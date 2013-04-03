@@ -311,6 +311,22 @@ while {true} do
 				
 				_unitsArray = _unitsArray + [_spawnGroup];
 			};
+			
+			_x = 0;
+			for "_x" from 0 to 2 do
+			{
+				_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+				[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+				
+				_unitsArray = _unitsArray + [_spawnGroup];
+			};
+			
+			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+			[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+			
+			_unitsArray = _unitsArray + [_spawnGroup];
 
 			//Send new side mission hint
 			GlobalHint = _briefing;
@@ -402,6 +418,22 @@ while {true} do
 				
 				_unitsArray = _unitsArray + [_spawnGroup];
 			};
+			
+			_x = 0;
+			for "_x" from 0 to 2 do
+			{
+				_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+				[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+				
+				_unitsArray = _unitsArray + [_spawnGroup];
+			};
+			
+			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+			[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+			
+			_unitsArray = _unitsArray + [_spawnGroup];
 
 			//Throw out objective hint
 			GlobalHint = _briefing;
@@ -432,7 +464,7 @@ while {true} do
 		{
 			//Set up briefing message
 			_briefing =
-			"<t align='center'><t size='2.2'>New Side Mission</t><br/><t size='1.5' color='#00B2EE'>Destroy Smuggled Explosives</t><br/>____________________<br/>The OPFOR have been smuggling explosives onto the island and hiding them in an old building on the coastline.<br/><br/>We've marked the building on your map; head over there and destroy their stock. Keep well back when you blow it; there's a lot of stuff in that building.</t>";
+			"<t align='center'><t size='2.2'>New Side Mission</t><br/><t size='1.5' color='#00B2EE'>Destroy Smuggled Explosives</t><br/>____________________<br/>The OPFOR have been smuggling explosives onto the island and hiding them in a Mobile HQ on the coastline.<br/><br/>We've marked the building on your map; head over there and destroy their stock. Keep well back when you blow it; there's a lot of stuff in that building.</t>";
 			
 			_flatPos = [0,0,0];
 			_accepted = false;
@@ -470,9 +502,9 @@ while {true} do
 				};
 			};
 			
-			//Spawn stone shed
+			//Spawn Mobile HQ
 			_randomDir = (random 360);
-			sideObj = "Land_I_Stone_HouseSmall_V1_F" createVehicle _flatPos;
+			sideObj = "Land_Cargo_HQ_V1_F" createVehicle _flatPos;
 			waitUntil {alive sideObj};
 			sideObj setDir _randomDir;
 			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 0.5)];
@@ -489,6 +521,22 @@ while {true} do
 				
 				_unitsArray = _unitsArray + [_spawnGroup];
 			};
+			
+			_x = 0;
+			for "_x" from 0 to 2 do
+			{
+				_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+				[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+				
+				_unitsArray = _unitsArray + [_spawnGroup];
+			};
+			
+			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+			[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+			
+			_unitsArray = _unitsArray + [_spawnGroup];
 			
 			//Set marker up
 			"sideMarker" setMarkerPos (getPos sideObj);
@@ -508,7 +556,7 @@ while {true} do
 			publicVariable "sideMarkerText";
 			
 			//Wait for boats to be dead
-			waitUntil {(getDammage sideObj) > 0.4}; //Have to do this as the building never actually dies.
+			waitUntil {!alive sideObj};
 			
 			sideMissionUp = false;
 			publicVariable "sideMissionUp";
