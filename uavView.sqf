@@ -528,6 +528,7 @@ if (radioTowerAlive) exitWith
 	];
 };
 
+private["_obj","_id","_currentTarget","_colorWest","_markerArray","_playerName","_size","_unitType","_icon"];
 _obj = _this select 0;
 _id = _this select 2;
 _currentTarget = (_this select 3) select 0;

@@ -18,6 +18,8 @@ This version of Domination was lovingly crafted by
 Jack Williams (Rarek) for Ahoy World!
 */
 
+
+private ["_damage","_percentage","_veh","_vehType","_fuel"];
 _veh = _this select 0;
 _vehType = typeOf _veh;
 

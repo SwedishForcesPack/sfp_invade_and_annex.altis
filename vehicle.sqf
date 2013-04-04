@@ -1,7 +1,7 @@
 /*  
 ==================================================================================================================
   Simple Vehicle Respawn Script v1.81 for Arma 3
-  by Tophe of Östgöta Ops [OOPS]
+  by Tophe of ï¿½stgï¿½ta Ops [OOPS]
   
   Put this in the vehicles init line:
   veh = [this] execVM "vehicle.sqf"
@@ -47,6 +47,8 @@
 Contact & Bugreport: cwadensten@gmail.com
 ================================================================================================================== */
   
+
+private ["_hasname","_delay","_deserted","_respawns","_noend","_dead","_nodelay","_timeout","_position","_dir","_effect","_rounds","_run","_unit","_explode","_dynamic","_unitinit","_haveinit","_unitname","_type"];
 if (!isServer) exitWith {};
 
 // Define variables

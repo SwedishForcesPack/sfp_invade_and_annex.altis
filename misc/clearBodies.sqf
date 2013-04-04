@@ -26,6 +26,8 @@
 	deleteVehicle.
 */
 
+
+private ["_canDeleteGroup","_group"];
 while {true} do
 {
 	sleep 600;

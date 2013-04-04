@@ -22,6 +22,8 @@ work and we can therefore have no dynamic cloud
 coverage / rain (yet).
 */
 
+
+private ["_random"];
 while {true} do
 {
 	sleep (3600 + (random 3600));

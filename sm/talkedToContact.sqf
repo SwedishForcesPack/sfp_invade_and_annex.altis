@@ -1,3 +1,5 @@
+
+private ["_obj","_id"];
 _obj = _this select 0;
 _id = _this select 2;
 

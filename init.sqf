@@ -42,14 +42,16 @@ Jack Williams (Rarek) for Ahoy World!
 	
 	You can NOT have an AO called "Nothing".
 */
-_targets = [
-	"Agia Marina and Firing Range",
-	"Camp Rogain",
-	"Kamino Firing Range",
-	"Air Station Mike 26",
-	"Camp Maxwell",
-	"Girna",
-	"Camp Tempest"
+
+private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_currentTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
+_targets = [
+	"Agia Marina and Firing Range",
+	"Camp Rogain",
+	"Kamino Firing Range",
+	"Air Station Mike 26",
+	"Camp Maxwell",
+	"Girna",
+	"Camp Tempest"
 ];
 
 "GlobalHint" addPublicVariableEventHandler
@@ -323,7 +325,9 @@ _targetsLeft = count _targets;
 };
 
 AW_fnc_markerActivate = {
-	_mrk = _this select 0;
+	
+private ["_mrk"];
+_mrk = _this select 0;
 	_mrk setMarkerShape "ELLIPSE";
 	_mrk setMarkerSize [PARAMS_AOSize, PARAMS_AOSize];
 	_mrk setMarkerBrush "FDiagonal";
@@ -332,7 +336,9 @@ AW_fnc_markerActivate = {
 };
 
 AW_fnc_markerDeactivate = {
-	_mrk = _this select 0;
+	
+private ["_mrk"];
+_mrk = _this select 0;
 	_mrk setMarkerShape "ICON";
 	_mrk setMarkerSize [1, 1];
 	_mrk setMarkerType "Empty";
@@ -341,7 +347,9 @@ AW_fnc_markerDeactivate = {
 };
 
 AW_fnc_deleteOldAOUnits = {
-	_groupsToKill = _this select 0;
+	
+private ["_group","_groupsToKill","_c"];
+_groupsToKill = _this select 0;
 	_c = 0;
 	
 	sleep 600;
@@ -364,14 +372,18 @@ AW_fnc_deleteOldAOUnits = {
 };
 
 AW_fnc_deleteSingleUnit = {
-	_obj = _this select 0;
+	
+private ["_obj","_time"];
+_obj = _this select 0;
 	_time = _this select 1;
 	sleep _time;
 	deleteVehicle _obj;
 };
 
 AW_fnc_rewardPlusHint = {	
-	_veh = smRewards call BIS_fnc_selectRandom;
+	
+private ["_veh","_vehName","_vehVarname","_completeText","_reward"];
+_veh = smRewards call BIS_fnc_selectRandom;
 	_vehName = _veh select 0;
 	_vehVarname = _veh select 1;
 	
@@ -391,7 +403,9 @@ _unitSpawnPlus = PARAMS_AOSize;
 _unitSpawnMinus = _unitSpawnPlus - (_unitSpawnPlus * 2);
 
 AW_fnc_spawnUnits = {
-	_pos = getMarkerPos (_this select 0);
+	
+private ["_randomPos","_dt","_spawnGroup","_enemiesArray","_pos","_x"];
+_pos = getMarkerPos (_this select 0);
 	_enemiesArray = [grpNull];
 	
 	_x = 0;

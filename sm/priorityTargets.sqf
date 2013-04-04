@@ -1,4 +1,6 @@
 //by Rarek [AW]
+
+private ["_firstRun","_isGroup","_obj","_position","_flatPos","_nearUnits","_accepted","_debugCounter","_pos","_barrier","_dir","_unitsArray","_randomPos","_spawnGroup","_unit","_targetPos","_debugCount","_radius","_randomWait","_briefing","_flatPosAlt","_flatPosClose","_priorityGroup","_distance","_firingMessages","_completeText"];
 _firstRun = true;
 _unitsArray = [objNull];
 _completeText =
