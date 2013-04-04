@@ -44,14 +44,14 @@ Jack Williams (Rarek) for Ahoy World!
 */
 
 private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_currentTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
-_targets = [
-	"Agia Marina and Firing Range",
-	"Camp Rogain",
-	"Kamino Firing Range",
-	"Air Station Mike 26",
-	"Camp Maxwell",
-	"Girna",
-	"Camp Tempest"
+_targets = [
+	"Agia Marina and Firing Range",
+	"Camp Rogain",
+	"Kamino Firing Range",
+	"Air Station Mike 26",
+	"Camp Maxwell",
+	"Girna",
+	"Camp Tempest"
 ];
 
 "GlobalHint" addPublicVariableEventHandler
@@ -404,7 +404,7 @@ _unitSpawnMinus = _unitSpawnPlus - (_unitSpawnPlus * 2);
 
 AW_fnc_spawnUnits = {
 	
-private ["_randomPos","_dt","_spawnGroup","_enemiesArray","_pos","_x"];
+private ["_randomPos","_spawnGroup","_pos","_x"];
 _pos = getMarkerPos (_this select 0);
 	_enemiesArray = [grpNull];
 	
