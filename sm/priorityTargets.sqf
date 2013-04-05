@@ -51,7 +51,11 @@ while {true} do
 	_briefing = 
 	"<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#b60000'>Enemy Mortars</t><br/>____________________<br/>OPFOR forces are setting up a mortar team to hit you guys damned hard! We've picked up their positions with thermal imaging scans and have marked it on your map.<br/><br/>This is a priority target, boys! They're just setting up now; they'll be firing in about five minutes!";
 
-	//Find flat position that's not near spawn or within (PARAMS_AOSize + 200) of AO
+	/*
+		Find flat position that's not near spawn or within (PARAMS_AOSize + 200) of AO
+		Possibly change this to include mortar teams spawning on a minimum elevation?
+	*/
+
 	_flatPos = [0];
 	_accepted = false;
 	_debugCounter = 1;
@@ -112,13 +116,13 @@ while {true} do
 	//Spawn H-Barrier cover "Land_HBarrierBig_F"
 	_distance = 8;
 	_dir = 0;
-	for "_c" from 0 to 7 do
+	for "_c" from 0 to 15 do
 	{
 		_pos = [_flatPos, _distance, _dir] call BIS_fnc_relPos;
 		_barrier = "Land_HBarrier_3_F" createVehicle _pos;
 		waitUntil {alive _barrier};
 		_barrier setDir _dir;
-		_dir = _dir + 45;
+		_dir = _dir + 22.5;
 		
 		_unitsArray = _unitsArray + [_barrier];
 	};
@@ -161,7 +165,7 @@ while {true} do
 	publicVariable "debugMessage";
 
 	//Wait for 1-2 minutes while the mortars "set up"
-	sleep (60 + (random 60));
+	sleep (random 60);
 	
 	//Set mortars attacking while still alive
 	_firingMessages = 
@@ -222,11 +226,11 @@ while {true} do
 				};
 			};
 		} forEach priorityTargets;
-		if (_radius > 15) then
+		if (_radius > 10) then
 		{
-			_radius = _radius - 5; //zeroing in
+			_radius = _radius - 10; //zeroing in
 		};
-		sleep (60 + (random 60));
+		sleep (random 60);
 	};
 
 	//Send completion hint
