@@ -20,6 +20,8 @@ Rarek for Ahoy World.
 As a bug in the alpha, setOvercast currently does not
 work and we can therefore have no dynamic cloud
 coverage / rain (yet).
+
+Quick check to see if DEV builds are working...
 */
 
 
