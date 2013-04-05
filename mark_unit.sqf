@@ -18,6 +18,11 @@ This version of Domination was lovingly crafted by
 Jack Williams (Rarek) for Ahoy World!
 */
 
+/*
+	Remove this accounting for respawning when another
+	script handles that.
+*/
+
 
 private ["_unit","_marker","_delay"];
 _unit = _this select 0;
