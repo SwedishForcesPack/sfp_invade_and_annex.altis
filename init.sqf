@@ -79,7 +79,7 @@ _targets = [
 	{
 		_x setMarkerAlphaLocal (markerAlpha _x);
 		_x setMarkerPosLocal (markerPos _x);
-		_x setMarkerTextLocal (markerPos _x);
+		_x setMarkerTextLocal (markerText _x);
 	} forEach ["aoMarker","aoCircle"];
 };
 
