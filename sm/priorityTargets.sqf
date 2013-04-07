@@ -7,6 +7,8 @@ _completeText =
 "<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#08b000'>NEUTRALISED</t><br/>____________________<br/>Incredible job, boys! Make sure you jump on those priority targets quickly; they can really cause havoc if they're left to their own devices.<br/><br/>Keep on with the main objective; we'll tell you if anything comes up.";
 while {true} do
 {
+	_randomWait = (random 4800);
+	sleep (600 + _randomWait);
 	if (_firstRun) then
 	{
 		_firstRun = false;
@@ -34,9 +36,6 @@ while {true} do
 			};
 		};
 	};
-
-	_randomWait = (random 4800);
-	sleep (600 + _randomWait);
 	debugMessage = format["PT: Waiting %1 before next PT.",(_randomWait + 600)];
 	publicVariable "debugMessage";
 	
