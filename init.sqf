@@ -43,7 +43,7 @@ Jack Williams (Rarek) for Ahoy World!
 	You can NOT have an AO called "Nothing".
 */
 
-private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_currentTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
+private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
 _targets = [
 	"Agia Marina and Firing Range",
 	"Camp Rogain",
@@ -75,6 +75,12 @@ _targets = [
 		_x setMarkerBrushLocal (markerBrush _x);
 		_x setMarkerColorLocal (markerColor _x);
 	} forEach _targets;
+
+	{
+		_x setMarkerAlphaLocal (markerAlpha _x);
+		_x setMarkerPosLocal (markerPos _x);
+		_x setMarkerTextLocal (markerPos _x);
+	} forEach ["aoMarker","aoCircle"];
 };
 
 "sideMarker" addPublicVariableEventHandler
@@ -90,17 +96,6 @@ _targets = [
 	"priorityMarker" setMarkerAlphaLocal (markerAlpha "priorityMarker");
 	"priorityMarker" setMarkerTextLocal format["Priority Target: %1",priorityTargetText];
 };
-
-/*
-	"aoMarker" addPublicVariableEventHandler
-	{
-		{
-			_x setMarkerPosLocal (markerPos _x);
-			_x setMarkerAlphaLocal (markerAlpha _x);
-		} forEach ["aoCircle","aoMarker"];
-		"aoMarker" setMarkerTextLocal format["Take %1",currentAO];
-	};
-*/
 
 "aw_addAction" addPublicVariableEventHandler
 {
@@ -310,7 +305,8 @@ if (PARAMS_Perpetual == 1) then
 	_isPerpetual = true;
 };
 
-_currentTarget = "Nothing";
+currentAO = "Nothing";
+publicVariable "currentAO";
 _lastTarget = "Nothing";
 _targetsLeft = count _targets;
 
@@ -536,33 +532,32 @@ while {count _targets > 0} do
 		_validTarget = false;
 		while {!_validTarget} do 
 		{
-			_currentTarget = _targets call BIS_fnc_selectRandom;
-			if (_currentTarget != _lastTarget) then 
+			currentAO = _targets call BIS_fnc_selectRandom;
+			if (currentAO != _lastTarget) then 
 			{
 				_validTarget = true;
 			};
-			debugMessage = format["_validTarget = %1; %2 was our last target.",_validTarget,_currentTarget];
+			debugMessage = format["_validTarget = %1; %2 was our last target.",_validTarget,currentAO];
 			publicVariable "debugMessage";
 		};
 	} else {
-		_currentTarget = _targets call BIS_fnc_selectRandom;
+		currentAO = _targets call BIS_fnc_selectRandom;
 		_targetsLeft = count _targets;
 	};
 	
 	//Set currentAO for UAVs and JIP updates
-	currentAO = _currentTarget;
 	publicVariable "currentAO";
 	currentAOUp = true;
 	publicVariable "currentAOUp";
 	
 	//Edit and place markers for new target
-	//_marker = [_currentTarget] call AW_fnc_markerActivate;
+	//_marker = [currentAO] call AW_fnc_markerActivate;
 	{_x setMarkerAlpha 1; _x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle","aoMarker"];
 	"aoMarker" setMarkerText format["Take %1",currentAO];
 	publicVariable "refreshMarkers";
 	
 	//Create AO detection trigger
-	_dt = createTrigger ["EmptyDetector", getMarkerPos _currentTarget];
+	_dt = createTrigger ["EmptyDetector", getMarkerPos currentAO];
 	_dt setTriggerArea [PARAMS_AOSize, PARAMS_AOSize, 0, false];
 	_dt setTriggerActivation ["EAST", "PRESENT", false];
 	_dt setTriggerStatements ["this","",""];
@@ -587,13 +582,13 @@ while {count _targets > 0} do
 	"radioMarker" setMarkerAlpha 1;
 	
 	//Spawn enemies
-	_enemiesArray = [_currentTarget] call AW_fnc_spawnUnits;
+	_enemiesArray = [currentAO] call AW_fnc_spawnUnits;
 	
 	//Set target start text
 	_targetStartText = format
 	[
 		"<t align='center' size='2.2'>New Target</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/>We did a good job with the last target, lads. I want to see the same again. Get yourselves over to %1 and take 'em all down!<br/><br/>Remember to take down that radio tower so you can use your Personal UAVs, too.",
-		_currentTarget
+		currentAO
 	];
 	
 	if (!_isPerpetual) then 
@@ -632,12 +627,12 @@ while {count _targets > 0} do
 	//Delete markers and trigger
 	if (_isPerpetual) then 
 	{
-		//_perimeterMarker = [_currentTarget] call AW_fnc_markerDeactivate;
-		_lastTarget = _currentTarget;
+		//_perimeterMarker = [currentAO] call AW_fnc_markerDeactivate;
+		_lastTarget = currentAO;
 		publicVariable "refreshMarkers";
 	} else {
-		_targets = _targets - [_currentTarget];
-		//deleteMarker _currentTarget;
+		_targets = _targets - [currentAO];
+		//deleteMarker currentAO;
 	};
 	
 	{_x setMarkerAlpha 0;} forEach ["aoCircle","aoMarker"];
@@ -657,7 +652,7 @@ while {count _targets > 0} do
 	_targetCompleteText = format
 	[
 		"<t align='center' size='2.2'>Target Taken</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/><t align='left'>Fantastic job taking %1, boys! Give us a moment here at HQ and we'll line up your next target for you.</t>",
-		_currentTarget
+		currentAO
 	];
 	
 	//Show global target completion hint
