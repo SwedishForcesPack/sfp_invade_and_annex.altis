@@ -21,11 +21,12 @@
 //Create base array of differing side missions
 
 private ["_firstRun","_mission","_isGroup","_obj","_skipTimer","_awayFromBase","_road","_position","_deadHint","_civArray","_briefing","_altPosition","_truck","_chosenCiv","_contactPos","_civ","_flatPos","_accepted","_randomPos","_spawnGroup","_unitsArray","_randomDir","_hangar","_x","_sideMissions","_completeText","_roadList"];
-_sideMissions = 
-[
-	"destroyChopper",
-	"destroySmallRadar",
-	"destroyExplosivesCoast"
+_sideMissions = 
+
+[
+	"destroyChopper",
+	"destroySmallRadar",
+	"destroyExplosivesCoast"
 ];
 
 _mission = "";
