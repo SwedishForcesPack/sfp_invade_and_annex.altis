@@ -270,7 +270,6 @@ smRewards =
 	["an MH-9", "B_MH9_F"],
 	["a Hunter GMG", "B_Hunter_RCWS_F"],
 	["a Hunter HMG", "B_Hunter_HMG_F"],
-	["a quadbike", "B_Quadbike_F"],
 	["an off-road jeep", "c_offroad"]
 ];
 smMarkerList = 
