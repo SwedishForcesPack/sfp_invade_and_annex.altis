@@ -23,56 +23,105 @@ switch(_type) do
 	
 	case "items":
 	{
-		if(_item == "G_Diving" || _item == "G_Shades_Black" || _item == "G_Shades_Blue" || _item == "G_Sport_Blackred" || _item == "G_Tactical_Clear") then
+	
+		switch (true) do
 		{
-			removeGoggles player;
-		}
-			else
-		{
-			player unassignItem _item;
-			player removeItem _item;
-		};
-		
-		if(_item == "Binocular") then
-		{
-			player removeWeapon _item;
-		};
-		
-		if(([_item,6] call KRON_StrLeft) == "optic_") then
+			case ([_item] call fnc_isgoggle) :
 			{
-				if((primaryWeaponItems player) select 2 != "") then
-				{
-					player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 2);
-				};
+				removeGoggles player;
 			};
 			
-			if(([_item,7] call KRON_StrLeft) == "muzzle_") then
+			case ([_item] call fnc_isweapon) :
 			{
-				if(_item == "muzzle_snds_L") then
+				player removeWeapon _item;
+			};
+			
+			case (!([_item] call fnc_isweapon)) :
+			{
+				_item_type = [_item] call fnc_isgear;
+				
+				if(_item_type != "") then
 				{
-					if((handgunItems player) select 0 != "") then
+					switch (_item_type) do
 					{
-						player removeItemFromPrimaryWeapon ((handgunitems player) select 0);
+						case "uni":
+						{
+							if(uniform player == _item) then {removeUniform player} else {player removeItem _item;};
+						};
+						
+						case "vest":
+						{
+							if(vest player == _item) then {removeVest player;} else {player removeItem _item;};
+						};
+						
+						case "head":
+						{
+							if(headGear player == _item) then {removeHeadGear player;} else {player removeItem _item;};
+						};
+						
+						case "optic":
+						{
+							if((primaryWeaponItems player) select 2 == _item) then
+							{
+								player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 2);
+							}
+								else
+							{
+								player removeItem _item;
+							};
+						};
+						
+						case "acc":
+						{
+							if((primaryWeaponItems player) select 1 == _item) then
+							{
+								player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 1);
+							}
+								else
+							{
+								player removeItem _item;
+							};
+						};
+						
+						case "muzzle":
+						{
+							if(_item == "muzzle_snds_L") then
+							{
+								if((handGunItems player) select 0 == _item) then
+								{
+									//No command to remove it... WHY BIS!!!
+								}
+									else
+								{
+									player removeItem _item;
+								};
+							}
+								else
+							{
+								if((primaryWeaponItems player) select 0 == _item) then
+								{
+									player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 0);
+								}
+									else
+								{
+									player removeItem _item;
+								};
+							};
+						};
 					};
 				}
 					else
 				{
-					if((primaryWeaponItems player) select 0 != "") then
+					if([_item] call fnc_item_type) then
 					{
-						player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 0);
+						player unassignItem _item;
 					};
+					
+					player removeItem _item;
 				};
 			};
-			
-			if(([_item,4] call KRON_StrLeft) == "acc_") then
-			{
-				if((primaryWeaponItems player) select 1 != "") then
-				{
-					player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 1);
-				};
-			}
+		};
 	};
-	
 	case "packs":
 	{
 		removeBackPack player;

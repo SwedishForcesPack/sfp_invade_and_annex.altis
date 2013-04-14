@@ -112,8 +112,8 @@ class VAS_RscTree {
 	style = 2;
 	font = "PuristaMedium";
 	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	expandedTexture = "A3\ui_f\data\gui\VAS_Rsccommon\VAS_Rsctree\expandedTexture_ca.paa";
-	hiddenTexture = "A3\ui_f\data\gui\VAS_Rsccommon\VAS_Rsctree\hiddenTexture_ca.paa";
+	expandedTexture = "A3\ui_f\data\gui\Rsccommon\Rsctree\expandedTexture_ca.paa";
+	hiddenTexture = "A3\ui_f\data\gui\Rsccommon\Rsctree\hiddenTexture_ca.paa";
 	rowHeight = 0.0439091;
 	color[] = {1, 1, 1, 1};
 	colorSelect[] = {0.7, 0.7, 0.7, 1};
@@ -226,12 +226,12 @@ class VAS_RscShortcutButton {
 	colorDisabled[] = {1, 1, 1, 0.25};
 	colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 1};
 	colorBackground2[] = {1, 1, 1, 1};
-	animTextureDefault = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButton\normal_ca.paa";
-	animTextureNormal = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButton\normal_ca.paa";
-	animTextureDisabled = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButton\normal_ca.paa";
-	animTextureOver = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButton\over_ca.paa";
-	animTextureFocused = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButton\focus_ca.paa";
-	animTexturePressed = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButton\down_ca.paa";
+	animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
+	animTextureNormal = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
+	animTextureDisabled = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
+	animTextureOver = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\over_ca.paa";
+	animTextureFocused = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\focus_ca.paa";
+	animTexturePressed = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\down_ca.paa";
 	textureNoShortcut = "#(argb,8,8,3)color(0,0,0,0)";
 	periodFocus = 1.2;
 	periodOver = 0.8;
@@ -360,12 +360,12 @@ class VAS_RscShortcutButtonMain : VAS_RscShortcutButton {
 		right = 0.005;
 		bottom = 0.0;
 	};
-	animTextureNormal = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButtonMain\normal_ca.paa";
-	animTextureDisabled = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButtonMain\disabled_ca.paa";
-	animTextureOver = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButtonMain\over_ca.paa";
-	animTextureFocused = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButtonMain\focus_ca.paa";
-	animTexturePressed = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButtonMain\down_ca.paa";
-	animTextureDefault = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscShortcutButtonMain\normal_ca.paa";
+	animTextureNormal = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\normal_ca.paa";
+	animTextureDisabled = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\disabled_ca.paa";
+	animTextureOver = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\over_ca.paa";
+	animTextureFocused = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\focus_ca.paa";
+	animTexturePressed = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\down_ca.paa";
+	animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButtonMain\normal_ca.paa";
 	period = 0.5;
 	font = "PuristaMedium";
 	size = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
@@ -421,7 +421,7 @@ class VAS_RscProgress {
 	w = 0.313726;
 	h = 0.0261438;
 	shadow = 2;
-	texture = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_RscProgress\progressbar_ca.paa";
+	texture = "\A3\ui_f\data\GUI\RscCommon\RscProgress\progressbar_ca.paa";
 	colorFrame[] = {0, 0, 0, 0};
 	colorBar[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
 };
@@ -521,8 +521,8 @@ class VAS_RscHTML {
 	colorLink[] = {1, 1, 1, 0.75};
 	colorLinkActive[] = {1, 1, 1, 1.0};
 	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	prevPage = "\A3\ui_f\data\gui\VAS_Rsccommon\VAS_Rschtml\arrow_left_ca.paa";
-	nextPage = "\A3\ui_f\data\gui\VAS_Rsccommon\VAS_Rschtml\arrow_right_ca.paa";
+	prevPage = "\A3\ui_f\data\gui\Rsccommon\Rschtml\arrow_left_ca.paa";
+	nextPage = "\A3\ui_f\data\gui\Rsccommon\Rschtml\arrow_right_ca.paa";
 	shadow = 2;
 	
 	class H1 {
@@ -966,8 +966,8 @@ class VAS_RscCombo {
 	soundSelect[] = {
 			"", 0.000000, 1
 	};
-	arrowEmpty = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_Rsccombo\arrow_combo_ca.paa";
-	arrowFull = "\A3\ui_f\data\GUI\VAS_RscCommon\VAS_Rsccombo\arrow_combo_active_ca.paa";
+	arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\Rsccombo\arrow_combo_ca.paa";
+	arrowFull = "\A3\ui_f\data\GUI\RscCommon\Rsccombo\arrow_combo_active_ca.paa";
 	wholeHeight = 0.45;
 	color[] = {1, 1, 1, 1};
 	colorActive[] = {1, 0, 0, 1};

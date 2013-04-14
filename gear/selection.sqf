@@ -11,7 +11,6 @@ _item = lbData[_ctrlNum,_item];
 _struct = [];
 _show = false;
 
-_type = getNumber(ConfigFile >> "CfgWeapons" >> _item >> "type");
 if(isClass (configFile >> "Cfgweapons" >> _item)) then
 {
 	_type = getNumber(ConfigFile >> "CfgWeapons" >> _item >> "type");

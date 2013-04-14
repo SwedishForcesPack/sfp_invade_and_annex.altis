@@ -64,12 +64,45 @@ class VAS_Diag {
 	
 	class controls {
 	
+		class gundetailsbg : VAS_RscText
+		{
+			colorBackground[] = {0, 0, 0, 0.7};
+			idc = 2507;
+			text = "";
+			
+			x = -0.205;
+			y = 0.2 + (11 / 250);
+			w = 0.3;
+			h = 0.35 - (22 / 250);
+		};
+		
+		class gundetails : VAS_RscStructuredText
+		{
+			idc = 2508;
+			text = "";
+			//text = "<t align='center'>EBR 21 7.62 mm Uses:</t>";
+			x = -0.265;
+			y = 0.21 + (11 / 250);
+			w = 0.4; h = 0.15;
+		};
+		
+		class gundetailslist : VAS_RscListBox
+		{
+			colorBackground[] = {0,0,0,0};
+			idc = 2509;
+			text = "";
+			sizeEx = 0.030;
+			
+			x = -0.175; y = 0.3;
+			w = 0.25; h = 0.16;
+		};
+
 		class vasGear : VAS_RscListBox 
 		{
 			idc = 2501;
 			text = "";
 			sizeEx = 0.030;
-			//onLBSelChanged = "[2501] execVM 'gear\selection.sqf'";
+			onLBSelChanged = "[] execVM 'gear\info.sqf'";
 			
 			x = 0.12; y = 0.31;
 			w = 0.275; h = 0.340;
@@ -303,14 +336,26 @@ class VAS_Load_Diag {
 			text = "Load";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
 			onButtonClick = "[] call fnc_load_gear";
-			x = 0.15 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
+			x = 0.05 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
+			y = 0.73 - (1 / 25);
+			w = (6.25 / 40);
+			h = (1 / 25);
+		};
+		
+		class GearDeleteMenu : VAS_RscButtonMenu 
+		{
+			idc = -1;
+			text = "Delete";
+			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
+			onButtonClick = "[] call fnc_delete_gear";
+			x = 0.25 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.73 - (1 / 25);
 			w = (6.25 / 40);
 			h = (1 / 25);
 		};
 	};
 };
-
+	
 class VAS_Save_Diag {
 	idd = 2510;
 	name= "Virtual_Ammobox_Sys Save";
@@ -406,4 +451,66 @@ class VAS_Save_Diag {
 		};
 	};
 };
+
+class VAS_prompt 
+{
+	idd = 2550;
+	name = "Virtual_Ammobox_sys_prompt";
+	movingEnabled = false;
+	enableSimulation = true;
 	
+	class controlsBackground {
+		class VAS_RscTitleBackground:VAS_RscText {
+			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", "(profilenamespace getvariable ['GUI_BCG_RGB_A',0.7])"};
+			idc = -1;
+			x = 0.3;
+			y = 0.2;
+			w = 0.47;
+			h = (1 / 25);
+		};
+		
+		class MainBackground:VAS_RscText {
+			colorBackground[] = {0, 0, 0, 0.7};
+			idc = -1;
+			x = 0.3;
+			y = 0.2 + (11 / 250);
+			w = 0.47;
+			h = 0.3 - (22 / 250);
+		};
+	};
+	
+	class controls 
+	{
+		class InfoMsg : VAS_RscStructuredText
+		{
+			idc = -1;
+			sizeEx = 0.020;
+			text = "<t align='center'><t size='.8px'>What do you want to do with that attachment?</t></t><br/><t align='center'><t size='0.6'>Please know that if you choose to add it to your weapon your current existing attachment in that slot will be lost.</t></t>";
+			x = 0.287;
+			y = 0.2 + (11 / 250);
+			w = 0.5; h = 0.12;
+		};
+
+		class addtogun : VAS_RscButtonMenu {
+			idc = -1;
+			text = "Add to gun";
+			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
+			onButtonClick = "vas_prompt_choice = true; closeDialog 0;";
+			x = 0.2 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
+			y = 0.42 - (1 / 25);
+			w = (6.25 / 40);
+			h = (1 / 25);
+		};
+		
+		class addtogear : VAS_RscButtonMenu {
+			idc = -1;
+			text = "Add to INV";
+			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
+			onButtonClick = "vas_prompt_choice = false; closeDialog 0;";
+			x = 0.4 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
+			y = 0.42 - (1 / 25);
+			w = (6.25 / 40);
+			h = (1 / 25);
+		};
+	};
+};

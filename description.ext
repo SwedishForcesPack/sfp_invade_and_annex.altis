@@ -65,6 +65,94 @@ class Params
 		texts[] = {"1","2","3","4","5","6","7","8","9","10"};
 		default = 5;
 	};
+
+	class SideMissions
+	{
+		title = "Enable Side Missions?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class PriorityTargets
+	{
+		title = "Enable Priority Targets?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class SpawnProtection
+	{
+		title = "Spawn Protection Zone";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
+	class AOSize
+	{
+		title = "Main AO Diameter";
+		values[] = {200,300,400,500,600,700,800,900,1000};
+		texts[] = {"200m","300m","400m","500m","600m","700m","800m","900m","1,000m"};
+		default = 600;
+	};
+
+	class PlayerMarkers
+	{
+		title = "Show player markers on map?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class ViewDistance
+	{
+		title = "Allow players to change view distance?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class PilotsOnly
+	{
+		title = "Can only pilots fly?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class ReviveEnabled
+	{
+		title = "Enable =BTC= Revive?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class MedicMarkers
+	{
+		title = "Should medics see revive icons on their screen?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class FPSSaver
+	{
+		title = "Enable FPS Saver? (If players can't see eachother or enemies, turn this off)";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
+
+	class SpawnWrecks
+	{
+		title = "Spawn random wrecks across the island?";
+		values[] = {1,0};
+		texts[] = {"Yes","No"};
+		default = 1;
+	};
 	
 	class SquadsPatrol
 	{
@@ -123,6 +211,9 @@ onLoadName = "AW Invade & Annex";
 loadScreen = "awMissionLogo.jpg";
 OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk:9987.";
 
-respawn = "BASE";
-respawnDelay = 10;
+respawn = BASE;
+respawnDelay = 4;
+#include "=BTC=_revive\=BTC=_respawn.h"
 respawnDialog = true;
+
+disabledAI = true;

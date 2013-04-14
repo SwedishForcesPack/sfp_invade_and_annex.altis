@@ -4,7 +4,6 @@
 	"sideMarker" addPublicVariableEventHandler
 	{
 		"sideMarker" setMarkerPos (markerPos "sideMarker");
-		"sideMarker" setMarkerAlpha (markerAlpha "sideMarker");
 	};
 	
 	Also, we need an event handler for playing custom sounds via SAY.
@@ -145,7 +144,6 @@ while {true} do
 			waitUntil {alive sideObj};
 			_contactPos = (getPos sideObj);
 			"sideMarker" setMarkerPos (getPos sideObj);
-			"sideMarker" setMarkerAlpha 1;
 			"sideMarker" setMarkerText "Side Mission: Talk to Contact";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
@@ -178,7 +176,7 @@ while {true} do
 				publicVariable "GlobalHint";
 				hint parseText GlobalHint;
 				
-				"sideMarker" setMarkerAlpha 0;
+				"sideMarker" setMarkerPos [0,0,0];
 				publicVariable "sideMarker";
 				
 				aw_removeAction = [sideObj,0];
@@ -298,7 +296,6 @@ while {true} do
 			{_x setDir _randomDir} forEach [sideObj,_hangar];
 			sideObj setVehicleLock "LOCKED";
 			"sideMarker" setMarkerPos (getPos sideObj);
-			"sideMarker" setMarkerAlpha 1;
 			"sideMarker" setMarkerText "Side Mission: Destroy Chopper";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
@@ -351,7 +348,7 @@ while {true} do
 			[] call AW_fnc_rewardPlusHint;
 
 			//Hide SM marker
-			"sideMarker" setMarkerAlpha 0;
+			"sideMarker" setMarkerPos [0,0,0];
 			publicVariable "sideMarker";
 
 			//PROCESS REWARD HERE
@@ -405,7 +402,6 @@ while {true} do
 			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 2)];
 			sideObj setVectorUp [0,0,1];
 			"sideMarker" setMarkerPos (getPos sideObj);
-			"sideMarker" setMarkerAlpha 1;
 			"sideMarker" setMarkerText "Side Mission: Destroy Radar";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
@@ -457,7 +453,7 @@ while {true} do
 			[] call AW_fnc_rewardPlusHint;
 
 			//Hide marker
-			"sideMarker" setMarkerAlpha 0;
+			"sideMarker" setMarkerPos [0,0,0];
 			publicVariable "sideMarker";
 
 			//provide players with reward. Place an MH-9 in the hangar, maybe? 
@@ -543,7 +539,6 @@ while {true} do
 			
 			//Set marker up
 			"sideMarker" setMarkerPos (getPos sideObj);
-			"sideMarker" setMarkerAlpha 1;
 			"sideMarker" setMarkerText "Side Mission: Destroy Smuggled Explosives";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
@@ -570,7 +565,7 @@ while {true} do
 			[] call AW_fnc_rewardPlusHint;
 			
 			//Hide marker
-			"sideMarker" setMarkerAlpha 0;
+			"sideMarker" setMarkerPos [0,0,0];
 			sleep 5;
 			publicVariable "sideMarker";
 		}; /* case "destroyExplosivesCoast": */

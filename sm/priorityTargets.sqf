@@ -147,7 +147,6 @@ while {true} do
 
 	//Set marker up
 	"priorityMarker" setMarkerPos _flatPos;
-	"priorityMarker" setMarkerAlpha 1;
 	"priorityMarker" setMarkerText "Priority Target: Mortar Team";
 	publicVariable "priorityMarker";
 	priorityTargetUp = true;
@@ -242,6 +241,6 @@ while {true} do
 	publicVariable "priorityTargetUp";
 
 	//Hide priorityMarker
-	"priorityMarker" setMarkerAlpha 0;
+	"priorityMarker" setMarkerPos [0,0,0];
 	publicVariable "priorityMarker";
 };

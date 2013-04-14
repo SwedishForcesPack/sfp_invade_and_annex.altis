@@ -16,6 +16,123 @@ fnc_ismagazine =
 	};
 };
 
+fnc_isgear =
+{
+	private["_item","_cfg","_return"];
+	_item = _this select 0;
+	_cfg = configFile >> "CfgWeapons" >> _item >> "ItemInfo";
+	_return = "";
+	if(isClass _cfg) then
+	{
+		switch ((getNumber(_cfg >> "Type"))) do
+		{
+			case 201: {_return = "optic";};
+			case 101: {_return = "muzzle";};
+			case 301: {_return = "acc";};
+			case 605: {_return = "head";};
+			case 801: {_return = "uni";};
+			case 701: {_return = "vest";};
+		};
+	};
+	_return;
+};
+
+fnc_isweapon = 
+{
+	//Thanks to aeroson
+	private["_item","_config"];
+	_item = _this select 0;
+	_config = configFile >> "CfgWeapons" >> _item;
+	
+	if(isClass(_config >> "WeaponSlotsInfo") && (getNumber(_config >> "showempty")) == 1) then
+	{
+		true;
+	}
+		else
+	{
+		false;
+	};
+};
+
+fnc_add_items =
+{
+	private["_items","_obj","_isbackpack"];
+	_items = _this select 0;
+	_isbackpack = _this select 2;
+	_obj = _this select 1;
+	
+	{
+		switch (true) do
+		{
+			case ([_x] call fnc_ismagazine) :
+			{
+				if(_isbackpack) then
+				{
+					_obj addMagazineCargoGlobal [_x,1];
+				}
+					else
+				{
+					_obj addMagazine _x;
+				};
+			};
+			
+			case ([_x] call fnc_isweapon) :
+			{
+				if(_isbackpack) then
+				{
+					_obj addWeaponCargoGlobal [_x,1];
+				};
+			};
+			
+			case (!([_x] call fnc_isweapon)) :
+			{
+				if(_isbackpack) then
+				{
+					_obj addItemCargoGlobal [_x,1];
+				}
+					else
+				{
+					_obj addItem _x;
+				};
+			};
+		};
+	} foreach _items;
+};
+
+fnc_isgoggle = 
+{
+	private["_item","_config"];
+	_item = _this select 0;
+	_config = configFile >> "CfgGlasses" >> _item;
+	
+	if(isClass _config) then
+	{
+		true;
+	}
+		else
+	{
+		false;
+	};
+};
+
+fnc_item_type =
+{
+	//True for simulated item i.e ItemMap
+	//False for Non-simulated Item i.e optic_ACO
+	private["_item","_config"];
+	_item = _this select 0;
+	_config = configFile >> "CfgWeapons" >> _item;
+	
+	if(getText(_config >> "simulation") == _item) then
+	{
+		true;
+	}
+		else
+	{
+		false;
+	};
+};
+
 fnc_save_gear = 
 {
 	private["_dialog","_list","_slist","_edit","_sel","_primary,_launcher","_handgun","_magazines","_uniform","_vest","_backpack","_items","_primitems","_secitems","_handgunitems","_uitems","_vitems","_bitems"];
@@ -32,7 +149,7 @@ fnc_save_gear =
 	_primary = primaryWeapon player;
 	_launcher = secondaryWeapon player;
 	_handgun = handGunWeapon player;
-	_magazines = magazines player;
+	_magazines = [];
 	_uniform = uniform player;
 	_vest = vest player;
 	_backpack = backpack player;
@@ -43,9 +160,9 @@ fnc_save_gear =
 	_uitems = [];
 	_vitems = [];
 	_bitems = [];
-	{if(!([_x] call fnc_ismagazine)) then { _uitems set[count _uitems,_x];};} foreach (uniformItems player);
-	{if(!([_x] call fnc_ismagazine)) then { _vitems set[count _vitems,_x];};} foreach (vestItems player);
-	{if(!([_x] call fnc_ismagazine)) then { _bitems set[count _bitems,_x];};} foreach (backPackItems player);
+	if(_uniform != "") then {{_uitems set[count _uitems,_x];} foreach (uniformItems player);};
+	if(_vest != "") then {{_vitems set[count _vitems,_x];} foreach (vestItems player);};
+	if(_backpack != "") then {{_bitems set[count _bitems,_x];} foreach (backPackItems player);};
 	
 	if(primaryWeapon player != "") then
 	{
@@ -77,6 +194,18 @@ fnc_save_gear =
 	profileNameSpace setVariable[format["vas_gear_new_%1",_sel],[_edit,_primary,_launcher,_handgun,_magazines,_uniform,_vest,_backpack,_items,_primitems,_secitems,_handgunitems,_uitems,_vitems,_bitems]];
 	
 	[0] execVM "gear\refresh.sqf";
+	saveProfileNamespace;
+};
+
+fnc_delete_gear =
+{
+	private["_dialog","_sel"];
+	disableSerialization;
+	
+	_dialog = findDisplay 2520;
+	_sel = lbCurSel 2521;
+	profileNameSpace setVariable[format["vas_gear_new_%1",_sel],nil];
+	[1] execVM "gear\refresh.sqf";
 };
 
 fnc_load_gear =
@@ -111,19 +240,19 @@ fnc_load_gear =
 		{player removeMagazine _x;} foreach (magazines player);
 		
 		{
-			if(_x == "G_Diving" || _x == "G_Shades_Black" || _x == "G_Shades_Blue" || _x == "G_Sport_Blackred" || _x == "G_Tactical_Clear") then
+			switch(true) do
 			{
-				removeGoggles player;
-			};
-			
-			if(_x == "Binocular") then
-			{
-				player removeWeapon _x;
-			}
-				else
-			{
-				player unassignItem _x;
-				player removeItem _x;
+				case ([_x] call fnc_isgoggle) :
+				{
+					removeGoggles player;
+				};
+				
+				case ([_x] call fnc_isweapon) :
+				{
+					player removeWeapon _x;
+				};
+				
+				default {player unassignItem _x; player removeItem _x;};
 			};
 		} foreach (assignedItems player);
 		
@@ -144,55 +273,44 @@ fnc_load_gear =
 		_tmp = false;
 		
 		{
-			if(_x == "MineDetector") then
+			switch(true) do
 			{
-				(unitBackpack player) addWeaponCargo [_x,1];
+				case ([_x] call fnc_isgoggle) :
+				{
+					player addGoggles _x;
+				};
+				
+				case ([_x] call fnc_isweapon) :
+				{
+					player addWeapon _x;
+				};
+				
+				case ([_x] call fnc_item_type) :
+				{
+					player addItem _x;
+					player assignItem _x;
+				};
+				
+				default 
+				{
+					player addHeadGear _x;
+				};
 			};
-			
-			if(_x in ["ItemMap","ItemWatch","NVGoggles","ItemGPS","ItemRadio","ItemCompass"]) then
-			{
-				player addItem _x;
-				player assignItem _x;
-			};
-			
-			if(_x == "G_Diving" || _x == "G_Shades_Black" || _x == "G_Shades_Blue" || _x == "G_Sport_Blackred" || _x == "G_Tactical_Clear") then
-			{
-				player addGoggles _x;
-			};
-			
-			if(_x == "Binocular") then
-			{
-				player addWeapon _x;
-			};
-			
-			_item_type = [_x,2] call KRON_StrLeft;
-		
-			if(_item_type == "H_") then
-			{
-				player addHeadGear _x;
-			};
-			
 		} foreach _items;
 		
 		if(count _uitems != 0) then 
 		{
-			{
-				player addItem _x;
-			} foreach _uitems;
+			[_uitems,player,false] call fnc_add_items;
 		};
 		
 		if(count _vitems != 0) then
 		{
-			{
-				player addItem _x;
-			} foreach _vitems;
+			[_vitems,player,false] call fnc_add_items;
 		};
 		
-		if(count _bitems != 0) then
+		if(count _bitems != 0 && _backpack != "") then
 		{
-			{
-				player addItem _x;
-			} foreach _bitems;
+			[_bitems,(unitBackpack player),true] call fnc_add_items;
 		};
 		
 		if(count _primitems != 0) then
@@ -261,21 +379,21 @@ vas_loadonrespawn =
 			_bitems = _loadout select 14;
 			
 			{player removeMagazine _x;} foreach (magazines player);
-			
+		
 			{
-				if(_x == "G_Diving" || _x == "G_Shades_Black" || _x == "G_Shades_Blue" || _x == "G_Sport_Blackred" || _x == "G_Tactical_Clear") then
+				switch(true) do
 				{
-					removeGoggles player;
-				};
-				
-				if(_x == "Binocular") then
-				{
-					player removeWeapon _x;
-				}
-					else
-				{
-					player unassignItem _x;
-					player removeItem _x;
+					case ([_x] call fnc_isgoggle) :
+					{
+						removeGoggles player;
+					};
+					
+					case ([_x] call fnc_isweapon) :
+					{
+						player removeWeapon _x;
+					};
+					
+					default {player unassignItem _x; player removeItem _x;};
 				};
 			} foreach (assignedItems player);
 			
@@ -293,44 +411,48 @@ vas_loadonrespawn =
 			player addWeapon _primary;
 			player addWeapon _launcher;
 			player addWeapon _handgun;
+			_tmp = false;
 			
 			{
-				if(_item == "MineDetector") then
+				switch(true) do
 				{
-				if(!(_item in (backpackItems player))) then
-				{
-					(unitBackpack player) addWeaponCargo [_item,1];
+					case ([_x] call fnc_isgoggle) :
+					{
+						player addGoggles _x;
+					};
+					
+					case ([_x] call fnc_isweapon) :
+					{
+						player addWeapon _x;
+					};
+					
+					case ([_x] call fnc_item_type) :
+					{
+						player addItem _x;
+						player assignItem _x;
+					};
+					
+					default 
+					{
+						player addHeadGear _x;
+					};
 				};
-				};
-				if(_x in ["ItemMap","ItemWatch","NVGoggles","ItemGPS","ItemRadio","ItemCompass"]) then
-				{
-					player addItem _x;
-					player assignItem _x;
-				};
-				
-				if(_x == "G_Diving" || _x == "G_Shades_Black" || _x == "G_Shades_Blue" || _x == "G_Sport_Blackred" || _x == "G_Tactical_Clear") then
-				{
-					player addGoggles _x;
-				};
-				
-				if(_x == "Binocular") then
-				{
-					player addWeapon _x;
-				};
-				
-				_item_type = [_x,2] call KRON_StrLeft;
-			
-				if(_item_type == "H_") then
-				{
-					player addHeadGear _x;
-				};
-				
-				if(_x in ["FirstAidKit","ToolKit","Medikit"]) then
-				{
-					player addItem _x;
-				};
-		
 			} foreach _items;
+			
+			if(count _uitems != 0) then 
+			{
+				[_uitems,player,false] call fnc_add_items;
+			};
+			
+			if(count _vitems != 0) then
+			{
+				[_vitems,player,false] call fnc_add_items;
+			};
+			
+			if(count _bitems != 0 && _backpack != "") then
+			{
+				[_bitems,(unitBackpack player),true] call fnc_add_items;
+			};
 			
 			if(count _primitems != 0) then
 			{
@@ -363,27 +485,6 @@ vas_loadonrespawn =
 						player addHandgunItem (_handgunitems select _i);
 					};
 				};
-			};
-			
-			if(count _uitems != 0) then 
-			{
-				{
-					player addItem _x;
-				} foreach _uitems;
-			};
-			
-			if(count _vitems != 0) then
-			{
-				{
-					player addItem _x;
-				} foreach _vitems;
-			};
-			
-			if(count _bitems != 0) then
-			{
-				{
-					player addItem _x;
-				} foreach _bitems;
 			};
 		};
 	}];
@@ -421,11 +522,11 @@ fnc_gear_weapons =
 				_name = getText (_cur_wep >> "DisplayName");
 				_scope = getNumber(_cur_wep >> "scope");
 				_picture = getText(_cur_wep >> "picture");
-				if(_scope >= 2 && _wep_type in [1,2,4,4096] && _picture != "" && !(_classname in _weapons) && _classname != "NVGoggles") then
+				if(_scope >= 2 && _wep_type in [1,2,4,5,4096] && _picture != "" && !(_classname in _weapons) && _classname != "NVGoggles") then
 				{
 					//diag_log format["Class: %1 - Type: %2 - Scope: %3 - Pic: %4 - WEP: %5",_classname,_wep_type,_scope,_picture,_cur_wep];
 					_match = false;
-					_compare = [_classname,5] call KRON_StrLeft;
+					_str = [_classname,4] call KRON_StrLeft;
 					{
 						if(_picture ==  (_x select 2)) then
 						{
@@ -433,7 +534,7 @@ fnc_gear_weapons =
 						};
 					} foreach _weapons;
 					
-					if(!_match) then
+					if(!_match && _str != "ACRE") then
 					{
 						_weapons set[count _weapons, [_name,_classname,_picture]];
 					};
@@ -479,7 +580,10 @@ fnc_gear_mags =
 					//diag_log format["%1 - %2 - %3 - %4",_cur_wep,_classname,_scope,_name];
 					if(_scope >= 1 && _picture != "" && !(_classname in _magazines)) then
 					{
-						_magazines set[count _magazines,[_name,_classname,_picture]];
+						if(!(_classname in  vas_r_magazines)) then
+						{
+							_magazines set[count _magazines,[_name,_classname,_picture]];
+						};
 					};
 				};
 			};
@@ -489,7 +593,7 @@ fnc_gear_mags =
 
 fnc_gear_items =
 {
-	private["_cfgweapons","_items","_cur_wep","_classname","_scope","_picture","_wep_type","_name"];
+	private["_cfgweapons","_items","_cur_wep","_classname","_scope","_picture","_wep_type","_name","_str"];
 	_items = [];
 	if(count vas_items > 0) then
 	{
@@ -523,7 +627,11 @@ fnc_gear_items =
 					if(_scope >= 2 && _wep_type in [131072,4096] && _picture != "" && !(_classname in _items) && _classname != "Binocular") then
 					{
 						//diag_log format["Class: %1 - Type: %2 - Scope: %3 - Pic: %4 - WEP: %5",_classname,_wep_type,_scope,_picture,_cur_wep];
-						_items set[count _items, [_name,_classname,_picture]];
+						_str = [_classname,4] call KRON_StrLeft;
+						if(!(_classname in vas_r_items) && _str != "ACRE") then
+						{
+							_items set[count _items, [_name,_classname,_picture]];
+						};
 					};
 				};
 			};
@@ -543,9 +651,9 @@ fnc_gear_packs =
 			_name = getText(configFile >> "CfgVehicles" >> _classname >> "displayname");
 			_scope = getNumber(configFile >> "CfgVehicles" >> _classname >> "scope");
 			_picture = getText(configFile >> "CfgVehicles" >> _classname >> "picture");
-			if(_scope >= 2 && _wep_type == "Backpacks" && _picture != "" && !(_classname in _backpacks)) then
+			//diag_log format["Class: %1 - Type: %2 - Scope: %3 - Pic: %4 - WEP: %5",_classname,_wep_type,_scope,_picture,_cur_wep];
+			if(_wep_type == "Backpacks" && _picture != "") then
 			{
-				//diag_log format["Class: %1 - Type: %2 - Scope: %3 - Pic: %4 - WEP: %5",_classname,_wep_type,_scope,_picture,_cur_wep];
 				_backpacks set[count _backpacks, [_name,_classname,_picture]];
 			};
 		} foreach vas_backpacks;
@@ -607,7 +715,10 @@ fnc_gear_goggles =
 					_picture = getText(_cur_wep >> "picture");
 					if(_picture != "" && _name != "None") then
 					{
-						_glasses set[count _glasses, [_name,_classname,_picture]];
+						if(!(_classname in vas_r_goggles)) then
+						{
+							_glasses set[count _glasses, [_name,_classname,_picture]];
+						};
 					};
 				};
 			};

@@ -1,4 +1,4 @@
-private["_type","_dialog","_item","_list","_wep_type"];
+private["_type","_dialog","_item","_list","_wep_type","_temp"];
 _type = taw_g_sel;
 disableSerialization;
 
@@ -20,58 +20,44 @@ switch (_type) do
 			{
 				if(primaryWeapon player != "") then
 				{
-					player addWeapon _item;
-				}
-					else
-				{
 					player removeWeapon (primaryWeapon player);
-					player addweapon _item;
 				};
+				player addweapon _item;
 			};
 			
 			case 2:
 			{
 				if(handgunWeapon player != "") then
 				{
-					player addWeapon _item;
-				}
-					else
-				{
 					player removeWeapon (handgunWeapon player);
-					player addweapon _item;
 				};
+					player addweapon _item;
+			};
+			
+			case 5:
+			{
+				if(primaryWeapon player != "") then
+				{
+					player removeWeapon (primaryWeapon player);
+				};
+				player addweapon _item;
 			};
 			
 			case 4:
 			{
 				if(_item == "MineDetector") then
 				{
-					if(isNull (unitBackpack player)) then
-					{
-						hint "You need a backpack to use the Mine Detector";
-					}
-						else
-					{
-						if(!(_item in (backpackItems player))) then
-						{
-							(unitBackpack player) addWeaponCargo [_item,1];
-						};
-					};
+					player addItem _item;
 				}
 					else
 				{
 					if(secondaryWeapon player != "") then
 					{
-						player addWeapon _item;
-					}
-						else
-					{
 						player removeWeapon (secondaryWeapon player);
-						player addweapon _item;
 					};
+						player addweapon _item;
 				};
 			};
-			
 			
 			case 4096:
 			{
@@ -89,105 +75,124 @@ switch (_type) do
 	
 	case "items":
 	{
-		_item_type = [_item,2] call KRON_StrLeft;
+		_item_type = [_item] call fnc_isgear;
 		
-		if(_item_type == "H_") then
+		if(_item_type != "") then
 		{
-			if(headgear player != "") then
+			switch (_item_type) do
 			{
-				removeHeadgear player;
-				player addHeadGear _item;
-			}
-				else
-			{
-				player addHeadGear _item;
-			};
-		};
-			
-		if(_item_type == "V_") then 
-		{
-			if(vest player != "") then
-			{
-				removeVest player;
-				player addVest _item;
-			}
-				else
-			{
-				player addVest _item;
-			};
-		};
-		
-		if(_item_type == "U_") then
-		{
-			if(uniform player != "") then
-			{
-				removeUniform player;
-				player addUniform _item;
-			}
-				else
-			{
-				player addUniform _item;
+				case "uni":
+				{
+					_temp = [];
+					if(uniform player != "") then {_temp = uniformItems player; removeUniform player;};
+					player addUniform _item;
+					{player addItem _x} foreach _temp;
+				};
+				
+				case "vest":
+				{
+					_temp = [];
+					if(vest player != "") then {_temp = vestItems player; removeVest player;};
+					player addVest _item;
+					{player addItem _x} foreach _temp;
+				};
+				
+				case "head":
+				{
+					if(headGear player != "") then {removeHeadgear player;};
+					player addHeadGear _item;
+				};
+				
+				case "optic":
+				{
+					createDialog "VAS_prompt";
+					waitUntil {!isNil {vas_prompt_choice}};
+					if(vas_prompt_choice) then
+					{
+						if((primaryWeaponItems player) select 2 != "") then
+						{
+							player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 2);
+							player addPrimaryWeaponItem _item;
+						}
+							else
+						{
+							player addPrimaryWeaponItem _item;
+						};
+					}
+						else
+					{
+						player addItem _item;
+					};
+					vas_prompt_choice = nil;
+				};
+				
+				case "acc":
+				{
+					createDialog "VAS_prompt";
+					waitUntil {!isNil {vas_prompt_choice}};
+					if(vas_prompt_choice) then
+					{
+						if((primaryWeaponItems player) select 1 != "") then
+						{
+							player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 1);
+							player addPrimaryWeaponItem _item;
+						}
+							else
+						{
+							player addPrimaryWeaponItem _item;
+						};
+					}
+						else
+					{
+						player addItem _item;
+					};
+					vas_prompt_choice = nil;
+				};
+				
+				case "muzzle":
+				{
+					createDialog "VAS_prompt";
+					waitUntil {!isNil {vas_prompt_choice}};
+					if(vas_prompt_choice) then
+					{
+						if(_item == "muzzle_snds_L") then
+						{
+							if((handgunItems player) select 0 != "") then
+							{
+								player removeItemFromPrimaryWeapon ((handgunitems player) select 0);
+								player addHandgunItem _item;
+							}
+								else
+							{
+								player addHandgunItem _item;
+							};
+						}
+							else
+						{
+							if((primaryWeaponItems player) select 0 != "") then
+							{
+								player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 0);
+								player addPrimaryWeaponItem _item;
+							}
+								else
+							{
+								player addPrimaryWeaponItem _item;
+							};
+						};
+					}
+						else
+					{
+						player addItem _item;
+					};
+					vas_prompt_choice = nil;
+				};
 			};
 		}
 			else
 		{
-			if(([_item,6] call KRON_StrLeft) == "optic_") then
+			if([_item] call fnc_item_type) then
 			{
-				if((primaryWeaponItems player) select 2 != "") then
-				{
-					player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 2);
-					player addPrimaryWeaponItem _item;
-				}
-					else
-				{
-					player addPrimaryWeaponItem _item;
-				};
-			};
-			
-			if(([_item,7] call KRON_StrLeft) == "muzzle_") then
-			{
-				if(_item == "muzzle_snds_L") then
-				{
-					if((handgunItems player) select 0 != "") then
-					{
-						player removeItemFromPrimaryWeapon ((handgunitems player) select 0);
-						player addHandgunItem _item;
-					}
-						else
-					{
-						player addHandgunItem _item;
-					};
-				}
-					else
-				{
-					if((primaryWeaponItems player) select 0 != "") then
-					{
-						player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 0);
-						player addPrimaryWeaponItem _item;
-					}
-						else
-					{
-						player addPrimaryWeaponItem _item;
-					};
-				};
-			};
-			
-			if(([_item,4] call KRON_StrLeft) == "acc_") then
-			{
-				if((primaryWeaponItems player) select 1 != "") then
-				{
-					player removeItemFromPrimaryWeapon ((primaryWeaponItems player) select 1);
-					player addPrimaryWeaponItem _item;
-				}
-					else
-				{
-					player addPrimaryWeaponItem _item;
-				};
-			}
-				else
-			{
-				
-				if(_item in ["FirstAidKit","ToolKit","Medikit"]) then
+				if(_item in (assignedItems player)) then
 				{
 					player addItem _item;
 				}
@@ -196,6 +201,10 @@ switch (_type) do
 					player addItem _item;
 					player assignItem _item;
 				};
+			}
+				else
+			{
+				player addItem _item;
 			};
 		};
 	};

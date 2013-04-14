@@ -44,6 +44,18 @@ Jack Williams (Rarek) for Ahoy World!
 */
 
 private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
+
+/* 
+	Custom radio channels to come...
+
+		_mainIndex = radioChannelCreate [
+			[1.0, 0.81, 0.06],
+			"Main AO Channel",
+			"%UNIT_NAME",
+			[player]
+		];
+*/
+
 _targets = [
 	"Agia Marina and Firing Range",
 	"Camp Rogain",
@@ -53,6 +65,17 @@ _targets = [
 	"Girna",
 	"Camp Tempest"
 ];
+
+//Grab parameters and put them into readable variables
+for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
+{
+	call compile format 
+	[
+		"PARAMS_%1 = %2",
+		(configName ((missionConfigFile >> "Params") select _i)),
+		(paramsArray select _i)
+	];
+};
 
 "GlobalHint" addPublicVariableEventHandler
 {
@@ -64,7 +87,6 @@ _targets = [
 "radioTower" addPublicVariableEventHandler
 {
 	"radioMarker" setMarkerPosLocal (markerPos "radioMarker");
-	"radioMarker" setMarkerAlphaLocal (markerAlpha "radioMarker");
 };
 
 "refreshMarkers" addPublicVariableEventHandler
@@ -77,7 +99,6 @@ _targets = [
 	} forEach _targets;
 
 	{
-		_x setMarkerAlphaLocal (markerAlpha _x);
 		_x setMarkerPosLocal (markerPos _x);
 		_x setMarkerTextLocal (markerText _x);
 	} forEach ["aoMarker","aoCircle"];
@@ -86,14 +107,12 @@ _targets = [
 "sideMarker" addPublicVariableEventHandler
 {
 	"sideMarker" setMarkerPosLocal (markerPos "sideMarker");
-	"sideMarker" setMarkerAlphaLocal (markerAlpha "sideMarker");
 	"sideMarker" setMarkerTextLocal format["Side Mission: %1",sideMarkerText];
 };
 
 "priorityMarker" addPublicVariableEventHandler
 {
 	"priorityMarker" setMarkerPosLocal (markerPos "priorityMarker");
-	"priorityMarker" setMarkerAlphaLocal (markerAlpha "priorityMarker");
 	"priorityMarker" setMarkerTextLocal format["Priority Target: %1",priorityTargetText];
 };
 
@@ -141,9 +160,19 @@ _targets = [
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
 
-_null = [] execVM "grenadeStop.sqf";
-_null = [] execVM "taw_vd\init.sqf";
-_null = [] execVM "pilotCheck.sqf";
+if (PARAMS_SpawnProtection == 1) then { _null = [] execVM "grenadeStop.sqf"; };
+if (PARAMS_ViewDistance == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
+if (PARAMS_PilotsOnly == 1) then { _null = [] execVM "pilotCheck.sqf"; };
+if (PARAMS_ReviveEnabled == 1) then 
+{
+	call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf";
+
+	if (PARAMS_MedicMarkers == 1) then
+	{
+		_null = [] execVM "misc\medicMarkers.sqf";
+	};
+};
+if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
 
 [] spawn {
 	scriptName "initMission.hpp: mission start";
@@ -157,19 +186,17 @@ if (!isServer) then
 {
 	if (radioTowerAlive) then
 	{
-		"radioMarker" setMarkerAlphaLocal 1;
 		"radioMarker" setMarkerPosLocal (getPos radioTower);
 	} else {
-		"radioMarker" setMarkerAlphaLocal 0;
+		"radioMarker" setMarkerPosLocal [0,0,0];
 	};
 	
 	if (sideMissionUp) then
 	{
-		"sideMarker" setMarkerAlphaLocal 1;
 		"sideMarker" setMarkerPosLocal (getPos sideObj);
 		"sideMarker" setMarkerTextLocal format["Side Mission: %1",sideMarkerText];
 	} else {
-		"sideMarker" setMarkerAlphaLocal 0;
+		"sideMarker" setMarkerPosLocal [0,0,0];
 	};
 	
 	if (priorityTargetUp) then
@@ -181,23 +208,21 @@ if (!isServer) then
 		} else {
 			_pos = getPos priorityTarget2;
 		};
-		"priorityMarker" setMarkerAlphaLocal 1;
 		"priorityMarker" setMarkerPosLocal _pos;
 		"priorityMarker" setMarkerTextLocal format["Priority Target: %1",priorityTargetText];
 	} else {
-		"priorityMarker" setMarkerAlphaLocal 0;
+		"priorityMarker" setMarkerPosLocal [0,0,0];
 	};
 
 	if (currentAOUp) then
 	{
 		{
-			_x setMarkerAlphaLocal 1;
 			_x setMarkerPosLocal (getMarkerPos currentAO);
 		} forEach ["aoCircle","aoMarker"];
 		"aoMarker" setMarkerTextLocal format["Take %1",currentAO];
 	} else {
 		{
-			_x setMarkerAlpha 0;
+			_x setMarkerPosLocal [0,0,0];
 		} forEach ["aoCircle","aoMarker"];
 	};
 	
@@ -274,29 +299,8 @@ smMarkerList =
 _null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
-//Grab parameters and put them into readable variables
-//Set defaults first
-
-PARAMS_Perpetual = 0;
-PARAMS_TimeOfDay = 14;
-PARAMS_Weather = 1;
-PARAMS_AOSize = 600;
-publicVariable "PARAMS_AOSize";
-PARAMS_EnemyLeftThreshhold = 5;
-PARAMS_SquadsPatrol = 3;
-PARAMS_SquadsDefend = 1;
-PARAMS_TeamsPatrol = 3;
-PARAMS_CarsPatrol = 1;
-
-for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
-{
-	call compile format 
-	[
-		"PARAMS_%1 = %2",
-		(configName ((missionConfigFile >> "Params") select _i)),
-		(paramsArray select _i)
-	];
-};
+/* PARAM-DEPENDANT SETTINGS */
+if (PARAMS_FPSSaver == 1) then { [2500] execfsm "misc\fpsManager.fsm"; };
 
 _isPerpetual = false;
 
@@ -485,26 +489,29 @@ switch (PARAMS_Weather) do
 };
 
 //Spawn random wrecks
+if (PARAMS_PriorityTargets == 1) then
 {
-	_accepted = false;
-	_position = [0,0,0];
-	while {!_accepted} do
 	{
-		_position = [] call BIS_fnc_randomPos;
-		if (_position distance (getMarkerPos "respawn_west") > 800) then
+		_accepted = false;
+		_position = [0,0,0];
+		while {!_accepted} do
 		{
-			_accepted = true;
+			_position = [] call BIS_fnc_randomPos;
+			if (_position distance (getMarkerPos "respawn_west") > 800) then
+			{
+				_accepted = true;
+			};
 		};
-	};
-	_randomWreck = _x createVehicle _position;
-	_randomWreck setDir (random 360);
-} forEach ["Land_Wreck_Commanche_F","Land_UWreck_Mv22_F","Land_UWreck_Mv22_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Truck_dropside_F","Land_Wreck_Truck_F","Land_Wreck_Car_F","Land_Wreck_Car2_F","Land_Wreck_Car3_F"];
+		_randomWreck = _x createVehicle _position;
+		_randomWreck setDir (random 360);
+	} forEach ["Land_Wreck_Commanche_F","Land_UWreck_Mv22_F","Land_UWreck_Mv22_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Truck_dropside_F","Land_Wreck_Truck_F","Land_Wreck_Car_F","Land_Wreck_Car2_F","Land_Wreck_Car3_F"];
+};
 
 //Begin generating side missions
-_null = [] execVM "sm\sideMissions.sqf";
+if (PARAMS_SideMissions == 1) then { _null = [] execVM "sm\sideMissions.sqf"; };
 
 //Begin generating priority targets
-_null = [] execVM "sm\priorityTargets.sqf";
+if (PARAMS_PriorityTargets == 1) then { _null = [] execVM "sm\priorityTargets.sqf"; };
 
 //Begin creating random patrols
 // _null = [] execVM "randomPatrols.sqf";
@@ -552,8 +559,9 @@ while {count _targets > 0} do
 	
 	//Edit and place markers for new target
 	//_marker = [currentAO] call AW_fnc_markerActivate;
-	{_x setMarkerAlpha 1; _x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle","aoMarker"];
+	{_x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle","aoMarker"];
 	"aoMarker" setMarkerText format["Take %1",currentAO];
+	sleep 5;
 	publicVariable "refreshMarkers";
 	
 	//Create AO detection trigger
@@ -579,7 +587,6 @@ while {count _targets > 0} do
 	radioTowerAlive = true;
 	publicVariable "radioTowerAlive";
 	"radioMarker" setMarkerPos (getPos radioTower);
-	"radioMarker" setMarkerAlpha 1;
 	
 	//Spawn enemies
 	_enemiesArray = [currentAO] call AW_fnc_spawnUnits;
@@ -612,7 +619,7 @@ while {count _targets > 0} do
 	waitUntil {!alive radioTower};
 	radioTowerAlive = false;
 	publicVariable "radioTowerAlive";
-	"radioMarker" setMarkerAlpha 0;
+	"radioMarker" setMarkerPos [0,0,0];
 	_radioTowerDownText = 
 		"<t align='center' size='2.2'>Radio Tower</t><br/><t size='1.5' color='#08b000' align='center'>DESTROYED</t><br/>____________________<br/>The enemy radio tower has been destroyed! Fantastic job, lads! You're now all free to use your Personal UAVs!<br/><br/>Keep up the good work, lads; we're countin' on you.";
 	GlobalHint = _radioTowerDownText;
@@ -635,7 +642,7 @@ while {count _targets > 0} do
 		//deleteMarker currentAO;
 	};
 	
-	{_x setMarkerAlpha 0;} forEach ["aoCircle","aoMarker"];
+	{_x setMarkerPos [0,0,0];} forEach ["aoCircle","aoMarker"];
 	
 	currentAOUp = false;
 	publicVariable "currentAOUp";

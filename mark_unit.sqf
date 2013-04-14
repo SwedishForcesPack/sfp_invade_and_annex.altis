@@ -33,7 +33,7 @@ while {true} do
 	_marker setMarkerAlpha 1;
 	while {alive _unit} do 
 	{
-		_marker setMarkerPos getPos _unit;
+		_marker setMarkerPosLocal getPos _unit;
 		sleep _delay;
 	};
 	_marker setMarkerAlpha 0;

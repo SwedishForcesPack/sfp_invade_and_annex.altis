@@ -13,7 +13,16 @@ switch (_type) do
 {
 	case "guns":
 	{
-		_weps = [] call fnc_gear_weapons;
+		if(vas_preload) then
+		{
+			waitUntil {!isNil {vas_pre_goggles}};
+			_weps = vas_pre_weapons;
+		}
+			else
+		{
+			_weps = [] call fnc_gear_weapons;
+		};
+		
 		{
 			_name = _x select 0;
 			_wep = _x select 1;
@@ -29,7 +38,16 @@ switch (_type) do
 	
 	case "mags":
 	{
-		_weps = [] call fnc_gear_mags;
+		if(vas_preload) then
+		{
+			waitUntil {!isNil {vas_pre_goggles}};
+			_weps = vas_pre_mags;
+		}
+			else
+		{
+			_weps = [] call fnc_gear_mags;
+		};
+		
 		{
 			_name = _x select 0;
 			_wep = _x select 1;
@@ -45,7 +63,16 @@ switch (_type) do
 	
 	case "items":
 	{
-		_weps = [] call fnc_gear_items;
+		if(vas_preload) then
+		{
+			waitUntil {!isNil {vas_pre_goggles}};
+			_weps = vas_pre_items;
+		}
+			else
+		{
+			_weps = [] call fnc_gear_items;
+		};
+		
 		{
 			_name = _x select 0;
 			if(_name != "") then
@@ -64,7 +91,16 @@ switch (_type) do
 	
 	case "packs":
 	{
-		_weps = [] call fnc_gear_packs;
+		if(vas_preload) then
+		{
+			waitUntil {!isNil {vas_pre_goggles}};
+			_weps = vas_pre_packs;
+		}
+			else
+		{
+			_weps = [] call fnc_gear_packs;
+		};
+		
 		{
 			_name = _x select 0;
 			_wep = _x select 1;
@@ -80,7 +116,16 @@ switch (_type) do
 	
 	case "glass":
 	{
-		_weps = [] call fnc_gear_goggles;
+		if(vas_preload) then
+		{
+			waitUntil {!isNil {vas_pre_goggles}};
+			_weps = vas_pre_goggles;
+		}
+			else
+		{
+			_weps = [] call fnc_gear_goggles;
+		};
+		
 		{
 			_name = _x select 0;
 			_wep = _x select 1;
