@@ -21,7 +21,6 @@ Jack Williams (Rarek) for Ahoy World!
 while {true} do
 {
 	waitUntil {sleep 0.5; alive player};
-
 	if (typeOf player != "B_Helipilot_F") then
 	{
 		private "_v";

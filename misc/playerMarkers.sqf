@@ -31,7 +31,7 @@ while {true} do {
 				_injured = true;
 			};      
 			if(!isNil {_x getVariable "BTC_need_revive"}) then {
-				if(_x getVariable "BTC_need_revive" == 1) then {
+				if(_x getVariable "BTC_need_revive" select 0 == 1) then {
 					_show = false;
 				};    
 			};      

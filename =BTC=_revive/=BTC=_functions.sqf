@@ -207,7 +207,7 @@ BTC_fnc_PVEH =
 				{
 					_pos  = _this select 0;
 					_unit = _this select 1;
-					while {(!(isNull _unit) && (format ["%1", _unit getVariable "BTC_need_revive"] == "1"))} do
+					while {(!(isNull _unit) && (format ["%1", _unit getVariable "BTC_need_revive" select 0] == "1"))} do
 					{
 						format ["FA_%1", _pos] setMarkerPosLocal getpos _unit;
 						sleep 1;
@@ -225,7 +225,7 @@ BTC_fnc_PVEH =
 			{
 				_injured = _this select 0;
 				_injured allowDamage false;
-				WaitUntil {sleep 1; (isNull _injured) || (format ["%1", _injured getVariable "BTC_need_revive"] == "0")};
+				WaitUntil {sleep 1; (isNull _injured) || (format ["%1", _injured getVariable "BTC_need_revive" select 0] == "0")};
 				_injured allowDamage true;
 			};
 		};
@@ -251,7 +251,7 @@ BTC_first_aid =
 	private ["_injured","_array_item_injured","_array_item","_cond"];
 	_men = nearestObjects [player, ["Man"], 2];
 	if (count _men > 1) then {_injured = _men select 1;};
-	if (format ["%1",_injured getVariable "BTC_need_revive"] != "1") exitWith {};
+	if (format ["%1",_injured getVariable "BTC_need_revive" select 0] != "1") exitWith {};
 	_array_item = items player;
 	_array_item_injured = items _injured;
 	_cond = false;
@@ -265,7 +265,8 @@ BTC_first_aid =
 	waitUntil {!Alive player || (animationState player != "AinvPknlMstpSlayWrflDnon_medic" && animationState player != "amovpercmstpsraswrfldnon_amovpknlmstpsraswrfldnon" && animationState player != "amovpknlmstpsraswrfldnon_ainvpknlmstpslaywrfldnon" && animationState player != "ainvpknlmstpslaywrfldnon_amovpknlmstpsraswrfldnon")};
 	if (Alive player && Alive _injured) then
 	{
-		_injured setVariable ["BTC_need_revive",0,true];
+		_injured setVariable ["BTC_need_revive",[0,0],true];
+		player addScore 2;
 		_injured playMoveNow "AinjPpneMstpSnonWrflDnon_rolltoback";
 	};
 };
@@ -274,7 +275,7 @@ BTC_drag =
 	private ["_injured"];
 	_men = nearestObjects [player, ["Man"], 2];
 	if (count _men > 1) then {_injured = _men select 1;};
-	if (format ["%1",_injured getVariable "BTC_need_revive"] != "1") exitWith {};
+	if (format ["%1",_injured getVariable "BTC_need_revive" select 0] != "1") exitWith {};
 	BTC_dragging = true;
 	_injured attachTo [player, [0, 1.1, 0.092]];
 	player playMoveNow "AcinPknlMstpSrasWrflDnon";
@@ -284,7 +285,7 @@ BTC_drag =
 	WaitUntil {!Alive player || ((animationstate player == "acinpknlmstpsraswrfldnon") || (animationstate player == "acinpknlmwlksraswrfldb"))};
 	private ["_act","_veh_selected","_array","_array_veh","_name_veh","_text_action","_action_id"];
 	_act = 0;_veh_selected = objNull;_array_veh = [];
-	while {!isNull player && alive player && !isNull _injured && alive _injured && format ["%1", _injured getVariable "BTC_need_revive"] == "1" && BTC_dragging} do
+	while {!isNull player && alive player && !isNull _injured && alive _injured && format ["%1", _injured getVariable "BTC_need_revive" select 0] == "1" && BTC_dragging} do
 	{
 		_array = nearestObjects [player, ["Air","LandVehicle"], 5];
 		_array_veh = [];
@@ -304,7 +305,7 @@ BTC_drag =
 	if (_act == 1) then {player removeAction _action_id;};
 	player playMoveNow "AmovPknlMstpSrasWrflDnon";
 	detach _injured;
-	if (format ["%1",_injured getVariable "BTC_need_revive"] == "1") then {_injured playMoveNow "AinjPpneMstpSnonWrflDb_release";};
+	if (format ["%1",_injured getVariable "BTC_need_revive" select 0] == "1") then {_injured playMoveNow "AinjPpneMstpSnonWrflDb_release";};
 	player removeAction _id;
 	BTC_dragging = false;
 };
@@ -326,7 +327,7 @@ BTC_pull_out =
 	if (count _array != 0) then
 	{
 		{
-			if (format ["%1",_x getVariable "BTC_need_revive"] == "1") then {_array_injured = _array_injured + [_x];};
+			if (format ["%1",_x getVariable "BTC_need_revive" select 0] == "1") then {_array_injured = _array_injured + [_x];};
 		} foreach crew (_array select 0);
 	};
 	BTC_pullout_pveh = [4,_array_injured];publicVariable "BTC_pullout_pveh";
@@ -338,7 +339,7 @@ BTC_pull_out_check =
 	if (count _array != 0) then
 	{
 		{
-			if (format ["%1",_x getVariable "BTC_need_revive"] == "1") then {_cond = true;};
+			if (format ["%1",_x getVariable "BTC_need_revive" select 0] == "1") then {_cond = true;};
 		} foreach crew (_array select 0);
 	};
 	_cond
@@ -360,7 +361,9 @@ BTC_player_killed =
 			if (BTC_pvp == 0) then {player setcaptive true;};
 			//player setvehicleInit "this allowDamage false;";ProcessInitCommands;
 			BTC_killed_pveh = [2,_body_marker];publicVariable "BTC_killed_pveh";player allowDamage false;
-			player setVariable ["BTC_need_revive",1,true];
+			_time = time;
+			_timeout = _time + BTC_revive_time_max;
+			player setVariable ["BTC_need_revive",[1,_timeout],true];
 			player switchMove "AinjPpneMstpSnonWrflDnon";
 			_actions = [] spawn BTC_assign_actions;
 			if (BTC_respawn_gear == 1) then 
@@ -383,28 +386,27 @@ BTC_player_killed =
 			};
 			if (BTC_black_screen == 0) then {titleText ["", "BLACK IN"];};
 			disableUserInput false;
-			_time = time;
-			_timeout = _time + BTC_revive_time_max;
+
 			private ["_id","_lifes"];
 			if (BTC_disable_respawn == 1) then {player enableSimulation false;};
 			if (BTC_black_screen == 0 && BTC_disable_respawn == 0) then {if (BTC_action_respawn == 0) then {_dlg = createDialog "BTC_respawn_button_dialog";} else {_id = player addAction [("<t color=""#ED2744"">") + ("Respawn") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_player_respawn], 9, true, true, "", "true"];};};
 			if (BTC_black_screen == 1 && BTC_disable_respawn == 0) then {_dlg = createDialog "BTC_respawn_button_dialog";};
-			while {format ["%1", player getVariable "BTC_need_revive"] == "1" && time < _timeout} do
+			while {format ["%1", player getVariable "BTC_need_revive" select 0] == "1" && time < _timeout} do
 			{
 				if (BTC_black_screen == 0) then {if (animationstate player != "ainjppnemstpsnonwrfldnon" && animationstate player != "AinjPpneMstpSnonWrflDb_grab" && vehicle player == player) then {player switchMove "AinjPpneMstpSnonWrflDnon";};};
 				if (BTC_disable_respawn == 0) then {if (BTC_black_screen == 1 || (BTC_black_screen == 0 && BTC_action_respawn == 0)) then {if (!Dialog) then {_dlg = createDialog "BTC_respawn_button_dialog";};};};
 				_healer = call BTC_check_healer;
 				_lifes = "";
 				if (BTC_active_lifes == 1) then {_lifes = format ["Lifes remaining: %1",BTC_lifes];};
-				if (BTC_black_screen == 1) then {titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "BLACK FADED"]} else {hintSilent format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes];};
+				if (BTC_black_screen == 1) then {titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "BLACK FADED"]} else {hintSilent parseText format ["<t color='#ED2744' size='2.2'>Critically Injured</t><br/>--------------------<br/>%1 seconds until death<br/><br/>%2 %3", round (_timeout - time),_healer,_lifes];};
 				sleep 0.5;
 			};
 			closedialog 0;
-			if (time > _timeout && format ["%1", player getVariable "BTC_need_revive"] == "1") then 
+			if (time > _timeout && format ["%1", player getVariable "BTC_need_revive" select 0] == "1") then 
 			{
 				_respawn = [] spawn BTC_player_respawn;
 			};
-			if (format ["%1", player getVariable "BTC_need_revive"] == "0" && !BTC_respawn_cond) then 
+			if (format ["%1", player getVariable "BTC_need_revive" select 0] == "0" && !BTC_respawn_cond) then 
 			{
 				if (BTC_black_screen == 1) then {titleText ["", "BLACK IN"];} else {hintSilent "";};
 				if (BTC_need_first_aid == 1 && ((items player) find "FirstAidKit" != -1)) then {player removeItem "FirstAidKit";};
@@ -424,17 +426,17 @@ BTC_check_healer =
 {
 	_pos = getpos player;
 	_men = [];_dist = 501;_healer = objNull;_healers = [];
-	_msg = "No healer in 500 m";
+	_msg = "No medics nearby.";
 	_men = nearestObjects [_pos, BTC_who_can_revive, 500];
 	if (count _men > 0) then
 	{
-		{if (Alive _x && format ["%1",_x getVariable "BTC_need_revive"] != "1" && ([_x,player] call BTC_can_revive) && isPlayer _x && side _x == BTC_side) then {_healers = _healers + [_x];};} foreach _men;
+		{if (Alive _x && format ["%1",_x getVariable "BTC_need_revive" select 0] != "1" && ([_x,player] call BTC_can_revive) && isPlayer _x && side _x == BTC_side) then {_healers = _healers + [_x];};} foreach _men;
 		if (count _healers > 0) then
 		{
 			{
 				if (_x distance _pos < _dist) then {_healer = _x;_dist = _x distance _pos;};
 			} foreach _healers;
-			if !(isNull _healer) then {_msg = format ["%1 could heal you! He is %2 m away!", name _healer,round(_healer distance _pos)];};
+			if !(isNull _healer) then {_msg = format ["%1 medic(s) nearby<br/><br/><t underline='true'>Nearest Medic</t><br/>%2 (%3m)", (count _men) - 1, name _healer,round(_healer distance _pos)];};
 		};
 	};
 	_msg
@@ -444,7 +446,7 @@ BTC_player_respawn =
 	BTC_respawn_cond = true;
 	if (BTC_active_lifes == 1) then {BTC_lifes = BTC_lifes - 1;};
 	if (BTC_active_lifes == 1 && BTC_lifes == 0) exitWith BTC_out_of_lifes;
-	player setVariable ["BTC_need_revive",0,true];
+	player setVariable ["BTC_need_revive",[0,0],true];
 	if (BTC_black_screen == 0) then {titleText ["", "BLACK OUT"];};
 	sleep 0.2;
 	if (BTC_black_screen == 0) then {titleText ["", "BLACK FADED"];};
@@ -482,7 +484,7 @@ BTC_player_respawn =
 		sleep 2;
 		titleText ["", "PLAIN"];
 	};
-	player setVariable ["BTC_need_revive",0,true];
+	player setVariable ["BTC_need_revive",[0,0],true];
 	BTC_respawn_cond = false;
 	if (BTC_black_screen == 1 && BTC_respawn_time == 0) then {titleText ["", "BLACK IN"];sleep 2;titleText ["", "PLAIN"];};
 };
@@ -492,9 +494,9 @@ BTC_check_action_first_aid =
 	_cond = false;
 	_array_item = items player;
 	_men = nearestObjects [vehicle player, ["Man"], 2];
-	if (count _men > 1 && format ["%1", player getVariable "BTC_need_revive"] == "0") then
+	if (count _men > 1 && format ["%1", player getVariable "BTC_need_revive" select 0] == "0") then
 	{
-		if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging) then {_cond = true;};
+		if (format ["%1", (_men select 1) getVariable "BTC_need_revive" select 0] == "1" && !BTC_dragging) then {_cond = true;};
 		_injured = _men select 1;
 	};
 	if (_cond && BTC_pvp == 1) then 
@@ -516,7 +518,7 @@ BTC_check_action_drag =
 	_men = nearestObjects [vehicle player, ["Man"], 2];
 	if (count _men > 1) then
 	{
-		if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging) then {_cond = true;};
+		if (format ["%1", (_men select 1) getVariable "BTC_need_revive" select 0] == "1" && !BTC_dragging) then {_cond = true;};
 	};
 	_cond
 };
@@ -669,7 +671,7 @@ BTC_revive_loop =
 	while {true} do
 	{
 		sleep 1;
-		if (Alive player && format ["%1",player getVariable "BTC_need_revive"] != "1") then
+		if (Alive player && format ["%1",player getVariable "BTC_need_revive" select 0] != "1") then
 		{
 			//hintsilent format ["%1 %2",currentWeaponMode player,currentMagazineDetail player];
 			//diag_log text format ["SAVED %1",dialog];

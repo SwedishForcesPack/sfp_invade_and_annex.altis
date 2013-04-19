@@ -77,7 +77,7 @@ BTC_respawn_cond = false;
 	if (BTC_respawn_marker == "respawn_civ") then {BTC_respawn_marker = "respawn_civilian";};
 	if (BTC_respawn_gear == 1) then {player addEventHandler ["HandleDamage", BTC_fnc_handledamage];};
 	player addEventHandler ["Killed", BTC_player_killed];
-	player setVariable ["BTC_need_revive",0,true];
+	player setVariable ["BTC_need_revive",[0,0],true];
 	if ([player] call BTC_is_class_can_revive) then {player addAction [("<t color=""#ED2744"">") + ("First aid") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_first_aid], 8, true, true, "", "[] call BTC_check_action_first_aid"];};
 	player addAction [("<t color=""#ED2744"">") + ("Drag") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_drag], 8, true, true, "", "[] call BTC_check_action_drag"];
 	player addAction [("<t color=""#ED2744"">") + ("Pull out injured") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_pull_out], 8, true, true, "", "[] call BTC_pull_out_check"];

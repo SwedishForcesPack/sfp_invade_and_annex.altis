@@ -178,7 +178,7 @@ if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"
 	scriptName "initMission.hpp: mission start";
 	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
 	waitUntil {!(isNil "BIS_fnc_titlecard_finished")};
-	[[1864.000,5565.000,0],"We've gotten a foot-hold on the island,|but we need to take the rest.|Listen to HQ and neutralise all enemies|designated."] spawn BIS_fnc_establishingShot;
+	[[1864.000,5565.000,0],"We've gotten a foot-hold on the island,|but we need to take the rest.|Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
 	titleText [WELCOME_MESSAGE, "PLAIN", 3];
 };
 
@@ -237,13 +237,16 @@ if (!isServer) then
 		false,
 		true
 	];
-	
-	hint parseText "<t align='center' size='2.2'>REBRANDING</t><br/><t align='center' size='1.5' color='#FFCF11'>Invade &amp; Annex</t><br/>______________<br/>As per Xeno's request, Ahoy World has rebranded our Domination mission from Domination to Invade &amp; Annex (I&amp;A).<br/><br/>In all future versions, this mission will be called Invade &amp; Annex / I&amp;A. Spread the word!";
-
 };
 
 if (!isServer) exitWith
 {
+	_spawnBuildings = nearestObjects [(getMarkerPos "respawn_west"), ["building"], 800];
+
+	{
+		_x allowDamage false;
+	} forEach _spawnBuildings;
+
 	while {true} do
 	{
 		_isAdmin = serverCommandAvailable "#kick";

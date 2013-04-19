@@ -25,7 +25,9 @@ _vehType = typeOf _veh;
 
 if (_veh isKindOf "ParachuteBase" || !alive _veh) exitWith {};
 
-_veh setFuel 0;
+if !(_veh isKindOf "Helicopter") exitWith { _veh vehicleChat "This pad is for chopper repairs only, soldier!"; };
+
+_veh engineOn false;
 
 _veh vehicleChat format ["Repairing and refuelling %1. Stand by...", _vehType];
 
@@ -33,27 +35,38 @@ _damage = getDammage _veh;
 
 while {_damage > 0} do
 {
-	sleep 2;
+	_veh engineOn false;
+	sleep 1;
 	_percentage = 100 - (_damage * 100);
 	_veh vehicleChat format ["Repairing (%1%)...", _percentage];
-	if ((_damage - 0.05) < 0) then
+	if ((_damage - 0.01) < 0) then
 	{
 		_veh setDamage 0;
 		_damage = 0;
 	} else {
-		_veh setDamage (_damage - 0.05);
-		_damage = _damage - 0.05;
-	};	
+		_veh setDamage (_damage - 0.01);
+		_damage = _damage - 0.01;
+	};
 };
 
 _veh vehicleChat "Repaired (100%).";
 
 _fuel = fuel _veh;
 
-if (_fuel < 1) then
+while {_fuel < 1} do
 {
-	sleep 5;
-	_veh setFuel 1;
+	_veh engineOn false;
+	sleep 1;
+	_percentage = (_fuel * 100);
+	_veh vehicleChat format["Refuelling (%1%)...", _percentage];
+	if ((_fuel + 0.01) > 1) then
+	{
+		_veh setFuel 1;
+		_fuel = 1;
+	} else {
+		_veh setFuel (_fuel + 0.01);
+		_fuel = _fuel + 0.01;
+	};
 };
 
 _veh vehicleChat "Refuelled (100%).";
