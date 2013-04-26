@@ -71,7 +71,7 @@ while {true} do
 		};
 		
 		if
-		((_flatPos distance (getMarkerPos "respawn_west")) > 800 && (_flatPos distance (getMarkerPos currentAO)) > 800) then {
+		((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 800) then {
 			_nearUnits = 0;
 			{
 				if ((_flatPos distance (getPos _x)) < 500) then
@@ -113,7 +113,7 @@ while {true} do
 	_unitsArray = [PriorityTarget1, PriorityTarget2, priorityVeh1, priorityVeh2];
 
 	//Spawn H-Barrier cover "Land_HBarrierBig_F"
-	_distance = 8;
+	_distance = 12;
 	_dir = 0;
 	for "_c" from 0 to 15 do
 	{
@@ -146,7 +146,14 @@ while {true} do
 	};
 
 	//Set marker up
-	"priorityMarker" setMarkerPos _flatPos;
+	_fuzzyPos = 
+	[
+		((_flatPos select 0) - 300) + (random 600),
+		((_flatPos select 1) - 300) + (random 600),
+		0
+	];
+
+	{ _x setMarkerPos _fuzzyPos; } forEach ["priorityMarker", "priorityCircle"];
 	"priorityMarker" setMarkerText "Priority Target: Mortar Team";
 	publicVariable "priorityMarker";
 	priorityTargetUp = true;
@@ -155,9 +162,8 @@ while {true} do
 	publicVariable "priorityTargetText";
 
 	//Send Global Hint
-	GlobalHint = _briefing;
-	publicVariable "GlobalHint";
-	hint parseText _briefing;
+	GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText _briefing;
+	showNotification = ["NewPriorityTarget", "Destroy Enemy Mortar Team"]; publicVariable "showNotification";
 
 	debugMessage = "Letting mortars 'set up'.";
 	publicVariable "debugMessage";
@@ -190,7 +196,7 @@ while {true} do
 			_unit = (playableUnits select (floor (random (count playableUnits))));
 			_targetPos = getPos _unit;
 			
-			if ((_targetPos distance (getMarkerPos "respawn_west")) > 800 && vehicle _unit == _unit && side _unit == WEST) then
+			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) then
 			{
 				_accepted = true;
 			};
@@ -232,9 +238,8 @@ while {true} do
 	};
 
 	//Send completion hint
-	GlobalHint = _completeText;
-	publicVariable "GlobalHint";
-	hint parseText _completeText;
+	GlobalHint = _completeText; publicVariable "GlobalHint"; hint parseText _completeText;
+	showNotification = ["CompletedPriorityTarget", "Enemy Mortar Team Neutralised"]; publicVariable "showNotification";
 	
 	//Set global VAR saying mission is complete
 	priorityTargetUp = false;
@@ -242,5 +247,6 @@ while {true} do
 
 	//Hide priorityMarker
 	"priorityMarker" setMarkerPos [0,0,0];
+	"priorityCircle" setMarkerPos [0,0,0];
 	publicVariable "priorityMarker";
 };

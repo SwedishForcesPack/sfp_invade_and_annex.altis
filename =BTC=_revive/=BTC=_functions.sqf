@@ -266,7 +266,8 @@ BTC_first_aid =
 	if (Alive player && Alive _injured) then
 	{
 		_injured setVariable ["BTC_need_revive",[0,0],true];
-		player addScore 2;
+		addToScore = [player, 2]; publicVariable "addToScore";
+		["ScoreBonus", ["Revived a fellow soldier.", "2"]] call bis_fnc_showNotification;
 		_injured playMoveNow "AinjPpneMstpSnonWrflDnon_rolltoback";
 	};
 };

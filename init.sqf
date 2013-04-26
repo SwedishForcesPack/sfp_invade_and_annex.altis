@@ -45,16 +45,16 @@ Jack Williams (Rarek) for Ahoy World!
 
 private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
 
-/* 
-	Custom radio channels to come...
+_initialTargets = [
+	"Agia Marina and Firing Range",
+	"Camp Rogain",
+	"Kamino Firing Range",
+	"Air Station Mike 26",
+	"Camp Maxwell",
+	"Girna",
+	"Camp Tempest"
+];
 
-		_mainIndex = radioChannelCreate [
-			[1.0, 0.81, 0.06],
-			"Main AO Channel",
-			"%UNIT_NAME",
-			[player]
-		];
-*/
 
 _targets = [
 	"Agia Marina and Firing Range",
@@ -87,6 +87,8 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 "radioTower" addPublicVariableEventHandler
 {
 	"radioMarker" setMarkerPosLocal (markerPos "radioMarker");
+	"radioMarker" setMarkerTextLocal (markerText "radioMarker");
+	"radioMineCircle" setMarkerPosLocal (markerPos "radioMineCircle");
 };
 
 "refreshMarkers" addPublicVariableEventHandler
@@ -104,15 +106,27 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 	} forEach ["aoMarker","aoCircle"];
 };
 
+"showNotification" addPublicVariableEventHandler
+{
+	private ["_type", "_message"];
+	_array = _this select 1;
+	_type = _array select 0;
+	_message = "";
+	if (count _array > 1) then { _message = _array select 1; };
+	[_type, [_message]] call bis_fnc_showNotification;
+};
+
 "sideMarker" addPublicVariableEventHandler
 {
 	"sideMarker" setMarkerPosLocal (markerPos "sideMarker");
+	"sideCircle" setMarkerPosLocal (markerPos "sideCircle");
 	"sideMarker" setMarkerTextLocal format["Side Mission: %1",sideMarkerText];
 };
 
 "priorityMarker" addPublicVariableEventHandler
 {
 	"priorityMarker" setMarkerPosLocal (markerPos "priorityMarker");
+	"priorityCircle" setMarkerPosLocal (markerPos "priorityCircle");
 	"priorityMarker" setMarkerTextLocal format["Priority Target: %1",priorityTargetText];
 };
 
@@ -163,40 +177,44 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 if (PARAMS_SpawnProtection == 1) then { _null = [] execVM "grenadeStop.sqf"; };
 if (PARAMS_ViewDistance == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
 if (PARAMS_PilotsOnly == 1) then { _null = [] execVM "pilotCheck.sqf"; };
+
 if (PARAMS_ReviveEnabled == 1) then 
 {
 	call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf";
-
-	if (PARAMS_MedicMarkers == 1) then
-	{
-		_null = [] execVM "misc\medicMarkers.sqf";
-	};
+	if (PARAMS_MedicMarkers == 1) then { _null = [] execVM "misc\medicMarkers.sqf"; };
 };
+
 if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
 
 [] spawn {
 	scriptName "initMission.hpp: mission start";
 	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
 	waitUntil {!(isNil "BIS_fnc_titlecard_finished")};
-	[[1864.000,5565.000,0],"We've gotten a foot-hold on the island,|but we need to take the rest.|Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
+	[[1864.000,5565.000,0],"We've gotten a foot-hold on the island,|but we need to take the rest.||Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
 	titleText [WELCOME_MESSAGE, "PLAIN", 3];
 };
 
 if (!isServer) then
 {
+	sleep 20;
 	if (radioTowerAlive) then
 	{
 		"radioMarker" setMarkerPosLocal (getPos radioTower);
+		"radioMineCircle" setMarkerPosLocal (getPos radioTower);
+		"radioMarker" setMarkerTextLocal (markerText "radioMarker");
 	} else {
 		"radioMarker" setMarkerPosLocal [0,0,0];
+		"radioMineCircle" setMarkerPosLocal [0,0,0];
 	};
 	
 	if (sideMissionUp) then
 	{
 		"sideMarker" setMarkerPosLocal (getPos sideObj);
+		"sideCircle" setMarkerPosLocal (getPos sideObj);
 		"sideMarker" setMarkerTextLocal format["Side Mission: %1",sideMarkerText];
 	} else {
 		"sideMarker" setMarkerPosLocal [0,0,0];
+		"sideCircle" setMarkerPosLocal [0,0,0];
 	};
 	
 	if (priorityTargetUp) then
@@ -209,9 +227,11 @@ if (!isServer) then
 			_pos = getPos priorityTarget2;
 		};
 		"priorityMarker" setMarkerPosLocal _pos;
+		"priorityCircle" setMarkerPosLocal _pos;
 		"priorityMarker" setMarkerTextLocal format["Priority Target: %1",priorityTargetText];
 	} else {
 		"priorityMarker" setMarkerPosLocal [0,0,0];
+		"priorityCircle" setMarkerPosLocal [0,0,0];
 	};
 
 	if (currentAOUp) then
@@ -241,10 +261,11 @@ if (!isServer) then
 
 if (!isServer) exitWith
 {
-	_spawnBuildings = nearestObjects [(getMarkerPos "respawn_west"), ["building"], 800];
+	_spawnBuildings = nearestObjects [(getMarkerPos "respawn_west"), ["building"], 1000];
 
 	{
 		_x allowDamage false;
+		_x enableSimulation false;
 	} forEach _spawnBuildings;
 
 	while {true} do
@@ -283,7 +304,10 @@ if (!isServer) exitWith
 //Set a few blank variables for event handlers and solid vars for SM
 debugMode = false;
 eastSide = createCenter EAST;
+radioTowerAlive = false;
 sideMissionUp = false;
+priorityTargetUp = false;
+currentAOUp = false;
 refreshMarkers = true;
 sideObj = objNull;
 priorityTargets = ["None"];
@@ -302,8 +326,10 @@ smMarkerList =
 _null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
-/* PARAM-DEPENDANT SETTINGS */
-if (PARAMS_FPSSaver == 1) then { [2500] execfsm "misc\fpsManager.fsm"; };
+/* 
+	NOT NEEDED
+	if (PARAMS_FPSSaver == 1) then { [2500] execfsm "misc\fpsManager.fsm"; };
+*/
 
 _isPerpetual = false;
 
@@ -326,26 +352,35 @@ _targetsLeft = count _targets;
 	"theTakeMarker" setMarkerText format["Take %1", ((_this select 1) select 1)];
 };
 
-AW_fnc_markerActivate = {
-	
-private ["_mrk"];
-_mrk = _this select 0;
-	_mrk setMarkerShape "ELLIPSE";
-	_mrk setMarkerSize [PARAMS_AOSize, PARAMS_AOSize];
-	_mrk setMarkerBrush "FDiagonal";
-	_mrk setMarkerColor "ColorRed";
-	publicVariable _mrk;
+"addToScore" addPublicVariableEventHandler
+{
+	((_this select 1) select 0) addScore ((_this select 1) select 1);
 };
 
-AW_fnc_markerDeactivate = {
-	
-private ["_mrk"];
-_mrk = _this select 0;
-	_mrk setMarkerShape "ICON";
-	_mrk setMarkerSize [1, 1];
-	_mrk setMarkerType "Empty";
-	_mrk setMarkerColor "Default";
-	publicVariable _mrk;
+AW_fnc_minefield = {
+	_centralPos = _this select 0;
+	_unitsArray = [];
+	for "_x" from 0 to 79 do 
+	{
+		_mine = createMine ["SLAMDirectionalMine", _centralPos, [], 50];
+		_unitsArray = _unitsArray + [_mine];
+	};
+
+	//Spawn H-Barrier cover "Land_HBarrierBig_F"
+	_distance = 50;
+	_dir = 0;
+	for "_c" from 0 to 7 do
+	{
+		_pos = [_flatPos, _distance, _dir] call BIS_fnc_relPos;
+		_sign = "Land_Sign_Mines_F" createVehicle _pos;
+		waitUntil {alive _sign};
+		_sign setDir _dir;
+		_dir = _dir + 45;
+		
+		_unitsArray = _unitsArray + [_sign];
+	};
+
+	_unitsArray
 };
 
 AW_fnc_deleteOldAOUnits = {
@@ -396,13 +431,108 @@ _veh = smRewards call BIS_fnc_selectRandom;
 	waitUntil {alive _reward};
 	_reward setDir 284;
 	
-	GlobalHint = _completeText;
-	publicVariable "GlobalHint";
-	hint parseText _completeText;
+	GlobalHint = _completeText; publicVariable "GlobalHint"; hint parseText _completeText;
+	showNotification = ["CompletedSideMission", sideMarkerText]; publicVariable "showNotification";
+	showNotification = ["Reward", format["Your team received %1!", _vehName]]; publicVariable "showNotification";
 };
 
 _unitSpawnPlus = PARAMS_AOSize;
 _unitSpawnMinus = _unitSpawnPlus - (_unitSpawnPlus * 2);
+
+AW_fnc_garrisonBuildings = 
+{
+	_building = _this select 0;
+	_faction = "OPF_F";
+	_coef = 1;
+
+	BIS_getRelPos = {
+		_relDir = [_this, player] call BIS_fnc_relativeDirTo;
+		_dist = [_this, player] call BIS_fnc_distance2D;
+		_elev = ((getPosASL _this) select 2) - ((getPosASL player) select 2);
+		_dir = (direction player) - direction _this;
+		
+		[_relDir, _dist, _elev, _dir];
+	};
+
+	_buildings = [
+		"Land_Cargo_House_V1_F", [
+			[216.049,2.33014,-0.0721207,-173.782]
+		],
+		"Land_Cargo_House_V2_F", [
+			[216.049,2.33014,-0.0721207,-173.782]
+		],
+		"Land_Cargo_HQ_V1_F", [
+			[-89.3972,5.45408,-0.724457,-89.757],
+			[160.876,5.95225,-0.59613,-0.245575],
+			[30.379,5.37352,-3.03543,-32.9396],
+			[49.9438,7.04951,-3.03488,1.15405],
+			[109.73,7.20652,-3.12396,-273.082],
+			[190.289,6.1683,-3.12094,-181.174],
+			[212.535,6.83544,-3.1217,-154.507]
+		],
+		"Land_Cargo_Patrol_V1_F", [
+			[84.1156,2.21253,-4.1396,88.6112],
+			[316.962,3.81801,-4.14061,270.592],
+			[31.6563,3.91418,-4.13602,-0.194908]
+			
+		],
+		"Land_Cargo_Tower_V1_F", [
+			[99.5325,3.79597,-4.62543,-271,3285],
+			[-65.1654,4.17803,-8.59327,2,79],
+			[-50.097,4.35226,-12.7691,2,703],
+			[115.749,5.55055,-12.7623,-270,6282],
+			[-143.89,7.92183,-12.9027,-180,867],
+			[67.2957,6.75608,-15.4993,-270,672],
+			[-68.9994,7.14031,-15.507,-88,597],
+			[195.095,7.46374,-17.792,-182,651],
+			[-144.962,8.67736,-17.7939,-178,337],
+			[111.831,6.52689,-17.7889,-271,5161],
+			[-48.2151,6.2476,-17.7976,-1,334],
+			[-24.622,4.62995,-17.796,1,79]
+		],
+		"Land_i_Barracks_V1_F", [
+			[66.6219,14.8599,-3.8678,94.6476],
+			[52.0705,10.0203,-3.86142,4.09206],
+			[11.4515,6.26249,-3.85385,1.42117],
+			[306.455,10.193,-3.84314,0.0715332],
+			[294.846,14.2778,-3.83774,-91.0892],
+			[7.04782,1.86908,-0.502411,-90.3917],
+			[86.3556,7.98911,-0.510651,129.846]
+		],
+		"Land_i_Barracks_V2_F", [
+			[66.6219,14.8599,-3.8678,94.6476],
+			[52.0705,10.0203,-3.86142,4.09206],
+			[11.4515,6.26249,-3.85385,1.42117],
+			[306.455,10.193,-3.84314,0.0715332],
+			[294.846,14.2778,-3.83774,-91.0892],
+			[7.04782,1.86908,-0.502411,-90.3917],
+			[86.3556,7.98911,-0.510651,129.846]
+		]
+	];
+
+	if (!(typeOf _building in _buildings)) exitWith {_newGrp = objNull; _newGrp};
+
+	_paramsArray = (_buildings select ((_buildings find (typeOf _building)) + 1));
+	_finalCnt = count _paramsArray;
+
+	_newGrp = createGroup EAST;
+
+	_units = ["O_Soldier_F", "O_Soldier_AR_F"];
+
+	{
+		_pos =  [_building, _x select 1, (_x select 0) + direction _building] call BIS_fnc_relPos;
+		_pos = [_pos select 0, _pos select 1, ((getPosASL _building) select 2) - (_x select 2)];
+		_units select floor random 2 createUnit [_pos, _newGrp, "BIS_currentDude = this"];
+		doStop BIS_currentDude;
+		commandStop BIS_currentDude;
+		BIS_currentDude setPosASL _pos;
+		BIS_currentDude setUnitPos "UP";
+		BIS_currentDude doWatch ([BIS_currentDude, 1000, direction _building + (_x select 3)] call BIS_fnc_relPos);
+		BIS_currentDude setDir direction _building + (_x select 3);
+	} forEach _paramsArray;
+
+	_newGrp
+};
 
 AW_fnc_spawnUnits = {
 	
@@ -414,7 +544,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_SquadsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _pos, 200] call bis_fnc_taskPatrol;
+		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
 	}; 
@@ -432,7 +562,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_TeamsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, 20],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _pos, 200] call bis_fnc_taskPatrol;
+		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
 	};
@@ -441,10 +571,15 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_CarsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _pos, 200] call bis_fnc_taskPatrol;
+		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
 	};
+
+	{
+		_newGrp = [_x] call AW_fnc_garrisonBuildings;
+		if (!isNull _newGrp) then { _enemiesArray = _enemiesArray + [_newGrp]; };
+	} forEach (getMarkerPos currentAO nearObjects ["House", 600]);
 	
 	_enemiesArray
 };
@@ -573,6 +708,9 @@ while {count _targets > 0} do
 	_dt setTriggerActivation ["EAST", "PRESENT", false];
 	_dt setTriggerStatements ["this","",""];
 	
+	//Spawn enemies
+	_enemiesArray = [currentAO] call AW_fnc_spawnUnits;
+
 	//Spawn radiotower
 	_position = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 	_flatPos = _position isFlatEmpty[3, 1, 0.7, 20, 0, false];
@@ -584,15 +722,25 @@ while {count _targets > 0} do
 	};
 	
 	radioTower = "Land_TTowerBig_2_F" createVehicle _flatPos;
-	waitUntil {alive radioTower};
+	waitUntil {sleep 0.5; alive radioTower};
 	radioTower setVectorUp [0,0,1];
-	publicVariable "radioTower";
 	radioTowerAlive = true;
 	publicVariable "radioTowerAlive";
 	"radioMarker" setMarkerPos (getPos radioTower);
-	
-	//Spawn enemies
-	_enemiesArray = [currentAO] call AW_fnc_spawnUnits;
+
+	//Spawn mines
+	_chance = random 1;
+	if (_chance <= 0.4) then
+	{
+		_mines = [_flatPos] call AW_fnc_minefield;
+		_enemiesArray = _enemiesArray + [_mines];
+		"radioMineCircle" setMarkerPos (getPos radioTower);
+		"radioMarker" setMarkerText "Radiotower (Minefield)";
+	} else {
+		"radioMarker" setMarkerText "Radiotower";
+	};
+
+	publicVariable "radioTower";
 	
 	//Set target start text
 	_targetStartText = format
@@ -612,24 +760,25 @@ while {count _targets > 0} do
 	};
 	
 	//Show global target start hint
-	GlobalHint = _targetStartText;
-	publicVariable "GlobalHint";
-	hint parseText GlobalHint;
+	GlobalHint = _targetStartText; publicVariable "GlobalHint"; hint parseText GlobalHint;
+	showNotification = ["NewMain", currentAO]; publicVariable "showNotification";
+	showNotification = ["NewSub", "Destroy the enemy radio tower."]; publicVariable "showNotification";
+
 	
 	/* =============================================== */
 	/* ========= WAIT FOR TARGET COMPLETION ========== */
-	waitUntil {count list _dt > PARAMS_EnemyLeftThreshhold};
-	waitUntil {!alive radioTower};
+	waitUntil {sleep 5; count list _dt > PARAMS_EnemyLeftThreshhold};
+	waitUntil {sleep 0.5; !alive radioTower};
 	radioTowerAlive = false;
 	publicVariable "radioTowerAlive";
 	"radioMarker" setMarkerPos [0,0,0];
 	_radioTowerDownText = 
 		"<t align='center' size='2.2'>Radio Tower</t><br/><t size='1.5' color='#08b000' align='center'>DESTROYED</t><br/>____________________<br/>The enemy radio tower has been destroyed! Fantastic job, lads! You're now all free to use your Personal UAVs!<br/><br/>Keep up the good work, lads; we're countin' on you.";
-	GlobalHint = _radioTowerDownText;
-	publicVariable "GlobalHint";
-	hint parseText GlobalHint;
+	GlobalHint = _radioTowerDownText; publicVariable "GlobalHint"; hint parseText GlobalHint;
+	showNotification = ["CompletedSub", "Enemy radio tower destroyed."]; publicVariable "showNotification";
+	showNotification = ["Reward", "Personal UAVs now available."]; publicVariable "showNotification";
 	
-	waitUntil {count list _dt < PARAMS_EnemyLeftThreshhold};
+	waitUntil {sleep 5; count list _dt < PARAMS_EnemyLeftThreshhold};
 	
 	//Set enemy kill timer
 	[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
@@ -638,14 +787,20 @@ while {count _targets > 0} do
 	if (_isPerpetual) then 
 	{
 		//_perimeterMarker = [currentAO] call AW_fnc_markerDeactivate;
-		_lastTarget = currentAO;
-		publicVariable "refreshMarkers";
+		if (count _targets == 1) then
+		{
+			_targets = _initialTargets;
+			_lastTarget = currentAO;
+			publicVariable "refreshMarkers";
+		} else {
+			_targets = _targets - [currentAO];
+		};	
 	} else {
 		_targets = _targets - [currentAO];
 		//deleteMarker currentAO;
 	};
 	
-	{_x setMarkerPos [0,0,0];} forEach ["aoCircle","aoMarker"];
+	{_x setMarkerPos [0,0,0];} forEach ["aoCircle","aoMarker","radioMineCircle"];
 	
 	currentAOUp = false;
 	publicVariable "currentAOUp";
@@ -666,9 +821,8 @@ while {count _targets > 0} do
 	];
 	
 	//Show global target completion hint
-	GlobalHint = _targetCompleteText;
-	publicVariable "GlobalHint";
-	hint parseText GlobalHint;
+	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
+	showNotification = ["CompletedMain", currentAO]; publicVariable "showNotification";
 };
 
 //Set completion text

@@ -155,9 +155,8 @@ while {true} do
 			aw_addAction = [sideObj, "Talk to Contact", "sm\talkedToContact.sqf"];
 			publicVariable "aw_addAction";
 			
-			GlobalHint = _briefing;
-			publicVariable "GlobalHint";
-			hint parseText _briefing;
+			GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText _briefing;
+			showNotification = ["NewSideMission", "Talk to Contact"]; publicVariable "showNotification";
 
 			sideMissionUp = true;
 			publicVariable "sideMissionUp";
@@ -280,7 +279,7 @@ while {true} do
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
@@ -295,7 +294,14 @@ while {true} do
 			waitUntil {alive sideObj};
 			{_x setDir _randomDir} forEach [sideObj,_hangar];
 			sideObj setVehicleLock "LOCKED";
-			"sideMarker" setMarkerPos (getPos sideObj);
+			_fuzzyPos = 
+			[
+				((_flatPos select 0) - 300) + (random 600),
+				((_flatPos select 1) - 300) + (random 600),
+				0
+			];
+
+			{ _x setMarkerPos _fuzzyPos; } forEach ["sideMarker", "sideCircle"];
 			"sideMarker" setMarkerText "Side Mission: Destroy Chopper";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
@@ -329,9 +335,8 @@ while {true} do
 			_unitsArray = _unitsArray + [_spawnGroup];
 
 			//Send new side mission hint
-			GlobalHint = _briefing;
-			publicVariable "GlobalHint";
-			hint parseText _briefing;
+			GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText _briefing;
+			showNotification = ["NewSideMission", "Destroy Enemy Chopper"]; publicVariable "showNotification";
 
 			sideMissionUp = true;
 			publicVariable "sideMissionUp";
@@ -349,6 +354,7 @@ while {true} do
 
 			//Hide SM marker
 			"sideMarker" setMarkerPos [0,0,0];
+			"sideCircle" setMarkerPos [0,0,0];
 			publicVariable "sideMarker";
 
 			//PROCESS REWARD HERE
@@ -390,7 +396,7 @@ while {true} do
 					];
 				};
 				
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
@@ -401,7 +407,14 @@ while {true} do
 			waitUntil {alive sideObj};
 			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 2)];
 			sideObj setVectorUp [0,0,1];
-			"sideMarker" setMarkerPos (getPos sideObj);
+			_fuzzyPos = 
+			[
+				((_flatPos select 0) - 300) + (random 600),
+				((_flatPos select 1) - 300) + (random 600),
+				0
+			];
+
+			{ _x setMarkerPos _fuzzyPos; } forEach ["sideMarker", "sideCircle"];
 			"sideMarker" setMarkerText "Side Mission: Destroy Radar";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
@@ -435,9 +448,8 @@ while {true} do
 			_unitsArray = _unitsArray + [_spawnGroup];
 
 			//Throw out objective hint
-			GlobalHint = _briefing;
-			publicVariable "GlobalHint";
-			hint parseText GlobalHint;
+			GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText GlobalHint;
+			showNotification = ["NewSideMission", "Destroy Enemy Radar"]; publicVariable "showNotification";
 
 			sideMissionUp = true;
 			publicVariable "sideMissionUp";
@@ -454,6 +466,7 @@ while {true} do
 
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
+			"sideCircle" setMarkerPos [0,0,0];
 			publicVariable "sideMarker";
 
 			//provide players with reward. Place an MH-9 in the hangar, maybe? 
@@ -495,7 +508,7 @@ while {true} do
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
@@ -538,15 +551,21 @@ while {true} do
 			_unitsArray = _unitsArray + [_spawnGroup];
 			
 			//Set marker up
-			"sideMarker" setMarkerPos (getPos sideObj);
+			_fuzzyPos = 
+			[
+				((_flatPos select 0) - 300) + (random 600),
+				((_flatPos select 1) - 300) + (random 600),
+				0
+			];
+
+			{ _x setMarkerPos _fuzzyPos; } forEach ["sideMarker", "sideCircle"];
 			"sideMarker" setMarkerText "Side Mission: Destroy Smuggled Explosives";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
 			
 			//Throw briefing hint
-			GlobalHint = _briefing;
-			publicVariable "GlobalHint";
-			hint parseText GlobalHint;
+			GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText GlobalHint;
+			showNotification = ["NewSideMission", "Destroy Smuggled Explosives"]; publicVariable "showNotification";
 			
 			sideMissionUp = true;
 			publicVariable "sideMissionUp";
@@ -566,6 +585,7 @@ while {true} do
 			
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
+			"sideCircle" setMarkerPos [0,0,0];
 			sleep 5;
 			publicVariable "sideMarker";
 		}; /* case "destroyExplosivesCoast": */

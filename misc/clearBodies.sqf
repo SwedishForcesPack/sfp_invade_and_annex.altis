@@ -40,7 +40,7 @@ while {true} do
 	debugMessage = "Dead bodies deleted.";
 	publicVariable "debugMessage";
 	
-	for "_c" from 0 to (count allGroups) do
+	for "_c" from 0 to ((count allGroups) - 1) do
 	{
 		_canDeleteGroup = true;
 		_group = (allGroups select _c);
