@@ -114,12 +114,6 @@ while {_run} do
 		_unit setPosASL _position;
 		_unit setDir _dir;
 
-		if (_haveinit) then 
-					{_unit setVehicleInit format ["%1;", _unitinit];
-					processInitCommands;};
-		if (_hasname) then 
-					{_unit setVehicleInit format ["%1 = this; this setVehicleVarName ""%1""",_unitname];
-					processInitCommands;};
 		_dead = false;
 
 		// Check respawn amount
