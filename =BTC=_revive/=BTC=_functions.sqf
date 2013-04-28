@@ -288,6 +288,14 @@ BTC_drag =
 	_act = 0;_veh_selected = objNull;_array_veh = [];
 	while {!isNull player && alive player && !isNull _injured && alive _injured && format ["%1", _injured getVariable "BTC_need_revive" select 0] == "1" && BTC_dragging} do
 	{
+		//Fix exploit where pressing <Enter> would revive you
+		switch _key do
+		{
+			case 28:
+			{
+				_respawn = [] spawn BTC_player_respawn;
+		    };
+		};
 		_array = nearestObjects [player, ["Air","LandVehicle"], 5];
 		_array_veh = [];
 		{if (_x emptyPositions "cargo" != 0) then {_array_veh = _array_veh + [_x];};} foreach _array;
