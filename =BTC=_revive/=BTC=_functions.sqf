@@ -288,7 +288,9 @@ BTC_drag =
 	_act = 0;_veh_selected = objNull;_array_veh = [];
 	while {!isNull player && alive player && !isNull _injured && alive _injured && format ["%1", _injured getVariable "BTC_need_revive" select 0] == "1" && BTC_dragging} do
 	{
+
 		//Fix exploit where pressing <Enter> would revive you
+		_key     = _this select 1;
 		switch _key do
 		{
 			case 28:
