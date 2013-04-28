@@ -322,6 +322,20 @@ smRewards =
 smMarkerList = 
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
 
+//Create invisible spawn protection
+_distance = 45;
+_dir = 0;
+_spawnPos = getMarkerPos "respawn_west";
+
+_zone = "ProtectionZone_Invisible_F" createVehicle _spawnPos;
+
+for "_x" from 0 to 7 do
+{
+	_pos = [_spawnPos, _distance, _dir] call BIS_fnc_relPos;
+	_zone = "ProtectionZone_Invisible_F" createVehicle _pos;
+	_dir = _dir + 45;
+};
+
 //Run a few miscellaneous server-side scripts
 _null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
