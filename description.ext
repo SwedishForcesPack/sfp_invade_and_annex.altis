@@ -265,7 +265,7 @@ class CfgNotifications
 	class CompletedSideMission
 	{
 		title = "SIDE MISSION COMPLETE";
-		iconPicture = "notificons\side_mission_completed.paa"
+		iconPicture = "notificons\side_mission_completed.paa";
 		description = "%1";
 		color[] = {0, 0.7, 0.93, 1};
 		priority = 7;
