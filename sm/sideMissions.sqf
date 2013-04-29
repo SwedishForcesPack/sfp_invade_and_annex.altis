@@ -440,39 +440,6 @@ while {true} do
 				
 				_unitsArray = _unitsArray + [_spawnGroup];
 			};
-
-			while {(alive sideObj) and (PARAMS_HarderEnemy == 1) } do {
-				sleep PARAMS_HarderEnemyInterval;
-				_spawnMessages = 
-				[
-					"Enemy is getting reinforcements by the minute, take down that radar!",
-					"Enemy has been reinforced, take down that radar!",
-					"Enemy is still avare of your presence at the AO, take down that radar!",
-					"AWAC flyby has detected enemy radar, and troops garrosing the AO, take down that radar!"
-				];
-				hqSideChat = _spawnMessages call BIS_fnc_selectRandom;
-				publicVariable "hqSideChat";
-				[WEST,"HQ"] sideChat hqSideChat;
-
-				_x = 0;
-				for "_x" from 0 to 1 do
-				{
-					_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
-					_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-					[_spawnGroup, _flatPos] call BIS_fnc_taskDefend;
-					
-					_unitsArray = _unitsArray + [_spawnGroup];
-				};
-
-				_x = 0;
-				for "_x" from 0 to 1 do {
-					_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
-					_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-					[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
-					
-					_unitsArray = _unitsArray + [_spawnGroup];
-				};
-			};
 			
 			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
 			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
@@ -488,6 +455,48 @@ while {true} do
 			publicVariable "sideMissionUp";
 			sideMarkerText = "Destroy Radar";
 			publicVariable "sideMarkerText";
+
+			if (PARAMS_HarderEnemy == 1) then
+			{
+				[] spawn 
+				{
+					private ["_timeout"];
+
+					while {alive sideObj} do {
+						_timeout = time + PARAMS_HarderEnemyInterval;
+						waitUntil {time >= _timeout || !alive sideObj};
+						_spawnMessages = 
+						[
+							"Enemy units at the radar have received reinforcements! Take 'em down!",
+							"More reinforcements have appeared at the radar! Take it down, damn it!",
+							"More troops have gathered at the radar, lads. Better get going!",
+							"You need to get that radar down! They're getting stronger over there!"
+						];
+						hqSideChat = _spawnMessages call BIS_fnc_selectRandom;
+						publicVariable "hqSideChat";
+						[WEST,"HQ"] sideChat hqSideChat;
+
+						_x = 0;
+						for "_x" from 0 to 1 do
+						{
+							_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+							_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+							[_spawnGroup, _flatPos] call BIS_fnc_taskDefend;
+							
+							_unitsArray = _unitsArray + [_spawnGroup];
+						};
+
+						_x = 0;
+						for "_x" from 0 to 1 do {
+							_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
+							_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+							[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
+							
+							_unitsArray = _unitsArray + [_spawnGroup];
+						};
+					};
+				};
+			};
 			
 			waitUntil {sleep 0.5; !alive sideObj}; //wait until the objective is destroyed
 

@@ -172,6 +172,8 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 
 "SyncCoins" addPublicVariableEventHandler
 {
+	private ["_playerToSync", "_query", "_tempString", "_tempArray", "_memberData", "_ahoycoins", "_currentScore"];
+
 	_playerToSync = _this select 1;
 
 	_query = format ["SELECT * FROM ipbpfields_content WHERE field_16 = '%1'", getPlayerUID _playerToSync];
@@ -183,12 +185,35 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 		_memberData = (_tempArray select 0) select 0;
 		_ahoycoins = parseNumber (_memberData select 6);
 		_currentScore = score _playerToSync;
-		_playerToSync spawn { titleText [format["Ahoy World member VERIFIED\n\nWelcome, %1\nYou have %2 Ahoy Coins", name _playerToSync, _ahoycoins], "PLAIN DOWN", 10]; };
+		GlobalHint = format["AW Member %1 has joined the server!", name _playerToSync]; publicVariable "GlobalHint";
 	    _playerToSync setVariable ["ahoycoins", _ahoycoins, true];
 	    _playerToSync setVariable ["score", _currentScore, true];
 	};
 };
 
+"UpdateCoins" addPublicVariableEventHandler
+{
+	private ["_playerToUpdate", "_ahoycoins", "_currentScore", "_pastScore", "_coinsToAdd", "_newTotal", "_query", "_handle"];
+
+	_playerToUpdate = _this select 1;
+	_ahoycoins = _playerToUpdate getVariable ["ahoycoins", false];
+
+	if ((typeName _ahoycoins) == "SCALAR") then
+	{
+		_currentScore = score _playerToUpdate;
+		_pastScore = _playerToUpdate getVariable "score";
+		if (_currentScore > _pastScore) then
+		{
+			_coinsToAdd = _currentScore - _pastScore;
+			_newTotal = _ahoycoins + _coinsToAdd;
+
+			_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _playerToUpdate];
+			_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
+			_playerToUpdate setVariable ["score", score _playerToUpdate, true];
+			_playerToUpdate setVariable ["ahoycoins", _newTotal, true];
+		};
+	};
+};
 
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
@@ -213,11 +238,12 @@ if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"
 };
 
 if (!isServer) then
-{
+{	
+	sleep 20;
+
 	waitUntil {sleep 0.5; alive player};
 	SyncCoins = player; publicVariable "SyncCoins";
-	
-	sleep 20;
+
 	if (radioTowerAlive) then
 	{
 		"radioMarker" setMarkerPosLocal (getPos radioTower);
@@ -859,21 +885,7 @@ while {count _targets > 0} do
 
 	//Process Ahoy Coin additions
 	{
-		if (!isNil (_x getVariable "ahoycoins")) then
-		{
-			_currentScore = score _x;
-			_pastScore = _x getVariable "score";
-			if (_currentScore > _pastScore) then
-			{
-				_coinsToAdd = _currentScore - _pastScore;
-				_newTotal = (_x getVariable "ahoycoins") + _coinsToAdd;
-
-				_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _x];
-				_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-				_x setVariable ["score", score _x, true];
-				_x setVariable ["ahoycoins", _newTotal, true];
-			};
-		};
+		UpdateCoins = _x; publicVariable "UpdateCoins";
 	} forEach playableUnits;
 };
 
