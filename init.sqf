@@ -364,11 +364,6 @@ if (PARAMS_SpawnProtection == 1) then
 _null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
-/* 
-	NOT NEEDED
-	if (PARAMS_FPSSaver == 1) then { [2500] execfsm "misc\fpsManager.fsm"; };
-*/
-
 _isPerpetual = false;
 
 if (PARAMS_Perpetual == 1) then 
