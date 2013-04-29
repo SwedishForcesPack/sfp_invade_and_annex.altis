@@ -55,5 +55,5 @@ _transportIndex = radioChannelCreate [
 			re-added after a unit's death
 		-	Find a good way to be able to
 			subscribe/unsubscribe to/from
-			channels
+			channels. Dialog would be perfect.
 */

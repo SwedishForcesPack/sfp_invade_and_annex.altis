@@ -36,7 +36,7 @@ _damage = getDammage _veh;
 while {_damage > 0} do
 {
 	_veh engineOn false;
-	sleep 1;
+	sleep (1 + (random 1.5));
 	_percentage = 100 - (_damage * 100);
 	_veh vehicleChat format ["Repairing (%1%)...", _percentage];
 	if ((_damage - 0.01) < 0) then

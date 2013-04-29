@@ -193,7 +193,6 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
 
-if (PARAMS_SpawnProtection == 1) then { _null = [] execVM "grenadeStop.sqf"; };
 if (PARAMS_ViewDistance == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
 if (PARAMS_PilotsOnly == 1) then { _null = [] execVM "pilotCheck.sqf"; };
 
@@ -208,14 +207,14 @@ if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"
 [] spawn {
 	scriptName "initMission.hpp: mission start";
 	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
-	waitUntil {!(isNil "BIS_fnc_titlecard_finished")};
+	waitUntil {sleep 0.5; !(isNil "BIS_fnc_titlecard_finished")};
 	[[1864.000,5565.000,0],"We've gotten a foot-hold on the island,|but we need to take the rest.||Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
 	titleText [WELCOME_MESSAGE, "PLAIN", 3];
 };
 
 if (!isServer) then
 {
-	waitUntil {alive player};
+	waitUntil {sleep 0.5; alive player};
 	SyncCoins = player; publicVariable "SyncCoins";
 	
 	sleep 20;
@@ -303,8 +302,8 @@ if (!isServer) exitWith
 		} else {
 			{ _x setRadioMsg "NULL"; } forEach [1,2,3,4,5];
 		};
-		waitUntil {!alive player};
-		waitUntil {alive player};
+		waitUntil {sleep 0.5; !alive player};
+		waitUntil {sleep 0.5; alive player};
 		_uavAction = player addAction 
 		[
 			"<t color='#FFCF11'>Activate Personal UAV</t>",
@@ -344,18 +343,21 @@ smRewards =
 smMarkerList = 
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
 
-//Create invisible spawn protection
-_distance = 45;
-_dir = 0;
-_spawnPos = getMarkerPos "respawn_west";
-
-_zone = "ProtectionZone_Invisible_F" createVehicle _spawnPos;
-
-for "_x" from 0 to 7 do
+if (PARAMS_SpawnProtection == 1) then
 {
-	_pos = [_spawnPos, _distance, _dir] call BIS_fnc_relPos;
-	_zone = "ProtectionZone_Invisible_F" createVehicle _pos;
-	_dir = _dir + 45;
+	//Create invisible spawn protection
+	_distance = 45;
+	_dir = 0;
+	_spawnPos = getMarkerPos "respawn_west";
+
+	_zone = "ProtectionZone_Invisible_F" createVehicle _spawnPos;
+
+	for "_x" from 0 to 7 do
+	{
+		_pos = [_spawnPos, _distance, _dir] call BIS_fnc_relPos;
+		_zone = "ProtectionZone_Invisible_F" createVehicle _pos;
+		_dir = _dir + 45;
+	};
 };
 
 //Run a few miscellaneous server-side scripts
@@ -836,8 +838,6 @@ while {count _targets > 0} do
 		//deleteMarker currentAO;
 	};
 	
-	{_x setMarkerPos [0,0,0];} forEach ["aoCircle","aoMarker","radioMineCircle"];
-	
 	currentAOUp = false;
 	publicVariable "currentAOUp";
 	
@@ -855,6 +855,8 @@ while {count _targets > 0} do
 		"<t align='center' size='2.2'>Target Taken</t><br/><t size='1.5' align='center' color='#FFCF11'>%1</t><br/>____________________<br/><t align='left'>Fantastic job taking %1, boys! Give us a moment here at HQ and we'll line up your next target for you.</t>",
 		currentAO
 	];
+
+	{_x setMarkerPos [0,0,0];} forEach ["aoCircle","aoMarker","radioMineCircle"];
 	
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
@@ -862,17 +864,20 @@ while {count _targets > 0} do
 
 	//Process Ahoy Coin additions
 	{
-		_currentScore = score _x;
-		_pastScore = _x getVariable "score";
-		if (_currentScore > _pastScore) then
+		if (!isNil (_x getVariable "ahoycoins")) then
 		{
-			_coinsToAdd = _currentScore - _pastScore;
-			_newTotal = (_x getVariable "ahoycoins") + _coinsToAdd;
+			_currentScore = score _x;
+			_pastScore = _x getVariable "score";
+			if (_currentScore > _pastScore) then
+			{
+				_coinsToAdd = _currentScore - _pastScore;
+				_newTotal = (_x getVariable "ahoycoins") + _coinsToAdd;
 
-			_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _x];
-			_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-			_x setVariable ["score", score _x, true];
-			_x setVariable ["ahoycoins", _newTotal, true];
+				_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _x];
+				_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
+				_x setVariable ["score", score _x, true];
+				_x setVariable ["ahoycoins", _newTotal, true];
+			};
 		};
 	} forEach playableUnits;
 };

@@ -190,8 +190,7 @@ while {true} do
 		_debugCount = 1;
 		while {!_accepted} do
 		{
-			debugMessage = format["PT: Finding valid target.<br/><br/>Attempt #%1",_debugCount];
-			publicVariable "debugMessage";
+			debugMessage = format["PT: Finding valid target.<br/><br/>Attempt #%1",_debugCount]; publicVariable "debugMessage";
 
 			_unit = (playableUnits select (floor (random (count playableUnits))));
 			_targetPos = getPos _unit;
@@ -207,9 +206,7 @@ while {true} do
 		debugMessage = "PT: Valid target found; warning players and beginning fire sequence.";
 		publicVariable "debugMessage";
 		
-		hqSideChat = _firingMessages call BIS_fnc_selectRandom;
-		publicVariable "hqSideChat";
-		[WEST,"HQ"] sideChat hqSideChat;
+		hqSideChat = _firingMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 		
 		_dir = [_flatPos, _targetPos] call BIS_fnc_dirTo;
 		{ _x setDir _dir; } forEach [priorityVeh1, priorityVeh2];
@@ -225,7 +222,7 @@ while {true} do
 						(_targetPos select 1) - _radius + (2 * random _radius),
 						0
 					];
-					_x doArtilleryFire [_pos, "8Rnd_82mm_Mo_shells", 1];
+					_x doArtilleryFire [_pos, "8Rnd_82mm_Mo_shells", 1]; //update so parameter customises mortar rounds?
 					sleep 5;
 				};
 			};
@@ -234,7 +231,7 @@ while {true} do
 		{
 			_radius = _radius - 10; //zeroing in
 		};
-		sleep (random 60);
+		sleep (30 + (random 45);
 	};
 
 	//Send completion hint

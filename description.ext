@@ -32,6 +32,8 @@ class Header
   maxPlayers = 40;
 };
 
+enableSaving [false, false];
+
 class Params
 {
 	class Perpetual

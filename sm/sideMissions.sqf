@@ -36,7 +36,7 @@ _completeText =
 //Set up some vars
 _firstRun = true; //debug
 _skipTimer = false;
-_roadList = island nearRoads 4000; //ensure blank trigger 'island' is present, covering the island
+_roadList = island nearRoads 4000; //change this to the BIS function that creates a trigger covering the map
 _contactPos = [0,0,0];
 _unitsArray = [sideObj];
 
@@ -164,7 +164,7 @@ while {true} do
 			publicVariable "sideMarkerText";
 			
 			//Wait until we've talked to the contact or the contact is dead
-			waitUntil {talkedToContact || !alive sideObj};
+			waitUntil {sleep 0.5; talkedToContact || !alive sideObj};
 
 			if (!alive sideObj) then
 			{
@@ -344,7 +344,7 @@ while {true} do
 			publicVariable "sideMarkerText";
 			
 			//Wait until objective is destroyed
-			waitUntil {!alive sideObj};
+			waitUntil {sleep 0.5; !alive sideObj};
 
 			sideMissionUp = false;
 			publicVariable "sideMissionUp";
@@ -489,7 +489,7 @@ while {true} do
 			sideMarkerText = "Destroy Radar";
 			publicVariable "sideMarkerText";
 			
-			waitUntil {!alive sideObj}; //wait until the objective is destroyed
+			waitUntil {sleep 0.5; !alive sideObj}; //wait until the objective is destroyed
 
 			sideMissionUp = false;
 			publicVariable "sideMissionUp";
@@ -606,7 +606,7 @@ while {true} do
 			publicVariable "sideMarkerText";
 			
 			//Wait for boats to be dead
-			waitUntil {!alive sideObj};
+			waitUntil {sleep 0.5; !alive sideObj};
 			
 			sideMissionUp = false;
 			publicVariable "sideMissionUp";

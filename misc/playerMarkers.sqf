@@ -1,6 +1,6 @@
 /*
 	
-	AUTHOR: aeroson
+	AUTHOR: aeroson - tweaked by Rarek
 	NAME: player_markers.sqf
 	VERSION: 1.2
 	
