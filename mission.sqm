@@ -48,7 +48,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.85.5.6 REVIVE";
+		briefingName="co40 AW Invade & Annex 2.85.5.8 REVIVE";
 		briefingDescription="We've finally gotten a foot-hold on the island Stratis, but OPFOR forces are still crawling across the various towns and camps. HQ will mark your targets; neutralise the remaining enemies.";
 		startWeather=0;
 		startWind=0;

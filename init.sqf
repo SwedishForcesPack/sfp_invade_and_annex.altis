@@ -178,12 +178,12 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 	_tempString = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
 	_tempArray = call compile _tempString;
 
-	if (count (_tempArray select 0) > 0) then
+	if (count (_tempArray select 0) > 0 && ((_tempArray select 0) select 0) select 0 != "Error") then
 	{
 		_memberData = (_tempArray select 0) select 0;
 		_ahoycoins = parseNumber (_memberData select 6);
 		_currentScore = score _playerToSync;
-		titleText [format["Ahoy World member VERIFIED\n\nWelcome, %1\nYou have %2 Ahoy Coins", name _playerToSync, _ahoycoins], "PLAIN DOWN", 10];
+		_playerToSync spawn { titleText [format["Ahoy World member VERIFIED\n\nWelcome, %1\nYou have %2 Ahoy Coins", name _playerToSync, _ahoycoins], "PLAIN DOWN", 10]; };
 	    _playerToSync setVariable ["ahoycoins", _ahoycoins, true];
 	    _playerToSync setVariable ["score", _currentScore, true];
 	};

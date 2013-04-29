@@ -231,7 +231,7 @@ while {true} do
 		{
 			_radius = _radius - 10; //zeroing in
 		};
-		sleep (30 + (random 45);
+		sleep (30 + (random 45));
 	};
 
 	//Send completion hint
