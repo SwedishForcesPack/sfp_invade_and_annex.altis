@@ -55,7 +55,6 @@ _initialTargets = [
 	"Camp Tempest"
 ];
 
-
 _targets = [
 	"Agia Marina and Firing Range",
 	"Camp Rogain",
