@@ -24,8 +24,8 @@ Jack Williams (Rarek) for Ahoy World!
 						"www.AhoyWorld.co.uk\n\n" +\
 						"...and feel free to join us on TeamSpeak at\n" +\
 						"ts.ahoyworld.co.uk:9987"
-					
-					
+						
+						
 /* =============================================== */
 /* =============== GLOBAL VARIABLES ============== */
 
@@ -169,58 +169,6 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 	};
 };
 
-"SyncCoins" addPublicVariableEventHandler
-{
-	private ["_playerToSync", "_query", "_tempString", "_tempArray", "_memberData", "_ahoycoins", "_currentScore"];
-
-	if (isServer) then
-	{
-		_playerToSync = _this select 1;
-
-		_query = format ["SELECT * FROM ipbpfields_content WHERE field_16 = '%1'", getPlayerUID _playerToSync];
-		_tempString = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-		_tempArray = call compile _tempString;
-
-		if (count (_tempArray select 0) > 0 && ((_tempArray select 0) select 0) select 0 != "Error") then
-		{
-			_memberData = (_tempArray select 0) select 0;
-			_ahoycoins = parseNumber (_memberData select 6);
-			_currentScore = score _playerToSync;
-			GlobalHint = format["AW Member %1 has joined the server!", name _playerToSync]; publicVariable "GlobalHint";
-		    _playerToSync setVariable ["ahoycoins", _ahoycoins, true];
-		    _playerToSync setVariable ["score", _currentScore, true];
-		};
-	};
-};
-
-"UpdateCoins" addPublicVariableEventHandler
-{
-	private ["_playerToUpdate", "_ahoycoins", "_currentScore", "_pastScore", "_coinsToAdd", "_newTotal", "_query", "_handle"];
-
-	if (isServer) then
-	{
-		_playerToUpdate = _this select 1;
-		_ahoycoins = _playerToUpdate getVariable ["ahoycoins", false];
-
-		if ((typeName _ahoycoins) == "SCALAR") then
-		{
-			_currentScore = score _playerToUpdate;
-			_pastScore = _playerToUpdate getVariable "score";
-			if (_currentScore > _pastScore) then
-			{
-				_coinsToAdd = _currentScore - _pastScore;
-				_newTotal = _ahoycoins + _coinsToAdd;
-
-				_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _playerToUpdate];
-				_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-				GlobalHint = format["AW Member %1 earned %2 more Ahoy Coin(s)!", name _playerToUpdate, _coinsToAdd]; publicVariable "GlobalHint";
-				_playerToUpdate setVariable ["score", score _playerToUpdate, true];
-				_playerToUpdate setVariable ["ahoycoins", _newTotal, true];
-			};
-		};
-	};
-};
-
 
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
@@ -247,9 +195,6 @@ if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"
 if (!isServer) then
 {	
 	sleep 10;
-
-	waitUntil {sleep 0.5; alive player};
-	SyncCoins = player; publicVariable "SyncCoins";
 
 	waitUntil {sleep 0.5; currentAO != "Nothing"};
 
@@ -891,9 +836,6 @@ while {count _targets > 0} do
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMain", currentAO]; publicVariable "showNotification";
-
-	//Process Ahoy Coin additions
-	{ UpdateCoins = _x; publicVariable "UpdateCoins"; } forEach playableUnits;
 };
 
 //Set completion text
