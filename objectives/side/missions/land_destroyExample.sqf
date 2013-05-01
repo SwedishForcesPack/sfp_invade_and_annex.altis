@@ -112,9 +112,11 @@ _SM_Create =
 	/*
 		The above line is what this script is passed;
 		a position found based on the conditions
-		you supplied above.
+		you supplied above. Use this as the central
+		marker for your Side Mission.
 
-		Use this to place units.
+		You must also add to the _sideObjs array all
+		mission-critical variables.
 	*/
 
 	_hangar = "O_hangar_F" createVehicle _pos;
@@ -130,7 +132,7 @@ _SM_Success =
 		that return whether or not the Side Mission
 		has been successfully completed.
 	*/
-		private ["sideObjs"];
+		private ["_sideObjs"];
 		_sideObjs = _this select 0;
 	/*
 		The above line is what this script is passed;
@@ -143,7 +145,12 @@ _SM_Success =
 
 	_hasSucceeded = true;
 	{
-		if (alive _x) then { _hasSucceeded = false; };
+		scopeName "sideCheck";
+		if (alive _x) then
+		{
+			_hasSucceeded = false;
+			breakOut "sideCheck";
+		};
 	} forEach _sideObjs;
 
 	_hasSucceeded
@@ -152,7 +159,12 @@ _SM_Success =
 
 	_hasSucceeded = true;
 	{
-		if (mineActive _x) then { _hasSucceeded = true; };
+		scopeName "sideCheck";
+		if (mineActive _x) then
+		{
+			_hasSucceeded = false;
+			breakOut "sideCheck";
+		};
 	} forEach _sideObjs;
 
 	_hasSucceeded
@@ -172,9 +184,15 @@ _SM_Failure
 		Remember, we return TRUE if we've failed the mission
 		and FALSE if we haven't.
 	*/
+		private ["_sideObjs"];
+		_sideObjs = _this select 0;
+	/*
+		This function is also passed your vital _sideObjs
+		array.
+	*/
 
 	/* If more than 5 mines have blown up, fail the mission */
 	_counter = 0;
-	if (!alive _x) then { _counter++; };
+	{ if (!alive _x) then { _counter++; }; } forEach _sideObjs;
 	if (_counter > 5) then { true } else { false };
 }

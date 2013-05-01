@@ -12,7 +12,7 @@
 |
 ***********************************************/
 
-private ["_sideObjs", "_sideMissions", "_missionDetails", "_spawnedObjects", "_title", "_briefObj", "_posConditions"];
+private ["_sideObjs", "_sideMissions", "_missionDetails", "_spawnedObjects", "_title", "_briefObj", "_posConditions", "_enemies", "_SM_Create", "_SM_Success", "_SM_Failure"];
 
 /***********************************************
 |
@@ -41,6 +41,12 @@ private ["_sideObjs", "_sideMissions", "_missionDetails", "_spawnedObjects", "_t
 |
 ***********************************************/
 
-_sideObjs = []; publicVariable "sideObjs";
-call compile preProcessFileLineNumbers format["objectives/side/missions/%1.sqf", _sideMissions select (random ((count _sideMissions) - 1))];
+
+_sideObjs = [];
+_randomSideIndex = _sideMissions select (random ((count _sideMissions) - 1));
+call compile preProcessFileLineNumbers format["objectives/side/missions/%1.sqf", _randomSideIndex];
+
+{
+	if (isNull _x) exitWith { /* Log debug error message here */ };
+} forEach [_title, _briefObj, _posConditions, _enemies, _SM_Create, _SM_Success, _SM_Failure];
 
