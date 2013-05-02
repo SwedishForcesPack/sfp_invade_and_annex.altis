@@ -54,8 +54,30 @@ _briefObj = "Destroy the enemy's prototype chopper";
 _successMsg = "Destroyed the enemy prototype chopper";
 _failureMsg = "The chopper flew away!";
 
-/* Explain ALL vars in this */
-_posConditions = [[[getMarkerPos currentAO, 20],_dt],["water","out"]];
+/***********************************************
+|
+|	This decides where your Side Mission will be created.
+|	Available options are:
+|
+|		-	land
+|		-	road
+|		-	shore
+|		-	water
+|
+|	You must then also decide whether your location
+|	must be relatively flat. 
+*/
+	_posType = "land";
+	_mustBeFlat = true;
+/*
+|	While you can deal with
+|	more random gradients with most missions, some
+|	(such as mortar positions) may require flat
+|	ground. 
+|
+|	Simply specify true or false.
+|
+***********************************************/
 
 _SM_Create =
 {
@@ -101,9 +123,7 @@ _SM_Create =
 	_officer = "O_officer_F" createVehicle _pos; _sideObjs = _sideObjs + [_officer];
 
 	/* REQUIRED FORMAT */
-	_allObjs = [_sideObjs, _genericObjs];
-
-	_allObjs
+	_allObjs = [_sideObjs, _genericObjs]; _allObjs
 };
 
 _SM_Enemies =

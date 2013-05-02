@@ -379,7 +379,6 @@ AW_fnc_minefield = {
 		_unitsArray = _unitsArray + [_mine];
 	};
 
-	//Spawn H-Barrier cover "Land_HBarrierBig_F"
 	_distance = 50;
 	_dir = 0;
 	for "_c" from 0 to 7 do

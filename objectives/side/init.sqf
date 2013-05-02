@@ -64,23 +64,10 @@ AW_fnc_deleteObjects =
 	};
 };
 
-{ _x = nil; } forEach [_title, _briefObj, _successMsg, _failureMsg, _posConditions, _SM_Create, _SM_Enemies, _SM_Success, _SM_Failure];
-_sideObjs = [];
-_enemiesArray = [];
-_randomSideIndex = _sideMissions select (round(random ((count _sideMissions) - 1)));
-call compile preProcessFileLineNumbers format["objectives/side/missions/%1.sqf", _randomSideIndex];
-
+AW_fnc_distanceCheck =
 {
-	if (isNull _x) exitWith { /* Log debug error message here */ };
-} forEach [_title, _briefObj, _successMsg, _posConditions, _SM_Create, _SM_Enemies, _SM_Success, _SM_Failure];
-
-_sidePos = [0,0,0];
-_isGoodPos = false;
-_distanceChecks = [["respawn_west", 1000], ["priorityMarker", 300], [currentAO, PARAMS_AOSize]];
-while {!_isGoodPos} do
-{
-	_isGoodPos = true;
-	_sidePos = _posConditions call BIS_fnc_randomPos;
+	private ["_pos", "_distanceChecks"]; _pos = _this select 0; _isGoodPos = true;
+	_distanceChecks = [["respawn_west", 1000], ["priorityMarker", 300], [currentAO, PARAMS_AOSize]];
 	{
 		scopeName "distanceCheck";
 		_marker		= _x select 0;
@@ -92,6 +79,59 @@ while {!_isGoodPos} do
 		scopeName "playerDistanceCheck"; 
 		if (_sidePos distance _x < 500) then { _isGoodPos = false; breakOut "playerDistanceCheck"; };
 	} forEach playableUnits;
+
+	_isGoodPos
+};
+
+{ _x = nil; } forEach [_title, _briefObj, _successMsg, _failureMsg, _posType, _mustBeFlat, _SM_Create, _SM_Enemies, _SM_Success, _SM_Failure];
+_sideObjs = [];
+_enemiesArray = [];
+_randomSideIndex = _sideMissions select (round(random ((count _sideMissions) - 1)));
+call compile preProcessFileLineNumbers format["objectives/side/missions/%1.sqf", _randomSideIndex];
+
+{
+	if (isNull _x) exitWith { /* Log debug error message here */ };
+} forEach [_title, _briefObj, _successMsg, _posType, _mustBeFlat, _SM_Create, _SM_Enemies, _SM_Success, _SM_Failure];
+
+/* Find our position */
+_sidePos = [];
+_isGoodPos = false;
+switch (_posType) do
+{
+	case "land":
+	{
+		while {!_isGoodPos} do
+		{
+			_isGoodPos = true; _sidePos = []; _randomPos = [];
+			while {(count _sidePos) < 1} do
+			{
+				_randomPos = [] call BIS_fnc_randomPos;
+				_sidePos = _randomPos isFlatEmpty [5, 1, 0.5, 10, 0, false];
+			};
+			_isGoodPos = [_sidePos] call AW_fnc_distanceCheck;
+		};
+	};
+
+	case "road":
+	{
+		_roadList = island nearRoads 4000; /* Change to island-cover function */
+		while {!_isGoodPos} do
+		{
+			_road = _roadList call BIS_fnc_selectRandom;
+			_sidePos = getPos _road;
+			_isGoodPos = [_sidePos] call AW_fnc_distanceCheck;
+		};
+	};
+
+	case "shore":
+	{
+		/* Use Explosives Coast as an example */
+	};
+
+	case "water":
+	{
+		/* Whitelist water / blacklist land etc */
+	};
 };
 
 _spawnedObjects = [_sidePos] call _SM_Create;
