@@ -229,13 +229,12 @@ if (PARAMS_AhoyCoinIntegration == 1) then
 
 if (PARAMS_ViewDistance == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
 if (PARAMS_PilotsOnly == 1) then { _null = [] execVM "pilotCheck.sqf"; };
-
+if (PARAMS_SpawnProtection == 1) then { _null = [] execVM "grenadeStop.sqf"; };
 if (PARAMS_ReviveEnabled == 1) then 
 {
 	call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf";
 	if (PARAMS_MedicMarkers == 1) then { _null = [] execVM "misc\medicMarkers.sqf"; };
 };
-
 if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
 
 [] spawn {
