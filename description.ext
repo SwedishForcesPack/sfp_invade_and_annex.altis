@@ -203,6 +203,14 @@ class Params
 		texts[] = {"2 Minutes","10 Minutes","15 Minutes","20 Minutes","25 Minutes","30 Minutes"};
 		default = 900;
 	};
+
+	class AhoyCoinIntegration
+	{
+		title = "Enable Ahoy Coin Integration? (Only enable if you are an official Ahoy World server)";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 0;
+	};
 };
 
 class CfgNotifications
