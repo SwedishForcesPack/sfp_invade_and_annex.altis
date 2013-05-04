@@ -87,6 +87,7 @@ class BTC_respawn_button_dialog
 	movingEnable = 1;
 	onLoad = "";//"uiNamespace setVariable [""BTC_respawn_dialog"", _this select 0];[] spawn BTC_check_kit;if (getNumber (configFile >> ""cfgVehicles"" >> typeof player >> ""attendant"") == 1) then {[] spawn BTC_ctrlShow;};_spawn = [] spawn BTC_check_sniper;";
 	objects[] = {};
+	onKeyDown = "closeDialog 0;_respawn = [] spawn BTC_player_respawn;";
 	class controlsBackground 
 	{
 	};
