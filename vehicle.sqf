@@ -83,13 +83,13 @@ _nodelay = false;
 // Start monitoring the vehicle
 while {_run} do 
 {	
-	sleep (2 + random 10);
-      if ((getDammage _unit > 0.8) and ({alive _x} count crew _unit == 0)) then {_dead = true};
+
+  if ((getDammage _unit > 0.8) and ({alive _x} count crew _unit == 0)) then {_dead = true};
 
 	// Check if the vehicle is deserted.
 	if (_deserted > 0) then
 	{
-		if ((getPosASL _unit distance _position > 10) and ({alive _x} count crew _unit == 0) and (getDammage _unit < 0.8)) then 
+		if ((getPosASL _unit distance _position > 500) and ({alive _x} count crew _unit == 0) and (getDammage _unit < 0.8)) then 
 		{
 			_timeout = time + _deserted;
 			sleep 0.1;
@@ -101,7 +101,7 @@ while {_run} do
 	};
 
 	// Respawn vehicle
-      if (_dead) then 
+  if (_dead) then 
 	{	
 		if (_nodelay) then {sleep 0.1; _nodelay = false;} else {sleep _delay;};
 		if (_dynamic) then {_position = getPosASL _unit; _dir = getDir _unit;};
