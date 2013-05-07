@@ -83,7 +83,7 @@ _nodelay = false;
 // Start monitoring the vehicle
 while {_run} do 
 {	
-
+  sleep (5 + (random 20));
   if ((getDammage _unit > 0.8) and ({alive _x} count crew _unit == 0)) then {_dead = true};
 
 	// Check if the vehicle is deserted.

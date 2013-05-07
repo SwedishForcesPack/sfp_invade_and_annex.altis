@@ -115,6 +115,11 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 	[_type, [_message]] call bis_fnc_showNotification;
 };
 
+"showSingleNotification" addPublicVariableEventHandler
+{
+	/* Slam somethin' 'ere */
+};
+
 "sideMarker" addPublicVariableEventHandler
 {
 	"sideMarker" setMarkerPosLocal (markerPos "sideMarker");
@@ -158,13 +163,14 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 
 "debugMessage" addPublicVariableEventHandler
 {
+	private ["_isAdmin", "_message"];
 	_isAdmin = serverCommandAvailable "#kick";
 	if (_isAdmin) then
 	{
 		if (debugMode) then
 		{
 			_message = _this select 1;
-			hint parseText format["<t size='2.2' align='center'>Debug Mode</t><br/>____________________<br/>%1",_message];
+			[_message] call bis_fnc_error;
 		};
 	};
 };
@@ -188,7 +194,7 @@ if (PARAMS_AhoyCoinIntegration == 1) then
 				_memberData = (_tempArray select 0) select 0;
 				_ahoycoins = parseNumber (_memberData select 6);
 				_currentScore = score _playerToSync;
-				GlobalHint = format["AW Member %1 has joined the server!", name _playerToSync]; publicVariable "GlobalHint";
+				GlobalHint = format["<t align='center'><t size='2.2' color='#CE2123'>Ahoy World</t><br/><t size='1.5'>%1 joined</t><br/>joined the server</t>", name _playerToSync]; publicVariable "GlobalHint";
 			    _playerToSync setVariable ["ahoycoins", _ahoycoins, true];
 			    _playerToSync setVariable ["score", _currentScore, true];
 			};
@@ -215,10 +221,11 @@ if (PARAMS_AhoyCoinIntegration == 1) then
 
 					_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _playerToUpdate];
 					_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-					GlobalHint = format["AW Member %1 earned %2 more Ahoy Coin(s)!", name _playerToUpdate, _coinsToAdd]; publicVariable "GlobalHint";
 					_playerToUpdate setVariable ["score", score _playerToUpdate, true];
 					_playerToUpdate setVariable ["ahoycoins", _newTotal, true];
 				};
+
+				debugMessage = format["<t color='#FF8000'>_playerToUpdate:</t> %1 | <t color='#FF8000'>_ahoycoins:</t> %2<br/><t color='#FF8000'>_currentScore:</t> %3 | <t color='#FF8000'>_pastScore:</t> %4<br/><t color='#FF8000'>_coinsToAdd:</t> %5 | <t color='#FF8000'>_newTotal:</t> %6<br/><t color='#FF8000'>_query:</t> %7", _playerToUpdate, _ahoycoins, _currentScore, _pastScore, _coinsToAdd, _newTotal, _query]; publicVariable "debugMessage";
 			};
 		};
 	};
@@ -252,6 +259,14 @@ if (!isServer) then
 	{
 		waitUntil {sleep 0.5; alive player};
 		SyncCoins = player; publicVariable "SyncCoins";
+		[player] spawn
+		{
+			while {true} do
+			{
+				sleep (100 + (random 200));
+				UpdateCoins = (_this select 0); publicVariable "UpdateCoins";
+			};
+		};
 	};
 
 	waitUntil {sleep 0.5; currentAO != "Nothing"};
@@ -361,7 +376,7 @@ if (!isServer) exitWith
 /* ============ SERVER INITIALISATION ============ */
 
 //Set a few blank variables for event handlers and solid vars for SM
-debugMode = false;
+debugMode = true; publicVariable "debugMode";
 eastSide = createCenter EAST;
 radioTowerAlive = false;
 sideMissionUp = false;
@@ -885,11 +900,6 @@ while {count _targets > 0} do
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMain", currentAO]; publicVariable "showNotification";
-	if (PARAMS_AhoyCoinIntegration == 1) then
-	{
-		//Process Ahoy Coin additions
-		{ UpdateCoins = _x; publicVariable "UpdateCoins"; } forEach playableUnits;
-	};
 };
 
 //Set completion text
