@@ -10,7 +10,6 @@ class Mission
 		"A3_Structures_F_Walls",
 		"a3_soft_f_hunter",
 		"A3_Structures_F_Items_Vessels",
-		"a3_air_f_ka60",
 		"A3_Soft_F_Quadbike",
 		"A3_Boat_F_Speedboat",
 		"A3_Boat_F_Assault_Boat",
@@ -32,7 +31,7 @@ class Mission
 		"A3_Structures_F_Mil_Fortification",
 		"A3_Structures_F_Mil_Helipads",
 		"A3_Structures_F_Items_Vessels",
-		"a3_air_f_ka60",
+		"A3_Air_F_MH9",
 		"A3_Soft_F_Hunter",
 		"A3_Soft_F_Quadbike",
 		"A3_Boat_F_Speedboat",
@@ -48,7 +47,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.86.0.1 REVIVE";
+		briefingName="co40 AW Invade & Annex 2.86.0.3 REVIVE";
 		startWeather=0;
 		startWind=0;
 		forecastWeather=0;
@@ -3647,7 +3646,7 @@ class Mission
 			azimut=190;
 			id=319;
 			side="EMPTY";
-			vehicle="O_Ka60_Unarmed_F";
+			vehicle="B_MH9_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H1"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H1"",0.5] execVM ""mark_unit.sqf"";";
@@ -3658,7 +3657,7 @@ class Mission
 			azimut=190;
 			id=320;
 			side="EMPTY";
-			vehicle="O_Ka60_Unarmed_F";
+			vehicle="B_MH9_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H2"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H2"",0.5] execVM ""mark_unit.sqf"";";
@@ -5144,7 +5143,7 @@ class Mission
 			azimut=235;
 			id=456;
 			side="EMPTY";
-			vehicle="O_Ka60_Unarmed_F";
+			vehicle="B_MH9_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H3"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H3"",0.5] execVM ""mark_unit.sqf"";";

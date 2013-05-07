@@ -388,7 +388,8 @@ priorityTargets = ["None"];
 smRewards = 
 [
 	["an AH-9", "B_AH9_F"],
-	["an MH-9", "B_MH9_F"],
+	["a Ka60", "O_Ka60_F"],
+	["an unarmed Ka60", "O_Ka60_Unarmed_F"],
 	["a Hunter GMG", "B_Hunter_RCWS_F"],
 	["a Hunter HMG", "B_Hunter_HMG_F"],
 	["an off-road jeep", "c_offroad"]
