@@ -19,25 +19,27 @@ Jack Williams (Rarek) for Ahoy World!
 */
 
 
-private ["_damage","_percentage","_veh","_vehType","_fuelLevel"];
+private ["_damage","_percentage","_veh","_vehType","_fuel"];
 _veh = _this select 0;
-_vehType = getText(configFile>>"CfgVehicles">>typeOf _veh>>"DisplayName");
+_vehType = typeOf _veh;
 
 if (_veh isKindOf "ParachuteBase" || !alive _veh) exitWith {};
+
 if !(_veh isKindOf "Helicopter") exitWith { _veh vehicleChat "This pad is for chopper repairs only, soldier!"; };
 
-_fuelLevel = fuel _veh;
-_damage = getDammage _veh;
-_veh setFuel 0;
+_veh engineOn false;
 
 _veh vehicleChat format ["Repairing and refuelling %1. Stand by...", _vehType];
 
+_damage = getDammage _veh;
+
 while {_damage > 0} do
 {
-	sleep (1 + (random 6));
+	_veh engineOn false;
+	sleep (1 + (random 1.5));
 	_percentage = 100 - (_damage * 100);
 	_veh vehicleChat format ["Repairing (%1%)...", _percentage];
-	if ((_damage - 0.01) <= 0) then
+	if ((_damage - 0.01) < 0) then
 	{
 		_veh setDamage 0;
 		_damage = 0;
@@ -49,17 +51,21 @@ while {_damage > 0} do
 
 _veh vehicleChat "Repaired (100%).";
 
-while {_fuelLevel < 1} do
+_fuel = fuel _veh;
+
+while {_fuel < 1} do
 {
-	sleep (1 + (random 2));
-	_percentage = (_fuelLevel * 100);
+	_veh engineOn false;
+	sleep 1;
+	_percentage = (_fuel * 100);
 	_veh vehicleChat format["Refuelling (%1%)...", _percentage];
-	if ((_fuelLevel + 0.01) >= 1) then
+	if ((_fuel + 0.01) > 1) then
 	{
 		_veh setFuel 1;
-		_fuelLevel = 1;
+		_fuel = 1;
 	} else {
-		_fuelLevel = _fuelLevel + 0.01;
+		_veh setFuel (_fuel + 0.01);
+		_fuel = _fuel + 0.01;
 	};
 };
 
