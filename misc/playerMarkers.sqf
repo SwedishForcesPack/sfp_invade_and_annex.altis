@@ -66,14 +66,20 @@ while {true} do {
 				};
 			};
  
- 			_text = name _x; 
- 			if(vehicle _x != _x) then { 			
-				if(count crew vehicle _x > 1) then {
-					for "_i" from 1 to (count crew vehicle _x)-1 do {
-						_text = format["%1, %2", _text, name(crew vehicle _x select _i)];
-					}; 
+			_text = name _x;
+			_veh = vehicle _x;
+			if (_veh != _x) then
+			{
+				_crew = crew _veh;
+				if ((count _crew) > 1) then
+				{
+					_crewLoopCount = (count _crew) - 1;
+					for "_i" from 1 to _crewLoopCount do
+					{
+						_text = format["%1, %2", _text, name (_crew select _i)];
+					};
 				};
-				_text = format["%1 [%2]", _text, getText(configFile>>"CfgVehicles">>typeOf vehicle _x>>"DisplayName")];
+				_text = format["%1 [%2]", _text, getText(configFile>>"CfgVehicles">>typeOf _veh>>"DisplayName")];
 			};
 			_marker setMarkerTextLocal _text;
 
