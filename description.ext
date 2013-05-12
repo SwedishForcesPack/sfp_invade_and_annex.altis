@@ -333,3 +333,5 @@ respawnDelay = 4;
 respawnDialog = true;
 
 disabledAI = true;
+
+disableChannels[] = {0, 1, 2};

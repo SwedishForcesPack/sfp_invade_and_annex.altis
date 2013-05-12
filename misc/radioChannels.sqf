@@ -25,26 +25,34 @@
 		];
 */
 
-_mainIndex = radioChannelCreate [
-	[1.0, 0.81, 0.06],
-	"Main AO Channel",
-	"%UNIT_NAME",
-	[player]
-];
+if (!isServer) then
+{
+	{ _x radioChannelAdd [player]; } forEach radioChannels;
+} else {
+	_mainIndex = radioChannelCreate [
+		[1.0, 0.81, 0.06],
+		"Main AO Channel",
+		"%UNIT_NAME",
+		[player]
+	];
 
-_sideIndex = radioChannelCreate [
-	[0, 0.7, 0.93],
-	"Side Mission Channel",
-	"%UNIT_NAME",
-	[player]
-];
+	_sideIndex = radioChannelCreate [
+		[0, 0.7, 0.93],
+		"Side Mission Channel",
+		"%UNIT_NAME",
+		[player]
+	];
 
-_transportIndex = radioChannelCreate [
-	[0.38, 0.81, 0.16],
-	"Transport Channel",
-	"%UNIT_NAME",
-	[player]
-];
+	_transportIndex = radioChannelCreate [
+		[0.38, 0.81, 0.16],
+		"Transport Channel",
+		"%UNIT_NAME",
+		[player]
+	];
+
+	radioChannels = [_mainIndex, _sideIndex, _transportIndex];
+	publicVariable "radioChannels";
+};
 
 /*
 	Make sure players are added to this

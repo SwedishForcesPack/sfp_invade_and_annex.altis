@@ -76,6 +76,8 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 	];
 };
 
+if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, _name] execVM ""ac\init.sqf"";"; };
+
 "GlobalHint" addPublicVariableEventHandler
 {
 	private ["_GHint"];
@@ -175,61 +177,6 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 	};
 };
 
-if (PARAMS_AhoyCoinIntegration == 1) then
-{
-	"SyncCoins" addPublicVariableEventHandler
-	{
-		private ["_playerToSync", "_query", "_tempString", "_tempArray", "_memberData", "_ahoycoins", "_currentScore"];
-
-		if (isServer) then
-		{
-			_playerToSync = _this select 1;
-
-			_query = format ["SELECT * FROM ipbpfields_content WHERE field_16 = '%1'", getPlayerUID _playerToSync];
-			_tempString = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-			_tempArray = call compile _tempString;
-
-			if (count (_tempArray select 0) > 0 && ((_tempArray select 0) select 0) select 0 != "Error") then
-			{
-				_memberData = (_tempArray select 0) select 0;
-				_ahoycoins = parseNumber (_memberData select 6);
-				_currentScore = score _playerToSync;
-				GlobalHint = format["<t align='center'><t size='2.2' color='#CE2123'>Ahoy World</t><br/><t size='1.5'>%1 joined</t><br/>joined the server</t>", name _playerToSync]; publicVariable "GlobalHint";
-			    _playerToSync setVariable ["ahoycoins", _ahoycoins, true];
-			    _playerToSync setVariable ["score", _currentScore, true];
-			};
-		};
-	};
-
-	"UpdateCoins" addPublicVariableEventHandler
-	{
-		private ["_playerToUpdate", "_ahoycoins", "_currentScore", "_pastScore", "_coinsToAdd", "_newTotal", "_query", "_handle"];
-
-		if (isServer) then
-		{
-			_playerToUpdate = _this select 1;
-			_ahoycoins = _playerToUpdate getVariable ["ahoycoins", false];
-
-			if ((typeName _ahoycoins) == "SCALAR") then
-			{
-				_currentScore = score _playerToUpdate;
-				_pastScore = _playerToUpdate getVariable "score";
-				if (_currentScore > _pastScore) then
-				{
-					_coinsToAdd = _currentScore - _pastScore;
-					_newTotal = _ahoycoins + _coinsToAdd;
-
-					_query = format ["UPDATE ipbpfields_content SET eco_points=%1 WHERE field_16 = '%2'", _newTotal, getPlayerUID _playerToUpdate];
-					_handle = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['mxegnxzt_ipb', '%1']", _query];
-					_playerToUpdate setVariable ["score", score _playerToUpdate, true];
-					_playerToUpdate setVariable ["ahoycoins", _newTotal, true];
-				};
-
-				debugMessage = format["<t color='#FF8000'>_playerToUpdate:</t> %1 | <t color='#FF8000'>_ahoycoins:</t> %2<br/><t color='#FF8000'>_currentScore:</t> %3 | <t color='#FF8000'>_pastScore:</t> %4<br/><t color='#FF8000'>_coinsToAdd:</t> %5 | <t color='#FF8000'>_newTotal:</t> %6<br/><t color='#FF8000'>_query:</t> %7", _playerToUpdate, _ahoycoins, _currentScore, _pastScore, _coinsToAdd, _newTotal, _query]; publicVariable "debugMessage";
-			};
-		};
-	};
-};
 
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
@@ -243,6 +190,7 @@ if (PARAMS_ReviveEnabled == 1) then
 	if (PARAMS_MedicMarkers == 1) then { _null = [] execVM "misc\medicMarkers.sqf"; };
 };
 if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
+_null = [] execVM "misc\radioChannels.sqf";
 
 [] spawn {
 	scriptName "initMission.hpp: mission start";
@@ -255,19 +203,6 @@ if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"
 if (!isServer) then
 {	
 	sleep 10;
-	if (PARAMS_AhoyCoinIntegration == 1) then
-	{
-		waitUntil {sleep 0.5; alive player};
-		SyncCoins = player; publicVariable "SyncCoins";
-		[player] spawn
-		{
-			while {true} do
-			{
-				sleep (100 + (random 200));
-				UpdateCoins = (_this select 0); publicVariable "UpdateCoins";
-			};
-		};
-	};
 
 	waitUntil {sleep 0.5; currentAO != "Nothing"};
 
@@ -397,6 +332,9 @@ smRewards =
 smMarkerList = 
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
 
+radioChannels = []; publicVariable "radioChannels";
+_null = [] execVM "misc\radioChannels.sqf";
+
 if (PARAMS_SpawnProtection == 1) then
 {
 	//Create invisible spawn protection
@@ -469,29 +407,23 @@ AW_fnc_minefield = {
 	_unitsArray
 };
 
-AW_fnc_deleteOldAOUnits = {
-	
-private ["_group","_groupsToKill","_c"];
-_groupsToKill = _this select 0;
-	_c = 0;
-	
-	sleep 600;
-	
-	debugMessage = "Deleting old AO units...";
-	publicVariable "debugMessage";
-	
-	for "_c" from 0 to (count _groupsToKill) do
+AW_fnc_deleteOldAOUnits =
+{
+	private ["_unitsArray", "_obj", "_isGroup"];
+	_unitsArray = _this select 0;
+	for "_c" from 0 to (count _unitsArray) do
 	{
-		_group = _groupsToKill select _c;
+		_obj = _unitsArray select _c;
+		_isGroup = false; if (_obj in allGroups) then { _isGroup = true; };
+		if (_isGroup) then
 		{
-			deleteVehicle _x;
-		} forEach (units _group);
-		waitUntil {(count (units _group)) == 0};
-		deleteGroup _group;
+			{
+				if (!isNull _x) then { deleteVehicle _x; };
+			} forEach (units _obj);
+		} else {
+			if (!isNull _obj) then { deleteVehicle _obj; };
+		};
 	};
-	
-	debugMessage = "Old AO units deleted.";
-	publicVariable "debugMessage";
 };
 
 AW_fnc_deleteSingleUnit = {
