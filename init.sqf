@@ -410,6 +410,7 @@ AW_fnc_minefield = {
 AW_fnc_deleteOldAOUnits =
 {
 	private ["_unitsArray", "_obj", "_isGroup"];
+	sleep 600;
 	_unitsArray = _this select 0;
 	for "_c" from 0 to (count _unitsArray) do
 	{
