@@ -54,7 +54,7 @@ class Params
 	
 	class Weather
 	{
-		title = "Weather";
+		title = "Starting Weather";
 		values[] = {1,2,3,4};
 		texts[] = {"Clear","Stormy","Cloudy","Foggy"};
 		default = 1;
@@ -72,7 +72,7 @@ class Params
 	{
 		title = "Enable Side Missions?";
 		values[] = {1,0};
-		texts[] = {"Yes","No"};
+		texts[] = {"Enabled","Disabled"};
 		default = 1;
 	};
 
@@ -80,8 +80,16 @@ class Params
 	{
 		title = "Enable Priority Targets?";
 		values[] = {1,0};
-		texts[] = {"Yes","No"};
+		texts[] = {"Enabled","Disabled"};
 		default = 1;
+	};
+
+	class PriorityTargetTickTime
+	{
+		title = "(Not yet in use) Time between priority target actions";
+		values[] = {30,60,120,180,240,300,600,900};
+		texts[] = {"30 seconds","1 minute","2 minutes","3 minutes","4 minutes","5 minutes","10 minutes","15 minutes"};
+		default = 120;
 	};
 
 	class SpawnProtection
@@ -102,17 +110,17 @@ class Params
 
 	class PlayerMarkers
 	{
-		title = "Show player markers on map?";
+		title = "Player markers on map";
 		values[] = {1,0};
-		texts[] = {"Yes","No"};
+		texts[] = {"Enabled","Disabled"};
 		default = 1;
 	};
 
 	class ViewDistance
 	{
-		title = "Allow players to change view distance?";
+		title = "Player View Distance Dialog";
 		values[] = {1,0};
-		texts[] = {"Yes","No"};
+		texts[] = {"Enabled","Disabled"};
 		default = 1;
 	};
 
@@ -135,14 +143,6 @@ class Params
 	class MedicMarkers
 	{
 		title = "Should medics see revive icons on their screen?";
-		values[] = {1,0};
-		texts[] = {"Yes","No"};
-		default = 1;
-	};
-
-	class FPSSaver
-	{
-		title = "Enable FPS Saver? (If players can't see eachother or enemies, turn this off)";
 		values[] = {1,0};
 		texts[] = {"Yes","No"};
 		default = 1;
@@ -192,7 +192,7 @@ class Params
 	{
 		title = "Enable Ahoy Coin Integration? (Only enable if you are an official Ahoy World server)";
 		values[] = {1,0};
-		texts[] = {"Enabled","Disabled"};
+		texts[] = {"Enable","Disable"};
 		default = 0;
 	};
 };

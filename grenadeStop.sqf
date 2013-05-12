@@ -36,7 +36,6 @@ player addEventHandler ["Fired", {
 }];
 
 player addEventHandler ["WeaponAssembled", {
-	_weapon = _this select 1;
-	deleteVehicle _weapon;
+	deleteVehicle _this select 1;
 	titleText [MORTAR_MESSAGE, "PLAIN", 3];
 }];

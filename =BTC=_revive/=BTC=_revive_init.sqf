@@ -8,7 +8,7 @@ http://www.blacktemplars.altervista.org/
 
 ////////////////// EDITABLE \\\\\\\\\\\\\\\\\\\\\\\\\\
 BTC_revive_time_min = 5;
-BTC_revive_time_max = 600;
+BTC_revive_time_max = 600; publicVariable "BTC_revive_time_max";
 BTC_who_can_revive  = ["B_medic_F"];
 BTC_loop_check      = 0;
 BTC_disable_respawn = 0;
