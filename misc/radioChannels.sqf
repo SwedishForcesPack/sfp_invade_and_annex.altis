@@ -1,56 +1,41 @@
-/* 
-	Custom radio channels to come...
-
-	Add the following to the description.ext
-	to remove certain channels:
-
-		disableChannels[] = {0, 1, 2};
-
-	This removes the Global, Side and
-	Command channels. Players still have
-	Group, Vehicle and Direct channels.
-*/
-
-/*
-	Add the following when we can restict the
-	channels to only admins talking i.e.
-	everyone can listen, but only admins
-	can talk.
-
-		_adminIndex = radioChannelCreate [
-			[0.81, 0.13, 0.14],
-			"Admin Channel",
-			"%UNIT_NAME",
-			[]
-		];
-*/
-
 if (!isServer) then
 {
-	{ _x radioChannelAdd [player]; } forEach radioChannels;
+	while {true} do
+	{
+		waitUntil {alive player};
+		{ _x radioChannelAdd [player]; } forEach radioChannels;
+		waitUntil {!alive player};
+	};
 } else {
 	_mainIndex = radioChannelCreate [
-		[1.0, 0.81, 0.06],
+		[1.0, 0.81, 0.06, 1],
 		"Main AO Channel",
-		"%UNIT_NAME",
+		"[MAIN] %UNIT_GRP_NAME %UNIT_NAME [%UNIT_VEH_NAME]",
 		[player]
 	];
 
 	_sideIndex = radioChannelCreate [
-		[0, 0.7, 0.93],
+		[0, 0.7, 0.93, 1],
 		"Side Mission Channel",
-		"%UNIT_NAME",
+		"[SIDE] %UNIT_GRP_NAME %UNIT_NAME [%UNIT_VEH_NAME]",
 		[player]
 	];
 
 	_transportIndex = radioChannelCreate [
-		[0.38, 0.81, 0.16],
+		[0.38, 0.81, 0.16, 1],
 		"Transport Channel",
+		"[TRANSPORT] %UNIT_GRP_NAME %UNIT_NAME [%UNIT_VEH_NAME]",
+		[player]
+	];
+
+	_generalIndex = radioChannelCreate [
+		[0.8, 0.8, 0.8, 1],
+		"General Conversation",
 		"%UNIT_NAME",
 		[player]
 	];
 
-	radioChannels = [_mainIndex, _sideIndex, _transportIndex];
+	radioChannels = [_mainIndex, _sideIndex, _transportIndex, _generalIndex];
 	publicVariable "radioChannels";
 };
 
@@ -59,8 +44,6 @@ if (!isServer) then
 	channel upon entering the game.
 
 	TODO:
-		-	Figure out if channels must be
-			re-added after a unit's death
 		-	Find a good way to be able to
 			subscribe/unsubscribe to/from
 			channels. Dialog would be perfect.
