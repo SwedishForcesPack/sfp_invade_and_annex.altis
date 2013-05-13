@@ -89,7 +89,11 @@ while {_run} do
 	// Check if the vehicle is deserted.
 	if (_deserted > 0) then
 	{
-		if ((getPosASL _unit distance _position > 500) and ({alive _x} count crew _unit == 0) and (getDammage _unit < 0.8)) then 
+    _nearPlayers = false;
+    {
+      if ((_x distance _unit) < PARAMS_VehicleRespawnDistance) exitWith { _nearPlayers = true; };
+    } forEach playableUnits;
+		if ((getPosASL _unit distance _position > 10) and ({alive _x} count crew _unit == 0) and (getDammage _unit < 0.8) and !_nearPlayers) then 
 		{
 			_timeout = time + _deserted;
 			sleep 0.1;
