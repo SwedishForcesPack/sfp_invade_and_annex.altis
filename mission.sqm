@@ -101,7 +101,7 @@ class Mission
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="(group this) setGroupId [""(Infantry) Alpha""];";
+					init="(group this) setGroupId [""IA""];";
 					description="Alpha Squad Leader";
 				};
 				class Item1
@@ -211,7 +211,7 @@ class Mission
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="(group this) setGroupId [""(Infantry) Bravo""];";
+					init="(group this) setGroupId [""IB""];";
 					description="Bravo Squad Leader";
 				};
 				class Item1
@@ -321,7 +321,7 @@ class Mission
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="(group this) setGroupId [""(Infantry) Charlie""];";
+					init="(group this) setGroupId [""IC""];";
 					description="Charlie Squad Leader";
 				};
 				class Item1
@@ -431,7 +431,7 @@ class Mission
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="(group this) setGroupId [""(Infantry) Delta""];";
+					init="(group this) setGroupId [""ID""];";
 					description="Delta Squad Leader";
 				};
 				class Item1
@@ -540,7 +540,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.60000002;
-					init="(group this) setGroupId [""(Transport) Vortex""];";
+					init="(group this) setGroupId [""TV""];";
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk:9987)";
 				};
 				class Item1
