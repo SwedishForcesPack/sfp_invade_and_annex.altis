@@ -195,10 +195,7 @@ while {true} do
 			_unit = (playableUnits select (floor (random (count playableUnits))));
 			_targetPos = getPos _unit;
 			
-			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) then
-			{
-				_accepted = true;
-			};
+			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) then { _accepted = true; };
 			
 			_debugCount = _debugCount + 1;
 		};
@@ -206,7 +203,10 @@ while {true} do
 		debugMessage = "PT: Valid target found; warning players and beginning fire sequence.";
 		publicVariable "debugMessage";
 		
-		hqSideChat = _firingMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
+		if (PARAMS_PriorityTargetTickWarning == 1) then
+		{
+			hqSideChat = _firingMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
+		};
 		
 		_dir = [_flatPos, _targetPos] call BIS_fnc_dirTo;
 		{ _x setDir _dir; } forEach [priorityVeh1, priorityVeh2];
@@ -227,11 +227,13 @@ while {true} do
 				};
 			};
 		} forEach priorityTargets;
-		if (_radius > 10) then
+		if (_radius > 10) then { _radius = _radius - 10; }; /* zeroing in */
+		if (PARAMS_PriorityTargetTickTimeMax <= PARAMS_PriorityTargetTickTimeMin) then
 		{
-			_radius = _radius - 10; //zeroing in
+			sleep PARAMS_PriorityTargetTickTimeMin;
+		} else {
+			sleep (PARAMS_PriorityTargetTickTimeMin + (random (PARAMS_PriorityTargetTickTimeMax - PARAMS_PriorityTargetTickTimeMin)));
 		};
-		sleep (30 + (random 45));
 	};
 
 	//Send completion hint

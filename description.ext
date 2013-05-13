@@ -84,12 +84,28 @@ class Params
 		default = 1;
 	};
 
-	class PriorityTargetTickTime
+	class PriorityTargetTickTimeMin
 	{
-		title = "(Not yet in use) Time between priority target actions";
+		title = "MINIMUM Time between Priority Target actions";
+		values[] = {30,60,120,180,240,300,600,900};
+		texts[] = {"30 seconds","1 minute","2 minutes","3 minutes","4 minutes","5 minutes","10 minutes","15 minutes"};
+		default = 60;
+	};
+
+	class PriorityTargetTickTimeMax
+	{
+		title = "MAXIMUM Time between Priority Target actions";
 		values[] = {30,60,120,180,240,300,600,900};
 		texts[] = {"30 seconds","1 minute","2 minutes","3 minutes","4 minutes","5 minutes","10 minutes","15 minutes"};
 		default = 120;
+	};
+
+	class PriorityTargetTickWarning
+	{
+		title = "Warnings from CROSSROAD regarding Priority Target actions?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
 	};
 
 	class SpawnProtection
