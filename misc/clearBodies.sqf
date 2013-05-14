@@ -1,4 +1,4 @@
-private ["_canDeleteGroup","_group"];
+private ["_canDeleteGroup","_group","_groups","_units"];
 while {true} do
 {
 	sleep 600;
@@ -11,17 +11,20 @@ while {true} do
 	debugMessage = "Dead bodies deleted.";
 	publicVariable "debugMessage";
 	
-	for "_c" from 0 to ((count allGroups) - 1) do
+	_groups = allGroups;
+
+	for "_c" from 0 to ((count _groups) - 1) do
 	{
 		_canDeleteGroup = true;
-		_group = (allGroups select _c);
+		_group = (_groups select _c);
+		if (!isNull _group) then
 		{
-			if (alive _x) then
+			_units = (units _group);
 			{
-				_canDeleteGroup = false;
-			};
-		} forEach (units _group);
-		if (_canDeleteGroup) then { deleteGroup _group; };
+				if (alive _x) then { _canDeleteGroup = false; };
+			} forEach _units;
+		};
+		if (_canDeleteGroup && !isNull _group) then { deleteGroup _group; };
 	};
 	
 	debugMessage = "Empty groups deleted.";

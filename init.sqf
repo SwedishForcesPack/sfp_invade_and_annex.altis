@@ -190,7 +190,8 @@ if (PARAMS_ReviveEnabled == 1) then
 	if (PARAMS_MedicMarkers == 1) then { _null = [] execVM "misc\medicMarkers.sqf"; };
 };
 if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
-_null = [] execVM "misc\radioChannels.sqf";
+/* 	Disabled while Alpha bug is present
+	_null = [] execVM "misc\radioChannels.sqf"; */
 
 [] spawn {
 	scriptName "initMission.hpp: mission start";
@@ -202,7 +203,7 @@ _null = [] execVM "misc\radioChannels.sqf";
 
 if (!isServer) then
 {	
-	sleep 10;
+	sleep 20;
 
 	waitUntil {sleep 0.5; currentAO != "Nothing"};
 
@@ -332,8 +333,11 @@ smRewards =
 smMarkerList = 
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
 
-radioChannels = []; publicVariable "radioChannels";
-_null = [] execVM "misc\radioChannels.sqf";
+/*---------------------------------------------------------------------------
+Disabled while Alpha bug is present
+---------------------------------------------------------------------------*/
+/* radioChannels = []; publicVariable "radioChannels";
+_null = [] execVM "misc\radioChannels.sqf"; */
 
 if (PARAMS_SpawnProtection == 1) then
 {
@@ -674,6 +678,7 @@ if (PARAMS_PriorityTargets == 1) then { _null = [] execVM "sm\priorityTargets.sq
 // _null = [] execVM "randomPatrols.sqf";
 
 _firstTarget = true;
+_lastTarget = "Nothing";
 
 while {count _targets > 0} do
 {
@@ -704,7 +709,7 @@ while {count _targets > 0} do
 	publicVariable "currentAOUp";
 	
 	//Edit and place markers for new target
-	//_marker = [currentAO] call AW_fnc_markerActivate;
+	//_marker = [currentAO] call AW_fnc_markerActivate
 	{_x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle","aoMarker"];
 	"aoMarker" setMarkerText format["Take %1",currentAO];
 	sleep 5;
@@ -737,11 +742,11 @@ while {count _targets > 0} do
 	"radioMarker" setMarkerPos (getPos radioTower);
 
 	//Spawn mines
-	_chance = random 1;
-	if (_chance <= 0.4) then
+	_chance = random 10;
+	if (_chance < PARAMS_RadioTowerMineFieldChance) then
 	{
 		_mines = [_flatPos] call AW_fnc_minefield;
-		_enemiesArray = _enemiesArray + [_mines];
+		_enemiesArray = _enemiesArray + _mines;
 		"radioMineCircle" setMarkerPos (getPos radioTower);
 		"radioMarker" setMarkerText "Radiotower (Minefield)";
 	} else {
@@ -808,7 +813,18 @@ while {count _targets > 0} do
 		//deleteMarker currentAO;
 	}; */
 
-	if (_isPerpetual) then { _lastTarget = currentAO; } else { _targets = _targets - [currentAO]; };
+	if (_isPerpetual) then
+	{
+		_lastTarget = currentAO;
+		if ((count (_targets)) == 1) then
+		{
+			_targets = _initialTargets;
+		} else {
+			_targets = _targets - [currentAO];
+		};
+	} else {
+		_targets = _targets - [currentAO];
+	};
 
 	publicVariable "refreshMarkers";
 	currentAOUp = false;
