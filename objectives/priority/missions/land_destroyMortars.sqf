@@ -1,20 +1,23 @@
 _title = "Enemy Mortars";
-_briefObj = "Destroy the enemy mortar team";
-_successMsg = "Destroyed the enemy mortar team";
+_briefMsg = "Neutralise the enemy mortar team!";
+_successMsg = "Enemy mortar team neutralised!";
+_failureMsg = "";
 
-_posType = "land";
-_mustBeFlat = true;
+_PT_Pos =
+{
+	_pos = [];
+	while { (count _pos) < 3 } do
+	{
+		_tempPos = [[[getMarkerPos currentAO, 2500]], ["water", "out"]] call BIS_fnc_randomPos;
+		_pos = _tempPos isFlatEmpty [5, 0, 0.3, 5, 0, false];
+	};
+
+	_pos
+};
 
 _PT_Create =
 {
-	private ["_pos", "_sideObjs", "_genericObjs", "_allObjs"];
 	_pos = _this select 0;
-	_sideObjs = [];
-	_genericObjs = [];
-
-	_pos1 = [(_pos select 0) - 2, (_pos select 1), (_pos select 2)];
-	_pos2 = [(_pos select 0) + 2, (_pos select 1), (_pos select 2)];
-	_group = createGroup EAST;
 
 	for "_c" from 1 to 3 do
 	{
@@ -50,19 +53,13 @@ _PT_Create =
 		_genericObjs = _genericObjs + [_barrier];
 	};
 
-	/* REQUIRED FORMAT */
 	_allObjs = [_sideObjs, _genericObjs]; _allObjs
 };
 
-_PT_Enemies =
-[
-	["GroupClassNameInCfgGroups", 2, "patrol", 200, 50],
-	["ADifferentGroupHere", 1, "defend", 100, 0]
-];
-
-_SM_Run =
+_PT_Run =
 {
-	_sideObjs = _this select 0;
+	_pos = _this select 0; _sideObjs = _this select 1;
+
 	_radius = 80;
 	_firingMessages = 
 	[
@@ -74,14 +71,9 @@ _SM_Run =
 		"They're zeroing in! Incoming mortar fire; heads down!"
 	];
 
-	while { (count (_sideObjs)) > 0 } do
+	while { true } do
 	{
-		if (PARAMS_PriorityTargetTickTimeMax <= PARAMS_PriorityTargetTickTimeMin) then
-		{
-			sleep PARAMS_PriorityTargetTickTimeMin;
-		} else {
-			sleep (PARAMS_PriorityTargetTickTimeMin + (random (PARAMS_PriorityTargetTickTimeMax - PARAMS_PriorityTargetTickTimeMin)));
-		};
+		sleep PARAMS_PriorityTargetTickTime;
 
 		_validPlayer = false; _unit = objNull; _targetPos = [0,0,0];
 		while { true } do
@@ -91,11 +83,8 @@ _SM_Run =
 			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) exitWith {};
 		};
 
-		if (PARAMS_PriorityTargetTickWarning == 1) then
-		{
-			hqSideChat = _firingMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat";
-			[WEST, "HQ"] sideChat hqSideChat;
-		};
+		hqSideChat = _firingMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat";
+		[WEST, "HQ"] sideChat hqSideChat;
 
 		{
 			if (alive _x) then
@@ -108,16 +97,28 @@ _SM_Run =
 						_x doArtilleryFire [_pos, "8Rnd_82mm_Mo_shells", 1];
 						sleep 5;
 					} else {
-						exitWith { _sideObjs = _sideObjs - [_x]; };
+						exitWith {};
 					};
 				};
-			} else {
-				_sideObjs = _sideObjs - [_x];
 			};
 		} forEach _sideObjs;
 
 		if (_radius > 10) then { _radius = _radius - 10; };
 	};
+};
 
-	true
+_PT_Success = 
+{
+	_pos = _this select 0;
+	_sideObjs = _this select 1;
+
+	_hasSucceeded = true;
+	{ if (alive _x) exitWith { _hasSucceeded = false; }; } forEach _sideObjs;
+
+	_hasSucceeded
+};
+
+_PT_Failure =
+{
+	false
 };

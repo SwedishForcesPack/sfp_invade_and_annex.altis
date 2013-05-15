@@ -85,6 +85,16 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 	hint parseText format["%1", _GHint];
 };
 
+"runOnServer" addPublicVariableEventHandler
+{
+	if (isServer) then
+	{
+		private ["_codeToRun"];
+		_codeToRun = _this select 1;
+		call _codeToRun;
+	};
+};
+
 "radioTower" addPublicVariableEventHandler
 {
 	"radioMarker" setMarkerPosLocal (markerPos "radioMarker");
