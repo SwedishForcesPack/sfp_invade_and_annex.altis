@@ -370,6 +370,16 @@ if (PARAMS_SpawnProtection == 1) then
 _null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
+//Run mortar scripts
+_null = [] execVM "misc\mortar\mortarHEReload.sqf";
+_null = [] execVM "misc\mortar\mortarSupportReload.sqf";
+if (isServer) then 	{
+		_mortarbuilding = createVehicle ["Land_Cargo_HQ_V1_F", [4088.2217,4591.668], [], 0, "NONE"];
+		_mortarbuilding enableSimulation false;
+		_mortarbuilding setDir 280;
+		_mortarbuilding setpos [ getPos _mortarbuilding select 0, getPos _mortarbuilding select 1, -0.3]; 
+			};
+
 _isPerpetual = false;
 
 if (PARAMS_Perpetual == 1) then 
