@@ -48,7 +48,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.86.1.12 REVIVE";
+		briefingName="co40 AW Invade & Annex 2.86.1.13 REVIVE";
 		startWeather=0;
 		startWind=0;
 		forecastWeather=0;

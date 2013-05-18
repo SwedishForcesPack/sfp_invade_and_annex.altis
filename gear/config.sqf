@@ -27,7 +27,19 @@ vas_magazines = [];
 //Want to limit VAS to specific items? Place the classnames in the array!
 vas_items = [];
 //Want to limit backpacks? Place the classnames in the array!
-vas_backpacks = [];
+vas_backpacks = [
+"B_AssaultPack_Base",
+"B_AssaultPack_blk",
+"B_AssaultPack_cbr",
+"B_AssaultPack_dgtl",
+"B_AssaultPack_mcamo",
+"B_AssaultPack_khk",
+"B_Carryall_Base",
+"B_Carryall_ocamo_Exp",
+"B_Carryall_oucamo",
+"B_diver_F",
+"B_FieldPack_cbr"
+];
 //Want to limit goggles? Place the classnames in the array!
 vas_goggles = [];
 
