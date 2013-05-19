@@ -50,10 +50,15 @@ class Mission
 	{
 		briefingName="co40 AW Invade & Annex 2.86.1.13 REVIVE";
 		startWeather=0;
-		startWind=0;
+		startWind=0.079999998;
+		startWindDir=10;
+		startGust=0.14;
 		forecastWeather=0;
-		forecastWind=0;
+		forecastWind=0.12;
 		forecastWaves=0;
+		forecastGust=0.17999999;
+		forecastWindDir=15;
+		windForced=1;
 		year=2035;
 		month=7;
 		day=6;
@@ -373,25 +378,25 @@ class Mission
 				};
 				class Item7
 				{
-					position[]={2002.1195,5.6588879,5750.5645};
-					azimut=-339.45407;
-					id=25;
-					side="WEST";
-					vehicle="B_Soldier_F";
-					player="PLAY CDG";
-					skill=0.60000002;
-					description="Charlie Rifleman";
-				};
-				class Item8
-				{
 					position[]={1999.9434,5.6522512,5751.5498};
 					azimut=-346.582;
-					id=26;
+					id=25;
 					side="WEST";
 					vehicle="B_soldier_LAT_F";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Rifleman (AT)";
+				};
+				class Item8
+				{
+					position[]={2001.3198,5.6515346,5752.353};
+					azimut=-346.582;
+					id=26;
+					side="WEST";
+					vehicle="B_Soldier_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					description="Charlie";
 				};
 			};
 		};
@@ -490,7 +495,7 @@ class Mission
 					vehicle="B_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					description="Delta Rifleman";
+					description="Delta Artillery Observer";
 				};
 				class Item8
 				{
@@ -574,7 +579,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=538;
+		items=542;
 		class Item0
 		{
 			position[]={2469.0491,3.1891034,5851.1865};
@@ -5616,7 +5621,7 @@ class Mission
 		};
 		class Item459
 		{
-			position[]={2005.1163,5.7244768,5761.6841};
+			position[]={2005.8015,5.8445768,5764.8813};
 			azimut=55;
 			id=499;
 			side="EMPTY";
@@ -5624,7 +5629,7 @@ class Mission
 			leader=1;
 			skill=0.60000002;
 			text="BTC_base_flag_west";
-			init="this allowDamage false;";
+			init="this allowDamage false; this setFlagTexture ""signs\AWFlag.jpg"";";
 		};
 		class Item460
 		{
@@ -6261,7 +6266,7 @@ class Mission
 			side="EMPTY";
 			vehicle="Land_Shed_Big_F";
 			skill=0.60000002;
-			init="this allowDamage false; this setPos [(getPos this select 0), (getPos this select 1), (getPos this select 2) - 2.5];";
+			init="this allowDamage false; this enablesimulation false; this setPos [(getPos this select 0), (getPos this select 1), (getPos this select 2) - 2.5];";
 		};
 		class Item518
 		{
@@ -6271,19 +6276,19 @@ class Mission
 			side="EMPTY";
 			vehicle="Land_Shed_Big_F";
 			skill=0.60000002;
-			init="this allowDamage false; this setPos [(getPos this select 0), (getPos this select 1), (getPos this select 2) - 2.5];";
+			init="this allowDamage false; this enablesimulation false; this setPos [(getPos this select 0), (getPos this select 1), (getPos this select 2) - 2.5];";
 		};
 		class Item519
 		{
-			position[]={2004.8217,5.6788983,5760.2876};
-			azimut=55;
+			position[]={2053.0166,5.652782,5728.1626};
+			azimut=100;
 			id=559;
 			side="EMPTY";
 			vehicle="FlagPole_F";
 			leader=1;
 			skill=0.60000002;
 			text="BTC_base_flag_east";
-			init="this allowDamage false;";
+			init="this allowDamage false; this setFlagTexture ""signs\AWFlag.jpg"";";
 		};
 		class Item520
 		{
@@ -6475,6 +6480,50 @@ class Mission
 			leader=1;
 			skill=0.60000002;
 			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+		};
+		class Item538
+		{
+			position[]={1937.0293,5.9095898,5486.7017};
+			azimut=100;
+			id=578;
+			side="EMPTY";
+			vehicle="FlagPole_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false; this setFlagTexture ""signs\AWFlag.jpg"";";
+		};
+		class Item539
+		{
+			position[]={2463.936,3.2434802,5851.1333};
+			azimut=100;
+			id=579;
+			side="EMPTY";
+			vehicle="FlagPole_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false; this enableSimulation false; this setFlagTexture ""signs\AWFlag.jpg"";";
+		};
+		class Item540
+		{
+			position[]={1828.1853,5.5,5462.7852};
+			azimut=100;
+			id=580;
+			side="EMPTY";
+			vehicle="FlagPole_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false; this setFlagTexture ""signs\AWFlag.jpg"";";
+		};
+		class Item541
+		{
+			position[]={2089.792,6.2544799,5691.355};
+			azimut=100;
+			id=581;
+			side="EMPTY";
+			vehicle="FlagPole_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false; this setFlagTexture ""signs\AWFlag.jpg"";";
 		};
 	};
 	class Markers
