@@ -536,7 +536,10 @@ fnc_gear_weapons =
 					
 					if(!_match && _str != "ACRE") then
 					{
-						_weapons set[count _weapons, [_name,_classname,_picture]];
+						if(!(_classname in vas_r_weapons)) then
+						{
+							_weapons set[count _weapons, [_name,_classname,_picture]];
+						}
 					};
 				};
 			};
@@ -675,8 +678,11 @@ fnc_gear_packs =
 					_picture = getText(_cur_wep >> "picture");
 					if(_scope >= 2 && _wep_type == "Backpacks" && _picture != "" && !(_classname in _backpacks)) then
 					{
-						//diag_log format["Class: %1 - Type: %2 - Scope: %3 - Pic: %4 - WEP: %5",_classname,_wep_type,_scope,_picture,_cur_wep];
-						_backpacks set[count _backpacks, [_name,_classname,_picture]];
+						if(!(_classname in vas_r_backpacks)) then
+						{
+							//diag_log format["Class: %1 - Type: %2 - Scope: %3 - Pic: %4 - WEP: %5",_classname,_wep_type,_scope,_picture,_cur_wep];
+							_backpacks set[count _backpacks, [_name,_classname,_picture]];
+						}
 					};
 				};
 			};
