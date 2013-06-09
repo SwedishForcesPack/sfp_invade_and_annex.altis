@@ -329,7 +329,7 @@ while {true} do
 			};
 			
 			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
-			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInf_Team")] call BIS_fnc_spawnGroup;
 			[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
 			
 			_unitsArray = _unitsArray + [_spawnGroup];
@@ -442,7 +442,7 @@ while {true} do
 			};
 			
 			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
-			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInf_Team")] call BIS_fnc_spawnGroup;
 			[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
 			
 			_unitsArray = _unitsArray + [_spawnGroup];
@@ -545,7 +545,7 @@ while {true} do
 			};
 			
 			_randomPos = [[[getPos sideObj, 50]],["water","out"]] call BIS_fnc_randomPos;
-			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+			_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInf_Team")] call BIS_fnc_spawnGroup;
 			[_spawnGroup, _flatPos, 100] call bis_fnc_taskPatrol;
 			
 			_unitsArray = _unitsArray + [_spawnGroup];

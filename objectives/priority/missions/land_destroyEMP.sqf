@@ -106,7 +106,7 @@ _PT_Enemy =
 	],
 
 	[
-		(configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam"),
+		(configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInf_Team"),
 		1, "patrol", 300, 50
 	]
 };
