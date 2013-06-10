@@ -609,7 +609,7 @@ _pos = getMarkerPos (_this select 0);
 	_x = 0;
 	for "_x" from 0 to PARAMS_CarsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
-		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInfTeam")] call BIS_fnc_spawnGroup;
+		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInf_Team")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
