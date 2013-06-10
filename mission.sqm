@@ -50,7 +50,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.86.1.17 REVIVE";
+		briefingName="co40 AW Invade & Annex 2.86.1.18 REVIVE";
 		startWeather=0;
 		startWind=0.079999998;
 		startWindDir=10;
@@ -514,6 +514,7 @@ class Mission
 					vehicle="B_Helipilot_F";
 					player="PLAYER COMMANDER";
 					leader=1;
+					rank="LIEUTENANT";
 					skill=0.60000002;
 					init="(group this) setGroupId [""TV""];";
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk:9987)";
@@ -526,6 +527,7 @@ class Mission
 					side="WEST";
 					vehicle="B_Helipilot_F";
 					player="PLAY CDG";
+					rank="SERGEANT";
 					skill=0.60000002;
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk:9987)";
 				};
@@ -537,6 +539,7 @@ class Mission
 					side="WEST";
 					vehicle="B_Helipilot_F";
 					player="PLAY CDG";
+					rank="CORPORAL";
 					skill=0.60000002;
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk:9987)";
 				};
@@ -642,7 +645,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=593;
+		items=601;
 		class Item0
 		{
 			position[]={2469.0491,3.1891034,5851.1865};
@@ -6495,8 +6498,8 @@ class Mission
 		};
 		class Item533
 		{
-			position[]={4074.4036,220.21948,4590.665};
-			azimut=15;
+			position[]={4089.6624,220.3557,4582.8789};
+			azimut=24.698681;
 			id=573;
 			side="EMPTY";
 			vehicle="FlagPole_F";
@@ -6831,7 +6834,7 @@ class Mission
 		};
 		class Item566
 		{
-			position[]={4150.0137,210.56158,4530.7329};
+			position[]={4149.5498,210.4189,4528.5078};
 			azimut=75.89093;
 			id=606;
 			side="EMPTY";
@@ -6842,7 +6845,7 @@ class Mission
 		};
 		class Item567
 		{
-			position[]={4159.2783,209.92305,4528.7588};
+			position[]={4158.8145,209.91718,4526.5337};
 			azimut=75.89093;
 			id=607;
 			side="EMPTY";
@@ -6875,7 +6878,7 @@ class Mission
 		};
 		class Item570
 		{
-			position[]={4143.6152,210.96754,4528.4053};
+			position[]={4142.1318,210.93546,4526.1338};
 			azimut=110.89094;
 			id=610;
 			side="EMPTY";
@@ -6897,7 +6900,7 @@ class Mission
 		};
 		class Item572
 		{
-			position[]={4151.623,210.31235,4528.8174};
+			position[]={4151.1592,210.25934,4526.5923};
 			azimut=90.890938;
 			id=612;
 			side="EMPTY";
@@ -6974,7 +6977,7 @@ class Mission
 		};
 		class Item579
 		{
-			position[]={3967.9849,204.61668,4601.3174};
+			position[]={3967.3953,204.61565,4600.7871};
 			azimut=-83.284615;
 			id=619;
 			side="EMPTY";
@@ -7018,7 +7021,7 @@ class Mission
 		};
 		class Item583
 		{
-			position[]={3977.1826,205.6638,4590.0239};
+			position[]={3976.1221,205.63478,4589.0225};
 			azimut=-48.284645;
 			id=623;
 			side="EMPTY";
@@ -7084,47 +7087,159 @@ class Mission
 		};
 		class Item589
 		{
-			position[]={4107.6313,221.31503,4601.7002};
-			azimut=-16.168159;
+			position[]={4082.803,219.99931,4582.915};
+			azimut=-437.41599;
+			offsetY=-3;
 			special="NONE";
 			id=629;
 			side="EMPTY";
 			vehicle="Land_LampHalogen_F";
 			leader=1;
 			skill=0.60000002;
+			init="this allowDamage false;";
 		};
 		class Item590
 		{
-			position[]={4104.9185,222.02356,4588.0942};
-			azimut=60.517456;
+			position[]={4107.207,221.30359,4601.3613};
+			azimut=-391.77048;
+			offsetY=-3;
 			special="NONE";
 			id=630;
 			side="EMPTY";
 			vehicle="Land_LampHalogen_F";
 			leader=1;
 			skill=0.60000002;
+			init="this allowDamage false;";
 		};
 		class Item591
 		{
-			position[]={4082.803,219.99931,4582.915};
-			azimut=-437.4158;
+			position[]={4105.0645,222.02492,4588.2979};
+			azimut=-302.42249;
+			offsetY=-3;
 			special="NONE";
 			id=631;
 			side="EMPTY";
 			vehicle="Land_LampHalogen_F";
 			leader=1;
 			skill=0.60000002;
+			init="this allowDamage false;";
 		};
 		class Item592
 		{
-			position[]={4083.9954,221.22339,4610.1279};
-			azimut=-114.47864;
+			position[]={4084.3186,221.22517,4609.9316};
+			azimut=-832.31445;
+			offsetY=-3;
 			special="NONE";
 			id=632;
 			side="EMPTY";
 			vehicle="Land_LampHalogen_F";
 			leader=1;
 			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item593
+		{
+			position[]={2010.2476,5.8697276,5764.0957};
+			azimut=-641.59521;
+			offsetY=-3;
+			special="NONE";
+			id=633;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item594
+		{
+			position[]={1960.6969,5.5364943,5774.7012};
+			azimut=-574.07617;
+			offsetY=-3;
+			special="NONE";
+			id=634;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item595
+		{
+			position[]={1959.798,5.5,5841.9219};
+			azimut=-107.22795;
+			offsetY=-3;
+			special="NONE";
+			id=635;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item596
+		{
+			position[]={2031.1907,5.8531346,5822.061};
+			azimut=-30.005278;
+			offsetY=-3;
+			special="NONE";
+			id=636;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item597
+		{
+			position[]={2058.4595,5.6360168,5737.7852};
+			azimut=-471.4837;
+			offsetY=-3;
+			special="NONE";
+			id=637;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item598
+		{
+			position[]={2125.4504,6.2535791,5718.5684};
+			azimut=-380.75684;
+			offsetY=-3;
+			special="NONE";
+			id=638;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item599
+		{
+			position[]={2070.8057,6.0864406,5677.7729};
+			azimut=-569.48132;
+			offsetY=-3;
+			special="NONE";
+			id=639;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
+		};
+		class Item600
+		{
+			position[]={2046.6503,5.6933742,5744.6563};
+			azimut=-346.46439;
+			offsetY=-3;
+			special="NONE";
+			id=640;
+			side="EMPTY";
+			vehicle="Land_LampHalogen_F";
+			leader=1;
+			skill=0.60000002;
+			init="this allowDamage false;";
 		};
 	};
 	class Markers
