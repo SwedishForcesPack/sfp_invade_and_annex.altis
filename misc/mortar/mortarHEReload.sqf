@@ -1,24 +1,21 @@
-_mortar = mortarHE;
-_mortarPos = getPos _mortar;
-_gunner = gunner _mortar;
-_reloadTime = 30;			// 1800 = 30 minutes
-sleep 10;
+_timer = 300;
+
 while { true } do
 {
-	if (name _gunner == name player) then {hint format ["Removing Magazines"];};
-	_mortar removemagazines "8Rnd_82mm_Mo_Shells";
-	sleep 5;
-	if (name _gunner == name player) then {hint format ["Adding Magazines"];};
-	_mortar addmagazines ["8Rnd_82mm_Mo_shells",5];
-	sleep 5;
-	if (name _gunner == name player) then {hint format ["HE Mortar Reloaded!"];};
-	sleep _reloadTime / 5;
-	if (name _gunner == name player) then {hint format ["reloading HE in 20 minutes"];};
-	sleep _reloadTime / 5;
-	if (name _gunner == name player) then {hint format ["reloading HE in 15 minutes"];};
-	sleep _reloadTime / 5;
-	if (name _gunner == name player) then {hint format ["reloading HE in 10 minutes"];};
-	sleep _reloadTime / 5;
-	if (name _gunner == name player) then {hint format ["reloading HE in 5 minutes"];};
-	sleep _reloadTime / 5;
+
+	mortarHE removeMagazines "8Rnd_82mm_Mo_Shells";
+	mortarHE vehicleChat "Mortar HE Magazines Removed.";
+	sleep 1;
+	mortarHE addMagazines ["8Rnd_82mm_Mo_Shells", 5];
+	mortarHE vehicleChat "Mortar HE Magazines Reloaded.";
+	sleep _timer;
+	mortarHE vehicleChat "Mortar HE reload in 20 minutes.";
+	sleep _timer;
+	mortarHE vehicleChat "Mortar HE reload in 15 minutes.";
+	sleep _timer;
+	mortarHE vehicleChat "Mortar HE reload in 10 minutes.";
+	sleep _timer;
+	mortarHE vehicleChat "Mortar HE reload in 5 minutes.";
+	sleep _timer;
+	
 };
