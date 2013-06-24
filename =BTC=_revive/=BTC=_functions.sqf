@@ -1,6 +1,6 @@
 /*
-Created by =BTC= Giallustio
-version 0.9
+Created by =BTC= Giallustio, tweaked and edited by Rarek [AW]
+version 0.91
 Visit us at: 
 http://www.blacktemplars.altervista.org/
 06/03/2012
@@ -164,7 +164,7 @@ BTC_set_gear =
 	{_unit addMagazine _x;} foreach (_gear select 15);
 	if ((_gear select 16) != "") then {_unit addMagazine (_gear select 16)};
 	{if (isClass (configFile >> "cfgWeapons" >> _x)) then {_unit addweapon _x;};} foreach (_gear select 7);
-	{_unit removeItemFromPrimaryWeapon _x} foreach (primaryWeaponItems _unit);
+	{_unit RemovePrimaryWeaponItem _x} foreach (primaryWeaponItems _unit);
 	if (count (_gear select 8) > 0) then {{_unit addPrimaryWeaponItem _x;} foreach (_gear select 8);};
 	if (count (_gear select 9) > 0) then {{_unit addSecondaryWeaponItem _x;} foreach (_gear select 9);};
 	if (count (_gear select 10) > 0) then {{_unit addHandgunItem _x;} foreach (_gear select 10);};
@@ -292,18 +292,9 @@ BTC_drag =
 	WaitUntil {!Alive player || ((animationstate player == "acinpknlmstpsraswrfldnon") || (animationstate player == "acinpknlmwlksraswrfldb"))};
 	private ["_act","_veh_selected","_array","_array_veh","_name_veh","_text_action","_action_id"];
 	_act = 0;_veh_selected = objNull;_array_veh = [];
+
 	while {!isNull player && alive player && !isNull _injured && alive _injured && format ["%1", _injured getVariable "BTC_need_revive" select 0] == "1" && BTC_dragging} do
 	{
-
-		//Fix exploit where pressing <Enter> would revive you
-		_key     = _this select 1;
-		switch _key do
-		{
-			case 28:
-			{
-				_respawn = [] spawn BTC_player_respawn;
-		    };
-		};
 		_array = nearestObjects [player, ["Air","LandVehicle"], 5];
 		_array_veh = [];
 		{if (_x emptyPositions "cargo" != 0) then {_array_veh = _array_veh + [_x];};} foreach _array;
@@ -374,6 +365,7 @@ BTC_player_killed =
 		if (BTC_lifes != 0 || BTC_active_lifes == 0) then
 		{
 			WaitUntil {Alive player};
+			detach player;
 			_body_marker = player;
 			if (BTC_pvp == 0) then {player setcaptive true;};
 			//player setvehicleInit "this allowDamage false;";ProcessInitCommands;
@@ -390,6 +382,7 @@ BTC_player_killed =
 			WaitUntil {animationstate player == "ainjppnemstpsnonwrfldnon"};
 			sleep 2;
 			player setDir _dir;
+			player setVelocity [0,0,0];
 			player setPosATL _pos;
 			deletevehicle _body;
 			_side = playerSide;
@@ -403,14 +396,15 @@ BTC_player_killed =
 			};
 			if (BTC_black_screen == 0) then {titleText ["", "BLACK IN"];};
 			disableUserInput false;
-
 			private ["_id","_lifes"];
 			if (BTC_disable_respawn == 1) then {player enableSimulation false;};
 			if (BTC_black_screen == 0 && BTC_disable_respawn == 0) then {if (BTC_action_respawn == 0) then {_dlg = createDialog "BTC_respawn_button_dialog";} else {_id = player addAction [("<t color=""#ED2744"">") + ("Respawn") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_player_respawn], 9, true, true, "", "true"];};};
 			if (BTC_black_screen == 1 && BTC_disable_respawn == 0) then {_dlg = createDialog "BTC_respawn_button_dialog";};
+
+			BTC_display_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_anim = [] spawn {sleep 1;player switchMove ""AinjPpneMstpSnonWrflDnon"";};"];
 			while {format ["%1", player getVariable "BTC_need_revive" select 0] == "1" && time < _timeout} do
 			{
-				if (BTC_black_screen == 0) then {if (animationstate player != "ainjppnemstpsnonwrfldnon" && animationstate player != "AinjPpneMstpSnonWrflDb_grab" && vehicle player == player) then {player switchMove "AinjPpneMstpSnonWrflDnon";};};
+
 				if (BTC_disable_respawn == 0) then {if (BTC_black_screen == 1 || (BTC_black_screen == 0 && BTC_action_respawn == 0)) then {if (!Dialog) then {_dlg = createDialog "BTC_respawn_button_dialog";};};};
 				_healer = call BTC_check_healer;
 				_lifes = "";
@@ -418,6 +412,7 @@ BTC_player_killed =
 				if (BTC_black_screen == 1) then {titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "BLACK FADED"]} else {hintSilent parseText format ["<t color='#ED2744' size='2.2'>Critically Injured</t><br/>--------------------<br/>%1 seconds until death<br/><br/>%2 %3", round (_timeout - time),_healer,_lifes];};
 				sleep 0.5;
 			};
+			(findDisplay 46) displayRemoveEventHandler ["KeyDown", BTC_display_EH];
 			closedialog 0;
 			if (time > _timeout && format ["%1", player getVariable "BTC_need_revive" select 0] == "1") then 
 			{
@@ -463,6 +458,7 @@ BTC_player_respawn =
 	BTC_respawn_cond = true;
 	if (BTC_active_lifes == 1) then {BTC_lifes = BTC_lifes - 1;};
 	if (BTC_active_lifes == 1 && BTC_lifes == 0) exitWith BTC_out_of_lifes;
+	deTach player;
 	player setVariable ["BTC_need_revive",[0,0],true];
 	if (BTC_black_screen == 0) then {titleText ["", "BLACK OUT"];};
 	sleep 0.2;
@@ -492,6 +488,7 @@ BTC_player_respawn =
 		player enableSimulation true;
 		deTach player;
 		player setVelocity [0,0,0];
+		player switchMove "amovpercmstpslowwrfldnon";
 		player setPos getMarkerPos BTC_respawn_marker;
 		deleteVehicle _obj;
 	};

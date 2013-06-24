@@ -8,16 +8,16 @@ class Mission
 		"A3_Structures_F_Mil_Helipads",
 		"A3_Signs_F",
 		"A3_Structures_F_Walls",
-		"a3_soft_f_hunter",
+		"A3_Soft_F_MRAP_01",
 		"A3_Structures_F_Items_Vessels",
 		"A3_Soft_F_Quadbike",
-		"A3_Boat_F_Speedboat",
-		"A3_Boat_F_Assault_Boat",
+		"A3_Boat_F_Boat_Armed_01",
+		"A3_Boat_F_Boat_Transport_01",
 		"A3_Structures_F_Civ_Camping",
 		"A3_Weapons_F_Ammoboxes",
 		"A3_Characters_F_BLUFOR",
-		"A3_Static_F_Mk6",
-		"A3_Air_F_MH9",
+		"A3_Static_F_Mortar_01",
+		"A3_Air_F_Heli_Light_01",
 		"A3_Structures_F_System",
 		"A3_Structures_F_Mil_Flags",
 		"A3_Structures_F_Ind_Shed",
@@ -26,31 +26,31 @@ class Mission
 	};
 	addOnsAuto[]=
 	{
-		"A3_Characters_F_BLUFOR",
-		"A3_Structures_F_Walls",
-		"A3_Signs_F",
+		"a3_map_stratis",
 		"A3_Structures_F_Mil_Fortification",
 		"A3_Structures_F_Mil_Helipads",
+		"A3_Signs_F",
+		"A3_Structures_F_Walls",
+		"A3_Soft_F_MRAP_01",
 		"A3_Structures_F_Items_Vessels",
-		"A3_Air_F_MH9",
-		"A3_Soft_F_Hunter",
 		"A3_Soft_F_Quadbike",
-		"A3_Boat_F_Speedboat",
-		"A3_Boat_F_Assault_Boat",
+		"A3_Boat_F_Boat_Armed_01",
+		"A3_Boat_F_Boat_Transport_01",
 		"A3_Structures_F_Civ_Camping",
 		"A3_Weapons_F_Ammoboxes",
+		"A3_Characters_F_BLUFOR",
+		"A3_Static_F_Mortar_01",
+		"A3_Air_F_Heli_Light_01",
 		"A3_Structures_F_System",
 		"A3_Structures_F_Mil_Flags",
 		"A3_Structures_F_Ind_Shed",
 		"A3_Misc_F_Helpers",
-		"A3_Static_F_Mk6",
-		"A3_Structures_F_Civ_Lamps",
-		"a3_map_stratis"
+		"A3_Structures_F_Civ_Lamps"
 	};
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.86.1.18 REVIVE";
+		briefingName="co40 AW Invade & Annex 2.87 BETA";
 		startWeather=0;
 		startWind=0.079999998;
 		startWindDir=10;
@@ -3721,7 +3721,7 @@ class Mission
 			azimut=190;
 			id=319;
 			side="EMPTY";
-			vehicle="B_MH9_F";
+			vehicle="B_Heli_Light_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H1"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H1"",0.5] execVM ""mark_unit.sqf"";";
@@ -3732,7 +3732,7 @@ class Mission
 			azimut=190;
 			id=320;
 			side="EMPTY";
-			vehicle="B_MH9_F";
+			vehicle="B_Heli_Light_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H2"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H2"",0.5] execVM ""mark_unit.sqf"";";
@@ -4073,7 +4073,7 @@ class Mission
 			azimut=105;
 			id=351;
 			side="EMPTY";
-			vehicle="B_Hunter_F";
+			vehicle="B_MRAP_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4084,7 +4084,7 @@ class Mission
 			azimut=105;
 			id=352;
 			side="EMPTY";
-			vehicle="B_Hunter_F";
+			vehicle="B_MRAP_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4095,7 +4095,7 @@ class Mission
 			azimut=200;
 			id=353;
 			side="EMPTY";
-			vehicle="B_Hunter_F";
+			vehicle="B_MRAP_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4106,7 +4106,7 @@ class Mission
 			azimut=200;
 			id=354;
 			side="EMPTY";
-			vehicle="B_Hunter_F";
+			vehicle="B_MRAP_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4117,7 +4117,7 @@ class Mission
 			azimut=5;
 			id=355;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4128,7 +4128,7 @@ class Mission
 			azimut=5;
 			id=356;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4139,7 +4139,7 @@ class Mission
 			azimut=5;
 			id=357;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4150,7 +4150,7 @@ class Mission
 			azimut=5;
 			id=358;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4161,7 +4161,7 @@ class Mission
 			azimut=285;
 			id=359;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4172,7 +4172,7 @@ class Mission
 			azimut=285;
 			id=360;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4183,7 +4183,7 @@ class Mission
 			azimut=285;
 			id=361;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4194,7 +4194,7 @@ class Mission
 			azimut=285;
 			id=362;
 			side="EMPTY";
-			vehicle="B_Quadbike_F";
+			vehicle="B_Quadbike_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 30, 30, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4238,7 +4238,7 @@ class Mission
 			azimut=195;
 			id=366;
 			side="EMPTY";
-			vehicle="B_SpeedBoat";
+			vehicle="B_Boat_Armed_01_minigun_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 180, 600, 0, FALSE, FALSE, ""nul = [this,""""B2"""",5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""B2"",5] execVM ""mark_unit.sqf"";";
@@ -4249,7 +4249,7 @@ class Mission
 			azimut=20;
 			id=367;
 			side="EMPTY";
-			vehicle="B_SpeedBoat";
+			vehicle="B_Boat_Armed_01_minigun_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 180, 600, 0, FALSE, FALSE, ""nul = [this,""""B1"""",5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""B1"",5] execVM ""mark_unit.sqf"";";
@@ -4260,7 +4260,7 @@ class Mission
 			azimut=295;
 			id=368;
 			side="EMPTY";
-			vehicle="B_Assaultboat";
+			vehicle="B_Boat_Transport_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4271,7 +4271,7 @@ class Mission
 			azimut=295;
 			id=369;
 			side="EMPTY";
-			vehicle="B_Assaultboat";
+			vehicle="B_Boat_Transport_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4439,7 +4439,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item345
 		{
@@ -4450,7 +4450,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item346
 		{
@@ -4461,7 +4461,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item347
 		{
@@ -4472,7 +4472,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item348
 		{
@@ -4483,7 +4483,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item349
 		{
@@ -4494,7 +4494,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item350
 		{
@@ -4505,7 +4505,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item351
 		{
@@ -4516,7 +4516,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item352
 		{
@@ -4527,7 +4527,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item353
 		{
@@ -4538,7 +4538,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item354
 		{
@@ -4549,7 +4549,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item355
 		{
@@ -4560,7 +4560,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item356
 		{
@@ -4571,7 +4571,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item357
 		{
@@ -4582,7 +4582,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item358
 		{
@@ -4593,7 +4593,7 @@ class Mission
 			vehicle="Box_NATO_Wps_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item359
 		{
@@ -4965,7 +4965,7 @@ class Mission
 			azimut=235;
 			id=433;
 			side="EMPTY";
-			vehicle="B_MH9_F";
+			vehicle="B_Heli_Light_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H3"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H3"",0.5] execVM ""mark_unit.sqf"";";
@@ -6438,7 +6438,7 @@ class Mission
 			offsetY=2.6300001;
 			id=567;
 			side="EMPTY";
-			vehicle="B_Mk6";
+			vehicle="B_Mortar_01_F";
 			skill=0.60000002;
 			text="mortarSupport";
 			init="veh = [this, 1, 0, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -6450,7 +6450,7 @@ class Mission
 			offsetY=2.6300001;
 			id=568;
 			side="EMPTY";
-			vehicle="B_Mk6";
+			vehicle="B_Mortar_01_F";
 			leader=1;
 			skill=0.60000002;
 			text="mortarHE";
@@ -6528,7 +6528,7 @@ class Mission
 			vehicle="Box_NATO_Ammo_F";
 			leader=1;
 			skill=0.60000002;
-			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""gear\open.sqf""]; this allowDamage false;";
+			init="this addAction[""<t color='#ff1111'>Change Gear Loadout</t>"", ""VAS\open.sqf""]; this allowDamage false;";
 		};
 		class Item536
 		{

@@ -61,7 +61,7 @@ class VAS_RscListNBox {
 	color[] = {0.95, 0.95, 0.95, 1};
 	colorText[] = {1, 1, 1, 1.0};
 	colorDisabled[] = {1, 1, 1, 0.25};
-	coloVAS_Rscrollbar[] = {0.95, 0.95, 0.95, 1};
+	colorScrollbar[] = {0.95, 0.95, 0.95, 1};
 	colorSelect[] = {0, 0, 0, 1};
 	colorSelect2[] = {0, 0, 0, 1};
 	colorSelectBackground[] = {0.95, 0.95, 0.95, 1};
@@ -164,16 +164,22 @@ class VAS_RscStructuredText {
 
 class VAS_RscActiveText {
 	idc = -1;
+	type = 11;
+	style = 0;
 	x = 0;
 	y = 0;
-	h = 0.035;
-	w = 0.035;
-	font = "PuristaMedium";
-	shadow = 2;
-	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	color[] = {0, 0, 0, 1};
-	colorText[] = {0, 0, 0, 1};
-	colorActive[] = {0.3, 0.4, 0, 1};
+	h = 0.037;
+	w = 0.3;
+	sizeEx = 0.040;
+	font = "PuristaLight";
+	color[] = {1, 1, 1, 1};
+	colorActive[] = {1, 0.2, 0.2, 1};
+	soundEnter[] = {"\A3\ui_f\data\sound\onover", 0.09, 1};
+	soundPush[] = {"\A3\ui_f\data\sound\new1", 0.0, 0};
+	soundClick[] = {"\A3\ui_f\data\sound\onclick", 0.07, 1};
+	soundEscape[] = {"\A3\ui_f\data\sound\onescape", 0.09, 1};
+	action = "";
+	text = "";
 };
 
 class VAS_RscButton {
@@ -436,10 +442,10 @@ class VAS_RscListBox {
 	colorSelect[] = {1, 1, 1, 1};
 	colorText[] = {1, 1, 1, 1};
 	colorBackground[] = {0.28,0.28,0.28,0.28};
-	colorSelect2[] = {0, 0, 0, 1};
-	colorSelectBackground[] = {0.95, 0.95, 0.95, 1};
+	colorSelect2[] = {1, 1, 1, 1};
+	colorSelectBackground[] = {0.95, 0.95, 0.95, 0.5};
 	colorSelectBackground2[] = {1, 1, 1, 0.5};
-	coloVAS_Rscrollbar[] = {0.2, 0.2, 0.2, 1};
+	colorScrollbar[] = {0.2, 0.2, 0.2, 1};
 	arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
 	arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
 	wholeHeight = 0.45;
@@ -962,7 +968,7 @@ class VAS_RscCombo {
 	colorText[] = {0.95, 0.95, 0.95, 1};
 	colorBackground[] = {0.4,0.4,0.4,0.4};
 	colorSelectBackground[] = {1, 1, 1, 0.7};
-	coloVAS_Rscrollbar[] = {1, 0, 0, 1};
+	colorScrollbar[] = {1, 0, 0, 1};
 	soundSelect[] = {
 			"", 0.000000, 1
 	};

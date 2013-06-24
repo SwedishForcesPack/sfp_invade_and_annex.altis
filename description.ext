@@ -19,8 +19,11 @@ Jack Williams (Rarek) for Ahoy World!
 */
 
 /* VAS includes */
-#include "gear\common.hpp"
-#include "gear\menu.hpp"
+#include "VAS\menu.hpp"
+class CfgFunctions
+{
+	#include "VAS\cfgfunctions.hpp"
+};
 
 /* View Distance includes */
 #include "taw_vd\dialog.hpp"

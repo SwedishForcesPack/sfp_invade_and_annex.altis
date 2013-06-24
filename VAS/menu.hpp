@@ -4,12 +4,14 @@
 	Use of the VAS system is permitted although modification and distribution must be approved by Tonic, use of the VAS_Rsc source files i.e common.hpp you must have permission from Sa-Matra himself
 */
 
+#include "common.hpp"
+
 class VAS_Diag {
 	idd = 2500;
 	name= "Virtual_Ammobox_Sys";
 	movingEnable = false;
 	enableSimulation = true;
-	onLoad = "['guns'] execVM 'gear\switch.sqf'";
+	onLoad = "['guns',false] spawn VAS_fnc_mainDisplay";
 	
 	class controlsBackground {
 		class VAS_RscTitleBackground:VAS_RscText {
@@ -50,16 +52,6 @@ class VAS_Diag {
 			x = 0.60; y = 0.27;
 			w = 0.275; h = 0.04;
 		};
-		
-		class accText : VAS_RscStructuredText
-		{
-			idc = 2503;
-			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			text = "";
-			sizeEx = 0.04;
-			x = 0.38; y = 0.67;
-			w = 0.23; h = 0.06;
-		};
 	};
 	
 	class controls {
@@ -91,6 +83,7 @@ class VAS_Diag {
 			colorBackground[] = {0,0,0,0};
 			idc = 2509;
 			text = "";
+			onLBDblClick = "_this spawn VAS_fnc_quickMag;";
 			sizeEx = 0.030;
 			
 			x = -0.175; y = 0.3;
@@ -101,8 +94,9 @@ class VAS_Diag {
 		{
 			idc = 2501;
 			text = "";
-			sizeEx = 0.030;
-			onLBSelChanged = "[] execVM 'gear\info.sqf'";
+			sizeEx = 0.032;
+			onLBSelChanged = "_this spawn VAS_fnc_details";
+			onLBDblClick = "_this spawn VAS_fnc_quickItem;";
 			
 			x = 0.12; y = 0.31;
 			w = 0.275; h = 0.340;
@@ -112,8 +106,9 @@ class VAS_Diag {
 		{
 			idc = 2502;
 			text = "";
-			sizeEx = 0.030;
-			onLBSelChanged = "[2502] execVM 'gear\selection.sqf'";
+			sizeEx = 0.032;
+			onLBDblClick = "_this spawn VAS_fnc_qRemoveItem;";
+			//onLBSelChanged = "[2502] execVM 'gear\selection.sqf'";
 			
 			x = 0.60; y = 0.31;
 			w = 0.275; h = 0.340;
@@ -124,8 +119,8 @@ class VAS_Diag {
 			idc = -1;
 			text = "Weapons";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "['guns'] execVM 'gear\switch.sqf'";
-			x = 0.42; y = 0.35;
+			onButtonClick = "['guns',false] spawn VAS_fnc_mainDisplay";
+			x = 0.42; y = 0.30;
 			w = (6.25 / 40);
 			h = (1 / 25);
 		};
@@ -135,8 +130,8 @@ class VAS_Diag {
 			idc = -1;
 			text = "Magazines";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "['mags'] execVM 'gear\switch.sqf'";
-			x = 0.42; y = 0.40;
+			onButtonClick = "['mags',false] spawn VAS_fnc_mainDisplay";
+			x = 0.42; y = 0.35;
 			w = (6.25 / 40);
 			h = (1 / 25);
 		};
@@ -146,8 +141,8 @@ class VAS_Diag {
 			idc = -1;
 			text = "Items";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "['items'] execVM 'gear\switch.sqf'";
-			x = 0.42; y = 0.45;
+			onButtonClick = "['items',false] spawn VAS_fnc_mainDisplay";
+			x = 0.42; y = 0.40;
 			w = (6.25 / 40);
 			h = (1 / 25);
 		};
@@ -157,8 +152,8 @@ class VAS_Diag {
 			idc = -1;
 			text = "Backpacks";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "['packs'] execVM 'gear\switch.sqf'";
-			x = 0.42; y = 0.50;
+			onButtonClick = "['packs',false] spawn VAS_fnc_mainDisplay";
+			x = 0.42; y = 0.45;
 			w = (6.25 / 40);
 			h = (1 / 25);
 		};
@@ -168,10 +163,66 @@ class VAS_Diag {
 			idc = -1;
 			text = "Goggles";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "['glass'] execVM 'gear\switch.sqf'";
-			x = 0.42; y = 0.55;
+			onButtonClick = "['glass',false] spawn VAS_fnc_mainDisplay";
+			x = 0.42; y = 0.50;
 			w = (6.25 / 40);
 			h = (1 / 25);
+		};
+		
+		//Filter Buttons
+		class Filter1 : VAS_RscActiveText
+		{
+			idc = 2580;
+			text = "Uniforms";
+			action = "[0] spawn VAS_fnc_filterMenu";
+			sizeEx = 0.04;
+			
+			x = 0.43; y = 0.55;
+			w = 0.275; h = 0.04;
+		};
+		
+		class Filter2 : VAS_RscActiveText
+		{
+			idc = 2581;
+			text = "Vests";
+			action = "[1] spawn VAS_fnc_filterMenu";
+			sizeEx = 0.04;
+			
+			x = 0.43; y = 0.58;
+			w = 0.275; h = 0.04;
+		};
+		
+		class Filter3 : VAS_RscActiveText
+		{
+			idc = 2582;
+			text = "Headgear";
+			action = "[2] spawn VAS_fnc_filterMenu";
+			sizeEx = 0.04;
+			
+			x = 0.43; y = 0.61;
+			w = 0.275; h = 0.04;
+		};
+		
+		class Filter4 : VAS_RscActiveText
+		{
+			idc = 2583;
+			text = "Attachments";
+			action = "[3] spawn VAS_fnc_filterMenu";
+			sizeEx = 0.04;
+			
+			x = 0.43; y = 0.64;
+			w = 0.275; h = 0.04;
+		};
+		
+		class Filter5 : VAS_RscActiveText
+		{
+			idc = 2584;
+			text = "Misc";
+			action = "[4] spawn VAS_fnc_filterMenu";
+			sizeEx = 0.04;
+			
+			x = 0.43; y = 0.67;
+			w = 0.275; h = 0.04;
 		};
 			
 		class Title : VAS_RscTitle {
@@ -184,18 +235,12 @@ class VAS_Diag {
 			h = (1 / 25);
 		};
 
-		class PlayersName : Title {
-			idc = 601;
-			style = 1;
-			text = "";
-		};
-	
 		class ButtonAddG : VAS_RscButtonMenu
 		{
 			idc = -1;
 			text = "Add Item";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "[] execVM 'gear\add.sqf'";
+			onButtonClick = "[] spawn VAS_fnc_addGear";
 			
 			x = 0.16;
 			y = 0.67;
@@ -207,7 +252,7 @@ class VAS_Diag {
 			idc = -1;
 			text = "Remove Item";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "[] execVM 'gear\remove.sqf'";
+			onButtonClick = "[false] spawn VAS_fnc_removeGear;";
 			
 			x = 0.69;
 			y = 0.67;
@@ -229,7 +274,7 @@ class VAS_Diag {
 		class ButtonSaveGear : VAS_RscButtonMenu {
 			idc = -1;
 			text = "Save Gear";
-			onButtonClick = "if(!vas_disableLoadSave) then {createDialog ""VAS_Save_Diag"";} else {hint ""The mission maker has disabled this feature!"";};";
+			onButtonClick = "createDialog ""VAS_Save_Diag"";";
 			x = 0.1 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.8 - (1 / 25);
 			w = (6.25 / 40);
@@ -239,8 +284,18 @@ class VAS_Diag {
 		class ButtonLoadGear : VAS_RscButtonMenu {
 			idc = -1;
 			text = "Load Gear";
-			onButtonClick = "if(!vas_disableLoadSave) then {createDialog ""VAS_Load_Diag"";} else {hint ""The mission maker has disabled this feature!"";};";
+			onButtonClick = "createDialog ""VAS_Load_Diag"";";
 			x = 0.1 + (6.25 / 19.8) + (1 / 250 / (safezoneW / safezoneH));
+			y = 0.8 - (1 / 25);
+			w = (6.25 / 40);
+			h = (1 / 25);
+		};
+		
+		class ButtonRemoveAll : VAS_RscButtonMenu {
+			idc = -1;
+			text = "Remove All";
+			onButtonClick = "[true] spawn VAS_fnc_removeGear;";
+			x = 0.42 + (6.25 / 22.5) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.8 - (1 / 25);
 			w = (6.25 / 40);
 			h = (1 / 25);
@@ -253,7 +308,7 @@ class VAS_Load_Diag {
 	name= "Virtual_Ammobox_Sys Load";
 	movingEnable = false;
 	enableSimulation = true;
-	onLoad = "[1] execVM 'gear\refresh.sqf'";
+	onLoad = "[1] spawn VAS_fnc_SaveLoad";
 	
 	class controlsBackground {
 		class VAS_RscTitleBackground:VAS_RscText {
@@ -293,7 +348,7 @@ class VAS_Load_Diag {
 			idc = 2521;
 			text = "";
 			sizeEx = 0.035;
-			onLBSelChanged = "[1] execVM 'gear\csel.sqf'";
+			onLBSelChanged = "[1] spawn VAS_fnc_loadoutInfo";
 			
 			x = 0.12; y = 0.26;
 			w = 0.230; h = 0.360;
@@ -324,7 +379,7 @@ class VAS_Load_Diag {
 		class LoadOnRespawnMenu : VAS_RscButtonMenu {
 			idc = -1;
 			text = "Load On Respawn";
-			onButtonClick = "[] call vas_loadonrespawn;";
+			onButtonClick = "[] call VAS_fnc_onRespawn;";
 			x = 0.10 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.8 - (1 / 25);
 			w = (9 / 40);
@@ -335,7 +390,7 @@ class VAS_Load_Diag {
 			idc = -1;
 			text = "Load";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "[] call fnc_load_gear";
+			onButtonClick = "[] spawn VAS_fnc_loadGear";
 			x = 0.05 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.73 - (1 / 25);
 			w = (6.25 / 40);
@@ -347,7 +402,7 @@ class VAS_Load_Diag {
 			idc = -1;
 			text = "Delete";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "[] call fnc_delete_gear";
+			onButtonClick = "[] spawn VAS_fnc_deleteGear";
 			x = 0.25 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.73 - (1 / 25);
 			w = (6.25 / 40);
@@ -361,7 +416,7 @@ class VAS_Save_Diag {
 	name= "Virtual_Ammobox_Sys Save";
 	movingEnable = false;
 	enableSimulation = true;
-	onLoad = "[0] execVM 'gear\refresh.sqf'";
+	onLoad = "[0] spawn VAS_fnc_SaveLoad";
 	
 	class controlsBackground {
 		class VAS_RscTitleBackground:VAS_RscText {
@@ -401,7 +456,7 @@ class VAS_Save_Diag {
 			idc = 2511;
 			text = "";
 			sizeEx = 0.035;
-			onLBSelChanged = "[0] execVM 'gear\csel.sqf'";
+			onLBSelChanged = "[0] spawn VAS_fnc_loadoutInfo";
 			
 			x = 0.12; y = 0.26;
 			w = 0.230; h = 0.360;
@@ -443,7 +498,7 @@ class VAS_Save_Diag {
 			idc = -1;
 			text = "Save";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
-			onButtonClick = "[] call fnc_save_gear";
+			onButtonClick = "[] call VAS_fnc_saveGear";
 			x = 0.35 + (6.25 / 40) + (1 / 250 / (safezoneW / safezoneH));
 			y = 0.73 - (1 / 25);
 			w = (6.25 / 40);
@@ -483,7 +538,7 @@ class VAS_prompt
 	{
 		class InfoMsg : VAS_RscStructuredText
 		{
-			idc = -1;
+			idc = 2551;
 			sizeEx = 0.020;
 			text = "<t align='center'><t size='.8px'>What do you want to do with that attachment?</t></t><br/><t align='center'><t size='0.6'>Please know that if you choose to add it to your weapon your current existing attachment in that slot will be lost.</t></t>";
 			x = 0.287;
@@ -492,7 +547,7 @@ class VAS_prompt
 		};
 
 		class addtogun : VAS_RscButtonMenu {
-			idc = -1;
+			idc = 2552;
 			text = "Add to gun";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
 			onButtonClick = "vas_prompt_choice = true; closeDialog 0;";
@@ -503,7 +558,7 @@ class VAS_prompt
 		};
 		
 		class addtogear : VAS_RscButtonMenu {
-			idc = -1;
+			idc = 2553;
 			text = "Add to INV";
 			colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])", "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])", "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])", 0.5};
 			onButtonClick = "vas_prompt_choice = false; closeDialog 0;";

@@ -333,12 +333,12 @@ sideObj = objNull;
 priorityTargets = ["None"];
 smRewards = 
 [
-	["an AH-9", "B_AH9_F"],
-	["a Ka60", "O_Ka60_F"],
-	["an unarmed Ka60", "O_Ka60_Unarmed_F"],
-	["a Hunter GMG", "B_Hunter_RCWS_F"],
-	["a Hunter HMG", "B_Hunter_HMG_F"],
-	["an off-road jeep", "c_offroad"]
+	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
+	["a Hunter GMG", "B_MRAP_01_gmg_F"],
+	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
+	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
+	["a UH-80 Ghosthawk", "B_Heli_Transport_01_F"],
+	["a CH-49 Mohawk", "B_Heli_Transport_02_F"]
 ];
 smMarkerList = 
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
