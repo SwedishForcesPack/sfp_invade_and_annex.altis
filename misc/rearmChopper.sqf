@@ -29,6 +29,76 @@ if !(_veh isKindOf "Helicopter") exitWith { _veh vehicleChat "This pad is for ch
 _fuelLevel = fuel _veh;
 _damage = getDammage _veh;
 _veh setFuel 0;
+_ghosthawkAmmo = 0;
+_ghosthawkFlares = 0;
+
+_veh setVehicleAmmo 1;
+_veh vehicleChat format ["Servicing %1... Please stand by...", _vehType];
+_magazines = getArray(configFile >> "CfgVehicles" >> _vehType >> "magazines");
+
+if (count _magazines > 0) then {
+	_removed = [];
+	{
+		if (!(_x in _removed)) then {
+			_veh removeMagazines _x;
+			_removed = _removed + [_x];
+		};
+	} forEach _magazines;
+	{
+		_veh vehicleChat format ["Reloading %1", _x];
+		sleep 0.1;
+		_veh addMagazine _x;
+	} forEach _magazines;
+};
+
+_count = count (configFile >> "CfgVehicles" >> _vehType >> "Turrets");
+
+if (_count > 0) then {
+	for "_i" from 0 to (_count - 1) do {
+		scopeName "xx_reload2_xx";
+		_config = (configFile >> "CfgVehicles" >> _vehType >> "Turrets") select _i;
+		_magazines = getArray(_config >> "magazines");
+		_removed = [];
+		{
+			if (!(_x in _removed)) then {
+				_veh removeMagazines _x;
+				_removed = _removed + [_x];
+			};
+		} forEach _magazines;
+		{
+			_veh vehicleChat format ["Reloading %1", _x];
+			sleep 0.1;
+			_veh addMagazine _x;
+			sleep 0.1;
+		} forEach _magazines;
+		_count_other = count (_config >> "Turrets");
+		if (_count_other > 0) then {
+			for "_i" from 0 to (_count_other - 1) do {
+				_config2 = (_config >> "Turrets") select _i;
+				_magazines = getArray(_config2 >> "magazines");
+				_removed = [];
+				{
+					if (!(_x in _removed)) then {
+						_veh removeMagazines _x;
+						_removed = _removed + [_x];
+					};
+				} forEach _magazines;
+				{
+					_veh vehicleChat format ["Reloading %1", _x]; 
+					sleep 0.1;
+					_veh addMagazine _x;
+					sleep 0.1;
+				} forEach _magazines;
+			};
+		};
+	};
+};
+_veh setVehicleAmmo 1;	// Reload turrets / drivers magazine
+
+
+
+
+
 
 _veh vehicleChat format ["Repairing and refuelling %1. Stand by...", _vehType];
 

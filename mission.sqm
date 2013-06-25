@@ -22,35 +22,41 @@ class Mission
 		"A3_Structures_F_Mil_Flags",
 		"A3_Structures_F_Ind_Shed",
 		"A3_Misc_F_Helpers",
-		"A3_Structures_F_Civ_Lamps"
+		"A3_Structures_F_Civ_Lamps",
+		"a3_characters_f_beta",
+		"A3_Air_F_Beta_Heli_Transport_01",
+		"a3_soft_f_hemtt",
+		"A3_Characters_F_OPFOR"
 	};
 	addOnsAuto[]=
 	{
-		"a3_map_stratis",
+		"A3_Characters_F_BLUFOR",
+		"a3_characters_f_beta",
+		"A3_Structures_F_Walls",
+		"A3_Signs_F",
 		"A3_Structures_F_Mil_Fortification",
 		"A3_Structures_F_Mil_Helipads",
-		"A3_Signs_F",
-		"A3_Structures_F_Walls",
-		"A3_Soft_F_MRAP_01",
 		"A3_Structures_F_Items_Vessels",
+		"A3_Air_F_Beta_Heli_Transport_01",
+		"A3_Soft_F_MRAP_01",
+		"a3_soft_f_hemtt",
 		"A3_Soft_F_Quadbike",
 		"A3_Boat_F_Boat_Armed_01",
 		"A3_Boat_F_Boat_Transport_01",
 		"A3_Structures_F_Civ_Camping",
 		"A3_Weapons_F_Ammoboxes",
-		"A3_Characters_F_BLUFOR",
-		"A3_Static_F_Mortar_01",
-		"A3_Air_F_Heli_Light_01",
 		"A3_Structures_F_System",
 		"A3_Structures_F_Mil_Flags",
 		"A3_Structures_F_Ind_Shed",
 		"A3_Misc_F_Helpers",
-		"A3_Structures_F_Civ_Lamps"
+		"A3_Static_F_Mortar_01",
+		"A3_Structures_F_Civ_Lamps",
+		"a3_map_stratis"
 	};
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.87 BETA";
+		briefingName="co40 AW Invade & Annex 2.87.3 BETA";
 		startWeather=0;
 		startWind=0.079999998;
 		startWindDir=10;
@@ -645,7 +651,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=601;
+		items=603;
 		class Item0
 		{
 			position[]={2469.0491,3.1891034,5851.1865};
@@ -3721,7 +3727,7 @@ class Mission
 			azimut=190;
 			id=319;
 			side="EMPTY";
-			vehicle="B_Heli_Light_01_F";
+			vehicle="B_Heli_Transport_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H1"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H1"",0.5] execVM ""mark_unit.sqf"";";
@@ -3732,7 +3738,7 @@ class Mission
 			azimut=190;
 			id=320;
 			side="EMPTY";
-			vehicle="B_Heli_Light_01_F";
+			vehicle="B_Heli_Transport_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H2"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H2"",0.5] execVM ""mark_unit.sqf"";";
@@ -4095,7 +4101,7 @@ class Mission
 			azimut=200;
 			id=353;
 			side="EMPTY";
-			vehicle="B_MRAP_01_F";
+			vehicle="B_Truck_01_covered_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4106,7 +4112,7 @@ class Mission
 			azimut=200;
 			id=354;
 			side="EMPTY";
-			vehicle="B_MRAP_01_F";
+			vehicle="B_Truck_01_covered_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
@@ -4965,7 +4971,7 @@ class Mission
 			azimut=235;
 			id=433;
 			side="EMPTY";
-			vehicle="B_Heli_Light_01_F";
+			vehicle="B_Heli_Transport_01_F";
 			leader=1;
 			skill=0.60000002;
 			init="veh = [this, 60, 300, 0, FALSE, FALSE, ""nul = [this,""""H3"""",0.5] execVM """"mark_unit.sqf"""";""] execVM ""vehicle.sqf""; nul = [this,""H3"",0.5] execVM ""mark_unit.sqf"";";
@@ -7240,6 +7246,28 @@ class Mission
 			leader=1;
 			skill=0.60000002;
 			init="this allowDamage false;";
+		};
+		class Item601
+		{
+			position[]={2088.9539,6.0852275,5719.1465};
+			azimut=105;
+			id=641;
+			side="EMPTY";
+			vehicle="B_MRAP_01_F";
+			leader=1;
+			skill=0.60000002;
+			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
+		};
+		class Item602
+		{
+			position[]={2086.98,6.1195326,5712.0054};
+			azimut=105;
+			id=642;
+			side="EMPTY";
+			vehicle="B_MRAP_01_F";
+			leader=1;
+			skill=0.60000002;
+			init="veh = [this, 60, 300, 0, FALSE] execVM ""vehicle.sqf"";";
 		};
 	};
 	class Markers

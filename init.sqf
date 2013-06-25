@@ -17,6 +17,7 @@ distibuting this mission when hosting!
 This version of Domination was lovingly crafted by
 Jack Williams (Rarek) for Ahoy World!
 */
+enableSaving [false, false]; //Disables the 'Suspend' in local testing and allows abort.
 
 #define WELCOME_MESSAGE	"Welcome to Ahoy World's Invade & Annex\n" +\
 						"by Rarek (Ahoy World)\n\n" +\
@@ -335,6 +336,7 @@ smRewards =
 [
 	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
 	["a Hunter GMG", "B_MRAP_01_gmg_F"],
+	["a Hunter HMG", "B_MRAP_01_hmg_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
 	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
 	["a UH-80 Ghosthawk", "B_Heli_Transport_01_F"],
@@ -583,6 +585,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_SquadsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
+		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
 		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
@@ -592,20 +595,21 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_SquadsDefend do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
+		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
 		[_spawnGroup, _pos] call BIS_fnc_taskDefend;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
 	};
 	
-	x = 0;
+	_x = 0;
 	for "_x" from 0 to PARAMS_TeamsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, 20],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
 		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
 	};
-	
 	_x = 0;
 	for "_x" from 0 to PARAMS_CarsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
@@ -614,7 +618,15 @@ _pos = getMarkerPos (_this select 0);
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
 	};
-
+	/* //Commented out by noms (not working)
+	for "_x" from 0 to PARAMS_ArmourPatrol do {
+		_armourGroup = createGroup east;
+		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
+		_armour = "O_APC_Wheeled_02_rcws_F" createUnit [_randomPos,_armourGroup];
+		[_armourGroup] call bis_fnc_taskPatrol;
+		_enemiesArray = _enemiesArray + [_armourGroup];
+	};
+	*/
 	{
 		_newGrp = [_x] call AW_fnc_garrisonBuildings;
 		if (!isNull _newGrp) then { _enemiesArray = _enemiesArray + [_newGrp]; };
@@ -664,7 +676,8 @@ switch (PARAMS_Weather) do
 		0 setFog 0.7;
 	};
 };
-
+//Load the weatherChange scripting...
+_null = [] execVM "weatherChange.sqf"; 
 //Spawn random wrecks
 if (PARAMS_PriorityTargets == 1) then
 {
