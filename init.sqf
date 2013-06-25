@@ -17,7 +17,6 @@ distibuting this mission when hosting!
 This version of Domination was lovingly crafted by
 Jack Williams (Rarek) for Ahoy World!
 */
-enableSaving [false, false]; //Disables the 'Suspend' in local testing and allows abort.
 
 #define WELCOME_MESSAGE	"Welcome to Ahoy World's Invade & Annex\n" +\
 						"by Rarek (Ahoy World)\n\n" +\
@@ -676,8 +675,7 @@ switch (PARAMS_Weather) do
 		0 setFog 0.7;
 	};
 };
-//Load the weatherChange scripting...
-_null = [] execVM "weatherChange.sqf"; 
+
 //Spawn random wrecks
 if (PARAMS_PriorityTargets == 1) then
 {
