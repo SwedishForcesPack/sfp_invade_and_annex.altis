@@ -290,7 +290,7 @@ while {true} do
 			_hangar = "Land_TentHangar_V1_F" createVehicle _flatPos;
 			waitUntil {alive _hangar};
 			_hangar setPos [(getPos _hangar select 0), (getPos _hangar select 1), ((getPos _hangar select 2) - 1)];
-			sideObj = "O_Ka60_F" createVehicle _flatPos;
+			sideObj = "O_Heli_Light_02_F" createVehicle _flatPos;
 			waitUntil {alive sideObj};
 			{_x setDir _randomDir} forEach [sideObj,_hangar];
 			sideObj setVehicleLock "LOCKED";

@@ -1,11 +1,9 @@
 //Allow player to respawn with his loadout? If true unit will respawn with all ammo from initial save! Set to false to disable this and rely on other scripts!
 vas_onRespawn = false;
 //Preload Weapon Config?
-vas_preload = true;
+vas_preload = false;
 //If limiting weapons its probably best to set this to true so people aren't loading custom loadouts with restricted gear.
-vas_disableLoadSave = false;
-//Amount of save/load slots
-vas_customslots = 9; //9 is actually 10 slots, starts from 0 to whatever you set, so always remember when setting a number to minus by 1, i.e 12 will be 11.
+vas_disableLoadSave = false; 
 
 /*
 	NOTES ON EDITING!
@@ -31,7 +29,7 @@ vas_items = [];
 //Want to limit backpacks? Place the classnames in the array!
 vas_backpacks = [];
 //Want to limit goggles? Place the classnames in the array!
-vas_glasses = [];
+vas_goggles = [];
 
 
 /*
@@ -39,8 +37,7 @@ vas_glasses = [];
 	THIS IS THE SAME AS THE ABOVE VARIABLES, YOU NEED TO KNOW THE CLASS NAME OF THE ITEM YOU ARE RESTRICTING. THIS DOES NOT WORK IN 
 	CONJUNCTION WITH THE ABOVE METHOD, THIs IS ONLY FOR RESTRICTING / LIMITING ITEMS FROM VAS AND NOTHING MORE
 	
-														EXAMPLE
-	vas_r_weapons = ["srifle_EBR_F","arifle_MX_GL_F"];
+														EXAMPL
 	vas_r_items = ["muzzle_snds_H","muzzle_snds_B","muzzle_snds_L","muzzle_snds_H_MG"]; //Removes suppressors from VAS
 	vas_r_goggles = ["G_Diving"]; //Remove diving goggles from VAS
 */
@@ -53,11 +50,6 @@ vas_r_weapons = [
 "srifle_GM6_SOS_F",
 "srifle_LRR_SOS_F"
 ];
-//Backpacks to remove from VAS
-vas_r_backpacks = [
-"B_Mortar_01_support_F",
-"B_Mortar_01_weapon_F"
-];
 //Magazines to remove from VAS
 vas_r_magazines = [];
 //Items to remove from VAS
@@ -69,5 +61,10 @@ vas_r_items = [
 "U_Rangemaster",
 "Rangefinder"
 ];
+//Backpacks to remove from VAS
+vas_r_backpacks = [
+"B_Mk6Mortar_Support",
+"B_Mk6Mortar_Wpn"
+];
 //Goggles to remove from VAS
-vas_r_glasses = [];
+vas_r_goggles = [];

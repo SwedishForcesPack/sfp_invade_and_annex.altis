@@ -26,7 +26,9 @@ class Mission
 		"a3_characters_f_beta",
 		"A3_Air_F_Beta_Heli_Transport_01",
 		"a3_soft_f_hemtt",
-		"A3_Characters_F_OPFOR"
+		"A3_Characters_F_OPFOR",
+		"A3_Air_F_Beta_Heli_Attack_01",
+		"A3_Air_F_Beta_Heli_Transport_02"
 	};
 	addOnsAuto[]=
 	{
@@ -51,12 +53,14 @@ class Mission
 		"A3_Misc_F_Helpers",
 		"A3_Static_F_Mortar_01",
 		"A3_Structures_F_Civ_Lamps",
-		"a3_map_stratis"
+		"a3_map_stratis",
+		"A3_Air_F_Beta_Heli_Attack_01",
+		"A3_Air_F_Beta_Heli_Transport_02"
 	};
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co40 AW Invade & Annex 2.87.4 BETA";
+		briefingName="co40 AW Invade & Annex 2.87.9 BETA";
 		startWeather=0;
 		startWind=0.079999998;
 		startWindDir=10;

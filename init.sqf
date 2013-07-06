@@ -338,8 +338,7 @@ smRewards =
 	["a Hunter HMG", "B_MRAP_01_hmg_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
 	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
-	["a UH-80 Ghosthawk", "B_Heli_Transport_01_F"],
-	["a CH-49 Mohawk", "B_Heli_Transport_02_F"]
+	["a CH-49 Mohawk", "I_Heli_Transport_02_F"]
 ];
 smMarkerList = 
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
@@ -584,7 +583,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_SquadsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
-		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
+		if(random 1 > 0) then {"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];};
 		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
@@ -594,7 +593,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_SquadsDefend do {
 		_randomPos = [[[getMarkerPos currentAO, PARAMS_AOSize],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
-		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
+		if(random 1 > 0) then {"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];};
 		[_spawnGroup, _pos] call BIS_fnc_taskDefend;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];
@@ -604,7 +603,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 0 to PARAMS_TeamsPatrol do {
 		_randomPos = [[[getMarkerPos currentAO, 20],_dt],["water","out"]] call BIS_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
+		if(random 1 > 0) then {"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];};
 		[_spawnGroup, _pos, 400] call bis_fnc_taskPatrol;
 		
 		_enemiesArray = _enemiesArray + [_spawnGroup];

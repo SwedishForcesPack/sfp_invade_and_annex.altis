@@ -96,8 +96,8 @@ while {true} do
 	_flatPosAlt = [(_flatPos select 0) - 2, (_flatPos select 1), (_flatPos select 2)];
 	_flatPosClose = [(_flatPos select 0) + 2, (_flatPos select 1), (_flatPos select 2)];
 	_priorityGroup = createGroup EAST;
-	priorityVeh1 = "O_Mk6" createVehicle _flatPosAlt;
-	priorityVeh2 = "O_Mk6" createVehicle _flatPosClose;
+	priorityVeh1 = "O_Mortar_01_F" createVehicle _flatPosAlt;
+	priorityVeh2 = "O_Mortar_01_F" createVehicle _flatPosClose;
 	priorityVeh1 addEventHandler["Fired",{if (!isPlayer (gunner priorityVeh1)) then { priorityVeh1 setVehicleAmmo 1; };}];
 	priorityVeh2 addEventHandler["Fired",{if (!isPlayer (gunner priorityVeh2)) then { priorityVeh2 setVehicleAmmo 1; };}];
 	"O_Soldier_F" createUnit [_flatPosAlt, _priorityGroup, "priorityTarget1 = this; this moveInGunner priorityVeh1;"];
