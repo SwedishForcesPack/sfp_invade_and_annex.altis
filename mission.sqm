@@ -603,7 +603,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="mortarMan_1";
-					init="(group this) setGroupId [""ARTY - HayMaker""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="(group this) setGroupId [""ARTY - HayMaker""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="UAV operator - Deathstar";
 				};
 			};
@@ -1066,7 +1066,7 @@ class Mission
 				class Item0
 				{
 					position[]={14312.692,19.163263,16295.594};
-					azimut=-85.140068;
+					azimut=-85.140099;
 					id=62;
 					side="WEST";
 					vehicle="B_Helipilot_F";
@@ -1080,7 +1080,7 @@ class Mission
 				class Item1
 				{
 					position[]={14312.748,19.088186,16298.871};
-					azimut=-3.7599077;
+					azimut=-3.7599101;
 					special="NONE";
 					id=63;
 					side="WEST";
@@ -1088,7 +1088,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk)";
 				};
 				class Item2

@@ -1229,8 +1229,7 @@ BTC_player_killed =
 				if (BTC_black_screen == 1 && BTC_camera_unc == 0) then {titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "BLACK FADED"]} else {hintSilent format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes];};
 				if (BTC_camera_unc == 1) then
 				{
-					titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "PLAIN"]; titleFadeOut 1;
-					sleep 1.5;
+					titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "PLAIN DOWN"]; titleFadeOut 1;
 					if (!dialog) then {disableSerialization;_r_dlg = createDialog "BTC_spectating_dialog";sleep 0.01;_ui = uiNamespace getVariable "BTC_r_spectating";(_ui displayCtrl 120) ctrlShow false;if (BTC_disable_respawn == 1) then {(_ui displayCtrl 122) ctrlShow false;};{_lb = lbAdd [121,_x];if (_x == BTC_camera_unc_type select 0) then {lbSetCurSel [121,_lb];}} foreach BTC_camera_unc_type;};
 					BTC_r_u_camera attachTo [player,BTC_r_s_cam_view];
 					BTC_r_u_camera camCommit 0;
