@@ -57,7 +57,6 @@ private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_positi
 
 _handle = execVM "aw_functions.sqf";
 waitUntil{scriptDone _handle};
-execVM "changeLog.sqf";
 _initialTargets = [
 	"Kalochori",
 	"Sofia",
@@ -305,13 +304,13 @@ if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"
 /* 	Disabled while Alpha bug is present
 	_null = [] execVM "misc\radioChannels.sqf"; */
 
-[] spawn {
+/*[] spawn {
 	scriptName "initMission.hpp: mission start";
 	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
 	waitUntil {sleep 0.5; !(isNil "BIS_fnc_titlecard_finished")};
 	[[14600.0,16801.0,100],"We've gotten a foot-hold on the island,|but we need to take the rest.||Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
 	titleText [WELCOME_MESSAGE, "PLAIN", 3];
-};
+};*/
 
 if (!isServer) then
 {
