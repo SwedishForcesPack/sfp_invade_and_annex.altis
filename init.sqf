@@ -22,7 +22,11 @@ Jack Williams (Rarek) for Ahoy World!
 if (!isServer && isNull player) then {isJIP=true;} else {isJIP=false;};
 
 // Wait until player is initialized
-if (!isDedicated) then {waitUntil {!isNull player && isPlayer player};};
+if (!isDedicated) then
+{
+	waitUntil {!isNull player && isPlayer player};
+	sidePlayer = side player;
+};
 
 #define WELCOME_MESSAGE	"Welcome to Ahoy World's Invade & Annex ~ALTIS~\n" +\
 						"by Rarek (Ahoy World)\n\n" +\
@@ -161,7 +165,13 @@ if(isMultiplayer) then
 	if(PARAMS_DebugMode == 1) then {DEBUG = true} else {DEBUG = false};
 } else {DEBUG = true};
 
+
+// Disable saving to save time
+enableSaving [false, false];
+
+// Disable automatic radio messages
 enableSentences false;
+
 
 if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, _name] execVM ""ac\init.sqf"";"; };
 
@@ -425,10 +435,12 @@ sideObj = objNull;
 priorityTargets = ["None"];
 smRewards =
 [
+	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
 	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
 	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
 	["an A-143 Buzzard", "I_Plane_Fighter_03_CAS_F"],
-	["an M2A1 Slammer", "B_MBT_01_cannon_F"]
+	["an M2A1 Slammer", "B_MBT_01_cannon_F"],
+	["an Armed Offroad Pickup", "B_G_Offroad_01_armed_F"]
 ];
 smMarkerList =
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];

@@ -100,6 +100,6 @@ switch(_uid)do
 	player addAction ["<t color='#900000'>Admin spectate</t>", "spectator\specta.sqf"];
  	};
  	default
-     	{
+  {
  	};
 };

@@ -399,7 +399,7 @@ onLoadName = "AW Invade & Annex";
 loadScreen = "awMissionLogo.jpg";
 OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk:9987.";
 
-disabledAI = true;
+disabledAI = 1;
 Respawn = 3;
 RespawnDelay = 1;
 RespawnDialog = 0;

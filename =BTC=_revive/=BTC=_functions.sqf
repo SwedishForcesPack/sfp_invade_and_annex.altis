@@ -1,7 +1,7 @@
 /*
 Created by =BTC= Giallustio
 
-Visit us at: 
+Visit us at:
 http://www.blacktemplars.altervista.org/
 06/03/2012
 */
@@ -62,7 +62,7 @@ BTC_get_gear =
 				case ((_x select 3) == 1)  : {_mag_loaded_prim = [(_x select 0),(_x select 1)]};
 				case ((_x select 3) == 2)  : {_mag_loaded_sec = [(_x select 0),(_x select 1)]};
 				case ((_x select 3) == 4) : {_mag_loaded_at = [(_x select 0),(_x select 1)]};
-			};			
+			};
 		};
 	} foreach _magazinesAmmoFull;
 	_ammo = [_mag_loaded_prim,_mag_loaded_sec,_mag_loaded_at,_mag_uniform,_mag_vest,_mag_back];
@@ -128,48 +128,48 @@ BTC_set_gear =
 	////////////////////////
 	if ((_gear select 0) != "") then {_unit addUniform (_gear select 0);};
 	if ((_gear select 1) != "") then {_unit addVest (_gear select 1);};
-	_unit addBackpack "B_AssaultPack_blk"; 
+	_unit addBackpack "B_AssaultPack_blk";
 	if (count (_gear select 11) > 0) then {{if (_x != "" && _x != "Binocular" && _x != "Rangefinder" && _x != "Laserdesignator") then {_unit addItem _x;_unit assignItem _x;sleep 0.01;};} foreach (_gear select 11);};
 
 	_ammo = _gear select 16;
 	if (count (_ammo select 0) > 0) then {_unit addMagazine (_ammo select 0)};
 	if (count (_ammo select 1) > 0) then {_unit addMagazine (_ammo select 1)};
 	if (count (_ammo select 2) > 0) then {_unit addMagazine (_ammo select 2)};
-	
-	{if (isClass (configFile >> "cfgWeapons" >> _x)) then {_unit addweapon _x;};} foreach (_gear select 7);	
-	
+
+	{if (isClass (configFile >> "cfgWeapons" >> _x)) then {_unit addweapon _x;};} foreach (_gear select 7);
+
 	removeBackPack _unit;
-	if ((_gear select 4) != "") then {_unit addBackPack (_gear select 4);clearAllItemsFromBackpack _unit;};	
-	
+	if ((_gear select 4) != "") then {_unit addBackPack (_gear select 4);clearAllItemsFromBackpack _unit;};
+
 	//mags
 	_u_cont = (uniformContainer _unit);
-	_v_cont = (vestContainer _unit);	
-	
+	_v_cont = (vestContainer _unit);
+
 	{_unit addMagazine _x;} foreach (_ammo select 3);
 	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};sleep 0.1;} foreach (_gear select 12);
 
 	if (!isnull _u_cont) then {_u_cont addItemCargo ["itemWatch",50];};
-	
+
 	{_unit addMagazine _x;} foreach (_ammo select 4);
 	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};sleep 0.1;} foreach (_gear select 13);
-	
+
 	if (!isnull _v_cont) then {_v_cont addItemCargo ["itemWatch",300];};
-	
+
 	{_unit addMagazine _x;} foreach (_ammo select 5);
-	
+
 	{if (!(isClass (configFile >> "cfgMagazines" >> _x))) then {_unit addItem _x;} else {if (getNumber(configFile >> "cfgMagazines" >> _x >> "count") < 2) then {_unit addMagazine _x;};};sleep 0.1;} foreach (_gear select 5);
-	
+
 	if (!isnull _u_cont) then {for "_i" from 1 to 50 do {_unit removeItemFromUniform "itemWatch";};};
-	if (!isnull _v_cont) then {for "_i" from 1 to 300 do {_unit removeItemFromVest "itemWatch";};};		
-	
+	if (!isnull _v_cont) then {for "_i" from 1 to 300 do {_unit removeItemFromVest "itemWatch";};};
+
 	if ((_gear select 2) != "") then {_unit addGoggles (_gear select 2);};
 	if ((_gear select 3) != "") then {_unit addHeadgear (_gear select 3);};
-	if (count ((_gear select 6) select 0) > 0) then 
+	if (count ((_gear select 6) select 0) > 0) then
 	{
 		for "_i" from 0 to (count ((_gear select 6) select 0) - 1) do
 		{
 			(unitBackpack _unit) addweaponCargoGlobal [((_gear select 6) select 0) select _i,((_gear select 6) select 1) select _i];
-		};			
+		};
 	};
 	removeAllPrimaryWeaponItems _unit;
 	if (count (_gear select 8) > 0) then {{if (_x != "") then {_unit addPrimaryWeaponItem _x;};} foreach (_gear select 8);};
@@ -258,7 +258,7 @@ BTC_fnc_bleeding =
 		sleep 0.1;
 		if (((_unit getVariable "BTC_r_status" select 0)) == 0 && ((_unit getVariable "BTC_r_status" select 1)) == 0 && (_unit getVariable "BTC_r_status" select 2) == 0) then {BTC_r_bleeding_loop = false;};
 		//Bleeding
-		if (((_unit getVariable "BTC_r_status" select 0)) == 1 && time > _timeout_bleed) then 
+		if (((_unit getVariable "BTC_r_status" select 0)) == 1 && time > _timeout_bleed) then
 		{
 			private ["_moving_ratio"];
 			_moving_ratio = 1;
@@ -292,7 +292,7 @@ BTC_fnc_bleeding =
 		if ((_unit getVariable "BTC_r_status" select 2) == 1 && _timeout_mor == 0) then {_timeout_mor = time + 120;_timeout_eff_mor = time + 3;}; //else {_timeout_mor = 0;_timeout_eff_mor = 0;};
 		if ((_unit getVariable "BTC_r_status" select 2) == 1 && time > _timeout_eff_mor) then {addCamShake [2,4,3];_timeout_eff_mor = time + 3;};
 		//if ((BTC_r_damage > 1) && ((_unit getVariable "BTC_r_status" select 3) != 1)) then {_unit setVariable ["BTC_r_status",[((_unit getVariable "BTC_r_status") select 0),(_unit getVariable "BTC_r_status" select 1),(_unit getVariable "BTC_r_status" select 2),1],true];_timeout_mor = time + 120;};
-		//medikit - perchè in base a BTC_r_damage? Solo se in attesa di revive oppure ferito armi e gambe
+		//medikit - perch? in base a BTC_r_damage? Solo se in attesa di revive oppure ferito armi e gambe
 		//if ((((_unit getVariable "BTC_r_status") select 0) > 75) && (_unit getVariable "BTC_r_status" select 3) != 1) then {_unit setVariable ["BTC_r_status",[((_unit getVariable "BTC_r_status") select 0),(_unit getVariable "BTC_r_status" select 1),(_unit getVariable "BTC_r_status" select 2),1],true];};
 		//Serve un medikit se ferito a gambe o braccia
 		if (BTC_r_damage_legs > 0.50 && !BTC_r_med_effect) then
@@ -305,8 +305,8 @@ BTC_fnc_bleeding =
 		};
 		//Passa al wait for revive o morte
 		if (((_unit getVariable "BTC_r_status") select 1) >= 100) then {BTC_r_bleeding_loop = false;};
-		//Può svenire se perde troppo sangue o per dolore
-		if ((((_unit getVariable "BTC_r_status") select 1) > 65 || (time > _timeout_mor && _timeout_mor != 0)) && !BTC_r_unc) then 
+		//Pu? svenire se perde troppo sangue o per dolore
+		if ((((_unit getVariable "BTC_r_status") select 1) > 65 || (time > _timeout_mor && _timeout_mor != 0)) && !BTC_r_unc) then
 		{
 			if (((random 1.5) < (((_unit getVariable "BTC_r_status") select 1) / 100) && !BTC_r_unc) || (time > _timeout_mor)) then
 			{
@@ -362,13 +362,13 @@ BTC_r_wait_for_med =
 {
 	BTC_r_med_effect = true;
 	_state = player getVariable "BTC_r_status";
-	player setVariable ["BTC_r_status",[(_state select 0),(_state select 1),(_state select 2),(_state select 3),1],true];	
+	player setVariable ["BTC_r_status",[(_state select 0),(_state select 1),(_state select 2),(_state select 3),1],true];
 	while {BTC_r_med_effect} do
 	{
 		if (BTC_r_damage_legs > 0.5) then
 		{
 			player setHit ["legs", 1];player forceWalk true;
-			if (stance player != "PRONE") then 
+			if (stance player != "PRONE") then
 			{
 				switch (true) do
 				{
@@ -383,7 +383,7 @@ BTC_r_wait_for_med =
 		{
 			player setHit ["hands", 1];
 		};
-		if (BTC_r_damage_legs == 0 && BTC_r_damage_hands == 0) then {BTC_r_med_effect = false;};		
+		if (BTC_r_damage_legs == 0 && BTC_r_damage_hands == 0) then {BTC_r_med_effect = false;};
 		sleep 2;
 	};
 	player forceWalk false;
@@ -414,7 +414,7 @@ BTC_eh_killed =
 		player forceWalk false;
 		_actions = [] spawn BTC_assign_actions;
 		_respawn = [] spawn BTC_player_respawn;
-		if (BTC_respawn_gear == 1) then 
+		if (BTC_respawn_gear == 1) then
 		{
 			_gear = [player,BTC_gear] spawn BTC_set_gear;
 		};
@@ -461,7 +461,7 @@ BTC_check_unit_state =
 		if (_is_bleed == 0) then {(_ui displayCtrl 91) ctrlShow false;};
 		if (_bleeding == 0 || _is_bleed != 0) then {(_ui displayCtrl 96) ctrlShow false;};
 		if (_mor == 0) then {(_ui displayCtrl 92) ctrlShow false;};
-		if (_epi == 0) then {(_ui displayCtrl 93) ctrlShow false;};		
+		if (_epi == 0) then {(_ui displayCtrl 93) ctrlShow false;};
 		if (format ["%1",BTC_r_unit_dlg getVariable "BTC_need_revive"] != "1") then {(_ui displayCtrl 94) ctrlShow false;};
 		if (_med == 0 || _epi != 0 || _mor != 0 || _is_bleed != 0 || _bleeding != 0) then {(_ui displayCtrl 95) ctrlShow false;};
 		waitUntil {!Alive player || !dialog || !Alive _unit || isNull _unit};
@@ -497,13 +497,13 @@ BTC_r_apply_bandage =
 		closeDialog 0;
 		if (BTC_r_action == 1) then
 		{
-		
+
 			_anim_1 = "";_anim_2 = "";
 			//AinvPknlMstpSnonWnonDnon_medic2 polvere down
-			//AinvPknlMstpSnonWnonDnon_medic4 bendaggio down 
+			//AinvPknlMstpSnonWnonDnon_medic4 bendaggio down
 			if (format ["%1",_unit getVariable "BTC_need_revive"] == "1") then {};
 			//"AinvPknlMstpSnonWnonDnon_medicUp2" polvere up
-			//AinvPknlMstpSnonWnonDnon_medicUp0 non c'è di meglio per il bendaggio
+			//AinvPknlMstpSnonWnonDnon_medicUp0 non c'? di meglio per il bendaggio
 			player playMove "AinvPknlMstpSnonWnonDnon_medic";
 			sleep 5;
 			if (!isNull _unit && format ["%1",player getVariable "BTC_need_revive"] == "0") then
@@ -512,7 +512,7 @@ BTC_r_apply_bandage =
 				{
 
 				}
-				else 
+				else
 				{
 					private ["_name"];
 					_name = name _unit;
@@ -549,14 +549,14 @@ BTC_r_apply_bandage =
 					if (_bleed == 0) then {BTC_is_bleeding = false;};
 					_unit setVariable ["BTC_r_status",[(_state select 0),_bleed,(_state select 2),(_state select 3),(_state select 4)],true];
 				}
-				else 
+				else
 				{
 					private ["_name"];
 					_name = name _unit;
 					BTC_ban_pveh = [8,_name];publicVariable "BTC_ban_pveh";
 				};*/
-	
-			} else {hint "Bandage could not be applied!";};		
+
+			} else {hint "Bandage could not be applied!";};
 		};
 		switch (true) do
 		{
@@ -585,7 +585,7 @@ BTC_r_apply_tra =
 		closeDialog 0;
 		if (BTC_r_action == 1) then
 		{
-		
+
 		}
 		else
 		{
@@ -607,7 +607,7 @@ BTC_r_apply_tra =
 				if (_bleed < 0) then {_bleed = 0;};
 				_unit setVariable ["BTC_r_status",[(_state select 0),_bleed,(_state select 2),(_state select 3),(_state select 4)],true];
 				hint "Transfusion completed!";
-			} else {hint "Transfusion was not completed!";};		
+			} else {hint "Transfusion was not completed!";};
 		};
 		switch (true) do
 		{
@@ -635,12 +635,12 @@ BTC_r_apply_mor =
 		_unit = BTC_r_unit_dlg;
 		closeDialog 0;
 		if (BTC_r_action == 1) then
-		{	
+		{
 			player playMove "AinvPknlMstpSnonWnonDnon_medicUp0";
 			//ainvpknlmstpslaywrfldnon_medic self morphine
 			//Up AinvPknlMstpSnonWnonDnon_medicUp3
 			// morto AinvPknlMstpSnonWnonDnon_medic3
-			sleep 5;			
+			sleep 5;
 			if (!isNull _unit && format ["%1",player getVariable "BTC_need_revive"] == "0") then
 			{
 				private ["_state"];
@@ -665,7 +665,7 @@ BTC_r_apply_mor =
 				private ["_state"];
 				_state = (_unit getVariable "BTC_r_status");
 				_unit setVariable ["BTC_r_status",[(_state select 0),(_state select 1),0,(_state select 3),(_state select 4)],true];
-				hint "Morphine applied!";				
+				hint "Morphine applied!";
 			} else {hint "Morphine could not be applied!";};
 		};
 		switch (true) do
@@ -722,7 +722,7 @@ BTC_r_apply_epi =
 				_state = (_unit getVariable "BTC_r_status");
 				_unit setVariable ["BTC_r_status",[(_state select 0),(_state select 1),(_state select 2),0,(_state select 4)],true];
 				hint "Epi applied!";
-			} else {hint "Epi could not be applied!";};			
+			} else {hint "Epi could not be applied!";};
 		};
 		switch (true) do
 		{
@@ -780,7 +780,7 @@ BTC_r_apply_med =
 			{
 				private ["_state"];
 				_state = (_unit getVariable "BTC_r_status");
-				_unit setVariable ["BTC_r_status",[(_state select 0),(_state select 1),(_state select 2),(_state select 3),0],true];					
+				_unit setVariable ["BTC_r_status",[(_state select 0),(_state select 1),(_state select 2),(_state select 3),0],true];
 			};
 		}
 		else
@@ -802,7 +802,7 @@ BTC_r_apply_med =
 				_unit setVariable ["BTC_r_status",[(_state select 0),(_state select 1),(_state select 2),(_state select 3),0],true];
 				if (_unit == player) then {BTC_r_damage = 0;BTC_r_head = 0;BTC_r_damage_legs = 0;BTC_r_damage_hands = 0;_unit forceWalk false;_unit setHit ["legs", 0];_unit setHit ["hands", 0];BTC_r_med_effect = false;} else {_name = name _unit;BTC_med_pveh = [9,_name];publicVariable "BTC_med_pveh";};
 				hint "Medikit applied!";
-			} else {hint "Medikit could not be applied!";};			
+			} else {hint "Medikit could not be applied!";};
 		};
 	};
 	if (!_cond) then {hint "You don't have a Medikit!";closeDialog 0;};
@@ -829,7 +829,7 @@ BTC_fnc_wait_for_revive =
 	//BTC_killed_pveh = [10,_unit,"AinjPpneMstpSnonWrflDnon"];publicVariable "BTC_killed_pveh";
 	player setcaptive true;
 
-	BTC_killed_pveh = [2,_unit];publicVariable "BTC_killed_pveh";	
+	BTC_killed_pveh = [2,_unit];publicVariable "BTC_killed_pveh";
 	sleep 1;
 	player switchMove "AinjPpneMstpSnonWrflDnon";
 	WaitUntil {animationstate player == "AinjPpneMstpSnonWrflDnon"};
@@ -858,11 +858,11 @@ BTC_fnc_wait_for_revive =
 	closedialog 0;
 	//(findDisplay 46) displayRemoveEventHandler ["KeyDown",BTC_display_EH];
 	//player enableSimulation true;
-	if (time > BTC_r_timeout && format ["%1", player getVariable "BTC_need_revive"] == "1") then 
+	if (time > BTC_r_timeout && format ["%1", player getVariable "BTC_need_revive"] == "1") then
 	{
 		player setDamage 1;
 	};
-	if (format ["%1", player getVariable "BTC_need_revive"] == "0" && !BTC_respawn_cond) then 
+	if (format ["%1", player getVariable "BTC_need_revive"] == "0" && !BTC_respawn_cond) then
 	{
 		if (BTC_black_screen == 1) then {titleText ["", "BLACK IN"];} else {hintSilent "";};
 		player switchMove "AinjPpneMstpSnonWnonDnon_rolltofront";
@@ -873,7 +873,7 @@ BTC_fnc_wait_for_revive =
 	};
 	if (BTC_black_screen == 0 && BTC_action_respawn == 1 && BTC_disable_respawn == 0) then {_unit removeAction _id;};
 	player setcaptive false;
-	hintSilent "";	
+	hintSilent "";
 };
 BTC_fnc_PVEH =
 {
@@ -883,11 +883,11 @@ BTC_fnc_PVEH =
 	_type  = _array select 0;
 	switch (true) do
 	{
-		case (_type == 0) : 
+		case (_type == 0) :
 		{
 			_side = _array select 1;
 			_unit = _array select 3;
-			if (_side == BTC_side) then 
+			if (_side == BTC_side) then
 			{
 				_pos = _array select 2;
 				_marker = createmarkerLocal [format ["FA_%1", _pos], _pos];
@@ -909,7 +909,7 @@ BTC_fnc_PVEH =
 			};
 		};
 		case (_type == 1) : {(_array select 1) setDir 180;(_array select 1) playMoveNow "AinjPpneMstpSnonWrflDb_grab";};
-		case (_type == 2) : 
+		case (_type == 2) :
 		{
 			private ["_injured"];
 			_injured = (_array select 1);
@@ -921,14 +921,14 @@ BTC_fnc_PVEH =
 				_injured allowDamage true;
 			};
 		};
-		case (_type == 3) : 
+		case (_type == 3) :
 		{
 			private ["_injured","_veh"];
 			_injured = (_array select 1);
 			_veh     = (_array select 2);
 			if (name _injured == name player) then {_injured moveInCargo _veh};
 		};
-		case (_type == 4) : 
+		case (_type == 4) :
 		{
 			private ["_array_injured"];
 			_array_injured = (_array select 1);
@@ -936,14 +936,14 @@ BTC_fnc_PVEH =
 				if (name player == name _x) then {unAssignVehicle player;player action ["eject", vehicle player];_spawn = [] spawn {sleep 0.5;player switchMove "ainjppnemstpsnonwrfldnon";};};
 			} foreach _array_injured;
 		};
-		case (_type == 5) : 
+		case (_type == 5) :
 		{
 			private ["_array_injured"];
 			_spawn = [(_array select 1),(_array select 2)] spawn
 			{
 				_injured = _this select 0;
 				_healer  = _this select 1;
-				_injured setPos (_healer modelToWorld [0,1,0]);				
+				_injured setPos (_healer modelToWorld [0,1,0]);
 				_injured setDir (getDir _healer + 180);
 				_injured switchMove "AinjPfalMstpSnonWnonDnon_carried_up";
 				WaitUntil {!Alive _healer || ((animationstate _healer == "acinpercmstpsraswrfldnon") || (animationstate _healer == "acinpercmrunsraswrfldf") || (animationstate _healer == "acinpercmrunsraswrfldr") || (animationstate _healer == "acinpercmrunsraswrfldl"))};
@@ -952,7 +952,7 @@ BTC_fnc_PVEH =
 				_injured setDir 180;
 			};
 		};
-		case (_type == 6) : 
+		case (_type == 6) :
 		{
 			private ["_array_injured"];
 			_spawn = [(_array select 1)] spawn
@@ -962,37 +962,37 @@ BTC_fnc_PVEH =
 				if (format ["%1",(_this select 0) getVariable "BTC_need_revive"] == "1") then {(_this select 0) switchMove "ainjppnemstpsnonwrfldnon";};
 			};
 		};
-		case (_type == 7) : 
+		case (_type == 7) :
 		{
 			private ["_injured","_cpr_bonus"];
 			_injured = _array select 1;
 			_cpr_bonus = _array select 2;
 			if (name player == _injured) then {BTC_r_timeout = BTC_r_timeout + _cpr_bonus;};
 		};
-		case (_type == 8) : 
+		case (_type == 8) :
 		{
 			private ["_injured"];
 			_injured = _array select 1;
-			if (name player == _injured) then 
+			if (name player == _injured) then
 			{
 				private ["_state","_bleed"];
 				_state = (_injured getVariable "BTC_r_status");
 				_bleed = (_state select 0) - 70;
 				if (_bleed < 0) then {_bleed = 0;};
-				_injured setVariable ["BTC_r_status",[0,_bleed,(_state select 2),(_state select 3),(_state select 4)],true];			
+				_injured setVariable ["BTC_r_status",[0,_bleed,(_state select 2),(_state select 3),(_state select 4)],true];
 			};
 		};
-		case (_type == 9) : 
+		case (_type == 9) :
 		{
 			private ["_injured"];
 			_injured = _array select 1;
-			if (name player == _injured) then 
+			if (name player == _injured) then
 			{
 				private ["_state","_bleed"];
 				BTC_r_damage = 0;BTC_r_head = 0;BTC_r_damage_legs = 0;BTC_r_damage_hands = 0;player forceWalk false;BTC_r_med_effect = false;player setHit ["legs", 0];player setHit ["hands", 0];
 			};
 		};
-		case (_type == 10) : 
+		case (_type == 10) :
 		{
 			private ["_injured"];
 			_unit = _array select 1;
@@ -1054,7 +1054,7 @@ BTC_drag =
 		_array_veh = [];
 		{if (_x emptyPositions "cargo" != 0) then {_array_veh = _array_veh + [_x];};} foreach _array;
 		if (count _array_veh == 0) then {_veh_selected = objNull;};
-		if (count _array_veh > 0 && _veh_selected != _array_veh select 0) then 
+		if (count _array_veh > 0 && _veh_selected != _array_veh select 0) then
 		{
 			_veh_selected    = _array_veh select 0;
 			_name_veh        = getText (configFile >> "cfgVehicles" >> typeof _veh_selected >> "displayName");
@@ -1095,7 +1095,7 @@ BTC_carry =
 		_array_veh = [];
 		{if (_x emptyPositions "cargo" != 0) then {_array_veh = _array_veh + [_x];};} foreach _array;
 		if (count _array_veh == 0) then {_veh_selected = objNull;};
-		if (count _array_veh > 0 && _veh_selected != _array_veh select 0) then 
+		if (count _array_veh > 0 && _veh_selected != _array_veh select 0) then
 		{
 			_veh_selected    = _array_veh select 0;
 			_name_veh        = getText (configFile >> "cfgVehicles" >> typeof _veh_selected >> "displayName");
@@ -1172,7 +1172,7 @@ BTC_player_killed =
 			player setVariable ["BTC_need_revive",1,true];
 			player switchMove "AinjPpneMstpSnonWrflDnon";
 			_actions = [] spawn BTC_assign_actions;
-			if (BTC_respawn_gear == 1) then 
+			if (BTC_respawn_gear == 1) then
 			{
 				_gear = [player,BTC_gear] spawn BTC_set_gear;
 			};
@@ -1191,7 +1191,7 @@ BTC_player_killed =
 				if (BTC_active_lifes == 1) then {titleText [format ["Lifes remaining: %1",BTC_lifes], "BLACK FADED"];} else {titleText ["", "BLACK FADED"];};
 				sleep 0.5;
 			};
-			if (BTC_black_screen == 0) then {titleText ["", "BLACK IN"];};
+			if (BTC_black_screen == 0) then {titleText ["", "BLACK IN"]; titleFadeOut 1;};
 			disableUserInput false;
 			_time = time;
 			_timeout = _time + BTC_revive_time_max;
@@ -1227,13 +1227,13 @@ BTC_player_killed =
 				_lifes = "";
 				if (BTC_active_lifes == 1) then {_lifes = format ["Lifes remaining: %1",BTC_lifes];};
 				if (BTC_black_screen == 1 && BTC_camera_unc == 0) then {titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "BLACK FADED"]} else {hintSilent format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes];};
-				if (BTC_camera_unc == 1) then 
+				if (BTC_camera_unc == 1) then
 				{
-					titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "PLAIN DOWN"];
+					titleText [format ["%1\n%2\n%3", round (_timeout - time),_healer,_lifes], "PLAIN DOWN"]; titleFadeOut 1;
 					if (!dialog) then {disableSerialization;_r_dlg = createDialog "BTC_spectating_dialog";sleep 0.01;_ui = uiNamespace getVariable "BTC_r_spectating";(_ui displayCtrl 120) ctrlShow false;if (BTC_disable_respawn == 1) then {(_ui displayCtrl 122) ctrlShow false;};{_lb = lbAdd [121,_x];if (_x == BTC_camera_unc_type select 0) then {lbSetCurSel [121,_lb];}} foreach BTC_camera_unc_type;};
 					BTC_r_u_camera attachTo [player,BTC_r_s_cam_view];
 					BTC_r_u_camera camCommit 0;
-					if (BTC_r_camera_nvg) then {camusenvg true;} else {camusenvg false;};				
+					if (BTC_r_camera_nvg) then {camusenvg true;} else {camusenvg false;};
 				};
 				//sleep 0.5;
 			};
@@ -1244,18 +1244,18 @@ BTC_player_killed =
 			else
 			{
 				player cameraEffect ["TERMINATE", "BACK"];
-				camDestroy BTC_r_u_camera;	
+				camDestroy BTC_r_u_camera;
 				BTC_r_u_camera = objNull;
 				(findDisplay 46) displayRemoveEventHandler ["KeyDown",BTC_r_camera_EH_keydown];
 			};
 			closedialog 0;
-			if (time > _timeout && format ["%1", player getVariable "BTC_need_revive"] == "1") then 
+			if (time > _timeout && format ["%1", player getVariable "BTC_need_revive"] == "1") then
 			{
 				_respawn = [] spawn BTC_player_respawn;
 			};
-			if (format ["%1", player getVariable "BTC_need_revive"] == "0" && !BTC_respawn_cond) then 
+			if (format ["%1", player getVariable "BTC_need_revive"] == "0" && !BTC_respawn_cond) then
 			{
-				if (BTC_black_screen == 1) then {titleText ["", "BLACK IN"];} else {hintSilent "";};
+				if (BTC_black_screen == 1) then {titleText ["", "BLACK IN"]; titleFadeOut 1;} else {hintSilent "";};
 				if (BTC_need_first_aid == 1 && ((items player) find "FirstAidKit" != -1)) then {player removeItem "FirstAidKit";};
 				player playMove "amovppnemstpsraswrfldnon";
 				player playMove "";
@@ -1302,7 +1302,7 @@ BTC_player_respawn =
 		deTach player;
 		player setVariable ["BTC_need_revive",0,true];
 		closeDialog 0;
-		if (BTC_black_screen == 0) then {titleText ["", "BLACK OUT"];};
+		if (BTC_black_screen == 0) then {titleText ["", "BLACK OUT"]; titleFadeOut 1;};
 		sleep 0.2;
 		titleText ["", "BLACK FADED"];
 		if (vehicle player != player) then {unAssignVehicle player;player action ["eject", vehicle player];};
@@ -1333,11 +1333,11 @@ BTC_player_respawn =
 		closeDialog 0;
 		sleep 0.1;
 		BTC_respawn_cond = false;
-		if (BTC_dlg_on_respawn != 0) then 
+		if (BTC_dlg_on_respawn != 0) then
 		{
 			_dlg = [] spawn BTC_r_create_dialog_mobile;
-		} 
-		else 
+		}
+		else
 		{
 			player attachTo [BTC_r_base_spawn,[0,0,0]];
 			sleep 0.1;
@@ -1346,13 +1346,13 @@ BTC_player_respawn =
 			player setPos getMarkerPos BTC_respawn_marker;
 			player enableSimulation true;
 			player switchMove "amovpercmstpsraswrfldnon";
-			player switchMove "";//amovpercmstpsraswrfldnon		
-			if (BTC_black_screen == 1 && BTC_respawn_time == 0) then {titleText ["", "BLACK IN"];sleep 2;titleText ["", "PLAIN"];};
-			if (BTC_black_screen == 0 || BTC_respawn_time > 0) then 
-			{	
-				titleText ["", "BLACK IN"];
+			player switchMove "";//amovpercmstpsraswrfldnon
+			if (BTC_black_screen == 1 && BTC_respawn_time == 0) then {titleText ["", "BLACK IN"];sleep 2;titleText ["", "PLAIN"]; titleFadeOut 1;};
+			if (BTC_black_screen == 0 || BTC_respawn_time > 0) then
+			{
+				titleText ["", "BLACK IN"]; titleFadeOut 1;
 				sleep 2;
-				titleText ["", "PLAIN"];
+				titleText ["", "PLAIN"]; titleFadeOut 1;
 			};
 		};
 	};
@@ -1368,13 +1368,13 @@ BTC_check_action_first_aid =
 		if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] == "0") then {_cond = true;};
 		_injured = _men select 1;
 	};
-	if (_cond && BTC_pvp == 1) then 
+	if (_cond && BTC_pvp == 1) then
 	{
 		if ((_men select 1) getVariable "BTC_revive_side" == str (BTC_side)) then {_cond = true;} else {_cond = false;};
 	};
 	if (_cond && BTC_need_first_aid == 1) then
 	{
-		
+
 		if (_array_item find "FirstAidKit" == -1) then {_cond = false;};
 		_array_item_injured = items _injured;
 		if (!_cond && _array_item_injured find "FirstAidKit" != -1) then {_cond = true;};
@@ -1463,7 +1463,7 @@ BTC_mobile_marker =
 	while {true} do
 	{
 		_obj = objNull;
-		while {isNull _obj} do 
+		while {isNull _obj} do
 		{
 			{
 				if (format ["%1",_x getVariable _side] == _var && Alive _x) then {_obj = _x;};
@@ -1612,16 +1612,16 @@ BTC_r_get_list =
 	} foreach _array;
 	switch (true) do
 	{
-		case (BTC_dlg_on_respawn == 2) : 
+		case (BTC_dlg_on_respawn == 2) :
 		{
 			_leader = leader group player;
 			if (_leader != player && (format ["%1", _leader getVariable "BTC_need_revive"] == "0")) then {_list_name = _list_name + [_leader];_list_str = _list_str + [name _leader];};
 		};
-		case (BTC_dlg_on_respawn == 3) : 
+		case (BTC_dlg_on_respawn == 3) :
 		{
 			{if (_x != player && (format ["%1", _x getVariable "BTC_need_revive"] == "0")) then {_list_name = _list_name + [_x];_list_str = _list_str + [name _x];};} foreach (units group player);
 		};
-		case (BTC_dlg_on_respawn == 4) : 
+		case (BTC_dlg_on_respawn == 4) :
 		{
 			{if (_x != player && side _x == BTC_side && (format ["%1", _x getVariable "BTC_need_revive"] == "0")) then {_list_name = _list_name + [_x];_list_str = _list_str + [name _x];};} foreach allUnits;
 		};
@@ -1629,7 +1629,7 @@ BTC_r_get_list =
 	_list = [_list_str,_list_name];
 	_list
 };
-BTC_r_load = 
+BTC_r_load =
 {
 	_list = call BTC_r_get_list;
 	_list_name = _list select 0;
@@ -1643,7 +1643,7 @@ BTC_r_load =
 		case (str(BTC_side) == "civ") : {_side = "BTC_mobile_civ";_array = BTC_vehs_mobile_civ_str;};
 	};
 	if (!isNull BTC_r_mobile_selected) then {if ((_list_name find (BTC_r_mobile_selected getVariable _side)) == -1 && (_list_name find (name BTC_r_mobile_selected)) == -1) then {BTC_r_mobile_selected = _list_units select 0;};};
-	if (count _list_name != count BTC_r_list) then 
+	if (count _list_name != count BTC_r_list) then
 	{
 		lbClear 119;
 		{
@@ -1656,7 +1656,7 @@ BTC_r_load =
 };
 BTC_r_create_dialog_mobile =
 {
-	if (BTC_active_lifes != 1 || BTC_lifes != 0) then 
+	if (BTC_active_lifes != 1 || BTC_lifes != 0) then
 	{
 		player allowdamage false;
 		deTach player;
@@ -1694,7 +1694,7 @@ BTC_r_create_dialog_mobile =
 		closeDialog 0;
 	};
 };
-BTC_r_apply = 
+BTC_r_apply =
 {
 	BTC_r_chosen = true;
 	closeDialog 0;
@@ -1703,7 +1703,7 @@ BTC_r_apply =
 	titleText ["", "BLACK FADED"];
 	player cameraEffect ["terminate","back"];
 	camDestroy BTC_r_camera;
-	if (!isNull BTC_r_mobile_selected) then 
+	if (!isNull BTC_r_mobile_selected) then
 	{
 		private ["_mobile"];
 		_mobile = BTC_r_mobile_selected;
@@ -1717,7 +1717,7 @@ BTC_r_apply =
 	player enableSimulation true;
 	titleText ["", "BLACK IN"];sleep 1;titleText ["", "PLAIN"];
 };
-BTC_r_close = 
+BTC_r_close =
 {
 	BTC_r_chosen = true;
 	closeDialog 0;
@@ -1738,7 +1738,7 @@ BTC_r_close =
 	titleText ["", "PLAIN"];
 	closeDialog 0;
 };
-BTC_r_change_target = 
+BTC_r_change_target =
 {
 	_var = lbText [119,lbCurSel 119];
 	_target = objNull;_side = "";_array = [];
@@ -1758,12 +1758,12 @@ BTC_r_change_target =
 	} foreach vehicles;
 	switch (true) do
 	{
-		case (BTC_dlg_on_respawn == 2 || BTC_dlg_on_respawn == 3) : 
+		case (BTC_dlg_on_respawn == 2 || BTC_dlg_on_respawn == 3) :
 		{
 
 			{if (_var == name _x) then {_target = _x;};} foreach (units group player);
 		};
-		case (BTC_dlg_on_respawn == 4) : 
+		case (BTC_dlg_on_respawn == 4) :
 		{
 			{if (_var == name _x) then {_target = _x;};} foreach allUnits;
 		};
@@ -1777,7 +1777,7 @@ BTC_r_change_target =
 	BTC_r_camera camCommit 0;
 };
 //Spectating
-BTC_r_s_load = 
+BTC_r_s_load =
 {
 	_list_name = [];
 	_list_units = [];
@@ -1789,7 +1789,7 @@ BTC_r_s_load =
 	};
 	_n = 0;
 	if (!isNull BTC_r_s_target && BTC_r_s_target != BTC_r_base_spawn) then {if ((_list_name find (name BTC_r_s_target)) == -1) then {BTC_r_s_target = BTC_r_base_spawn;};};
-	if (count _list_name != count BTC_r_s_list) then 
+	if (count _list_name != count BTC_r_s_list) then
 	{
 		lbClear 120;
 		{
@@ -1798,7 +1798,7 @@ BTC_r_s_load =
 			if (isNull BTC_r_s_target) then {lbSetCurSel [120,_lb];_n = _list_name find _x;BTC_r_s_target = _list_units select _n;};
 		} foreach _list_name;BTC_r_s_list = _list_name;
 	} else {};
-	if (count _list_name == 0) then {titleText ["No units found!","PLAIN DOWN"];BTC_r_s_target = BTC_r_base_spawn;} else {titleText ["","PLAIN DOWN"];};
+	if (count _list_name == 0) then {titleText ["No units found!","PLAIN DOWN"]; titleFadeOut 1;BTC_r_s_target = BTC_r_base_spawn;} else {titleText ["","PLAIN DOWN"]; titleFadeOut 1;};
 	true
 };
 BTC_r_s_change_target =
@@ -1867,7 +1867,7 @@ BTC_r_spectator =
 		if (!dialog) then {_r_dlg = createDialog "BTC_spectating_dialog";sleep 0.5;};
 		WaitUntil {dialog};
 		_ui = uiNamespace getVariable "BTC_r_dialog";
-		(_ui displayCtrl 122) ctrlShow false;		
+		(_ui displayCtrl 122) ctrlShow false;
 		call BTC_r_s_load;
 		player setpos [0,0,6000];
 		player setVelocity [0,0,0];

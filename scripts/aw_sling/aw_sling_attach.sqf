@@ -6,7 +6,7 @@ _nearUnits = (getPos _helo) nearEntities [["Car","Motorcycle","Tank","Ship"],7];
 if(count _nearUnits < 1) exitWith{hint "No Sling Targets";};
 
 //Add size checks here
-_heavyCant = ["O_MBT_02_arty_F","O_APC_Tracked_02_cannon_F","O_APC_Wheeled_02_rcws_F","O_MBT_02_cannon_F","O_APC_Tracked_02_AA_F"];
+_heavyCant = ["C_Van_01_box_F","O_MBT_02_arty_F","O_APC_Tracked_02_cannon_F","O_APC_Wheeled_02_rcws_F","O_MBT_02_cannon_F","O_APC_Tracked_02_AA_F","B_APC_Tracked_01_AA_F"];
 _mediumCant = ["Tank","Wheeled_APC_F","Truck_F"];
 _lightCant = _mediumCant + ["MRAP_02_base_F","MRAP_01_base_F","MRAP_03_base_F","Offroad_01_base_F","Boat_Armed_01_base_F"];
 
