@@ -7,7 +7,7 @@ _completeText =
 "<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#08b000'>NEUTRALISED</t><br/>____________________<br/>Incredible job, boys! Make sure you jump on those priority targets quickly; they can really cause havoc if they're left to their own devices.<br/><br/>Keep on with the main objective; we'll tell you if anything comes up.";
 while {true} do
 {
-	_randomWait = (random 4800);
+	_randomWait = (random 3800);
 	sleep (600 + _randomWait);
 	if (_firstRun) then
 	{
@@ -96,10 +96,17 @@ while {true} do
 	_flatPosAlt = [(_flatPos select 0) - 2, (_flatPos select 1), (_flatPos select 2)];
 	_flatPosClose = [(_flatPos select 0) + 2, (_flatPos select 1), (_flatPos select 2)];
 	_priorityGroup = createGroup EAST;
-	priorityVeh1 = "O_Mortar_01_F" createVehicle _flatPosAlt;
-	priorityVeh2 = "O_Mortar_01_F" createVehicle _flatPosClose;
+	priorityVeh1 = "O_MBT_02_arty_F" createVehicle _flatPosAlt;
+	waitUntil {!isNull priorityVeh1};
+	priorityVeh2 = "O_MBT_02_arty_F" createVehicle _flatPosClose;
+	waitUntil {!isNull priorityVeh2};
+	priorityVeh1 lock 3;
+	priorityVeh2 lock 3;
+	
 	priorityVeh1 addEventHandler["Fired",{if (!isPlayer (gunner priorityVeh1)) then { priorityVeh1 setVehicleAmmo 1; };}];
 	priorityVeh2 addEventHandler["Fired",{if (!isPlayer (gunner priorityVeh2)) then { priorityVeh2 setVehicleAmmo 1; };}];
+	priorityVeh1 addEventHandler["GetIn",{if (isPlayer (gunner priorityVeh1)) then { priorityVeh1 setVehicleAmmo 0; };}];
+	priorityVeh2 addEventHandler["GetIn",{if (isPlayer (gunner priorityVeh2)) then { priorityVeh2 setVehicleAmmo 0; };}];	
 	"O_Soldier_F" createUnit [_flatPosAlt, _priorityGroup, "priorityTarget1 = this; this moveInGunner priorityVeh1;"];
 	"O_Soldier_F" createUnit [_flatPosClose, _priorityGroup, "priorityTarget2 = this; this moveInGunner priorityVeh2;"];
 	waitUntil {alive priorityTarget1 && alive priorityTarget2};
@@ -113,7 +120,7 @@ while {true} do
 	_unitsArray = [PriorityTarget1, PriorityTarget2, priorityVeh1, priorityVeh2];
 
 	//Spawn H-Barrier cover "Land_HBarrierBig_F"
-	_distance = 12;
+	_distance = 20;
 	_dir = 0;
 	for "_c" from 0 to 15 do
 	{
@@ -129,18 +136,20 @@ while {true} do
 	//Spawn some enemies protecting the units
 	for "_c" from 0 to 2 do
 	{
-		_randomPos = [[[_flatPos, 50]],["water","out"]] call BIS_fnc_randomPos;
+		_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _flatPos] call BIS_fnc_taskDefend;
+		[_spawnGroup, _flatPos, 50] call aw_fnc_spawn2_perimeterPatrol;
+		[(units _spawnGroup)] call aw_setGroupSkill;
 		
 		_unitsArray = _unitsArray + [_spawnGroup];
 	};
 	
 	for "_c" from 0 to 3 do
 	{
-		_randomPos = [[[_flatPos, 50]],["water","out"]] call BIS_fnc_randomPos;
+		_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _pos, 100] call bis_fnc_taskPatrol;
+		[_spawnGroup, _flatPos, 150] call aw_fnc_spawn2_randomPatrol;
+		[(units _spawnGroup)] call aw_setGroupSkill;
 		
 		_unitsArray = _unitsArray + [_spawnGroup];
 	};
@@ -174,14 +183,19 @@ while {true} do
 	//Set mortars attacking while still alive
 	_firingMessages = 
 	[
-		"Thermal scans are picking up those enemy mortars firing! Heads down!",
-		"Enemy mortar rounds incoming! Advise you seek cover immediately.",
-		"OPFOR mortar rounds incoming! Seek cover immediately!",
-		"The mortar team's firing, boys! Down on the ground!",
-		"Get that damned mortar team down; they're firing right now! Seek cover!",
-		"They're zeroing in! Incoming mortar fire; heads down!"
+		"Thermal scans are picking up those enemy Artillery firing! Heads down!",
+		"Enemy Artillery rounds incoming! Advise you seek cover immediately.",
+		"OPFOR Artillery rounds incoming! Seek cover immediately!",
+		"The Artillery team's firing, boys! Down on the ground!",
+		"Get that damned Artillery team down; they're firing right now! Seek cover!",
+		"They're zeroing in! Incoming Artillery fire; heads down!"
 	];
 	_radius = 80; //Declared here so we can "zero in" gradually
+	
+	//Add aw_firing script start
+	//[priorityVeh1,15000,600] execVM "scripts\aw_artillery\aw_artillery_findTargets.sqf";
+	//[priorityVeh2,15000,600] execVM "scripts\aw_artillery\aw_artillery_findTargets.sqf";
+	
 	while {alive priorityTarget1 || alive priorityTarget2} do
 	{
 		_accepted = false;
@@ -195,7 +209,10 @@ while {true} do
 			_unit = (playableUnits select (floor (random (count playableUnits))));
 			_targetPos = getPos _unit;
 			
-			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) then { _accepted = true; };
+			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) then { _accepted = true; }
+			else {
+			sleep 10;
+		};
 			
 			_debugCount = _debugCount + 1;
 		};
@@ -222,8 +239,8 @@ while {true} do
 						(_targetPos select 1) - _radius + (2 * random _radius),
 						0
 					];
-					_x doArtilleryFire [_pos, "8Rnd_82mm_Mo_shells", 1]; //update so parameter customises mortar rounds?
-					sleep 5;
+					_x doArtilleryFire [_pos, "32Rnd_155mm_Mo_shells", 1]; //update so parameter customises mortar rounds?
+					sleep 8;
 				};
 			};
 		} forEach priorityTargets;
@@ -248,4 +265,5 @@ while {true} do
 	"priorityMarker" setMarkerPos [0,0,0];
 	"priorityCircle" setMarkerPos [0,0,0];
 	publicVariable "priorityMarker";
+	[] spawn aw_cleanGroups;
 };

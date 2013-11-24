@@ -1,15 +1,15 @@
 #include "macro.sqf"
 /*
-	@version: 1.2
+	@version: 2.0
 	@file_name: fn_loadGear.sqf
 	@file_author: TAW_Tonic
-	@file_edit: 6/5/2013
+	@file_edit: 9/24/2013
 	@file_description: Load saved gear in old VAS format.
 */
 private["_slot","_loadout","_primary","_launcher","_handgun","_magazines","_uniform","_vest","_backpack","_items","_primitems","_secitems","_handgunitems","_uitems","_vitems","_bitems","_handle"];
 if(!isNil {VAS_loadout_ip}) exitWith {};
 _slot = if(isNil {_this select 0}) then {lbCurSel VAS_load_list} else {_this select 0};
-if(_slot == -1) exitWith {hint "You didn't select a slot to load!";};
+if(_slot == -1) exitWith {hint localize "STR_VAS_Prompt_slotSelFail";};
 if(vas_disableLoadSave) then
 {
 	_loadout = missionNamespace getVariable format["vas_gear_new_%1",_slot];
@@ -50,25 +50,25 @@ removeHeadGear player;
 } foreach (assignedItems player);
 
 //Add the gear
-if(_uniform != "") then {[_uniform,true,nil,nil,nil] spawn VAS_fnc_handleItem;};
-if(_vest != "") then {[_vest,true,nil,nil,nil] spawn VAS_fnc_handleItem;};
-if(_backpack != "") then {[_backpack,true,nil,nil,nil] spawn VAS_fnc_handleItem;};
+if(_uniform != "") then {_handle = [_uniform,true,false,false,false] spawn VAS_fnc_handleItem; waitUntil {scriptDone _handle};};
+if(_vest != "") then {_handle = [_vest,true,false,false,false] spawn VAS_fnc_handleItem; waitUntil {scriptDone _handle};};
+if(_backpack != "") then {_handle = [_backpack,true,false,false,false] spawn VAS_fnc_handleItem; waitUntil {scriptDone _handle};};
 {
-	_handle = [_x,true,nil,nil,nil] spawn VAS_fnc_handleItem;
+	_handle = [_x,true,false,false,false] spawn VAS_fnc_handleItem;
 	waitUntil {scriptDone _handle};
 } foreach _magazines;
 
-if(_primary != "") then {[_primary,true,nil,nil,nil] spawn VAS_fnc_handleItem;};
-if(_launcher != "") then {[_launcher,true,nil,nil,nil] spawn VAS_fnc_handleItem;};
-if(_handgun != "") then {[_handgun,true,nil,nil,nil] spawn VAS_fnc_handleItem;};
+if(_primary != "") then {[_primary,true,false,false,false] spawn VAS_fnc_handleItem;};
+if(_launcher != "") then {[_launcher,true,false,false,false] spawn VAS_fnc_handleItem;};
+if(_handgun != "") then {[_handgun,true,false,false,false] spawn VAS_fnc_handleItem;};
 
-{[_x,true,nil,nil,nil] call VAS_fnc_handleItem;} foreach _items;
-{[_x,true,nil,nil,true] call VAS_fnc_handleItem;} foreach (_uitems);
-{[_x,true,nil,nil,true] call VAS_fnc_handleItem;} foreach (_vitems);
-{[_x,true,true,nil,nil] call VAS_fnc_handleItem;} foreach (_bitems);
-{[_x,true,nil,true,nil] call VAS_fnc_handleItem;} foreach (_primitems);
-{[_x,true,nil,true,nil] call VAS_fnc_handleItem;} foreach (_secitems);
-{[_x,true,nil,true,nil] call VAS_fnc_handleItem;} foreach (_handgunitems);  
+{_handle = [_x,true,false,false,false] spawn VAS_fnc_handleItem; waitUntil {scriptDone _handle};} foreach _items;
+{[_x,true,false,false,true,true] call VAS_fnc_handleItem;} foreach (_uitems);
+{[_x,true,false,false,true,false,true] call VAS_fnc_handleItem;} foreach (_vitems);
+{[_x,true,true,false,false] call VAS_fnc_handleItem;} foreach (_bitems);
+{[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_primitems);
+{[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_secitems);
+{[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_handgunitems);  
 
 if(primaryWeapon player != "") then
 {

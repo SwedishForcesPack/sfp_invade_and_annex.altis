@@ -29,7 +29,7 @@ if(vas_disableLoadSave) then
 		}
 			else
 		{
-			_control lbAdd format["Custom Loadout %1", _i+1];
+			_control lbAdd format["%1 %2",localize "STR_VAS_Main_CL", _i+1];
 		};
 	};
 }
@@ -43,7 +43,7 @@ if(vas_disableLoadSave) then
 		}
 			else
 		{
-			_control lbAdd format["Custom Loadout %1", _i+1];
+			_control lbAdd format["%1 %2",localize "STR_VAS_Main_CL", _i+1];
 		};
 	};
 };

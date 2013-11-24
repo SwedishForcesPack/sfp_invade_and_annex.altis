@@ -1,12 +1,13 @@
 /*
-	@version: 1.0
+	@version: 2.0
 	@file_name: build_config.sqf
+	@file_edit: 9/24/2013
 	@file_author: TAW_Tonic
-	@file_edit: 5/9/2013
 	@file_description: If preload is enabled, it will build our preloaded config, otherwise fetches everything from the config.
 */
 private["_cfg","_type","_temp","_ret","_master","_class","_details","_displayName","_scope","_type","_str","_itemInfo"];
-_cfg = _this select 0;
+_cfg = [_this,0,"",[""]] call BIS_fnc_param;
+if(_cfg == "") exitWith {}; //Bad data passed, exit.
 
 if(VAS_preload) then
 {
@@ -34,26 +35,41 @@ switch(_cfg) do
 				_picture = _details select 2;
 				_scope = _details select 3;
 				_type = _details select 4;
+				_itemInfo = _details select 5;
 				_base = configName(inheritsFrom (configFile >> "CfgWeapons" >> _class));
 				//diag_log format["DEBUG - %1 :: %2",_class,_base];
-				if(_scope >= 2 && _type in [1,2,4,5,4096,131072] && _picture != "" && !(_displayName in _temp) && _displayName != "") then
+				
+				_str = [_class,4] call VAS_fnc_KRON_StrLeft;
+				
+				if(_scope >= 2 && _str != "ACRE") then
 				{
-					_str = [_class,4] call KRON_StrLeft;
-					if(_type in [131072,4096] && !isNil {(_details select 5)}) then
+					switch (true) do
 					{
-						if(_str != "ACRE" && !(_class in VAS_r_items)) then
+						case (_type in [1,2,4,5,4096]):
 						{
-							_temp set[count _temp,_displayName];
-							_ret2 set[count _ret2,_class];
+							if(_picture != "" && _displayName != "") then
+							{
+								if(_itemInfo == 616 && _type == 4096) then
+								{
+									_ret2 set[count _ret2,_class];
+								}
+									else
+								{
+									if(!(_displayName in _temp) && !(_base in VAS_r_weapons) && !(_class in VAS_r_weapons)) then
+									{
+										_temp set[count _temp,_displayName];
+										_ret set[count _ret,_class];
+									};
+								};
+							};
 						};
-					}
-						else
-					{
-					
-						if(_str != "ACRE" && !(_base in VAS_r_weapons) && !(_class in VAS_r_weapons)) then
+						
+						case (_type == 131072):
 						{
-							_temp set[count _temp,_displayName];
-							_ret set[count _ret,_class];
+							if(_picture != "" && !(_base in VAS_r_items) && !(_class in VAS_r_items)) then
+							{
+								_ret2 set[count _ret2,_class];
+							};
 						};
 					};
 				};
@@ -66,6 +82,7 @@ switch(_cfg) do
 	
 	case "CfgMagazines":
 	{
+		if(count VAS_magazines > 0) exitWith {}; //Don't waste CPU-processing on something that isn't required.
 		_temp = [];
 		_ret = [];
 		_master = configFile >> _cfg;
@@ -82,7 +99,7 @@ switch(_cfg) do
 				
 				if(_scope >= 1 && _picture != "" && !(_displayName in _temp)) then
 				{
-					_str = [_class,4] call KRON_StrLeft;
+					_str = [_class,4] call VAS_fnc_KRON_StrLeft;
 					if(_str != "ACRE" && !(_class in VAS_R_magazines)) then
 					{
 						_temp set[count _temp,_displayName];
@@ -97,6 +114,7 @@ switch(_cfg) do
 	
 	case "CfgVehicles":
 	{
+		if(count VAS_backpacks > 0) exitWith {}; //Don't waste CPU-processing on something that isn't required.
 		_ret = [];
 		_master = configFile >> _cfg;
 		private["_base"];
@@ -114,7 +132,7 @@ switch(_cfg) do
 				_base = inheritsFrom (configFile >> _cfg >> _class);
 				if(_scope >= 2 && _type == "Backpacks" && _picture != "") then
 				{
-					_str = [_class,4] call KRON_StrLeft;
+					_str = [_class,4] call VAS_fnc_KRON_StrLeft;
 					if(_str != "ACRE" && !(_base in VAS_r_backpacks) && !(_class in VAS_r_backpacks)) then
 					{
 						_ret set[count _ret,_class];
@@ -128,6 +146,7 @@ switch(_cfg) do
 	
 	case "CfgGlasses":
 	{
+		if(count VAS_glasses > 0) exitWith {}; //Don't waste CPU-processing on something that isn't required.
 		_temp = [];
 		_ret = [];
 		_master = configFile >> _cfg;
@@ -143,7 +162,7 @@ switch(_cfg) do
 				
 				if(_picture != "" && _displayName != "None" && !(_displayName in _temp)) then
 				{
-					_str = [_class,4] call KRON_StrLeft;
+					_str = [_class,4] call VAS_fnc_KRON_StrLeft;
 					if(_str != "ACRE" && !(_class in VAS_r_glasses)) then
 					{
 						_temp set[count _temp,_displayName];

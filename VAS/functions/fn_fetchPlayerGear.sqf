@@ -2,10 +2,10 @@
 	@version: 1.3
 	@file_name: fn_fetchPlayerGear.sqf
 	@file_author: TAW_Tonic
-	@file_edit: 6/19/2013
+	@file_edit: 7/9/2013
 	@file_description: Retrieves players current gear and returns it.
 */
-private["_ret"];
+private["_ret","_curWep"];
 _ret = [];
 
 //Fetch Weapons
@@ -35,6 +35,16 @@ if(count (handgunMagazine player) > 0) then
 	} foreach (handgunMagazine player);
 };
 
+//Hard code for Laser Desigantor batteries
+_curWep = currentWeapon player;
+
+if("Laserdesignator" in assignedItems player) then
+{
+	player selectWeapon "Laserdesignator";
+	if(currentMagazine player != "") then {_ret set[count _ret,(currentMagazine player)];};
+};
+
+player selectWeapon _curWep;
 
 //Fetch rest of misc information.
 if(uniform player != "") then 
@@ -93,8 +103,6 @@ if(handgunWeapon player != "") then
 	} foreach [0,1,2];
 };
 
-//Fetch secondary weapon attachments (placeholder
-
-//Handgun doesn't have a command yet to fetch its items... Damn you BIS...
+//Fetch secondary weapon attachments (placeholder)
 
 _ret; //Return!

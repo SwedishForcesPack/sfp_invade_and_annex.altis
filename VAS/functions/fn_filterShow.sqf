@@ -15,11 +15,11 @@ switch(_req) do
 {
 	case "guns":
 	{
-		ctrlSetText[VAS_filter_1,"Rifles"];
-		ctrlSetText[VAS_filter_2,"Scoped"];
-		ctrlSetText[VAS_filter_3,"Heavy"];
-		ctrlSetText[VAS_filter_4,"Launcher"];
-		ctrlSetText[VAS_filter_5,"Pistol"];
+		ctrlSetText[VAS_filter_1,localize "STR_VAS_Main_Rifles"];
+		ctrlSetText[VAS_filter_2,localize "STR_VAS_Main_Scoped"];
+		ctrlSetText[VAS_filter_3,localize "STR_VAS_Main_Heavy"];
+		ctrlSetText[VAS_filter_4,localize "STR_VAS_Main_Launcher"];
+		ctrlSetText[VAS_filter_5,localize "STR_VAS_Main_Pistols"];
 		
 		ctrlShow[VAS_filter_1,true];
 		ctrlShow[VAS_filter_2,true];
@@ -30,11 +30,11 @@ switch(_req) do
 	
 	case "items":
 	{
-		ctrlSetText[VAS_filter_1,"Uniforms"];
-		ctrlSetText[VAS_filter_2,"Vests"];
-		ctrlSetText[VAS_filter_3,"Headgear"];
-		ctrlSetText[VAS_filter_4,"Attachments"];
-		ctrlSetText[VAS_filter_5,"Misc"];
+		ctrlSetText[VAS_filter_1,localize "STR_VAS_Main_Uniforms"];
+		ctrlSetText[VAS_filter_2,localize "STR_VAS_Main_Vests"];
+		ctrlSetText[VAS_filter_3,localize "STR_VAS_Main_Headgear"];
+		ctrlSetText[VAS_filter_4,localize "STR_VAS_Main_Attachments"];
+		ctrlSetText[VAS_filter_5,localize "STR_VAS_Main_Misc"];
 		
 		ctrlShow[VAS_filter_1,true];
 		ctrlShow[VAS_filter_2,true];

@@ -1,10 +1,10 @@
 #include "macro.sqf"
 /*
-	@version: 1.0
+	@version: 1.8
 	@file_name: fn_filterMenu.sqf
 	@file_author: TAW_Tonic
-	@file_edit: 5/31/2013
-	@file_description: When a filter is called it will give us the details and we shall short her out!
+	@file_edit: 8/27/2013
+	@file_description: When a filter is called it will give us the details and we shall sort her out!
 */
 waitUntil {!isNull (findDisplay VAS_Main_Display)};
 disableSerialization;
@@ -40,7 +40,7 @@ switch(_filter) do
 				_data = [_filter,[201,101,301]] call VAS_fnc_fetchCfg;
 				_myfilter = [201,101,301];
 			};
-			case 4: {_data = [_filter,[0,616,619,620,401]] call VAS_fnc_fetchCfg; _myfilter = [0,616,619,620,401];};
+			case 4: {_data = [_filter,[0,616,621,619,620,401]] call VAS_fnc_fetchCfg; _myfilter = [0,616,621,619,620,401];};
 		};
 	};
 };

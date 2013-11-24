@@ -1,9 +1,9 @@
 #include "macro.sqf"
 /*
-    @version: 1.2
+    @version: 2.0
     @file_name: fn_loadoutInfo.sqf
     @file_author: TAW_Tonic
-    @file_edit: 6/5/2013
+    @file_edit: 9/24/2013
     @file_description: Pulls up the selected saved slots loadout.
 */
 private["_control","_slot","_type","_loadout"];
@@ -18,7 +18,7 @@ switch (_type) do
 
 lbClear _control;
 
-if(_slot == -1) exitWith {hint "You didn't select a slot!";}; //No slot selected
+if(_slot == -1) exitWith {hint localize "STR_VAS_Prompt_slotNoInfo";}; //No slot selected
 if(vas_disableLoadSave) then
 {
     _loadout = missionNamespace getVariable format["vas_gear_new_%1",_slot];
@@ -28,7 +28,7 @@ if(vas_disableLoadSave) then
     _loadout = profileNamespace getVariable format["vas_gear_new_%1",_slot];
 };
 
-if(isNil {_loadout}) exitWith {(VAS_getControl(VAS_save_Display,VAS_save_text)) ctrlSetText "Custom Loadout Name";}; //No information in this slot.
+if(isNil {_loadout}) exitWith {(VAS_getControl(VAS_save_Display,VAS_save_text)) ctrlSetText localize "STR_VAS_Save_CLN";}; //No information in this slot.
 if(_type == 0) then
 {
     (VAS_getControl(VAS_save_Display,VAS_save_text)) ctrlSetText (_loadout select 0);

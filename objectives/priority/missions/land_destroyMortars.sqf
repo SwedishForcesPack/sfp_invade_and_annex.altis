@@ -71,40 +71,9 @@ _PT_Run =
 		"They're zeroing in! Incoming mortar fire; heads down!"
 	];
 
-	while { true } do
 	{
-		sleep PARAMS_PriorityTargetTickTime;
-
-		_validPlayer = false; _unit = objNull; _targetPos = [0,0,0];
-		while { true } do
-		{
-			waitUntil { sleep 0.5; (count (playableUnits)) > 0 };
-			_unit = (playableUnits select (floor (random (count playableUnits)))); _targetPos = getPos _unit;
-			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) exitWith {};
-		};
-
-		hqSideChat = _firingMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat";
-		[WEST, "HQ"] sideChat hqSideChat;
-
-		{
-			if (alive _x) then
-			{
-				for "_c" from 0 to 4 do
-				{
-					_pos = [(_targetPos select 0) - radius + (2 * random _radius), (_targetPos select 1) - radius + (2 * random _radius), 0];
-					if (alive _x) then
-					{
-						_x doArtilleryFire [_pos, "8Rnd_82mm_Mo_shells", 1];
-						sleep 5;
-					} else {
-						exitWith {};
-					};
-				};
-			};
-		} forEach _sideObjs;
-
-		if (_radius > 10) then { _radius = _radius - 10; };
-	};
+		[vehicle _x,3500,200] execVM "scripts\aw_artillery\aw_artillery_findTargets.sqf";
+	}forEach _sideObjs;
 };
 
 _PT_Success = 

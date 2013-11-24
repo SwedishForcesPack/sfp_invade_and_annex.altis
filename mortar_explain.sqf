@@ -1,0 +1,1 @@
+"This mortar is placed here so that players who respawn and can't walk can sort themselves out." call GVAR(msg);

@@ -5,20 +5,6 @@
 	@file_edit: 5/23/2013
 	@file_description: A file of functions that well.. just weren't fat enough to make it to its own file.. EAT MORE PIE FUNCTIONS... EAT MORE PIE...
 */
-VAS_fnc_isMagazine =
-{
-	private["_item"];
-	_item = _this select 0;
-	if((getText(configFile >> "CfgMagazines" >> _item >> "displayname")) != "") then
-	{
-		true;
-	}
-		else
-	{
-		false;
-	};
-};
-
 VAS_fnc_openDetails =
 {
 	#include "macro.sqf"

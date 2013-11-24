@@ -1,15 +1,15 @@
 #include "macro.sqf"
 /*
-	@version: 1.3
+	@version: 2.0
 	@file_name: fn_saveGear.sqf
 	@file_author: TAW_Tonic
-	@file_edit: 6/20/2013
+	@file_edit: 9/24/2013
 	@file_description: Save to profileNamespace in old VAS format
 */
-private["_title","_slot","_primary,_launcher","_handgun","_magazines","_uniform","_vest","_backpack","_items","_primitems","_secitems","_handgunitems","_uitems","_vitems","_bitems"];
+private["_title","_slot","_primary,_launcher","_handgun","_magazines","_uniform","_vest","_backpack","_items","_primitems","_secitems","_handgunitems","_uitems","_vitems","_bitems","_curWep"];
 _title = ctrlText VAS_save_text;
 _slot = lbCurSel VAS_save_list;
-if(_slot == -1) exitWith {hint "You didn't select a slot!"};
+if(_slot == -1) exitWith {hint localize"STR_VAS_Prompt_slotSelFail"};
 
 //Old format / code
 _primary = primaryWeapon player;
@@ -53,6 +53,15 @@ if(count (handgunMagazine player) > 0) then
 	} foreach (handgunMagazine player);
 };
 
+//Hard code for Laser Desigantor batteries
+_curWep = currentWeapon player;
+if("Laserdesignator" in assignedItems player) then
+{
+	player selectWeapon "Laserdesignator";
+	if(currentMagazine player != "") then {_magazines set[count _magazines,(currentMagazine player)];};
+};
+
+player selectWeapon _curWep;
 
 if(vas_disableLoadSave) then
 {

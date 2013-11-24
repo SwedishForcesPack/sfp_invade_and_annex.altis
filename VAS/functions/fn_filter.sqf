@@ -1,8 +1,8 @@
 /*
-	@version: 1.0
-	@file_name: filter.sqf
+	@version: 1.9
+	@file_name: fn_filter.sqf
 	@file_author: TAW_Tonic
-	@file_edit: 5/22/2013
+	@file_edit: 9/1/2013
 	@file_description: Takes current array of items and filters it for what we need.
 */
 private["_items","_filter","_ret","_itemInfo","_type","_details"];
@@ -38,7 +38,7 @@ _ret = [];
 				};
 			};
 			
-			case (_type in [1,2,4,5,4096] && _x != "NVGoggles") :
+			case (_type in [1,2,4,5,4096] && (_itemInfo == 0 OR _itemInfo == -1)) :
 			{
 				switch(typeName _filter) do
 				{
@@ -60,8 +60,9 @@ _ret = [];
 				};
 			};
 			
-			case (_type in [4096,131072] && _x != "Binocular") :
+			case (_type in [4096,131072]) :
 			{
+				if(_type == 4096 && _itemInfo == 0) exitWith {};
 				switch(typeName _filter) do
 				{
 					case "ARRAY":
