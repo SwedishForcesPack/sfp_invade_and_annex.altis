@@ -16,13 +16,13 @@ PFP_getPenalty = {
 	_srcObj = _this select 2;
 	_dstObj = _this select 3;
 
-	//format ["PFP_getPenalty: dist1 %1, dist %2, penalty: %3", (_from distance _to), 
+	//format ["PFP_getPenalty: dist1 %1, dist %2, penalty: %3", (_from distance _to),
 	// (_srcObj distance _dstObj), (_from distance _to) / (_srcObj distance _dstObj) ] call BIS_fnc_log;
 
-	(_from distance _to) / (_srcObj distance _dstObj)
+	//(_from distance _to) / (_srcObj distance _dstObj)
 };
 
-// argument - from 
+// argument - from
 PFP_getClosestObjective = {
 	private ["_from", "_min_dist", "_objs", "_d"];
 	_from = _this;
@@ -32,8 +32,8 @@ PFP_getClosestObjective = {
 	if (!isNil("currentAOUp")) then { if (currentAOUp) then {_objs set[ count _objs, getMarkerPos currentAO ];}; };
 	if (!isNil("priorityTargetUp")) then { if (priorityTargetUp) then { _objs set[ count _objs, markerPos "priorityMarker" ]; }; };
 	if (!isNil("sideMissionUp")) then { if (sideMissionUp) then { _objs set[ count _objs, getPos sideObj ]; }; };
-	
-	{ 
+
+	{
 		_d = _this distance _x;
 		if ( _d < _min_dist ) then { _min_dist = _d; _from = _x };
 	} forEach _objs;
@@ -51,7 +51,7 @@ PFP_countPoints = {
 	{
 		_getInOutPos = (_x select 1) call PFP_getClosestObjective;
 
-		if ( count _x > 2 && (_landedAtPos distance _getInOutPos) > 0 ) then { //  && 
+		if ( count _x > 2 && (_landedAtPos distance _getInOutPos) > 0 ) then { //  &&
 
 				if ( (_x select 2) > 0 ) then {
 					_points = _points + (_x select 2);
@@ -64,7 +64,7 @@ PFP_countPoints = {
 		};
 		//format ["PFP_countPoints: x= %1, points =%2", _x, _points] call BIS_fnc_log;
 	} forEach PFP_getins;
-	
+
 	PFP_getins =+ _filtered_getins;
 	//format ["PFP_countPoints: points= %1, getins= %2", _points, PFP_getins] call BIS_fnc_log;
 	[ round _points, _countGroup ]
@@ -86,6 +86,7 @@ PFP_heliOnGetIn = {
 			};
 
 			PFP_getins set[ _idx, [ _passageer, position _passageer ] ];
+			hint "passenger got in";
 		};
 	};
 };
@@ -99,7 +100,7 @@ PFP_heliOnGetOut = {
 			_passageer = _this select 2;
 			_isIn = { (_x select 0) == _passageer } count PFP_getins;
 			if !(isIn) exitWith {};
-			
+
 			_idx = [];
 
 			{
@@ -113,7 +114,7 @@ PFP_heliOnGetOut = {
 			//format ["PFP_heliOnGetOut: _idx= %1, PFP_getins=%2", _idx, PFP_getins] call BIS_fnc_log;
 			//PFP_getins = PFP_getins - _idx;
 			//format ["PFP_heliOnGetOut: _idx= %1, PFP_getins=%2", _idx, PFP_getins] call BIS_fnc_log;
-			
+
 			_from = _idx select 1;
 
 			// drop too close to load
@@ -127,12 +128,13 @@ PFP_heliOnGetOut = {
 			/// 1 point for PFP_max_distance / 2.
 			_points = (_srcObj distance _destObj) * _penalty * 2 / PFP_max_distance;
 
-			//hint format["src->dst: %1, _penalty:%2, max: %3. points: %4", 
+			//hint format["src->dst: %1, _penalty:%2, max: %3. points: %4",
 			//	(_srcObj distance _destObj), _penalty, PFP_max_distance,  _points];
 			_idx set[ 1, position _passageer ]; //save dest
 			_idx set[ count _idx, _points ]; // [ _passageer, position _passageer, _points ]
 			//PFP_getins set[ count PFP_getins, _idx ];
 			//format ["PFP_heliOnGetOut: PFP_getins= %1", PFP_getins ] call BIS_fnc_log;
+			hint "player got out";
 		};
 	};
 };
