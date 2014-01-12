@@ -3,7 +3,7 @@ waitUntil {sleep 0.5; !(isNil "currentAO")};
 private ["_priorityMessageJet"];
 
 while {true} do {
-sleep (2000 + (random 600));
+sleep (1200 + (random 600));
     if (radioTowerAlive) then {
         if (radioTowerAlive) then {
             _patrolPos=getMarkerPos currentAO;

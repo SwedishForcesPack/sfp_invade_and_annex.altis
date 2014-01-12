@@ -737,7 +737,7 @@ AW_fnc_garrisonBuildings =
 		BIS_currentDude doWatch ([BIS_currentDude, 1000, direction _building + (_x select 3)] call BIS_fnc_relPos);
 		BIS_currentDude setDir direction _building + (_x select 3);
 	} forEach _paramsArray;
-	[(units _newGrp)] call aw_setGroupSkill;
+	//[(units _newGrp)] call aw_setGroupSkill;
 	_newGrp
 };
 
@@ -753,7 +753,7 @@ _pos = getMarkerPos (_this select 0);
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
 		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
 		[_spawnGroup, getMarkerPos currentAO, PARAMS_AOSize] call aw_fnc_spawn2_randomPatrol;
-		[(units _spawnGroup)] call aw_setGroupSkill;
+		//[(units _spawnGroup)] call aw_setGroupSkill;
 
 		if(DEBUG) then
 		{
@@ -786,7 +786,7 @@ _pos = getMarkerPos (_this select 0);
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
 		"O_Soldier_AA_F" createUnit [_randomPos, _spawnGroup];
 		[_spawnGroup, getMarkerPos currentAO,50] call aw_fnc_spawn2_perimeterPatrol;
-		[(units _spawnGroup)] call aw_setGroupSkill;
+		//[(units _spawnGroup)] call aw_setGroupSkill;
 
 		if(DEBUG) then
 		{
@@ -818,7 +818,7 @@ _pos = getMarkerPos (_this select 0);
 		_randomPos = [getMarkerPos currentAO, PARAMS_AOSize] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, getMarkerPos currentAO, (PARAMS_AOSize / 2)] call aw_fnc_spawn2_randomPatrol;
-		[(units _spawnGroup)] call aw_setGroupSkill;
+		//[(units _spawnGroup)] call aw_setGroupSkill;
 
 		if(DEBUG) then
 		{
@@ -850,7 +850,7 @@ _pos = getMarkerPos (_this select 0);
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> "OIA_MotInf_Team")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, getMarkerPos currentAO, PARAMS_AOSize] call aw_fnc_spawn2_randomPatrol;
 		(vehicle (leader _spawnGroup)) spawn aw_fnc_fuelMonitor;
-		[(units _spawnGroup)] call aw_setGroupSkill;
+		//[(units _spawnGroup)] call aw_setGroupSkill;
 
 		if(DEBUG) then
 		{
@@ -893,7 +893,7 @@ _pos = getMarkerPos (_this select 0);
 		[_armourGroup,getMarkerPos currentAO,(PARAMS_AOSize / 2)] call aw_fnc_spawn2_perimeterPatrol;
 		_armour spawn aw_fnc_fuelMonitor;
 		_enemiesArray = _enemiesArray + [_armourGroup];
-		[(units _armourGroup)] call aw_setGroupSkill;
+		//[(units _armourGroup)] call aw_setGroupSkill;
 
 		_armour lock true;
 		if(DEBUG) then
@@ -956,7 +956,7 @@ _pos = getMarkerPos (_this select 0);
 		[_airGroup,getMarkerPos currentAO,(2 * (PARAMS_AOSize / 3))] call aw_fnc_spawn2_perimeterPatrol;
 		_air spawn aw_fnc_fuelMonitor;
 		_enemiesArray = _enemiesArray + [_airGroup];
-		[(units _airGroup)] call aw_setGroupSkill;
+		//[(units _airGroup)] call aw_setGroupSkill;
 
 		if(DEBUG) then
 		{

@@ -38,7 +38,7 @@ initialWeather = (PARAMS_Weather);
     case 4: {forecastOvercast = 1;forecastRain = 1;forecastFog = .05;forecastWindE = 4;forecastWindN = 4;};      // Heavy Rain
     case 5: {forecastOvercast = .75;forecastRain = .10;forecastFog = .30;forecastWindE = 1;forecastWindN = 1;};  // Light Fog
     case 6: {forecastOvercast = .85;forecastRain = .20;forecastFog = .50;forecastWindE = 0;forecastWindN = 0;};  // Heavy Fog
-    case 7: {forecastOvercast = random(1);forecastRain = random(1);forecastFog = random(.20);forecastWindE = (random(14)-7);forecastWindN = (random(14)-7);};    // Random
+    case 7: {forecastOvercast = random(1);forecastRain = random(1);forecastFog = random(.10);forecastWindE = random(1);forecastWindN = random(2);};    // Random
 };
 
 // Set up variable to track server weather updates.
