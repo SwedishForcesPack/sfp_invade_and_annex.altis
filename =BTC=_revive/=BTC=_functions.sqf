@@ -1477,7 +1477,7 @@ BTC_mobile_marker =
 		format ["%1", _var] setMarkerTextLocal format ["%1", _var];
 		format ["%1", _var] setmarkerColorlocal "ColorGreen";
 		format ["%1", _var] setMarkerSizeLocal [0.5, 0.5];
-		hint format ["%1 is available!", _var];
+		//hint format ["%1 is available!", _var];
 		while {Alive _obj} do
 		{
 			format ["%1", _var] setMarkerPosLocal (getPos _obj);

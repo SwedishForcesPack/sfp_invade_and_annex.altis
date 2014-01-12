@@ -101,7 +101,6 @@ GVAR(invites) = [];
 GVAR(requests) = [];
 
 GVAR(msg) = {
-	hint _this;
 	systemChat _this;
 };
 
@@ -741,4 +740,4 @@ GVAR(keyUp) = {
 };
 
 
-// "squad manager is active, hold T and use mousewheel to bring it up" call GVAR(msg);
+"" call GVAR(msg);

@@ -20,7 +20,10 @@ Jack Williams (Rarek) for Ahoy World!
 
 
 // Kegetys Spectator Script
-	#include "spectator\spectating.hpp"
+#include "spectator\spectating.hpp"
+
+// squad management
+#include "DOM_squad\SquadManagement.hpp"
 
 /* VAS includes */
 #include "VAS\menu.hpp"
@@ -56,31 +59,31 @@ class Params
 		title = "Time of Day";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
 		texts[] = {"00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"};
-		default = 8;
+		default = 7;
 	};
 
 	class Weather
 	{
-		title = "Starting Weather";
-		values[] = {1,2,3,4};
-		texts[] = {"Clear","Stormy","Cloudy","Foggy"};
-		default = 1;
+		title = "initialWeather";
+    values[] = {1,2,3,4,5,6,7};
+    texts[] = {"Clear","Overcast","Light Rain","Heavy Rain","Light Fog","Heavy Fog","Random"};
+    default = 7;
 	};
 
-	class EnemyLeftThreshhold
+  class EnemyLeftThreshhold
 	{
 		title = "Enemy Left Threshold";
 		values[] = {1,2,3,4,5,6,7,8,9,10};
 		texts[] = {"1","2","3","4","5","6","7","8","9","10"};
-		default = 5;
+		default = 8;
 	};
 
 	class RadioTowerMineFieldChance
 	{
 		title = "Chance for minefield to spawn around Radio Tower?";
-		values[] = {0,1,2,3,4,5,6,7,8,9,11};
+		values[] = {0,1,2,3,4,5,6,7,8,9,10};
 		texts[] = {"0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"};
-		default = 0;
+		default = 5;
 	};
 
 	class SideMissions
@@ -94,6 +97,22 @@ class Params
 	class PriorityTargets
 	{
 		title = "Enable Priority Targets?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
+	class AOReinforcementJet
+	{
+		title = "Enable AO Reinforcement Jet?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
+	class AOReinforcementHeavyHelo
+	{
+		title = "Enable AO Reinforcement Heavy Attack Helicopter?";
 		values[] = {1,0};
 		texts[] = {"Enabled","Disabled"};
 		default = 1;
@@ -136,7 +155,15 @@ class Params
 		title = "Main AO Diameter";
 		values[] = {200,300,400,500,600,700,800,900,1000};
 		texts[] = {"200m","300m","400m","500m","600m","700m","800m","900m","1,000m"};
-		default = 600;
+		default = 700;
+	};
+
+		class DefendAO
+	{
+		title = "AI Retake AO?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
 	};
 
 	class PlayerMarkers
@@ -208,7 +235,7 @@ class Params
 		title = "Squads Defending AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 1;
+		default = 3;
 	};
 
 	class TeamsPatrol
@@ -232,15 +259,15 @@ class Params
 		title = "Armoured Vehicles Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 4;
+		default = 3;
 	};
 
 	class AirPatrol
 	{
-		title = "Air Vehicles Patrolling AO";
+		title = "% Chance Of Air Vehicles Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10};
-		texts[] = {1,2,3,4,5,6,7,8,9,10};
-		default = 10;
+		texts[] = {0,10,20,30,40,50,60,70,80,90,100};
+		default = 7;
 	};
 
 	class AhoyCoinIntegration
@@ -292,6 +319,23 @@ class CfgNotifications
 		priority = 9;
 	};
 
+	class NewMainDefend
+	{
+		title = "DEFEND MAIN OBJECTIVE";
+		description = "Defend %1";
+		iconPicture = "notificons\defendtarget.paa";
+		color[] = {1, 0.81, 0.06, 1};
+		priority = 9;
+	};
+
+	class CompletedMainDefended
+	{
+		title = "MAIN OBJECTIVE DEFENDED";
+		description = "Defended %1";
+		iconPicture = "notificons\main_objective_completed.paa";
+		color[] = {1, 0.81, 0.06, 1};
+		priority = 9;
+	};
 	class NewSub
 	{
 		title = "NEW SUB-OBJECTIVE";
@@ -319,6 +363,32 @@ class CfgNotifications
 		priority = 7;
 	};
 
+	class NewSideMissionFileData
+	{
+		title = "NEW SIDE MISSION";
+		iconPicture = "notificons\laptop.paa";
+		description = "%1";
+		color[] = {0, 0.7, 0.93, 1};
+		priority = 7;
+	};
+
+	class NewSideMissionFileDataComplete
+	{
+		title = "FILE DATA SAVED";
+		description = "%1";
+		iconPicture = "notificons\laptop.paa";
+		color[] = {0.38, 0.81, 0.16, 1};
+		priority = 6;
+	};
+
+	class NewSideMissionRadar
+	{
+		title = "NEW SIDE MISSION";
+		iconPicture = "notificons\smdestroyradar.paa";
+		description = "%1";
+		color[] = {0, 0.7, 0.93, 1};
+		priority = 7;
+	};
 	class CompletedSideMission
 	{
 		title = "SIDE MISSION COMPLETE";
@@ -344,6 +414,78 @@ class CfgNotifications
 		description = "%1";
 		color[] = {0.8, 0.13, 0.14, 1};
 		priority = 10;
+	};
+
+	class EnemyHelo
+	{
+		title = "ENEMY HELICOPTER INBOUND";
+		iconPicture = "notificons\heloinbound.paa";
+		description = "%1";
+		color[] = {0.8, 0.13, 0.14, 1};
+		priority = 8;
+	};
+
+	class EnemyHeloDown
+	{
+		title = "ENEMY HELICOPTER NEUTRALIZED";
+		iconPicture = "notificons\down.paa";
+		description = "%1";
+		color[] = {1, 0.81, 0.06, 1};
+		priority = 8;
+	};
+
+	class EnemyJetDown
+	{
+		title = "ENEMY HELICOPTER NEUTRALIZED";
+		iconPicture = "notificons\down.paa";
+		description = "%1";
+		color[] = {1, 0.81, 0.06, 1};
+		priority = 8;
+	};
+
+	class EnemyHeavyHelo
+	{
+		title = "ENEMY HELICOPTER INBOUND";
+		iconPicture = "notificons\heavyheliinbound.paa";
+		description = "%1";
+		color[] = {0.8, 0.13, 0.14, 1};
+		priority = 8;
+	};
+
+	class EnemyJet
+	{
+		title = "ENEMY JET INBOUND";
+		iconPicture = "notificons\enemyJetinbound.paa";
+		description = "%1";
+		color[] = {0.8, 0.13, 0.14, 1};
+		priority = 8;
+	};
+
+	class NewSideMissionJet
+	{
+		title = "NEW SIDE MISSION";
+		iconPicture = "notificons\enemyJetinbound.paa";
+		description = "%1";
+		color[] = {0.8, 0.13, 0.14, 1};
+		priority = 8;
+	};
+
+	class EnemyHeavyHeloDown
+	{
+		title = "ENEMY HELICOPTER NEUTRALIZED";
+		iconPicture = "notificons\down.paa";
+		description = "%1";
+		color[] = {1, 0.81, 0.06, 1};
+		priority = 8;
+	};
+
+	class FriendlyHeavyHeloDown
+	{
+		title = "FRIENDLY HELO GOT NEUTRALIZED";
+		iconPicture = "notificons\down.paa";
+		description = "%1";
+		color[] = {1, 0.81, 0.06, 1};
+		priority = 8;
 	};
 
 	class Reward
@@ -397,7 +539,7 @@ class RscTitles
 author = Rarek [AW];
 onLoadName = "AW Invade & Annex";
 loadScreen = "awMissionLogo.jpg";
-OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk:9987.";
+OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. (maintained and updated by Jester and Razgriz33) To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk:9987.";
 
 disabledAI = 1;
 Respawn = 3;
