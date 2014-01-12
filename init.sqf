@@ -468,6 +468,8 @@ _null = [] execVM "misc\mortar\mortarHEReload.sqf";
 _null = [] execVM "misc\mortar\mortarSupportReload.sqf";
 */
 
+// AI retake AO start
+[]execVM "eos\OpenMe.sqf";
 
 _isPerpetual = false;
 
@@ -984,8 +986,6 @@ _pos = getMarkerPos (_this select 0);
 //Set time of day
 skipTime PARAMS_TimeOfDay;
 
-
-
 //Spawn random wrecks
 if (PARAMS_PriorityTargets == 1) then
 {
@@ -1010,9 +1010,6 @@ if (PARAMS_SideMissions == 1) then { _null = [] execVM "sm\sideMissions.sqf"; };
 
 //Begin generating priority targets
 if (PARAMS_PriorityTargets == 1) then { _null = [] execVM "sm\priorityTargets.sqf"; };
-
-//Begin creating random patrols
-// _null = [] execVM "randomPatrols.sqf";
 
 _firstTarget = true;
 _lastTarget = "Nothing";
@@ -1132,26 +1129,6 @@ while {count _targets > 0} do
 
 	waitUntil {sleep 5; count list _dt < PARAMS_EnemyLeftThreshhold};
 
-	//Set enemy kill timer
-	[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
-
-	//Delete markers and trigger
-	/* if (_isPerpetual) then
-	{
-		//_perimeterMarker = [currentAO] call AW_fnc_markerDeactivate;
-		if (count _targets == 1) then
-		{
-			_targets = _initialTargets;
-			_lastTarget = currentAO;
-			publicVariable "refreshMarkers";
-		} else {
-			_targets = _targets - [currentAO];
-		};
-	} else {
-		_targets = _targets - [currentAO];
-		//deleteMarker currentAO;
-	}; */
-
 	if (_isPerpetual) then
 	{
 		_lastTarget = currentAO;
@@ -1189,7 +1166,110 @@ while {count _targets > 0} do
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMain", currentAO]; publicVariable "showNotification";
-	[] spawn aw_cleanGroups;
+
+	//Set enemy kill timer
+	[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
+
+	// AI Retaliation by Jester [AW]
+	if (PARAMS_DefendAO == 1) then
+	{
+	sleep 5;
+
+	if(random 1 >= 0.0) then   //chance AI will re-attack
+	{
+	_defendMessages =
+	[
+		"OPFOR Forces incoming! Seek cover immediately and defend the target!"
+	];
+
+	_targetStartText = format
+	[
+		"<t align='center' size='2.2'>Defend Target</t><br/><t size='1.5' align='center' color='#0d4e8f'>%1</t><br/>____________________<br/>We got a problem. The enemy managed to call in land reinforcements. They are on the way to take back the last target. You need to defend it at all costs!<br/><br/>If the last man of BluFor dies in the target area the enemy have won.<br/><br/>Forces are expected to be there in a couple minutes, hurry up and dig in!",
+		currentAO
+	];
+
+	GlobalHint = _targetStartText; publicVariable "GlobalHint"; hint parseText GlobalHint;
+	showNotification = ["NewMainDefend", currentAO]; publicVariable "showNotification";
+
+	{_x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle_2","aoCircle_3","aoMarker_2"];
+	"aoMarker_2" setMarkerText format["Defend %1",currentAO];
+
+	sleep 10;
+	publicVariable "refreshMarkers";
+	publicVariable "currentAO";
+	currentAOUp = true;
+	publicVariable "currentAOUp";
+	radioTowerAlive = false;
+	publicVariable "radioTowerAlive";
+
+	//check for online players
+	players_online = West countSide allunits;
+	publicVariable "players_online";
+
+	_playersOnline = format
+	[
+		"Target: %1! Get ready boys - They are almost there! - UAVs available.", currentAO
+	];
+
+	_playersOnlineHint = format
+	[
+		"<t size='1.5' align='left' color='#C92626'>Target:%1!</t><br/><br/>____________________<br/>Get ready boys they are almost there! - UAVs available.", currentAO
+	];
+
+	hqSideChat = _playersOnline; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
+	GlobalHint = _playersOnlineHint; publicVariable "GlobalHint"; hint parseText GlobalHint;
+
+	sleep 60; // sleep before they spawn
+
+	hqSideChat = _defendMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
+
+	null = [["aoCircle_2"],[10,2],[0,0],[1,2],[1,3],[0,0,25,EAST]] call Bastion_Spawn;
+	hint "Thermal images show they are at the perimeter of the AO!";
+
+	sleep 300; //time before next wave
+
+	null = [["aoCircle_3"],[10,2],[0,0],[1,2],[1,3],[0,0,25,EAST]] call Bastion_Spawn;
+	hint "There are more then we expected!";
+
+	sleep 400; //time before poof
+	};
+
+	[["aoCircle_2"]] call EOS_deactivate;
+	//[] spawn aw_cleanGroups;
+	sleep 1;
+	[["aoCircle_3"]] call EOS_deactivate;
+
+	publicVariable "refreshMarkers";
+	currentAOUp = false;
+	publicVariable "currentAOUp";
+
+	//Delete detection trigger and markers
+	deleteVehicle _dt;
+
+	//Small sleep to let deletions process
+	sleep 1;
+
+	//Set target completion text
+	_targetCompleteText = format
+	[
+		"<t align='center' size='2.2'>Target Defended</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Fantastic job defending %1, boys! Give us a moment here at HQ and we'll line up your next target for you.</t>",
+		currentAO
+	];
+
+	{_x setMarkerPos [-10000,-10000,-10000];} forEach ["aoCircle_2","aoCircle_3","aoMarker_2"];
+
+	/*[] spawn aw_cleanGroups;
+	//[] call AW_fnc_rewardPlusHintDefended;
+	[_enemiesArrayDefend] spawn AW_fnc_deleteOldAOUnits;
+	[_enemiesArrayDefend] spawn GC_fnc_deleteOldUnitsAndVehicles;*/
+
+
+	//Show global target completion hint
+	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
+	showNotification = ["CompletedMainDefended", currentAO]; publicVariable "showNotification";
+	sleep 5;
+
+	};
 };
 
 //Set completion text
