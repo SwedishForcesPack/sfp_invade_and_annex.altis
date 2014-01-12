@@ -91,7 +91,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co50 AW Invade & Annex -ALTIS- 2.67b";
+		briefingName="co50 AW Invade & Annex -ALTIS- 2.68";
 		resistanceWest=0;
 		resistanceEast=1;
 		timeOfChanges=28800;
@@ -129,7 +129,7 @@ class Mission
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Squad Leader";
 				};
 				class Item1
