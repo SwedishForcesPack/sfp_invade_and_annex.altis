@@ -1,14 +1,14 @@
 /* == TASKMASTER ===============================================================================
-  
+
   Version 0.35
   Author: Shuko (shuko@quakenet, miika@miikajarvinen.fi)
   Contributors: cuel, galzohar, zuff
   Forum: http://forums.bistudio.com/showthread.php?160974-SHK_Taskmaster&p=2461579
-  
+
   == Creating a briefing =======================================================================
-  
+
   Tasks and notes are given in the init.sqf.
-  
+
   Syntax: [[[Task1Data],[Task2Data]],[[Note1Data],[Note2Data]]] execvm "shk_taskmaster.sqf";
   Example:
     [[
@@ -19,15 +19,15 @@
       ["Note2","Hello East",EAST],
       ["Credits","<br />Made by: Shuko of LDD Kyllikki<br />Contact: shuko@Quakenet<br />www.kyllikki.fi"]
     ]] execvm "shk_taskmaster.sqf";
-  
+
   -- Task Data ---------------------------------------------------------------------------------
     ["TaskName","Title","Description",Condition,[Marker],"State"]
-    
+
     Required parameters:
       TaskName      string     Name used to refer to the task
       Title         string     Task name shown in the in/game task list
       Description   string     Task description, the actual text body
-    
+
     Optional parameters:
       Condition     boolean/side/faction/unit/group/string   Units the task is added to. Default is everyone
       Marker        array     Marker related to the task. It will be created only for the units who have the
@@ -40,100 +40,100 @@
         Text        string    Marker text.
       State         string    Task state of the newly created task. Default is "created".
       Destination   object/position/marker   Place to create task destination (game's built-in waypoint/marker). If an object is given, setSimpleTaskTarget command is used, attaching the destination to it.
-      
+
     - Condition -
     It's possible to specify which units (groups, side etc) you want to create the tasks/notes for.
-    
+
     Examples:
       [...,WEST]               All playable units on BLUFOR (WEST)
       [...,"USMC"]             Faction USMC
       [...,grpMarine1]         Units that belong to group named grpMarine1
       [...,myDude]             Unit named myDude
-      
+
     Then there is the IF syntax, so you can create a condition anyway you want, where _x is the unit (=player).
-    
+
     Examples:
       "((group _x == grpScouts) OR (_x == pilot1))"     Members of grpScouts and unit named pilot1
       "(typeof _x == ""CDF_Soldier_Sniper"")"           All CDF snipers
-  
+
   -- Note Data ---------------------------------------------------------------------------------
     [NoteTitle,NoteText,Condition]
-    
+
     Required parameters:
       NoteTitle     string     Text shown in the list
       NoteText      string     The actual note text body
-      
+
     Optional parameters:
       Condition    boolean/side/faction/unit/group/string   Units the note is added to. Default is everyone.
-      
+
   == Updating tasks ============================================================================
-  
+
   Task states are updated by calling a function. Possible states are: succeeded/failed/canceled/assigned/created.
   Example: ["Task1","succeeded"] call SHK_Taskmaster_upd;
-  
+
   It's possible to set state of one task and set another as assigned using an optional 3rd parameter.
   Example: ["Task1","succeeded","Task2"] call SHK_Taskmaster_upd;
-  
+
   This will make task state of task Task1 to succeeded and the state of the task Task2 as assigned.
-  
+
   Another optional 3rd parameter can be used to add a new task after updating another task.
   Example: ["Task1","succeeded",["Task2","Title","Desc"]] call SHK_Taskmaster_upd;
-  
+
   This will make task Task1 as succeeded and create a new task Task2. Same set of parameters is used for the
   creation as in init.sqf or SHK_Taskmaster_add.
-  
+
   == Creating tasks during a mission ===========================================================
-  
+
   Tasks can be added after briefing with the add function. Same set of parameters is used as in creating a
   briefing.
-  
+
   Example: ["Task2","Extraction","Get to teh choppa!"] call SHK_Taskmaster_add;
-  
+
   == Checking task status ======================================================================
-  
+
     SHK_Taskmaster_isCompleted
       This function can be used to check if a task is completed. Task is considered completed with states
       succeeded, failed and canceled. Function returns a boolean (true/false) value.
-  
+
       Example: "Task1" call SHK_Taskmaster_isCompleted
-    
+
     SHK_Taskmaster_getAssigned
       Returns list of tasks which have "assigned" as their state.
-      
+
       Example: call SHK_Taskmaster_getAssigned
       Example result: ["Task1","Task4"]
-      
+
     SHK_Taskmaster_getState
       Returns the task state (succeeded/failed/canceled/assigned/created).
-      
+
       Example: "Task1" call SHK_Taskmaster_getState
-      
+
     SHK_Taskmaster_hasState
       Checks if a task's state matches the given state. Function returns a boolean value.
-      
+
       Example: ["Task1","succeeded"] call SHK_Taskmaster_hasState
 
     SHK_Taskmaster_hasTask
       Checks if a task with the given name has been created. Returns boolean.
-      
+
       Example: "Task1" call SHK_Taskmaster_hasTask
-      
+
     SHK_Taskmaster_addNote (client only)
       Creates a briefing note. This can only be used on client side, and it's not broadcasted for
       other players.
-      
+
       Parameters: ["Title","TextBody",Condition]
-      
+
       Condition is optional.
-      
+
       Example: Example: ["Enemy forces","Oh noes, there will be enemy soldiers in the area of operation."] call SHK_Taskmaster_addNote
-  
+
   == Known Issues =========================================================================
     If multiple add/upd calls are used nearly simultaneously (for example in same onAct field of a trigger) the tasks can multiply.
     This is because the script uses publicvariable and publicvariable eventhandler syncing. First command needs to travel over the net
     from server to clients and be processed before another update comes in. Way to avoid this issue is to add some waiting between the
     calls, for example "sleep 1;".
-  
+
   == Version history ======================================================================
     0.35  Changed: Faction faction list to A3.
     0.34  Switch to Arma 3, changed hint notification to use the A3 command.
@@ -156,7 +156,7 @@
     0.11  Fixed: Missed !isnull player check, which caused problems in marker handling.
 */
 #define FACTIONLIST ["BLU_F","OPF_F","IND_F","IND_G_F","CIV_F"]
-DEBUG = false;
+//DEBUG = false;
 /* == COMMON =================================================================================== */
   SHK_Taskmaster_initDone = false;
   SHK_Taskmaster_add = {
@@ -223,12 +223,12 @@ DEBUG = false;
           case "STRING": { _handle setsimpletaskdestination (getmarkerpos _dest) };
           case "ARRAY": { _handle setsimpletaskdestination _dest };
         };
-        
+
         _handles set [count _handles,_handle];
-        
+
         if (_x == player) then {
           if (SHK_Taskmaster_showHints) then { [_handle,_state] call SHK_Taskmaster_showHint };
-          
+
           if (count _marker > 0) then {
             if !(_state in ["succeeded","failed","canceled"]) then {
               if (typename (_marker select 0) == typename "") then {
@@ -238,17 +238,17 @@ DEBUG = false;
               {
                 _m = createmarkerlocal [(_x select 0),(_x select 1)];
                 _m setmarkershapelocal "ICON";
-                
+
                 _t = "selector_selectedMission";
                 if (count _x > 2) then {
                   private "_tmp";
-                  _tmp = (_x select 2); 
+                  _tmp = (_x select 2);
                   if (_tmp != "") then {
                     _t = _tmp;
                   };
                 };
                 _m setmarkertypelocal _t;
-                
+
                 _c = "ColorRed";
                 if (count _x > 3) then {
                   private "_tmp";
@@ -258,9 +258,9 @@ DEBUG = false;
                   };
                 };
                 _m setmarkercolorlocal _c;
-                
+
                 if (count _x > 4) then {_m setmarkertextlocal (_x select 4)};
-                
+
               } foreach _marker;
             };
           };
@@ -496,10 +496,10 @@ DEBUG = false;
           {
             if (_handle in (simpletasks _x)) then {
               _handle settaskstate _state;
-              
+
               if (_x == player) then {
                 if (SHK_Taskmaster_showHints) then { [_handle,_state] call SHK_Taskmaster_showHint };
-                
+
                 if (count _marker > 0) then {
                   if (_state in ["succeeded","failed","canceled"]) then {
                     if DEBUG then { diag_log format ["SHK_Taskmaster> updateTask deleting marker: %1, state: %2",_marker,_state]};
@@ -539,7 +539,7 @@ if isserver then {
     diag_log "-- SHK_Taskmaster_Tasks --";
     diag_log SHK_Taskmaster_Tasks;
   };
-  
+
 };
 /* == CLIENT =================================================================================== */
 if !isdedicated then {
@@ -560,7 +560,7 @@ if !isdedicated then {
   /*
     Initially wait for server to send the task list for briefing. After briefing is created, add
     an eventhandler to catch the updated task list server might send.
-    
+
     Wait for briefing tasks to be created before enabling taskhints. This prevents hints from briefing tasks
     from being spammed at the start of the mission.
   */

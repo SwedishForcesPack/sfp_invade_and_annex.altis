@@ -4,7 +4,7 @@ _actID = _this select 2;  // ID of the Action
 _object = _this select 0;
 
 sleep 1;
-_timeleft = 120;
+_timeleft = 60;
 
 [[hint "Charge placed on Objective. Standby..."],"BIS_fnc_spawn",nil,true] spawn BIS_fnc_MP;
 sleep 0.5;

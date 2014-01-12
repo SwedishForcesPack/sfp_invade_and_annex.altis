@@ -29,7 +29,7 @@ sleep _smDelay;
 			_enemyType=0;
 			_EOSspawnDistance=1000;
 		[[_currentSM]
-,[1,1],[2,1],[2,1],[0,0],[0,0,0],[0,1,1200,EAST]] call EOS_Spawn;
+,[3,1],[1,1],[2,1],[0,0],[0,0,0],[0,1,1200,EAST]] call EOS_Spawn;
 
 	waituntil {SM_COMPLETE};
 		[] call AW_fnc_rewardPlusHint;

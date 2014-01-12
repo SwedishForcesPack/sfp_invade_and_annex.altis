@@ -12,14 +12,16 @@
 			player addHandgunItem "muzzle_snds_L";
 			Server globalChat "Pilots may use side arms only. Primary weapon removed.";		
 		}; */
-		if ((player hasWeapon "launch_NLAW_F") || (player hasWeapon "launch_B_Titan_F") || (player hasWeapon "launch_B_Titan_short_F")) then
+		if ((player hasWeapon "launch_NLAW_F") || (player hasWeapon "launch_B_Titan_F") || (player hasWeapon "launch_O_Titan_F") || (player hasWeapon "launch_B_Titan_short_F") || (player hasWeapon "launch_O_Titan_short_F")) then
 		{
 			if ((playerSide == west && typeOf player != "B_soldier_LAT_F") || (playerside == east && typeOf player != "O_soldier_LAT_F") || (playerside == resistance && typeOf player != "I_soldier_LAT_F")) then
 			{
 				player removeWeapon "launch_NLAW_F";
 				player removeWeapon "launch_B_Titan_F";
+				player removeWeapon "launch_O_Titan_F";
 				player removeWeapon "launch_B_Titan_short_F";
-				player globalChat "Only AT Soldiers are trained in missile launcher operations. Launcher removed.";
+				player removeWeapon "launch_O_Titan_short_F";
+				player globalChat "Only AT Soldiers are trained with this weapon system. Launcher removed.";
 			};
 		};
 		if ((player hasWeapon "srifle_GM6_F") || (player hasWeapon "srifle_LRR_F") || (player hasWeapon "srifle_GM6_SOS_F") || (player hasWeapon "srifle_LRR_SOS_F")) then
@@ -30,17 +32,17 @@
 				player removeWeapon "srifle_LRR_F";
 				player removeWeapon "srifle_GM6_SOS_F";
 				player removeWeapon "srifle_LRR_SOS_F";
-				player globalChat "Only Snipers are trained with this caliber weapon. Sniper rifle removed.";
+				player globalChat "Only Snipers are trained with weapon system. Sniper rifle removed.";
 			};
 		};
-/* 		 if ((player hasItem "B_UavTerminal") || (player hasItem "O_UavTerminal") || (player hasItem "I_UavTerminal")) then
+ /*		 if ((player hasItem "B_UavTerminal") || (player hasItem "O_UavTerminal") || (player hasItem "I_UavTerminal")) then
 		{
 			if ((playerSide == west && typeOf player != "B_soldier_UAV_F") || (playerside == east && typeOf player != "O_soldier_UAV_F")) then
 			{
 				player removeItem "B_UavTerminal";
 				player removeItem "O_UavTerminal";
 				player removeItem "I_UavTerminal";
-				player globalChat "Only UAV are trained with this caliber weapon. Sniper rifle removed.";
+				player globalChat "Only UAV Operators are trained with this item. UAV Terminal removed.";
 			};
 		}; */	 
 		/* if ((surfaceIsWater getPos player) && !(vehicle player isKindOf "Air") && !(vehicle player isKindOf "LandVehicle") && !(vehicle player isKindOf "Ship") && !(vehicle player isKindOf "ParachuteBase")) then

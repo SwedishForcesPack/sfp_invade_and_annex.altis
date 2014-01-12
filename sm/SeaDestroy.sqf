@@ -19,13 +19,13 @@ private ["_ID","_smHint","_smMkr","_smPos","_object","_disname","_objectListArra
 SWITCH(_smHint)do 
 {
 case 0:{
-_taskDescription = format ["An unidentified %1 is lost at sea. The GPS coordinates have been sent to you.",_disname];
+_taskDescription = format ["OPFOR are using shipping containers to establish an underwater listening post off the coast of Altis. Stop them!",_disname];
 };
 case 1:{
-_taskDescription = format ["A weak signal is being transmitted from the sea. We believe it is a %1. Location has been sent to you.",_disname];
+_taskDescription = format ["The enemy is trying to jam our communications with the mainland. Destroy their communications container.",_disname];
 };
 case 2:{
-_taskDescription = format ["Local fishermen have reported suspicious activity near the coast. Confirm it is the %1 and destroy it",_disname];
+_taskDescription = format ["Local fishermen have reported suspicious activity near the coast. Confirm it is the enemy comms container and destroy it",_disname];
 };
 };
 

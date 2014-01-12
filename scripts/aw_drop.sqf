@@ -59,6 +59,7 @@ private ["_heli", "_reloadtime"];
 		clearMagazineCargoGlobal _crate;
 
 		// fill crate with our junk
+		_crate addMagazineCargoGlobal ["5Rnd_127x108_Mag", 10];
 		_crate addMagazineCargoGlobal ["7Rnd_408_Mag", 15];
 		_crate addMagazineCargoGlobal ["30Rnd_556x45_Stanag", 40];
 		_crate addMagazineCargoGlobal ["30Rnd_65x39_caseless_mag_Tracer", 40];
@@ -76,7 +77,7 @@ private ["_heli", "_reloadtime"];
 		_crate addMagazineCargoGlobal ["RPG32_F", 2];
 		_crate addMagazineCargoGlobal ["NLAW_F", 3];
 		_crate addMagazineCargoGlobal ["Titan_AT", 2];
-		_crate addMagazineCargoGlobal ["Titan_AA", 1];
+		_crate addMagazineCargoGlobal ["Titan_AA", 2];
 
 		// lets people know stuff happened
 		_HQ sideChat "ammo crate has been dropped.";

@@ -24,7 +24,7 @@ while{(alive _unit) AND (alive (gunner _unit))} do
 	if(count _availableTargets != 0) then 
 	{
 		{
-			if(((_x select 2) == _enemy) AND (((_x select 0) distance _pos) > _radiusMin) AND (((_x select 0) distance (getMarkerPos "respawn_west")) > 1000) AND (((_x select 0) distance _pos) < _radiusMax) AND !((_x select 1) isKindOf "Air") AND (({(side _x) == _friend} count ((_x select 0) nearEntities [["Man","Air","Car","Motorcycle","Tank"],100])) == 0)) then
+			if(((_x select 2) == _enemy) AND (((_x select 0) distance _pos) > _radiusMin) AND (((_x select 0) distance (getMarkerPos "respawn_west")) > 1000) AND (((_x select 0) distance (getMarkerPos "aoCircle")) < 5000) AND (((_x select 0) distance _pos) < _radiusMax) AND !((_x select 1) isKindOf "Air") AND (({(side _x) == _friend} count ((_x select 0) nearEntities [["Man","Air","Car","Motorcycle","Tank"],100])) == 0)) then
 			{
 				if(count _target == 0) then {_target = [_x]} else
 				{

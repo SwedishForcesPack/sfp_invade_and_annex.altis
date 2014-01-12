@@ -1,15 +1,15 @@
 sleep 5;
 
-	if(random 1 >= 0.2) then   //chance AI will re-attack
+	if(random 1 >= 0.4) then   //chance AI will re-attack
 	{
 	_defendMessages =
 	[
-		"OPFOR Forces incoming! Seek cover immediately and defend the target!"
+		"OPFOR Forces incoming! Seek cover immediately and defend the objective area!"
 	];
 
 	_targetStartText = format
 	[
-		"<t align='center' size='2.2'>Defend Target</t><br/><t size='1.5' align='center' color='#0d4e8f'>%1</t><br/>____________________<br/>We got a problem. The enemy managed to call in land reinforcements. They are on the way to take back the last target. You need to defend it at all costs!<br/><br/>If the last man of BluFor dies in the target area the enemy have won.<br/><br/>Forces are expected to be there in a couple minutes, hurry up and dig in!",
+		"<t align='center' size='2.2'>Defend Target</t><br/><t size='1.5' align='center' color='#0d4e8f'>%1</t><br/>____________________<br/>We have a problem. The enemy managed to call in land reinforcements. They are on the way to take back the last target. You need to defend it at all cost!",
 		currentAO
 	];
 
@@ -38,10 +38,10 @@ sleep 5;
 
 	_playersOnlineHint = format
 	[
-		"<t size='1.5' align='left' color='#C92626'>Target:%1!</t><br/><br/>____________________<br/>Get ready boys they are almost there! - UAVs available.", currentAO
+		"<t size='1.5' align='left' color='#C92626'>Target: %1!</t><br/><br/>____________________<br/>Get ready boys they are almost here! - UAVs available.", currentAO
 	];
 
-	_defendTimer = (500 + (random 300));
+	_defendTimer = (480 + (random 120));
 	hqSideChat = _playersOnline; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 	GlobalHint = _playersOnlineHint; publicVariable "GlobalHint"; hint parseText GlobalHint;
 
@@ -49,21 +49,16 @@ sleep 5;
 
 	hqSideChat = _defendMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 
-	null = [["aoCircle_2"],[12,2],[0,0],[1,2],[2,3],[0,0,25,EAST]] call Bastion_Spawn;
+	null = [["aoCircle_2"],[28,2],[3,2],[1],[0,0],[0,0,100,EAST]] call Bastion_Spawn;
 	hint "Thermal images show enemy are at the perimeter of the AO!";
 
-	sleep 20; //time before next wave
-	hint "sleeping for 20 then spawning second wave";
-
-	null = [["aoCircle_3"],[15,2],[0,0],[0,0],[0,0],[0,0,25,EAST]] call Bastion_Spawn;
-	hint "There are more then we expected!";
 
 			// countdown timer
 			[[hint "Enemy Spotted. Standby..."],"BIS_fnc_spawn",nil,true] spawn BIS_fnc_MP;
 			sleep 0.5;
 			while {true} do {
-			//hintsilent format ["Assualt will end in :%1", [((_defendTimer)/60)+.01,"HH:MM"] call bis_fnc_timetostring];
-			_targetStartText2 = format ["Assualt will end in: %1", [((_defendTimer)/60)+.01,"HH:MM"] call bis_fnc_timetostring];
+			//hintsilent format ["Assault will end in :%1", [((_defendTimer)/60)+.01,"HH:MM"] call bis_fnc_timetostring];
+			_targetStartText2 = format ["Assault will end in: %1", [((_defendTimer)/60)+.01,"HH:MM"] call bis_fnc_timetostring];
 			GlobalHint = _targetStartText2; publicVariable "GlobalHint"; hint parseText GlobalHint;
 			if (_defendTimer < 1) exitWith{};
 			_defendTimer = _defendTimer -1;
@@ -71,7 +66,4 @@ sleep 5;
 			};
 
 	[["aoCircle_2"]] call EOS_deactivate;
-	sleep 1;
-	[["aoCircle_3"]] call EOS_deactivate;
 	};
-
