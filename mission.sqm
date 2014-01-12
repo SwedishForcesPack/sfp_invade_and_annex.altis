@@ -102,7 +102,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co45 AW Invade & Annex -ALTIS- 2.70a";
+		briefingName="co45 AW Invade & Annex -ALTIS- 2.70b";
 		resistanceWest=0;
 		resistanceEast=1;
 		timeOfChanges=28800;
@@ -1018,7 +1018,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=282;
+		items=283;
 		class Item0
 		{
 			position[]={15246.208,-0.0082027912,14204.392};
@@ -4157,6 +4157,16 @@ class Mission
 			skill=0.60000002;
 			init="_m = [this,600,300] execVM ""vehicle\monitor.sqf"";";
 		};
+		class Item282
+		{
+			position[]={14604.515,17.91,16789.932};
+			azimut=-47.371212;
+			id=340;
+			side="EMPTY";
+			vehicle="Land_HelipadEmpty_F";
+			skill=0.60000002;
+			text="soundSource";
+		};
 	};
 	class Markers
 	{
@@ -5068,7 +5078,7 @@ class Mission
 	};
 	class Sensors
 	{
-		items=17;
+		items=18;
 		class Item0
 		{
 			position[]={15972.207,3.5464966,16012.277};
@@ -5334,6 +5344,24 @@ class Mission
 			age="UNKNOWN";
 			expCond="this and ((getPos (thisList select 0)) select 2 < 1)";
 			expActiv="_handle = [(thisList select 0)] execVM ""misc\rearmVehicle.sqf"";";
+			class Effects
+			{
+			};
+		};
+		class Item17
+		{
+			position[]={14641.674,17.91,16759.436};
+			b=13;
+			angle=-46.188;
+			rectangular=1;
+			activationBy="WEST";
+			repeating=1;
+			timeoutMin=2;
+			timeoutMid=2;
+			timeoutMax=2;
+			interruptable=1;
+			age="UNKNOWN";
+			expActiv="_handle = [(thisList select 0)] execVM ""arrival.sqf"";";
 			class Effects
 			{
 			};

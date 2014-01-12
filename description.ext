@@ -582,6 +582,15 @@ class RscTitles
 
 		titles[] = {};
 	};
+	
+    class arrival
+    {
+        // how the sound is referred to in the editor (e.g. trigger effects)
+        name = "arrival";
+        // filename, volume, pitch
+        sound[] = {"sounds\arrival.ogg", 1, 1};
+        titles[] = {};
+    };
 }; */
 
 /* Adds screen when loading. */
