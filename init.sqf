@@ -165,8 +165,8 @@ enableSaving [false, false];
 // Disable automatic radio messages
 enableSentences false;
 
-
-if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, _name] execVM ""ac\init.sqf"";"; };
+// taken out due to arma2net being buggy
+//if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, _name] execVM ""ac\init.sqf"";"; };
 
 "GlobalHint" addPublicVariableEventHandler
 {
@@ -277,9 +277,12 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 	};
 };
 
-
+/* =============================================== */
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
+/* =============================================== */
+/* =============================================== */
+
 // weather script
 execVM "misc\randomWeather.sqf";
 
@@ -289,11 +292,12 @@ execVM "misc\randomWeather.sqf";
 // group manager
 0 = [] execVM 'DOM_squad\group_manager.sqf';
 [] execVM "DOM_squad\init.sqf";
+
 // restrictions
 _null = [] execVM "restrictions.sqf";
 _null=[] execVM "admin_uid.sqf";
 
-// Allow to Jump set the key in the .sqf defualt is C - 2x's
+// Allow to Jump set the key in the .sqf defualt is f - 2x's
 execVM "misc\jump.sqf";
 
 // other stuff
@@ -424,9 +428,11 @@ if (!isServer) exitWith
 	};
 };
 
-
+/* =============================================== */
 /* =============================================== */
 /* ============ SERVER INITIALISATION ============ */
+/* =============================================== */
+/* =============================================== */
 
 //Set a few blank variables for event handlers and solid vars for SM
 debugMode = true; publicVariable "debugMode";
@@ -1175,7 +1181,7 @@ while {count _targets > 0} do
 	{
 	sleep 5;
 
-	if(random 1 >= 0.0) then   //chance AI will re-attack
+	if(random 1 >= 0.3) then   //chance AI will re-attack
 	{
 	_defendMessages =
 	[
@@ -1223,64 +1229,18 @@ while {count _targets > 0} do
 
 	hqSideChat = _defendMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 
-	null = [["aoCircle_2"],[12,2],[0,0],[1,2],[1,3],[0,0,25,EAST]] call Bastion_Spawn;
+	null = [["aoCircle_2"],[12,2],[0,0],[1,2],[2,3],[0,0,25,EAST]] call Bastion_Spawn;
 	hint "Thermal images show enemy are at the perimeter of the AO!";
 
 	sleep 20; //time before next wave
 	hint "sleeping for 20 then spawning second wave";
 
-	null = [["aoCircle_3"],[13,2],[0,0],[0,0],[0,0],[0,0,25,EAST]] call Bastion_Spawn;
+	null = [["aoCircle_3"],[15,2],[0,0],[0,0],[0,0],[0,0,25,EAST]] call Bastion_Spawn;
 	hint "There are more then we expected!";
 
-	sleep 20;
-	hint "second wave spawned activating timer in 3 seconds";
-	sleep 3;
-
-	if (isServer) then {     // Server countdown
-        missionNamespace setVariable ["kINTmissionstart",60];      // Set counter duration
-        publicVariable "kINTmissionstart";         // Transmit counter duration over the network
-        _kINTcountme = 0;    // Set initial loopcount to zero
-
-        while {kINTmissionstart!=0} do {     // Run the following while is not zero
-                sleep 1;    // wait 1 second
-                _kINTcountme = _kINTcountme + 1;   // Add 1 second to the loopcounter
-                kINTmissionstart = kINTmissionstart -1;   // Deduct 1 second from the countdown
-                if (_kINTcountme==10) then {  // When the countdown has reached 10sec do:
-                        publicVariable "kINTmissionstart";  // Transmit the current countdown status over the network
-                        //_kINTcountme=0;     // reset the loopcounter to zero
-                };
-
-        if (!isDedicated || !isServer || isPlayer player) then { // CLIENT code
-        if (isNil "kINTmissionstart") then    // if countdown is not set to anything (meaning client still JIP or not synced yet)
-        {
-                kINTmissionstart = 60;   // Assume the full 600 seconds to prevent early start
-        };
-        "kINTmissionstart" addPublicVariableEventHandler {   // Create publiceventhandler for the countdown
-                _timeLeftHint = format
-                [
-                "Enemy attack will end in: %1",kINTmissionstart
-                ];
-                TimerHint = _timeLeftHint; publicVariable "TimerHint"; hint parseText TimerHint;
-                //hint format ["Enemy attack will end in: %1",kINTmissionstart];     // display countdown when eventhander is tripped (so once every 10 seconds
-                //hint "Enemy attack will end in: %1",kINTmissionstart;
-                };
-        while {kINTmissionstart!=0} do {   // while countdown is not zero do:
-                sleep 1;      // sleep 1 second
-        };          // client will loop here and show hint every 10sec according to the eventhandler
-};  // after the 600 seconds the client will break out of the loop and the code will continue
-
-
-
-        };
-};    // So after the countdown reaches zero, the loop will break and the code will continue
-
-
-
-	//_awTimer = [] execVM "scripts\aw_timer.sqf";
-	//sleep 400; //time before poof
+	sleep (500 + (random 300)) ; //time before poof
 	//waitUntil{scriptDone _awTimer};
 
-	sleep 5;
 	hint "deactivating attack sequence";
 
 	[["aoCircle_2"]] call EOS_deactivate;

@@ -19,3 +19,6 @@ if((_unit isKindOf "Ship") OR (_unit isKindOf "Wheeled_APC_F")) then {[_unit] ex
 
 if((_unit isKindOf "B_MRAP_01_F") OR (_unit isKindOf "B_MRAP_01_hmg_F")) then {clearitemcargo _unit; clearWeaponCargoGlobal _unit; clearMagazineCargoGlobal _unit;};
 
+if(_unit isKindOf "I_Heli_Transport_02_F") then {[_unit] execVM "scripts\usableCargoRamp\start.sqf";};
+
+if(_unit isKindOf "B_Heli_Transport_01_camo_F") then {[_unit] execVM "misc\aw_heliDoor.sqf";};
