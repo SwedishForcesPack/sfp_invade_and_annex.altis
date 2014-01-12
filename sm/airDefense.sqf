@@ -66,5 +66,5 @@ sleep (1200 + (random 600));
             } foreach _helo_crew;
         };
     };
-    sleep 20;
+    sleep 10;
 };

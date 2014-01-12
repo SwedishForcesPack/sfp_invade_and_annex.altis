@@ -7,7 +7,7 @@ _completeText =
 "<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#08b000'>NEUTRALISED</t><br/>____________________<br/>Incredible job, boys! Make sure you jump on those priority targets quickly; they can really cause havoc if they're left to their own devices.<br/><br/>Keep on with the main objective; we'll tell you if anything comes up.";
 while {true} do
 {
-	_randomWait = (random 3800);
+	_randomWait = (random 3000);
 	sleep (600 + _randomWait);
 	if (_firstRun) then
 	{
@@ -139,7 +139,7 @@ while {true} do
 		_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, _flatPos, 50] call aw_fnc_spawn2_perimeterPatrol;
-		//[(units _spawnGroup)] call aw_setGroupSkill;
+		[(units _spawnGroup)] call aw_setGroupSkill;
 
 		_unitsArray = _unitsArray + [_spawnGroup];
 	};
@@ -149,7 +149,7 @@ while {true} do
 		_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, _flatPos, 150] call aw_fnc_spawn2_randomPatrol;
-		//[(units _spawnGroup)] call aw_setGroupSkill;
+		[(units _spawnGroup)] call aw_setGroupSkill;
 
 		_unitsArray = _unitsArray + [_spawnGroup];
 	};

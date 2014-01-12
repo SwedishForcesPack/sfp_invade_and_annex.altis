@@ -48,8 +48,7 @@ class Mission
 		"a3_characters_f_beta",
 		"A3_Air_F_Heli_Light_02",
 		"A3_Soft_F_Crusher_UGV",
-		"A3_Modules_F_Supports",
-		"A3_Air_F_Beta_Heli_Attack_02"
+		"A3_Modules_F_Supports"
 	};
 	addOnsAuto[]=
 	{
@@ -92,9 +91,10 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co50 AW Invade & Annex -ALTIS- 2.66c";
+		briefingName="co50 AW Invade & Annex -ALTIS- 2.67";
 		resistanceWest=0;
 		resistanceEast=1;
+		timeOfChanges=28800;
 		startWeather=0;
 		startWind=0;
 		forecastWeather=0;
@@ -105,8 +105,8 @@ class Mission
 		day=6;
 		hour=0;
 		minute=0;
-		startFogDecay=0;
-		forecastFogDecay=0;
+		startFogDecay=0.0049333;
+		forecastFogDecay=0.0049333;
 	};
 	class Groups
 	{
@@ -119,7 +119,7 @@ class Mission
 				items=10;
 				class Item0
 				{
-					position[]={14635.418,17.91,16766.238};
+					position[]={14635.816,17.91,16765.801};
 					azimut=-201.653;
 					special="NONE";
 					id=0;
@@ -135,98 +135,98 @@ class Mission
 				class Item1
 				{
 					position[]={14634.741,17.91,16769.271};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=1;
 					side="WEST";
 					vehicle="B_medic_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Medic";
 				};
 				class Item2
 				{
 					position[]={14633.979,17.91,16768.021};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=2;
 					side="WEST";
 					vehicle="B_soldier_repair_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Repair Specialist";
 				};
 				class Item3
 				{
 					position[]={14634.335,17.91,16767.027};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=3;
 					side="WEST";
 					vehicle="B_soldier_exp_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Explosive Specialist";
 				};
 				class Item4
 				{
 					position[]={14635.523,17.91,16767.617};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=4;
 					side="WEST";
 					vehicle="B_soldier_AR_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Autorifleman";
 				};
 				class Item5
 				{
 					position[]={14635.242,17.91,16768.408};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=5;
 					side="WEST";
 					vehicle="B_Soldier_GL_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Grenadier";
 				};
 				class Item6
 				{
 					position[]={14633.605,17.91,16768.949};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=6;
 					side="WEST";
 					vehicle="B_soldier_M_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Marksman";
 				};
 				class Item7
 				{
-					position[]={14632.991,17.91,16770.207};
-					azimut=-208.78101;
+					position[]={14633.19,17.91,16769.971};
+					azimut=-208.78093;
 					special="NONE";
 					id=7;
 					side="WEST";
 					vehicle="B_soldier_LAT_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Rifleman (AT)";
 				};
 				class Item8
 				{
 					position[]={14634.276,17.91,16770.498};
-					azimut=-201.653;
+					azimut=-201.65294;
 					special="NONE";
 					id=8;
 					side="WEST";
@@ -234,7 +234,7 @@ class Mission
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
-					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Squad Grenadier";
 				};
 				class Item9
@@ -248,7 +248,7 @@ class Mission
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
-					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
+					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Alpha Squad AT";
 				};
 			};
@@ -290,7 +290,7 @@ class Mission
 				class Item2
 				{
 					position[]={14628.66,17.91,16761.715};
-					azimut=96.2547;
+					azimut=96.25473;
 					special="NONE";
 					id=12;
 					side="WEST";
@@ -315,8 +315,8 @@ class Mission
 				};
 				class Item4
 				{
-					position[]={14626.73,17.91,16761.703};
-					azimut=96.2547;
+					position[]={14627.129,17.91,16762.461};
+					azimut=96.25473;
 					special="NONE";
 					id=14;
 					side="WEST";
@@ -367,15 +367,14 @@ class Mission
 				};
 				class Item8
 				{
-					position[]={14626.651,17.91,16762.92};
-					azimut=-884.32703;
+					position[]={14627.409,17.91,16763.479};
+					azimut=-884.32721;
 					special="NONE";
 					id=18;
 					side="WEST";
 					vehicle="B_soldier_M_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Charlie Marksman";
 				};
 			};
@@ -389,7 +388,7 @@ class Mission
 				class Item0
 				{
 					position[]={14639.142,17.91,16755.547};
-					azimut=-754.56696;
+					azimut=-754.56702;
 					special="NONE";
 					id=19;
 					side="WEST";
@@ -443,7 +442,7 @@ class Mission
 				class Item4
 				{
 					position[]={14640.558,17.91,16754.68};
-					azimut=-754.56696;
+					azimut=-754.56702;
 					special="NONE";
 					id=23;
 					side="WEST";
@@ -456,7 +455,7 @@ class Mission
 				class Item5
 				{
 					position[]={14640.8,17.91,16752.266};
-					azimut=-754.56696;
+					azimut=-754.56702;
 					special="NONE";
 					id=24;
 					side="WEST";
@@ -469,7 +468,7 @@ class Mission
 				class Item6
 				{
 					position[]={14642.48,17.91,16751.762};
-					azimut=-754.56696;
+					azimut=-754.56702;
 					special="NONE";
 					id=25;
 					side="WEST";
@@ -477,12 +476,12 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Charlie Marksman";
+					description="Charlie [AT]";
 				};
 				class Item7
 				{
 					position[]={14641.171,17.91,16753.627};
-					azimut=-761.69495;
+					azimut=-761.69501;
 					special="NONE";
 					id=26;
 					side="WEST";
@@ -495,7 +494,7 @@ class Mission
 				class Item8
 				{
 					position[]={14641.357,17.91,16751.223};
-					azimut=-754.56696;
+					azimut=-754.56702;
 					special="NONE";
 					id=27;
 					side="WEST";
@@ -909,7 +908,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Foxtrot Squad [AT]";
+					description="Foxtrot Squad AT";
 				};
 			};
 		};
@@ -1120,7 +1119,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=358;
+		items=353;
 		class Item0
 		{
 			position[]={15246.208,-0.0082027912,14204.392};
@@ -2001,7 +2000,7 @@ class Mission
 			vehicle="B_Quadbike_01_F";
 			skill=0.60000002;
 			text="Quad_8";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+			init="_m = [this,60,300] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
 		};
 		class Item80
 		{
@@ -2012,7 +2011,7 @@ class Mission
 			vehicle="B_Quadbike_01_F";
 			skill=0.60000002;
 			text="Quad_7";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+			init="_m = [this,60,300] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
 		};
 		class Item81
 		{
@@ -2023,7 +2022,7 @@ class Mission
 			vehicle="B_Quadbike_01_F";
 			skill=0.60000002;
 			text="Quad_6";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+			init="_m = [this,60,300] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
 		};
 		class Item82
 		{
@@ -4942,86 +4941,31 @@ class Mission
 		};
 		class Item350
 		{
-			position[]={14564.002,17.73455,16894.699};
-			azimut=224.229;
-			id=416;
-			side="EMPTY";
-			vehicle="B_Quadbike_01_F";
-			skill=0.60000002;
-			text="Quad_8_1";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
-		};
-		class Item351
-		{
-			position[]={14566.418,17.751198,16892.672};
-			azimut=224.229;
-			id=417;
-			side="EMPTY";
-			vehicle="B_Quadbike_01_F";
-			skill=0.60000002;
-			text="Quad_7_1";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
-		};
-		class Item352
-		{
-			position[]={14568.599,17.762674,16890.529};
-			azimut=224.229;
-			id=418;
-			side="EMPTY";
-			vehicle="B_Quadbike_01_F";
-			skill=0.60000002;
-			text="Quad_6_1";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
-		};
-		class Item353
-		{
-			position[]={14570.666,17.767557,16888.482};
-			azimut=224.229;
-			id=419;
-			side="EMPTY";
-			vehicle="B_Quadbike_01_F";
-			skill=0.60000002;
-			text="Quad_8_1_1";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
-		};
-		class Item354
-		{
-			position[]={14573.082,17.771555,16886.455};
-			azimut=224.229;
-			id=420;
-			side="EMPTY";
-			vehicle="B_Quadbike_01_F";
-			skill=0.60000002;
-			text="Quad_7_1_1";
-			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
-		};
-		class Item355
-		{
-			position[]={9126.458,16.996536,21483.826};
+			position[]={21117.852,21.894447,7248.5059};
 			azimut=401.21671;
-			id=421;
+			id=416;
 			side="EMPTY";
 			vehicle="B_supplyCrate_F";
 			skill=0.60000002;
 			text="ammo3_1";
 			init="this addAction[""<t color='#ff1111'>Virtual Ammobox</t>"", ""VAS\open.sqf""];";
 		};
-		class Item356
+		class Item351
 		{
-			position[]={23195.6,3.1900001,18911.711};
+			position[]={23185.344,3.1900001,18934.123};
 			azimut=401.21671;
-			id=422;
+			id=417;
 			side="EMPTY";
 			vehicle="B_supplyCrate_F";
 			skill=0.60000002;
 			text="ammo3_2";
 			init="this addAction[""<t color='#ff1111'>Virtual Ammobox</t>"", ""VAS\open.sqf""];";
 		};
-		class Item357
+		class Item352
 		{
-			position[]={21090.293,22.007912,7256.4316};
+			position[]={9121.2021,17.018406,21486.295};
 			azimut=401.21671;
-			id=423;
+			id=418;
 			side="EMPTY";
 			vehicle="B_supplyCrate_F";
 			skill=0.60000002;
@@ -5034,7 +4978,7 @@ class Mission
 		items=96;
 		class Item0
 		{
-			position[]={-25457.828,0.0053709671,-12789.827};
+			position[]={-1391.4594,-0.01276912,580.14929};
 			name="sideMarker";
 			text="Side Mission";
 			type="mil_dot";
@@ -5042,7 +4986,7 @@ class Mission
 		};
 		class Item1
 		{
-			position[]={-25592.229,-0.25992373,-13317.955};
+			position[]={-1455.0892,-0.0086975982,1430.8329};
 			name="aoCircle";
 			markerType="ELLIPSE";
 			type="Empty";
@@ -5053,7 +4997,7 @@ class Mission
 		};
 		class Item2
 		{
-			position[]={-25599.264,-0.57352817,-13313.994};
+			position[]={-1462.1263,0.009257229,1434.7938};
 			name="aoMarker";
 			text="Objective";
 			type="o_unknown";
@@ -5061,7 +5005,7 @@ class Mission
 		};
 		class Item3
 		{
-			position[]={-25602.637,-0.14193623,-13327.688};
+			position[]={-1536.2679,-0.027298985,42.289185};
 			name="priorityMarker";
 			text="Priority Target";
 			type="o_mortar";
@@ -5069,7 +5013,7 @@ class Mission
 		};
 		class Item4
 		{
-			position[]={-25405.271,0.4221597,-13092.258};
+			position[]={-1268.1322,-0.0044042207,1656.5302};
 			name="radioMarker";
 			text="Radiotower";
 			type="loc_Transmitter";
@@ -5077,7 +5021,7 @@ class Mission
 		};
 		class Item5
 		{
-			position[]={-24510.607,-0.38944447,-13227.785};
+			position[]={-373.46912,-0.0014226269,1521.0023};
 			name="sideCircle";
 			markerType="ELLIPSE";
 			type="Empty";
@@ -5089,7 +5033,7 @@ class Mission
 		};
 		class Item6
 		{
-			position[]={-24897.648,-0.10655269,-12668.839};
+			position[]={-760.51007,-0.042651292,2079.9487};
 			name="priorityCircle";
 			markerType="ELLIPSE";
 			type="Empty";
@@ -5101,7 +5045,7 @@ class Mission
 		};
 		class Item7
 		{
-			position[]={-25405.279,0.40341049,-13091.418};
+			position[]={-1268.142,-0.0015529618,1657.369};
 			name="radioMineCircle";
 			markerType="ELLIPSE";
 			type="Empty";
@@ -5383,7 +5327,7 @@ class Mission
 		};
 		class Item46
 		{
-			position[]={17144.451,15.266942,12718.887};
+			position[]={16857.619,20.688335,12705.762};
 			name="Pyrgos";
 			type="Empty";
 		};
@@ -5565,113 +5509,125 @@ class Mission
 		};
 		class Item73
 		{
-			position[]={3927.094,16.265757,13116.078};
+			position[]={3548.5437,8.5553999,13107.734};
 			name="Kavala";
 			type="Empty";
 		};
 		class Item74
 		{
+			position[]={3843.623,21.135872,13777.146};
+			name="Aggelochori";
+			type="Empty";
+		};
+		class Item75
+		{
 			position[]={10964.863,27.764334,13392.798};
 			name="Poliakko";
 			type="Empty";
 		};
-		class Item75
+		class Item76
 		{
 			position[]={20947.664,43.600555,16957.436};
 			name="Paros";
 			type="Empty";
 		};
-		class Item76
+		class Item77
 		{
 			position[]={27007.766,20.321817,23217.301};
 			name="Molos";
 			type="Empty";
 		};
-		class Item77
+		class Item78
 		{
 			position[]={16664.455,17.315681,16094.906};
 			name="Anthrakia";
 			type="Empty";
 		};
-		class Item78
+		class Item79
 		{
 			position[]={18636.91,209.52666,10183.688};
 			name="The wind turbines";
 			type="Empty";
 		};
-		class Item79
+		class Item80
+		{
+			position[]={14253.633,5.2516055,13008.563};
+			name="The peninsula";
+			type="Empty";
+		};
+		class Item81
 		{
 			position[]={10647.004,16.011082,12286.085};
 			name="Therisa";
 			type="Empty";
 		};
-		class Item80
+		class Item82
 		{
 			position[]={23595.215,95.620186,21097.58};
 			name="Delfinaki outpost";
 			type="Empty";
 		};
-		class Item81
+		class Item83
 		{
 			position[]={5101.8726,49.464031,11248.213};
 			name="Panochori";
 			type="Empty";
 		};
-		class Item82
+		class Item84
 		{
 			position[]={5480.0845,23.759537,14983.497};
 			name="The Stadium";
 			type="Empty";
 		};
-		class Item83
+		class Item85
 		{
 			position[]={9211.7803,27.914619,13788.503};
 			name="The Xirolimni Dam";
 			type="Empty";
 		};
-		class Item84
+		class Item86
 		{
 			position[]={5414.0161,76.723709,17909.834};
 			name="The small industrial complex";
 			type="Empty";
 		};
-		class Item85
+		class Item87
 		{
 			position[]={12818.027,86.947807,16690.49};
 			name="Lakka military outpost";
 			type="Empty";
 		};
-		class Item86
+		class Item88
 		{
 			position[]={4900.4351,77.775963,16144.908};
 			name="Negades";
 			type="Empty";
 		};
-		class Item87
+		class Item89
+		{
+			position[]={3017.0854,32.198544,18465.949};
+			name="Fotia";
+			type="Empty";
+		};
+		class Item90
 		{
 			position[]={9438.707,125.65749,20264.695};
 			name="Abdera";
 			type="Empty";
 		};
-		class Item88
+		class Item91
 		{
 			position[]={23210.268,13.970253,19967.121};
 			name="Ioannina";
 			type="Empty";
 		};
-		class Item89
+		class Item92
 		{
 			position[]={7157.7944,120.6228,16472.883};
 			name="Kore";
 			type="Empty";
 		};
-		class Item90
-		{
-			position[]={15144.351,17.91,17193.916};
-			name="gvs_uav_0";
-			type="Empty";
-		};
-		class Item91
+		class Item93
 		{
 			position[]={15032.022,17.903131,16747.824};
 			name="airService_2";
@@ -5679,38 +5635,19 @@ class Mission
 			type="b_maint";
 			angle=174.88219;
 		};
-		class Item92
+		class Item94
 		{
 			position[]={14766.006,17.91,16842.58};
 			name="MortarHQ_1";
 			type="Empty";
 			angle=90.186256;
 		};
-		class Item93
+		class Item95
 		{
 			position[]={14278.156,20.721277,16167.683};
 			name="MortarHQ_2";
 			type="Empty";
 			angle=-13.107552;
-		};
-		class Item94
-		{
-			position[]={-25248.424,-0.68573946,-13117.741};
-			name="aoMarker_2";
-			text="Objective";
-			type="b_hq";
-			colorName="ColorBLUFOR";
-		};
-		class Item95
-		{
-			position[]={-25218.664,0.061983556,-13230.106};
-			name="aoCircle_2";
-			markerType="ELLIPSE";
-			type="Empty";
-			colorName="ColorBLUFOR";
-			fillName="FDiagonal";
-			a=700;
-			b=700;
 		};
 	};
 	class Sensors
@@ -5750,12 +5687,12 @@ class Mission
 			position[]={15972.526,3.3962231,16026.043};
 			a=16000;
 			b=16000;
-			activationBy="INDIA";
+			activationBy="HOTEL";
 			repeating=1;
 			interruptable=1;
 			age="UNKNOWN";
 			text="Map Teleport";
-			name="trg_aw_admin_1";
+			name="trg_aw_admin_1_1_1";
 			expActiv="if((!serverCommandAvailable ""#kick"") AND (isMultiplayer)) exitWith{}; [] call aw_serverMapTP;";
 			class Effects
 			{
@@ -5891,16 +5828,16 @@ class Mission
 		};
 		class Item11
 		{
-			position[]={15972.528,3.0643411,16033.436};
-			a=16000;
-			b=16000;
-			activationBy="JULIET";
+			position[]={15143.835,17.91,17193.58};
+			a=8;
+			b=8;
+			angle=73.820999;
+			activationBy="WEST";
 			repeating=1;
 			interruptable=1;
 			age="UNKNOWN";
-			text="Kill all in 1k radius";
-			name="trg_aw_admin_2_2_2";
-			expActiv="if((!serverCommandAvailable ""#kick"") AND (isMultiplayer)) exitWith{}; [] call aw_destroyAll;";
+			expCond="this and ((getPos (thisList select 0)) select 2 < 1)";
+			expActiv="_handle = [(thisList select 0)] execVM ""misc\rearmVehicle.sqf"";";
 			class Effects
 			{
 			};
@@ -5920,19 +5857,21 @@ class Intro
 	randomSeed=4103789;
 	class Intel
 	{
-		timeOfChanges=5;
-		startWeather=0;
-		startWind=0;
-		forecastWeather=0;
-		forecastWind=0;
-		forecastWaves=0;
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
 		year=2035;
 		month=7;
 		day=6;
 		hour=14;
 		minute=15;
-		startFogDecay=0;
-		forecastFogDecay=0;
+		startFogDecay=0.0049333;
+		forecastFogDecay=0.0049333;
 	};
 };
 class OutroWin

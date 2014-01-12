@@ -62,6 +62,7 @@ class Params
 		default = 7;
 	};
 
+
 	class Weather
 	{
 		title = "initialWeather";
@@ -70,7 +71,7 @@ class Params
     default = 7;
 	};
 
-  class EnemyLeftThreshhold
+	class EnemyLeftThreshhold
 	{
 		title = "Enemy Left Threshold";
 		values[] = {1,2,3,4,5,6,7,8,9,10};
@@ -155,10 +156,10 @@ class Params
 		title = "Main AO Diameter";
 		values[] = {200,300,400,500,600,700,800,900,1000};
 		texts[] = {"200m","300m","400m","500m","600m","700m","800m","900m","1,000m"};
-		default = 700;
+		default = 600;
 	};
 
-		class DefendAO
+	class DefendAO
 	{
 		title = "AI Retake AO?";
 		values[] = {1,0};
@@ -227,7 +228,7 @@ class Params
 		title = "Squads Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 6;
+		default = 7;
 	};
 
 	class SquadsDefend
@@ -285,15 +286,13 @@ class Params
 		texts[] = {"Enable","Disable"};
 		default = 0;
 	};
-
-		class DebugMode2
+	class DebugMode2
 	{
 		title = "Enable Debug2 Mode";
 		values[] = {1,0};
 		texts[] = {"Enable","Disable"};
 		default = 0;
 	};
-
 };
 
 class CfgNotifications
@@ -496,7 +495,6 @@ class CfgNotifications
 		color[] = {1, 0.81, 0.06, 1};
 		priority = 8;
 	};
-
 	class Reward
 	{
 		title = "TEAM REWARD";
@@ -548,7 +546,7 @@ class RscTitles
 author = Rarek [AW];
 onLoadName = "AW Invade & Annex";
 loadScreen = "awMissionLogo.jpg";
-OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. (maintained and updated by Jester and Razgriz33) To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk:9987.";
+OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. (maintained and updated by Jester and Razgriz33). To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk.";
 
 disabledAI = 1;
 Respawn = 3;
