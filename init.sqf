@@ -1175,7 +1175,7 @@ while {count _targets > 0} do
 	{
 	sleep 5;
 
-	if(random 1 >= 0.0) then   //chance AI will re-attack
+	if(random 1 >= 0.5) then   //chance AI will re-attack
 	{
 	_defendMessages =
 	[
@@ -1194,7 +1194,7 @@ while {count _targets > 0} do
 	{_x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle_2","aoCircle_3","aoMarker_2"];
 	"aoMarker_2" setMarkerText format["Defend %1",currentAO];
 
-	sleep 10;
+	sleep 10; // give ao complete hint some time to be read
 	publicVariable "refreshMarkers";
 	publicVariable "currentAO";
 	currentAOUp = true;
@@ -1219,25 +1219,26 @@ while {count _targets > 0} do
 	hqSideChat = _playersOnline; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 	GlobalHint = _playersOnlineHint; publicVariable "GlobalHint"; hint parseText GlobalHint;
 
-	sleep 60; // sleep before they spawn
+	sleep 60; // time before they spawn
 
 	hqSideChat = _defendMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 
 	null = [["aoCircle_2"],[10,2],[0,0],[1,2],[1,3],[0,0,25,EAST]] call Bastion_Spawn;
 	hint "Thermal images show they are at the perimeter of the AO!";
 
-	sleep 300; //time before next wave
+	sleep 120; //time before next wave
 
 	null = [["aoCircle_3"],[10,2],[0,0],[1,2],[1,3],[0,0,25,EAST]] call Bastion_Spawn;
 	hint "There are more then we expected!";
 
 	sleep 400; //time before poof
-	};
+
 
 	[["aoCircle_2"]] call EOS_deactivate;
 	//[] spawn aw_cleanGroups;
 	sleep 1;
 	[["aoCircle_3"]] call EOS_deactivate;
+	};
 
 	publicVariable "refreshMarkers";
 	currentAOUp = false;

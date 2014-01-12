@@ -19,8 +19,8 @@ dokeyDown={
    //  HINT STR (_this select 1);// show key number
 
    // VARIOUS CHECKS
-   if (player getvariable["key",true] and (_this select 1)  == 46) exitwith {player setvariable["key",false]; [_key_delay] spawn {sleep (_this select 0);player setvariable["key",true]; };_r};
-     if ((_this select 1)  == 46 and speed player >8) then {
+   if (player getvariable["key",true] and (_this select 1)  == 33) exitwith {player setvariable["key",false]; [_key_delay] spawn {sleep (_this select 0);player setvariable["key",true]; };_r};
+     if ((_this select 1)  == 33 and speed player >8) then {
        if  (player == vehicle player  and player getvariable ["jump",true] and isTouchingGround player ) then  {
 
     player setvariable["key",true];// RESTE DOUBLE KEY TAP
@@ -32,7 +32,7 @@ dokeyDown={
 // MAKE JUMP IN RIGHT DIRECTION
 _vel = velocity player;
 _dir = direction player;
-_speed = 0.5;
+_speed = 0.8;
 If (_height > _max_height) then {_height = _max_height};// MAXIMUM HEIGHT OF JUMP
 player setVelocity [(_vel select 0)+(sin _dir*_speed),(_vel select 1)+(cos _dir*_speed),(_vel select 2)+_height];
 
