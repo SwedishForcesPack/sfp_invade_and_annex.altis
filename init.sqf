@@ -156,6 +156,7 @@ for [ {_i = 0}, {_i < count(paramsArray)}, {_i = _i + 1} ] do
 if(isMultiplayer) then
 {
 	if(PARAMS_DebugMode == 1) then {DEBUG = true} else {DEBUG = false};
+	if(PARAMS_DebugMode2 == 1) then {DEBUG2 = true} else {DEBUG2 = false};
 } else {DEBUG = true};
 
 
@@ -296,9 +297,6 @@ _null=[] execVM "admin_uid.sqf";
 
 // Allow to Jump set the key in the .sqf defualt is C - 2x's
 execVM "misc\jump.sqf";
-
-// Add GPS to players
-if !(player hasWeapon "ItemGPS") then {player addWeapon "ItemGPS";};
 
 // other stuff
 [45,60,60,60] execVM "scripts\bodyRemoval.sqf";
@@ -1208,7 +1206,7 @@ while {count _targets > 0} do
 	{
 	sleep 5;
 
-	if(random 1 >= 0) then
+	if(random 1 >= 0.4) then   //chance AI will re-attack
 	{
 	_defendMessages =
 	[
@@ -1218,7 +1216,7 @@ while {count _targets > 0} do
 
 	_targetStartText = format
 	[
-		"<t align='center' size='2.2'>Defend Target</t><br/><t size='1.5' align='center' color='#0d4e8f'>%1</t><br/>____________________<br/>We got a problem. The enemy managed to call in land reinforcements. They are on the way to take back the last target. You need to defend it at all costs!<br/><br/>If the last man of BluFor dies in the target area the enemy have won.<br/><br/>Forces are expected to be there in 2 minutes, hurry up!",
+		"<t align='center' size='2.2'>Defend Target</t><br/><t size='1.5' align='center' color='#0d4e8f'>%1</t><br/>____________________<br/>We got a problem. The enemy managed to call in land reinforcements. They are on the way to take back the last target. You need to defend it at all costs!<br/><br/>If the last man of BluFor dies in the target area the enemy have won.<br/><br/>Forces are expected to be there in a couple minutes, hurry up!",
 		currentAO
 	];
 
@@ -1229,37 +1227,56 @@ while {count _targets > 0} do
 	{_x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle_2","aoMarker_2"];
 	"aoMarker_2" setMarkerText format["Defend %1",currentAO];
 
-	sleep 120;
+	sleep 10;
 	publicVariable "refreshMarkers";
-
-
 	publicVariable "currentAO";
 	currentAOUp = true;
 	publicVariable "currentAOUp";
-
 	radioTowerAlive = false;
 	publicVariable "radioTowerAlive";
 
 
-
-
 	//Timer
-	ELAPSED_TIME  = 0;
-	END_TIME = 600; //When mission should end in seconds.
-	[] spawn
-    {
-        START_TIME = diag_tickTime;
-        while {ELAPSED_TIME < END_TIME} do
-        {
-            ELAPSED_TIME = diag_tickTime - START_TIME;
-            //hint format ["elaspsed time = %1", ELAPSED_TIME];
-            publicVariable "ELAPSED_TIME";
-            sleep .5;
-        };
-    };
-sleep .5;
+	END_TIME = 660; //When mission should end in seconds.
+	if (isServer) then {
+	  [] spawn
+	    {
+	        ELAPSED_TIME  = 0;
+	        START_TIME = diag_tickTime;
+	        while {ELAPSED_TIME < END_TIME} do
+	        {
+	            ELAPSED_TIME = diag_tickTime - START_TIME;
+	            publicVariable "ELAPSED_TIME";
+	            sleep 1;
+	        };
+	    };
+	};
 
-
+	if!(isDedicated) then
+	{
+	    [] spawn
+	    {
+	        while{ELAPSED_TIME < END_TIME } do
+	        {
+	            _time = END_TIME - ELAPSED_TIME;
+	            _finish_time_minutes = floor(_time / 60);
+	            _finish_time_seconds = floor(_time) - (60 * _finish_time_minutes);
+	            if(_finish_time_seconds < 10) then
+	            {
+	                _finish_time_seconds = format ["0%1", _finish_time_seconds];
+	            };
+	            if(_finish_time_minutes < 10) then
+	            {
+	                _finish_time_minutes = format ["0%1", _finish_time_minutes];
+	            };
+	            formatted_time = format ["%1:%2", _finish_time_minutes, _finish_time_seconds];
+	            publicVariable "formatted_time";
+	            //titleText [format ["Time until\n counter attack ends:\n%1", formatted_time], "PLAIN DOWN"];
+	           //hintSilent format ["Time left:\n%1", formatted_time];
+	            sleep 1;
+	        };
+	    };
+	};
 
 	//check for online players
 	players_online = West countSide allunits;
@@ -1273,9 +1290,10 @@ sleep .5;
 
 	_playersOnlineHint = format
 	[
-		"<t align='left' color='#0061E0' size='1.2'>Soldiers Online:</t><t size='1'>%1</t><br/><br/><t align='left' color='#0061E0' size='1.2'>Difficulty:</t><t size='1'>%1x Soldiers.</t><br/><br/><br/><t size='1.5' align='left' color='#C92626'>Target:</t>%2!<br/><br/>____________________<br/>Get ready boys - 2 minutes left! - UAVs available.",
+		"<t align='left' color='#0061E0' size='1.2'>Soldiers Online:</t><t size='1'>%1</t><br/><br/><t align='left' color='#0061E0' size='1.2'>Difficulty:</t><t size='1'>%1x Soldiers.</t><br/><br/><br/><t size='1.5' align='left' color='#C92626'>Target:</t>%2!<br/><br/>____________________<br/>Get ready boys they are almost there! - UAVs available.",
 		players_online, currentAO
 	];
+
 
 	//hintSilent format ["Player Count:\n%1", players_online];
 
@@ -1283,31 +1301,12 @@ sleep .5;
 	GlobalHint = _playersOnlineHint; publicVariable "GlobalHint"; hint parseText GlobalHint;
 
 
-	sleep 10;
+	sleep 60; // sleep before they spawn
 
 	hqSideChat = _defendMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 
-	[] spawn
-    {
-        while{ELAPSED_TIME < END_TIME } do
-        {
-            _time = END_TIME - ELAPSED_TIME;
-            _finish_time_minutes = floor(_time / 60);
-            _finish_time_seconds = floor(_time) - (60 * _finish_time_minutes);
-            if(_finish_time_seconds < 10) then
-            {
-                _finish_time_seconds = format ["0%1", _finish_time_seconds];
-            };
-            if(_finish_time_minutes < 10) then
-            {
-                _finish_time_minutes = format ["0%1", _finish_time_minutes];
-            };
-            _formatted_time = format ["%1:%2", _finish_time_minutes, _finish_time_seconds];
 
-            hintSilent format ["Time until\n counter attack ends:\n%1", _formatted_time];
-            sleep 1;
-        };
-    };
+
 
 GC_fnc_spawnUnitsDefend = {
 
@@ -1324,10 +1323,10 @@ GC_fnc_spawnUnitsDefend = {
 	AOost = "Nothing";
 	AOsued = "Nothing";
 	AOwest = "Nothing";
-	AOnord = [getMarkerPos currentAO select 0,(getMarkerPos currentAO select 1)-700 + (random 100)];
+	AOnord = [getMarkerPos currentAO select 0,(getMarkerPos currentAO select 1)-750 + (random 100)];
 	AOost = [(getMarkerPos currentAO select 0)+750 + (random 100),getMarkerPos currentAO select 1];
 	AOsued = [getMarkerPos currentAO select 0,(getMarkerPos currentAO select 1)+750 + (random 100)];
-	AOwest = [(getMarkerPos currentAO select 0)-700 + (random 100),getMarkerPos currentAO select 1];
+	AOwest = [(getMarkerPos currentAO select 0)-750 + (random 100),getMarkerPos currentAO select 1];
 
 	AOnordCars = [getMarkerPos currentAO select 0,(getMarkerPos currentAO select 1)-850 + (random 100)];
 	AOostCars = [(getMarkerPos currentAO select 0)+800 + (random 100),getMarkerPos currentAO select 1];
@@ -1376,16 +1375,17 @@ GC_fnc_spawnUnitsDefend = {
 		_AOrandom = [AOnord, AOost, AOsued, AOwest] call BIS_fnc_selectRandom;
 		_randomSquad = ["OIA_InfSquad", "OIA_InfSquad_Weapons", "OIA_InfTeam", "OIA_InfTeam_AT","OI_reconTeam","OI_reconPatrol"] call BIS_fnc_selectRandom;
 		_spawnGroup = [_AOrandom, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> _randomSquad)] call BIS_fnc_spawnGroup;
-		[(units _spawnGroup)] call aw_setGroupSkillDefend;
+		//[(units _spawnGroup)] call aw_setGroupSkillDefend;
 
+		[_spawnGroup, _pos2] call BIS_fnc_taskAttack;
 		_way1 = _spawnGroup addWaypoint [_pos2,0];
-		_way1 setWaypointSpeed "FULL";
+/*		_way1 setWaypointSpeed "FULL";
 		_way1 setWaypointType "MOVE";
 		_way1 setWaypointBehaviour "aware";
 		_way1 setWaypointCombatMode "yellow";
-		_wp = _spawnGroup addWaypoint [_pos2,0];
+		_wp = _spawnGroup addWaypoint [_pos2,0];*/
 
-		if(DEBUG) then
+		if(DEBUG2) then
 		{
 			_name = format ["%1",_way1];
 			createMarkerLocal [_name,waypointPosition _way1];
@@ -1393,7 +1393,7 @@ GC_fnc_spawnUnitsDefend = {
 			_name setMarkerText format["%1",_x];
 		};
 
-		if(DEBUG) then
+		if(DEBUG2) then
 		{
 			_name = format ["%1%2",name (leader _spawnGroup),_x];
 			createMarker [_name,getPos (leader _spawnGroup)];
@@ -1415,20 +1415,21 @@ GC_fnc_spawnUnitsDefend = {
 			};
 		};
 
-/*		_AOrandomCars = [AOnordCars, AOostCars, AOsuedCars, AOwestCars] call BIS_fnc_selectRandom;
-		_randomSquadCars = ["OIA_MotInf_Team"] call BIS_fnc_selectRandom;
-		_spawnGroupCars = [_AOrandomCars, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Motorized_MTP" >> _randomSquadCars)] call BIS_fnc_spawnGroup;
-		[(units _spawnGroupCars)] call aw_setGroupSkillDefend;
+		_AOrandomCars = [AOnordCars, AOostCars, AOsuedCars, AOwestCars] call BIS_fnc_selectRandom;
+		_randomSquadCars = ["OIA_InfSquad", "OIA_InfSquad_Weapons", "OIA_InfTeam"] call BIS_fnc_selectRandom;
+		_spawnGroupCars = [_AOrandomCars, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> _randomSquadCars)] call BIS_fnc_spawnGroup;
+		//[(units _spawnGroupCars)] call aw_setGroupSkillDefend;
 
+		[_spawnGroupCars, _pos2] call BIS_fnc_taskAttack;
 		_way2 = _spawnGroupCars addWaypoint [_pos2,0];
-		_way2 setWaypointBehaviour "aware";
+		/*_way2 setWaypointBehaviour "aware";
 		_way2 setWaypointCombatMode "RED";
 		_way2 setWaypointFormation "ECH LEFT";
 		_way2 setWaypointSpeed "FULL";
-		_wpCars = _spawnGroupCars addWaypoint [_pos2,0];
+		_wpCars = _spawnGroupCars addWaypoint [_pos2,0];*/
 
 
-		if(DEBUG) then
+		if(DEBUG2) then
 		{
 			_name = format ["%1",_way2];
 			createMarkerLocal [_name,waypointPosition _way2];
@@ -1436,7 +1437,7 @@ GC_fnc_spawnUnitsDefend = {
 			_name setMarkerText format["%1",_x];
 		};
 
-		if(DEBUG) then
+		if(DEBUG2) then
 		{
 			_name = format ["%1%2",name (leader _spawnGroupCars),_x];
 			createMarker [_name,getPos (leader _spawnGroupCars)];
@@ -1456,13 +1457,13 @@ GC_fnc_spawnUnitsDefend = {
 				};
 				deleteMarker _marker;
 			};
-		};*/
+		};
 
 		_enemiesArrayDefend = _enemiesArrayDefend + [_spawnGroup];
 
-		sleep 10;
+		sleep 4;
 
-		//_enemiesArrayDefend = _enemiesArrayDefend + [_spawnGroupCars];
+		_enemiesArrayDefend = _enemiesArrayDefend + [_spawnGroupCars];
 
 	};
 
@@ -1471,10 +1472,11 @@ GC_fnc_spawnUnitsDefend = {
 
 	_enemiesArrayDefend = [currentAO] call GC_fnc_spawnUnitsDefend;
 
-	waitUntil {ELAPSED_TIME > END_TIME };
+	waitUntil {ELAPSED_TIME >= END_TIME };
 	[] spawn aw_cleanGroups;
 	//[] call AW_fnc_rewardPlusHintDefended;
 	[_enemiesArrayDefend] spawn AW_fnc_deleteOldAOUnits;
+	sleep .5;
 	[_enemiesArrayDefend] spawn GC_fnc_deleteOldUnitsAndVehicles;
 	publicVariable "refreshMarkers";
 	currentAOUp = false;
@@ -1487,7 +1489,7 @@ GC_fnc_spawnUnitsDefend = {
 	//publicVariable "radioTowerAlive";
 
 	//Small sleep to let deletions process
-	sleep 5;
+	sleep 1;
 
 	//Set target completion text
 	_targetCompleteText = format
@@ -1498,14 +1500,15 @@ GC_fnc_spawnUnitsDefend = {
 
 	{_x setMarkerPos [-10000,-10000,-10000];} forEach ["aoCircle_2","aoMarker_2"];
 
+	/*[] spawn aw_cleanGroups;
+	//[] call AW_fnc_rewardPlusHintDefended;
+	[_enemiesArrayDefend] spawn AW_fnc_deleteOldAOUnits;
+	[_enemiesArrayDefend] spawn GC_fnc_deleteOldUnitsAndVehicles;*/
+
+
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMainDefended", currentAO]; publicVariable "showNotification";
-	sleep 10;
-	[] spawn aw_cleanGroups;
-	//[] call AW_fnc_rewardPlusHintDefended;
-	[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
-	[_enemiesArrayDefend] spawn GC_fnc_deleteOldUnitsAndVehicles;
 	sleep 5;
 
 	};

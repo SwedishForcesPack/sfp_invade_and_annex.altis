@@ -12,7 +12,7 @@ fn_Animation =
 dokeyDown={
      private ["_r","_key_delay","_max_height"] ;
      _key_delay  = 0.3;// MAX TIME BETWEEN KEY PRESSES
-     _max_height = 4.3;// SET MAX JUMP HEIGHT
+     _max_height = 4.4;// SET MAX JUMP HEIGHT
      // player setvariable ["key",false];// ENABLE THIS LINE FOR SINGLE KEYPRESS BY REMOVING // AT THE START OF THE LINE
    _r = false ;
 

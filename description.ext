@@ -227,7 +227,7 @@ class Params
 		title = "Squads Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 5;
+		default = 6;
 	};
 
 	class SquadsDefend
@@ -243,7 +243,7 @@ class Params
 		title = "Teams Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 7;
+		default = 9;
 	};
 
 	class CarsPatrol
@@ -285,6 +285,15 @@ class Params
 		texts[] = {"Enable","Disable"};
 		default = 0;
 	};
+
+		class DebugMode2
+	{
+		title = "Enable Debug2 Mode";
+		values[] = {1,0};
+		texts[] = {"Enable","Disable"};
+		default = 0;
+	};
+
 };
 
 class CfgNotifications

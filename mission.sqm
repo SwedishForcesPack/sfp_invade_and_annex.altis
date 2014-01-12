@@ -92,7 +92,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co50 AW Invade & Annex -ALTIS- 2.66";
+		briefingName="co50 AW Invade & Annex -ALTIS- 2.66b";
 		resistanceWest=0;
 		resistanceEast=1;
 		startWeather=0;
@@ -119,7 +119,7 @@ class Mission
 				items=10;
 				class Item0
 				{
-					position[]={14635.816,17.91,16765.801};
+					position[]={14635.418,17.91,16766.238};
 					azimut=-201.653;
 					special="NONE";
 					id=0;
@@ -129,104 +129,104 @@ class Mission
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
-					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Squad Leader";
 				};
 				class Item1
 				{
 					position[]={14634.741,17.91,16769.271};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=1;
 					side="WEST";
 					vehicle="B_medic_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Medic";
 				};
 				class Item2
 				{
 					position[]={14633.979,17.91,16768.021};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=2;
 					side="WEST";
 					vehicle="B_soldier_repair_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Repair Specialist";
 				};
 				class Item3
 				{
 					position[]={14634.335,17.91,16767.027};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=3;
 					side="WEST";
 					vehicle="B_soldier_exp_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Explosive Specialist";
 				};
 				class Item4
 				{
 					position[]={14635.523,17.91,16767.617};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=4;
 					side="WEST";
 					vehicle="B_soldier_AR_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Autorifleman";
 				};
 				class Item5
 				{
 					position[]={14635.242,17.91,16768.408};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=5;
 					side="WEST";
 					vehicle="B_Soldier_GL_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Grenadier";
 				};
 				class Item6
 				{
 					position[]={14633.605,17.91,16768.949};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=6;
 					side="WEST";
 					vehicle="B_soldier_M_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Marksman";
 				};
 				class Item7
 				{
-					position[]={14633.19,17.91,16769.971};
-					azimut=-208.78093;
+					position[]={14632.991,17.91,16770.207};
+					azimut=-208.78101;
 					special="NONE";
 					id=7;
 					side="WEST";
 					vehicle="B_soldier_LAT_F";
 					player="PLAY CDG";
 					skill=0.60000002;
-					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Rifleman (AT)";
 				};
 				class Item8
 				{
 					position[]={14634.276,17.91,16770.498};
-					azimut=-201.65294;
+					azimut=-201.653;
 					special="NONE";
 					id=8;
 					side="WEST";
@@ -234,7 +234,7 @@ class Mission
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
-					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Squad Grenadier";
 				};
 				class Item9
@@ -248,7 +248,7 @@ class Mission
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
-					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
+					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}]; ";
 					description="Alpha Squad AT";
 				};
 			};
@@ -290,7 +290,7 @@ class Mission
 				class Item2
 				{
 					position[]={14628.66,17.91,16761.715};
-					azimut=96.25473;
+					azimut=96.2547;
 					special="NONE";
 					id=12;
 					side="WEST";
@@ -315,8 +315,8 @@ class Mission
 				};
 				class Item4
 				{
-					position[]={14627.129,17.91,16762.461};
-					azimut=96.25473;
+					position[]={14626.73,17.91,16761.703};
+					azimut=96.2547;
 					special="NONE";
 					id=14;
 					side="WEST";
@@ -367,14 +367,15 @@ class Mission
 				};
 				class Item8
 				{
-					position[]={14627.409,17.91,16763.479};
-					azimut=-884.32721;
+					position[]={14626.651,17.91,16762.92};
+					azimut=-884.32703;
 					special="NONE";
 					id=18;
 					side="WEST";
 					vehicle="B_soldier_M_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
 					description="Charlie Marksman";
 				};
 			};
@@ -908,7 +909,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					init="(group this) setGroupId [""IA""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Foxtrot Squad AT";
+					description="Foxtrot Squad [AT]";
 				};
 			};
 		};
@@ -1119,7 +1120,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=350;
+		items=358;
 		class Item0
 		{
 			position[]={15246.208,-0.0082027912,14204.392};
@@ -2000,7 +2001,7 @@ class Mission
 			vehicle="B_Quadbike_01_F";
 			skill=0.60000002;
 			text="Quad_8";
-			init="_m = [this,60,300] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
 		};
 		class Item80
 		{
@@ -2011,7 +2012,7 @@ class Mission
 			vehicle="B_Quadbike_01_F";
 			skill=0.60000002;
 			text="Quad_7";
-			init="_m = [this,60,300] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
 		};
 		class Item81
 		{
@@ -2022,7 +2023,7 @@ class Mission
 			vehicle="B_Quadbike_01_F";
 			skill=0.60000002;
 			text="Quad_6";
-			init="_m = [this,60,300] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
 		};
 		class Item82
 		{
@@ -4939,6 +4940,94 @@ class Mission
 			skill=0.60000002;
 			init="this allowDamage false";
 		};
+		class Item350
+		{
+			position[]={14564.002,17.73455,16894.699};
+			azimut=224.229;
+			id=416;
+			side="EMPTY";
+			vehicle="B_Quadbike_01_F";
+			skill=0.60000002;
+			text="Quad_8_1";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+		};
+		class Item351
+		{
+			position[]={14566.418,17.751198,16892.672};
+			azimut=224.229;
+			id=417;
+			side="EMPTY";
+			vehicle="B_Quadbike_01_F";
+			skill=0.60000002;
+			text="Quad_7_1";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+		};
+		class Item352
+		{
+			position[]={14568.599,17.762674,16890.529};
+			azimut=224.229;
+			id=418;
+			side="EMPTY";
+			vehicle="B_Quadbike_01_F";
+			skill=0.60000002;
+			text="Quad_6_1";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+		};
+		class Item353
+		{
+			position[]={14570.666,17.767557,16888.482};
+			azimut=224.229;
+			id=419;
+			side="EMPTY";
+			vehicle="B_Quadbike_01_F";
+			skill=0.60000002;
+			text="Quad_8_1_1";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+		};
+		class Item354
+		{
+			position[]={14573.082,17.771555,16886.455};
+			azimut=224.229;
+			id=420;
+			side="EMPTY";
+			vehicle="B_Quadbike_01_F";
+			skill=0.60000002;
+			text="Quad_7_1_1";
+			init="_m = [this,60,1800] execVM ""vehicle.sqf""; _m = [this] execVM ""scripts\aw_unitSetup.sqf"";";
+		};
+		class Item355
+		{
+			position[]={9126.458,16.996536,21483.826};
+			azimut=401.21671;
+			id=421;
+			side="EMPTY";
+			vehicle="B_supplyCrate_F";
+			skill=0.60000002;
+			text="ammo3_1";
+			init="this addAction[""<t color='#ff1111'>Virtual Ammobox</t>"", ""VAS\open.sqf""];";
+		};
+		class Item356
+		{
+			position[]={23195.6,3.1900001,18911.711};
+			azimut=401.21671;
+			id=422;
+			side="EMPTY";
+			vehicle="B_supplyCrate_F";
+			skill=0.60000002;
+			text="ammo3_2";
+			init="this addAction[""<t color='#ff1111'>Virtual Ammobox</t>"", ""VAS\open.sqf""];";
+		};
+		class Item357
+		{
+			position[]={21090.293,22.007912,7256.4316};
+			azimut=401.21671;
+			id=423;
+			side="EMPTY";
+			vehicle="B_supplyCrate_F";
+			skill=0.60000002;
+			text="ammo3_3";
+			init="this addAction[""<t color='#ff1111'>Virtual Ammobox</t>"", ""VAS\open.sqf""];";
+		};
 	};
 	class Markers
 	{
@@ -5661,7 +5750,7 @@ class Mission
 			position[]={15972.526,3.3962231,16026.043};
 			a=16000;
 			b=16000;
-			activationBy="ALPHA";
+			activationBy="INDIA";
 			repeating=1;
 			interruptable=1;
 			age="UNKNOWN";
@@ -5805,12 +5894,12 @@ class Mission
 			position[]={15972.528,3.0643411,16033.436};
 			a=16000;
 			b=16000;
-			activationBy="BRAVO";
+			activationBy="JULIET";
 			repeating=1;
 			interruptable=1;
 			age="UNKNOWN";
 			text="Kill all in 1k radius";
-			name="trg_aw_admin_2";
+			name="trg_aw_admin_2_2_2";
 			expActiv="if((!serverCommandAvailable ""#kick"") AND (isMultiplayer)) exitWith{}; [] call aw_destroyAll;";
 			class Effects
 			{

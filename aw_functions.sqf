@@ -246,24 +246,24 @@ aw_setGroupSkill =
 aw_setGroupSkillDefend =
 {
 	if(!isServer) exitWith{};
+
 	{
 			_x setUnitAbility 0.85;
-			_x setskill ["aimingAccuracy",0.25 + random 0.30];
-			_x setskill ["aimingShake",0.25 + random 0.45];
-			_x setskill ["aimingSpeed",0.20 + random 0.35];
-			_x setskill ["Endurance",0.60 + random 0.50];
-			_x setskill ["spotDistance",0.70 + random 0.40];
-			_x setskill ["spotTime",0.30 + random 0.75];
-			_x setskill ["courage",0.65 + random 0.65];
-			_x setskill ["reloadSpeed",0.20 + random 0.50];
-			_x setskill ["general",0.55 + random 0.75];
+			_x setskill ["aimingAccuracy",0.65 + random 0.55];
+			_x setskill ["aimingShake",0.55 + random 0.50];
+			_x setskill ["aimingSpeed",0.60 + random 0.55];
+			_x setskill ["Endurance",0.70 + random 0.40];
+			_x setskill ["spotDistance",0.90 + random 0.70];
+			_x setskill ["spotTime",0.80 + random 0.85];
+			_x setskill ["courage",0.85 + random 0.75];
+			_x setskill ["reloadSpeed",0.60 + random 0.60];
+			_x setskill ["general",0.85 + random 0.65];
 
 			if ( isFormationLeader _x ) then {
-				_x setskill ["commanding",0.75 + random 0.35];
+				_x setskill ["commanding",0.95 + random 0.65];
 			} else {
-				_x setskill ["commanding",0.60 + random 0.45];
+				_x setskill ["commanding",0.90 + random 0.75];
 			};
-
 		//_x setSkill ["aimingAccuracy",0.3];
 		//_x setSkill ["aimingSpeed",0.3];
 		//_x setSkill ["aimingShake",0.8];

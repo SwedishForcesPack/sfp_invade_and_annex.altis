@@ -3,7 +3,7 @@ waitUntil {sleep 0.5; !(isNil "currentAO")};
 private ["_priorityMessageHelo"];
 
 while {true} do {
-sleep (600 + (random 660));
+sleep (2700 + (random 600));
     if (radioTowerAlive) then {
         if (radioTowerAlive) then {
             _patrolPos=getMarkerPos currentAO;
@@ -15,7 +15,7 @@ sleep (600 + (random 660));
             [_helo_Array select 2, _patrolPos, 500] call BIS_fnc_taskPatrol;
 			showNotification = ["EnemyHeavyHelo", "Enemy Mi-48 Kajman approaching to AO."]; publicVariable "showNotification";
 			_priorityMessageHelo =
-			"<t align='center' size='2.2'>Priority Target (AO)</t><br/><t size='1.5' color='#b60000'>Enemy Mi-48 Kajman Inbound</t><br/>____________________<br/>OPFOR forces are inbound with a Buzzard to support their infantry forces!<br/><br/>This is a priority target, boys!<br/><br/>HQ suggests to all Transport Helicopters to return to base until the danger is neutralised!";
+			"<t align='center' size='2.2'>Priority Target (AO)</t><br/><t size='1.5' color='#b60000'>Enemy Mi-48 Kajman Inbound</t><br/>____________________<br/>OPFOR forces are inbound with a Kajman to support their infantry forces!<br/><br/>This is a priority target, boys!<br/><br/>HQ suggests to all Transport Helicopters to return to base until the danger is neutralised!";
 			GlobalHint = _priorityMessageHelo; publicVariable "GlobalHint"; hint parseText _priorityMessageHelo;
             waitUntil {
                 sleep 5;
