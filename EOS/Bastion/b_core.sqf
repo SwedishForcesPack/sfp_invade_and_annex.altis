@@ -31,7 +31,7 @@ _side=_settings select 3;
 _timeout=160;
 _Placement=700;
 
-_debug=true;
+_debug=false;
 switch (_alpha) do {case 0:{_mkrAlphaHighlight = 1;_mkrAlpha = 0.5;};case 1:{_mkrAlphaHighlight = 0;_mkrAlpha = 0;};case 2:{_mkrAlphaHighlight = 0.5;_mkrAlpha = 0.5;};};
 switch (_side) do{case EAST:{_enemyFaction="east";};case WEST:{_enemyFaction="west";};case INDEPENDENT:{_enemyFaction="GUER";};case CIVILIAN:{_enemyFaction="civ";};};
 
