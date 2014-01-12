@@ -1,5 +1,5 @@
 /*  
-	usableCargoRamp - v1.00 // Open and close the cargo ramp, get in and get out using cargo ramp. // Zigomarvin - www.easy-team.fr
+	usableCargoRamp - v1.1 // Open and close the cargo ramp, get in and get out using cargo ramp. // Zigomarvin - www.easy-team.fr
 	
 	----------------------------------------------------------
 	_null = [this] execVM "scripts\usableCargoRamp\start.sqf";
@@ -14,6 +14,7 @@ if (typeOf _heli != "I_Heli_Transport_02_F") exitWith {};
 if !(isServer) then {
 	_heli setVariable ["actionsToRemove", [], false]; // actions to remove
 	_heli setVariable ["getInActionExist", 0, false]; // does "get in using cargo ramp" action exist
+	_heli setVariable ["getOutActionExist", 0, false]; // does "get out using cargo ramp" action exist
 	_heli setVariable ["getOutId", 0, false]; // id of the "get out using cargo ramp" action
 	_heli setVariable ["getInId", 0, false]; // id of the "get in using cargo ramp" action
 	_heli setVariable ["box", "", false]; // box
@@ -29,18 +30,17 @@ if (isServer) then {
 	_heli setVariable ["doorStatus", "closed", true];
 } else {
 	waitUntil {!isNull player};
-	sleep 2;
-	_box = nearestObject [_heli, "Box_NATO_AmmoVeh_F"];
-};
-
-_heli setVariable ["box", _box, false];
-
-// on join, get the door status
-if !(isServer) then {	
+	waitUntil {count (nearestObjects [_heli, ["Box_NATO_AmmoVeh_F"], 8]) != 0};
+	_box = nearestObjects [_heli, ["Box_NATO_AmmoVeh_F"], 8];
+	_box = _box select 0;
+	
+	_heli setVariable ["box", _box, false];
+	
 	_box setObjectTexture [0,""]; // hide box
 	_box setObjectTexture [1,""]; // hide box
 };
 
+// actions
 if !(isServer) then {
 	// on get in
 	_heli addEventHandler ["GetIn", {
@@ -62,7 +62,7 @@ if !(isServer) then {
 					if (language == "French") then {_action = "Ouvrir la rampe";};
 					_action = format ["<t color='#ff1111'>%1</t>", _action];
 				
-					_id = _unit addAction [_action, "scripts\usableCargoRamp\open.sqf", [_heli], 1.5, false];
+					_id = _unit addAction [_action, "scripts\usableCargoRamp\open.sqf", [_heli], 6.1, false];
 					
 					_actionsToRemove = _heli getVariable "actionsToRemove";			//
 					[_actionsToRemove, _id] call BIS_fnc_arrayPush;					// add to actions to remove array
@@ -75,7 +75,7 @@ if !(isServer) then {
 					if (language == "French") then {_action = "Fermer la rampe";};
 					_action = format ["<t color='#ff1111'>%1</t>", _action];
 		
-					_id = _unit addAction [_action, "scripts\usableCargoRamp\close.sqf", [_heli], 1.5, false];
+					_id = _unit addAction [_action, "scripts\usableCargoRamp\close.sqf", [_heli], 6.1, false];
 					
 					_actionsToRemove = _heli getVariable "actionsToRemove";			//
 					[_actionsToRemove, _id] call BIS_fnc_arrayPush;					// add to actions to remove array
@@ -88,24 +88,27 @@ if !(isServer) then {
 					if (language == "French") then {_action = "Rampe en position mi-ouverte";};
 					_action = format ["<t color='#ff1111'>%1</t>", _action];
 				
-					_id = _unit addAction [_action, "scripts\usableCargoRamp\middle.sqf", [_heli], 1.5, false];
+					_id = _unit addAction [_action, "scripts\usableCargoRamp\middle.sqf", [_heli], 6.05, false];
 					
 					_actionsToRemove = _heli getVariable "actionsToRemove";			//
 					[_actionsToRemove, _id] call BIS_fnc_arrayPush;					// add to actions to remove array
 					_heli setVariable ["actionsToRemove", _actionsToRemove, false];	//
 				};
 			} else {
-				// get out using cargo ramp
+				// add "get out using cargo ramp" action
 				if ((_pos != "Gunner") && (_doorStatus == "open")) then {
 					_action = "Get out using cargo ramp";
 					if (language == "French") then {_action = "Sortir par la rampe";};
 					_action = format ["<t color='#ff1111'>%1</t>", _action];
 						
-					_id = _unit addAction [_action, "scripts\usableCargoRamp\getOut.sqf", [_heli], 1.5, false];
+					_id = _unit addAction [_action, "scripts\usableCargoRamp\getOut.sqf", [_heli], 6.15, false];
 					_heli setVariable ["getOutId", _id, false];
-
+					_heli setVariable ["getOutActionExist", 1, false];
+					_box removeAction (_heli getVariable "getInId");
+					_heli setVariable ["getInActionExist", 0, false];
+	
 					if  ((_heli emptyPositions "Cargo") == 0) then {
-						[[[_heli], "scripts\usableCargoRamp\removeCargoAction.sqf"], "BIS_fnc_execVM", true, false] spawn BIS_fnc_MP;
+						[[[_heli], "scripts\usableCargoRamp\removeGetInActionOnly.sqf"], "BIS_fnc_execVM", true, false] spawn BIS_fnc_MP;
 					};
 					
 				};
@@ -144,7 +147,7 @@ if !(isServer) then {
 					if (language == "French") then {_action = "Grimper dans CH-49 Mohawk - par la rampe";};
 					_action = format ["<t color='#ff1111'>%1</t>", _action];
 					
-					_id = _box addAction [_action, "scripts\usableCargoRamp\getIn.sqf", [_heli], 1.5, false, true, "", "_target distance _this < 4"];
+					_id = _box addAction [_action, "scripts\usableCargoRamp\getIn.sqf", [_heli], 6, false, true, "", "_target distance _this < 4"];
 					_heli setVariable ["getInId", _id, false];
 					_heli setVariable ["getInActionExist", 1, false];
 				
@@ -157,12 +160,12 @@ if !(isServer) then {
 	}];
 	
 	// on join, create action if door is open
-	if (((_heli getVariable "doorStatus") == "open") && ((_heli emptyPositions "Cargo") != 0)) then {
+	if (((_heli getVariable "doorStatus") == "open") && ((_heli emptyPositions "Cargo") != 0)) then {  // && vehicle player == player
 		_action = "Get in CH-49 Mohawk - cargo ramp";
 		if (language == "French") then {_action = "Grimper dans CH-49 Mohawk - par la rampe";};
 		_action = format ["<t color='#ff1111'>%1</t>", _action];
 		
-		_id = _box addAction [_action, "scripts\usableCargoRamp\getIn.sqf", [_heli], 1.5, false, true, "", "_target distance _this < 4"];
+		_id = _box addAction [_action, "scripts\usableCargoRamp\getIn.sqf", [_heli], 6, true, true, "", "_target distance _this < 4"];
 		_heli setVariable ["getInId", _id, false];
 		_heli setVariable ["getInActionExist", 1, false];
 	};

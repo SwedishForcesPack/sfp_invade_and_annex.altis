@@ -68,7 +68,7 @@ class Params
 		title = "initialWeather";
     values[] = {1,2,3,4,5,6,7};
     texts[] = {"Clear","Overcast","Light Rain","Heavy Rain","Light Fog","Heavy Fog","Random"};
-    default = 7;
+    default = 1;
 	};
 
 	class EnemyLeftThreshhold
@@ -90,6 +90,14 @@ class Params
 	class SideMissions
 	{
 		title = "Enable Side Missions?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
+	class WaterMissions
+	{
+		title = "Enable Water Missions?";
 		values[] = {1,0};
 		texts[] = {"Enabled","Disabled"};
 		default = 1;

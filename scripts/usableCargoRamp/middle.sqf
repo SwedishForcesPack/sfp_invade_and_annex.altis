@@ -19,7 +19,7 @@ _action = "Open cargo ramp";
 if (language == "French") then {_action = "Ouvrir la rampe";};
 _action = format ["<t color='#ff1111'>%1</t>", _action];
 
-_id = _unit addAction [_action, "scripts\usableCargoRamp\open.sqf", [_heli], 1.5, false];
+_id = _unit addAction [_action, "scripts\usableCargoRamp\open.sqf", [_heli], 6.1, false];
 
 _actionsToRemove = _heli getVariable "actionsToRemove";			//
 [_actionsToRemove, _id] call BIS_fnc_arrayPush;					// add to actions to remove array
@@ -30,7 +30,7 @@ _action = "Close cargo ramp";
 if (language == "French") then {_action = "Fermer la rampe";};
 _action = format ["<t color='#ff1111'>%1</t>", _action];
 
-_id = _unit addAction [_action, "scripts\usableCargoRamp\close.sqf", [_heli], 1.5, false];
+_id = _unit addAction [_action, "scripts\usableCargoRamp\close.sqf", [_heli], 6.1, false];
 
 _actionsToRemove = _heli getVariable "actionsToRemove";			//
 [_actionsToRemove, _id] call BIS_fnc_arrayPush;					// add to actions to remove array

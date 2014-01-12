@@ -477,6 +477,10 @@ _null = [] execVM "misc\mortar\mortarSupportReload.sqf";
 // AI retake AO start
 []execVM "eos\OpenMe.sqf";
 
+// Water Missions
+if (PARAMS_WaterMissions == 1) then { _null=[2700] execVM "sm\sideMission_Init.sqf"; };
+null=[] execVM "misc\brief.sqf";
+
 _isPerpetual = false;
 
 if (PARAMS_Perpetual == 1) then
@@ -642,7 +646,7 @@ AW_fnc_rewardPlusHintMI = {
 private ["_veh","_vehName","_vehVarname","_completeTextHelo","_reward"];
 
 	_completeTextHelo = format[
-	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Buzzard Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
+	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Helicopter Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
 
 	GlobalHint = _completeTextHelo; publicVariable "GlobalHint"; hint parseText _completeTextHelo;
 	showNotification = ["EnemyHeloDown", "Enemy Mi-48 Kajman is down. Well Done!"]; publicVariable "showNotification";
@@ -1001,7 +1005,7 @@ if (PARAMS_PriorityTargets == 1) then
 		while {!_accepted} do
 		{
 			_position = [] call BIS_fnc_randomPos;
-			if (_position distance (getMarkerPos "respawn_west") > 800) then
+			if (_position distance (getMarkerPos "respawn_west") > 1200) then
 			{
 				_accepted = true;
 			};
@@ -1179,75 +1183,9 @@ while {count _targets > 0} do
 	// AI Retaliation by Jester [AW]
 	if (PARAMS_DefendAO == 1) then
 	{
-	sleep 5;
-
-	if(random 1 >= 0.3) then   //chance AI will re-attack
-	{
-	_defendMessages =
-	[
-		"OPFOR Forces incoming! Seek cover immediately and defend the target!"
-	];
-
-	_targetStartText = format
-	[
-		"<t align='center' size='2.2'>Defend Target</t><br/><t size='1.5' align='center' color='#0d4e8f'>%1</t><br/>____________________<br/>We got a problem. The enemy managed to call in land reinforcements. They are on the way to take back the last target. You need to defend it at all costs!<br/><br/>If the last man of BluFor dies in the target area the enemy have won.<br/><br/>Forces are expected to be there in a couple minutes, hurry up and dig in!",
-		currentAO
-	];
-
-	GlobalHint = _targetStartText; publicVariable "GlobalHint"; hint parseText GlobalHint;
-	showNotification = ["NewMainDefend", currentAO]; publicVariable "showNotification";
-
-	{_x setMarkerPos (getMarkerPos currentAO);} forEach ["aoCircle_2","aoCircle_3","aoMarker_2"];
-	"aoMarker_2" setMarkerText format["Defend %1",currentAO];
-
-	sleep 10; // give ao complete hint some time to be read
-	publicVariable "refreshMarkers";
-	publicVariable "currentAO";
-	currentAOUp = true;
-	publicVariable "currentAOUp";
-	radioTowerAlive = false;
-	publicVariable "radioTowerAlive";
-
-	//check for online players
-	players_online = West countSide allunits;
-	publicVariable "players_online";
-
-	_playersOnline = format
-	[
-		"Target: %1! Get ready boys - They are almost there! - UAVs available.", currentAO
-	];
-
-	_playersOnlineHint = format
-	[
-		"<t size='1.5' align='left' color='#C92626'>Target:%1!</t><br/><br/>____________________<br/>Get ready boys they are almost there! - UAVs available.", currentAO
-	];
-
-	hqSideChat = _playersOnline; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
-	GlobalHint = _playersOnlineHint; publicVariable "GlobalHint"; hint parseText GlobalHint;
-
-	sleep 5; // time before they spawn
-
-	hqSideChat = _defendMessages call BIS_fnc_selectRandom; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
-
-	null = [["aoCircle_2"],[12,2],[0,0],[1,2],[2,3],[0,0,25,EAST]] call Bastion_Spawn;
-	hint "Thermal images show enemy are at the perimeter of the AO!";
-
-	sleep 20; //time before next wave
-	hint "sleeping for 20 then spawning second wave";
-
-	null = [["aoCircle_3"],[15,2],[0,0],[0,0],[0,0],[0,0,25,EAST]] call Bastion_Spawn;
-	hint "There are more then we expected!";
-
-	sleep (500 + (random 300)) ; //time before poof
-	//waitUntil{scriptDone _awTimer};
-
-	hint "deactivating attack sequence";
-
-	[["aoCircle_2"]] call EOS_deactivate;
-	sleep 1;
-	[["aoCircle_3"]] call EOS_deactivate;
+	_aoUnderAttack = [] execVM "sm\aoRetake.sqf";
+	waitUntil {scriptDone _aoUnderAttack};
 	};
-
 	publicVariable "refreshMarkers";
 	currentAOUp = false;
 	publicVariable "currentAOUp";
@@ -1277,8 +1215,6 @@ while {count _targets > 0} do
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMainDefended", currentAO]; publicVariable "showNotification";
 	sleep 5;
-
-	};
 };
 
 //Set completion text

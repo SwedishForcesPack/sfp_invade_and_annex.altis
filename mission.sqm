@@ -48,7 +48,8 @@ class Mission
 		"a3_characters_f_beta",
 		"A3_Air_F_Heli_Light_02",
 		"A3_Soft_F_Crusher_UGV",
-		"A3_Modules_F_Supports"
+		"A3_Modules_F_Supports",
+		"A3_Structures_F_Wrecks"
 	};
 	addOnsAuto[]=
 	{
@@ -86,12 +87,14 @@ class Mission
 		"A3_Soft_F_Car",
 		"A3_Structures_F_Training",
 		"A3_Structures_F_Civ_InfoBoards",
+		"A3_Structures_F_Wrecks",
+		"A3_Structures_F_Ind_Cargo",
 		"a3_map_altis"
 	};
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co50 AW Invade & Annex -ALTIS- 2.68b";
+		briefingName="co50 AW Invade & Annex -ALTIS- 2.68c";
 		resistanceWest=0;
 		resistanceEast=1;
 		timeOfChanges=28800;
@@ -1137,7 +1140,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=353;
+		items=358;
 		class Item0
 		{
 			position[]={15246.208,-0.0082027912,14204.392};
@@ -4990,10 +4993,60 @@ class Mission
 			text="ammo3_3";
 			init="this addAction[""<t color='#ff1111'>Virtual Ammobox</t>"", ""VAS\open.sqf""];";
 		};
+		class Item353
+		{
+			position[]={-68.188721,0.19232589,-31.270996};
+			id=420;
+			side="EMPTY";
+			vehicle="Land_UWreck_FishingBoat_F";
+			skill=0.60000002;
+			text="smSeaObject1";
+			init="this addAction[""<t color='#ffff00'>Place C4 Charge</t>"",""sm\sabotage.sqf""];";
+		};
+		class Item354
+		{
+			position[]={-51.200989,-0.035318181,-28.409058};
+			id=421;
+			side="EMPTY";
+			vehicle="Land_UWreck_MV22_F";
+			skill=0.60000002;
+			text="smSeaObject2";
+			init="this addAction[""<t color='#ffff00'>Place C4 Charge</t>"",""sm\sabotage.sqf""];";
+		};
+		class Item355
+		{
+			position[]={-36.284294,0.1481984,-30.429199};
+			id=422;
+			side="EMPTY";
+			vehicle="Land_UWreck_Heli_Attack_02_F";
+			skill=0.60000002;
+			text="smSeaObject3";
+			init="this addAction[""<t color='#ffff00'>Place C4 Charge</t>"",""sm\sabotage.sqf""];";
+		};
+		class Item356
+		{
+			position[]={-26.047905,-0.12925349,-23.674316};
+			id=423;
+			side="EMPTY";
+			vehicle="Land_Wreck_Plane_Transport_01_F";
+			skill=0.60000002;
+			text="smSeaObject4";
+			init="this addAction[""<t color='#ffff00'>Place C4 Charge</t>"",""sm\sabotage.sqf""];this setPos [getPos this select 0, getPos this select 1, -1.5];";
+		};
+		class Item357
+		{
+			position[]={-15.432397,-0.15331791,-37.15271};
+			id=424;
+			side="EMPTY";
+			vehicle="Land_Cargo20_brick_red_F";
+			skill=0.60000002;
+			text="smSeaObject5";
+			init="this addAction[""<t color='#ffff00'>Place C4 Charge</t>"",""sm\sabotage.sqf""];";
+		};
 	};
 	class Markers
 	{
-		items=99;
+		items=112;
 		class Item0
 		{
 			position[]={-18123.361,0.95722705,-4905.9961};
@@ -5569,83 +5622,71 @@ class Mission
 		};
 		class Item80
 		{
-			position[]={14253.633,5.2516055,13008.563};
-			name="The peninsula";
-			type="Empty";
-		};
-		class Item81
-		{
 			position[]={10647.004,16.011082,12286.085};
 			name="Therisa";
 			type="Empty";
 		};
-		class Item82
+		class Item81
 		{
 			position[]={23595.215,95.620186,21097.58};
 			name="Delfinaki outpost";
 			type="Empty";
 		};
-		class Item83
+		class Item82
 		{
 			position[]={5101.8726,49.464031,11248.213};
 			name="Panochori";
 			type="Empty";
 		};
-		class Item84
+		class Item83
 		{
 			position[]={5480.0845,23.759537,14983.497};
 			name="The Stadium";
 			type="Empty";
 		};
-		class Item85
+		class Item84
 		{
 			position[]={9211.7803,27.914619,13788.503};
 			name="The Xirolimni Dam";
 			type="Empty";
 		};
-		class Item86
+		class Item85
 		{
 			position[]={5414.0161,76.723709,17909.834};
 			name="The small industrial complex";
 			type="Empty";
 		};
-		class Item87
+		class Item86
 		{
 			position[]={12818.027,86.947807,16690.49};
 			name="Lakka military outpost";
 			type="Empty";
 		};
-		class Item88
+		class Item87
 		{
 			position[]={4900.4351,77.775963,16144.908};
 			name="Negades";
 			type="Empty";
 		};
-		class Item89
-		{
-			position[]={3017.0854,32.198544,18465.949};
-			name="Fotia";
-			type="Empty";
-		};
-		class Item90
+		class Item88
 		{
 			position[]={9438.707,125.65749,20264.695};
 			name="Abdera";
 			type="Empty";
 		};
-		class Item91
+		class Item89
 		{
 			position[]={23210.268,13.970253,19967.121};
 			name="Ioannina";
 			type="Empty";
 		};
-		class Item92
+		class Item90
 		{
 			position[]={7157.7944,120.6228,16472.883};
 			name="Kore";
 			type="Empty";
 		};
-		class Item93
+		class Item91
 		{
 			position[]={15032.022,17.903131,16747.824};
 			name="airService_2";
@@ -5653,21 +5694,21 @@ class Mission
 			type="b_maint";
 			angle=174.88219;
 		};
-		class Item94
+		class Item92
 		{
 			position[]={14766.006,17.91,16842.58};
 			name="MortarHQ_1";
 			type="Empty";
 			angle=90.186256;
 		};
-		class Item95
+		class Item93
 		{
 			position[]={14278.156,20.721277,16167.683};
 			name="MortarHQ_2";
 			type="Empty";
 			angle=-13.107552;
 		};
-		class Item96
+		class Item94
 		{
 			position[]={-18105.979,-0.65697396,-4625.3335};
 			name="aoMarker_2";
@@ -5675,7 +5716,7 @@ class Mission
 			type="b_hq";
 			colorName="ColorBLUFOR";
 		};
-		class Item97
+		class Item95
 		{
 			position[]={-18060.854,-0.59674996,-4527.916};
 			name="aoCircle_2";
@@ -5686,7 +5727,7 @@ class Mission
 			a=700;
 			b=700;
 		};
-		class Item98
+		class Item96
 		{
 			position[]={-18073.99,-0.0084810853,-4516.9761};
 			name="aoCircle_3";
@@ -5696,6 +5737,101 @@ class Mission
 			fillName="FDiagonal";
 			a=700;
 			b=700;
+		};
+		class Item97
+		{
+			position[]={2581.9917,-0.092638105,11904.485};
+			name="sm1";
+			type="Empty";
+		};
+		class Item98
+		{
+			position[]={2584.4692,-0.020011054,18206.693};
+			name="sm2";
+			type="Empty";
+		};
+		class Item99
+		{
+			position[]={10065.167,-0.12408912,23084.686};
+			name="sm3";
+			type="Empty";
+		};
+		class Item100
+		{
+			position[]={9026.667,-0.0040723607,24842.338};
+			name="sm4";
+			type="Empty";
+		};
+		class Item101
+		{
+			position[]={18311.234,-0.091689356,18747.197};
+			name="sm5";
+			type="Empty";
+		};
+		class Item102
+		{
+			position[]={21436.486,-0.21635288,20465.906};
+			name="sm6";
+			type="Empty";
+		};
+		class Item103
+		{
+			position[]={25529.418,0.053560138,24254.217};
+			name="sm7";
+			type="Empty";
+		};
+		class Item104
+		{
+			position[]={28258.668,0.17966916,24340.129};
+			name="sm8";
+			type="Empty";
+		};
+		class Item105
+		{
+			position[]={22739.551,-0.59378934,14703.676};
+			name="sm9";
+			type="Empty";
+		};
+		class Item106
+		{
+			position[]={16821,0.018535756,14076.852};
+			name="sm10";
+			type="Empty";
+		};
+		class Item107
+		{
+			position[]={22624.787,0.22800016,6197.666};
+			name="sm11";
+			type="Empty";
+		};
+		class Item108
+		{
+			position[]={11432.496,-0.0040793568,10715.18};
+			name="sm12";
+			type="Empty";
+		};
+		class Item109
+		{
+			position[]={9116.3359,-0.12997656,7222.3452};
+			name="sm13";
+			type="Empty";
+		};
+		class Item110
+		{
+			position[]={7059.9458,-0.19620678,10128.327};
+			name="sm14";
+			type="Empty";
+		};
+		class Item111
+		{
+			position[]={-16771.682,-0.038178451,-5273.2319};
+			name="SM_Marker";
+			type="mil_warning";
+			colorName="ColorRed";
+			fillName="SolidBorder";
+			a=0.80000001;
+			b=0.80000001;
+			drawBorder=1;
 		};
 	};
 	class Sensors

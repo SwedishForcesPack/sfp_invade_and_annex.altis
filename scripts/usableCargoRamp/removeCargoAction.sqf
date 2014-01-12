@@ -6,8 +6,8 @@ _box = _heli getVariable "box";
 if (vehicle player == _heli) then {
 	player removeAction (_heli getVariable "getOutId");
 	_heli setVariable ["getOutActionExist", 0, false];
-	_box removeAction (_heli getVariable "getInId");
-	_heli setVariable ["getInActionExist", 0, false];
+	_box removeAction (_heli getVariable "getInId"); // remove ///////////////////////////////////////////////////////////
+	_heli setVariable ["getInActionExist", 0, false]; // remove ///////////////////////////////////////////////////////////
 };
 
 if (vehicle player == player) then {

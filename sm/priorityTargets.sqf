@@ -71,7 +71,7 @@ while {true} do
 		};
 
 		if
-		((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 800) then {
+		((_flatPos distance (getMarkerPos "respawn_west")) > 1300 && (_flatPos distance (getMarkerPos currentAO)) > 800) then {
 			_nearUnits = 0;
 			{
 				if ((_flatPos distance (getPos _x)) < 500) then
@@ -190,7 +190,7 @@ while {true} do
 		"Get that damned Artillery team down; they're firing right now! Seek cover!",
 		"They're zeroing in! Incoming Artillery fire; heads down!"
 	];
-	_radius = 80; //Declared here so we can "zero in" gradually
+	_radius = 40; //Declared here so we can "zero in" gradually
 
 	//Add aw_firing script start
 	//[priorityVeh1,15000,600] execVM "scripts\aw_artillery\aw_artillery_findTargets.sqf";

@@ -1,4 +1,5 @@
 EOS_Patrol = compile preprocessfilelinenumbers "eos\Functions\shk_patrol.sqf";
+EOS_Spawn = compile preprocessfilelinenumbers "eos\EOS\EOS_Launch.sqf";
 EOS_LightVeh = compile preprocessfilelinenumbers "eos\spawnUnits\Spawn_Vehicle.sqf";
 EOS_spawnPatrol = compile preprocessfilelinenumbers "eos\spawnUnits\Spawn_Infantry.sqf";
 EOS_spawnStatic = compile preprocessfilelinenumbers "eos\spawnUnits\Spawn_Static.sqf";

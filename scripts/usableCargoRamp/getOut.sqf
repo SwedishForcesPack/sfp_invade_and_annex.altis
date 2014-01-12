@@ -9,8 +9,14 @@ _heli setVariable ["getInActionExist", 0, false];
 
 _unit action ["Eject", _heli];
 waitUntil {vehicle _unit == _unit};
-_rampOutPos = [_heli, 5, ((getDir _heli) + 180)] call BIS_fnc_relPos;
+
+_d = if ((speed _heli) <= 40) then {6} else {5};
+
+_rampOutPos = [_heli, _d, ((getDir _heli) + 180)] call BIS_fnc_relPos;
 _altitude = getPosATL _heli;
-_rampOutPos set [2, (_altitude select 2)];
+
+_a = if ((speed _heli) <= 40) then {3} else {0};
+
+_rampOutPos set [2, ((_altitude select 2) - _a)];
 _unit setPosATL _rampOutPos;
 _unit setDir ((getDir _heli) + 180);
