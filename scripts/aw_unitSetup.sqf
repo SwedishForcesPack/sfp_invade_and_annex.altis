@@ -18,7 +18,3 @@ if((_unit isKindOf "B_Heli_Light_01_armed_F") OR (_unit isKindOf "Heli_Light_01_
 if((_unit isKindOf "Ship") OR (_unit isKindOf "Wheeled_APC_F")) then {[_unit] execVM "scripts\aw_boatPush\aw_boatPush_setupUnit.sqf"};
 
 if((_unit isKindOf "B_MRAP_01_F") OR (_unit isKindOf "B_MRAP_01_hmg_F")) then {clearitemcargo _unit; clearWeaponCargoGlobal _unit; clearMagazineCargoGlobal _unit;};
-
-if ( _unit isKindOf "Air" ) then {
-	_unit execVM "scripts\a3rc_PilotsPoints.sqf";
-};
