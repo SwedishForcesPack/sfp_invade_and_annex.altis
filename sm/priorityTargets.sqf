@@ -147,7 +147,7 @@ while {true} do
 	for "_c" from 0 to 1 do
 	{
 		_randomPos = [_flatPos, 100] call aw_fnc_randomPos;
-		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "UInfantry" >> "OIA_GuardTeam")] call BIS_fnc_spawnGroup;
+		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "UInfantry" >> "OIA_GuardSquad")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, _flatPos, 100] call aw_fnc_spawn2_randomPatrol;
 		[(units _spawnGroup)] call aw_setGroupSkill;
 		

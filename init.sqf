@@ -20,7 +20,7 @@ Jack Williams (Rarek) for Ahoy World!
 Maintained by [AW] Jester and Razgriz33
 
 LB has edited I&A with many hours of work.
-Contact LB Quiksilver or LB chucky for information. 
+Contact LB Quiksilver or LB chucky for information.
 */
 
 // JIP Check (This code should be placed first line of init.sqf file)
@@ -327,7 +327,7 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 
 // restrictions
 _null = [] execVM "restrictions.sqf";
-_null=[] execVM "admin_uid.sqf";
+//_null=[] execVM "admin_uid.sqf";
 
 // other stuff
 [40,50,55,60] execVM "scripts\bodyRemoval.sqf";
@@ -663,7 +663,7 @@ AW_fnc_rewardPlusHintMI = {
 private ["_veh","_vehName","_vehVarname","_completeTextHelo","_reward"];
 
 	_completeTextHelo = format[
-	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Buzzard Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
+	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Kajman Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
 
 	GlobalHint = _completeTextHelo; publicVariable "GlobalHint"; hint parseText _completeTextHelo;
 	showNotification = ["EnemyHeloDown", "Enemy Mi-48 Kajman is down. Well Done!"]; publicVariable "showNotification";
