@@ -20,7 +20,7 @@ Jack Williams (Rarek) for Ahoy World!
 Maintained by [AW] Jester and Razgriz33
 
 LB has edited I&A with many hours of work.
-Contact LB Quiksilver or LB chucky for information. TS: 173.199.80.222:9167  pw: uberlanbox
+Contact LB Quiksilver or LB chucky for information. 
 */
 
 // JIP Check (This code should be placed first line of init.sqf file)

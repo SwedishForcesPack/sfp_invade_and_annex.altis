@@ -104,6 +104,17 @@ switch(_uid)do
  	{
 	player addAction [("<t color=""#0074E8"">" + ("Admin Tools") +"</t>"),"scripts\admin\tools.sqf",[],-99,false,false,"",''];
  	};
+
+	case "76561198029008449": // Danny
+ 	{
+	player addAction [("<t color=""#0074E8"">" + ("Admin Tools") +"</t>"),"scripts\admin\tools.sqf",[],-99,false,false,"",''];
+ 	};
+
+ 	case "76561198058389301": // stuffedsheep
+ 	{
+	player addAction [("<t color=""#0074E8"">" + ("Admin Tools") +"</t>"),"scripts\admin\tools.sqf",[],-99,false,false,"",''];
+ 	};
+
  	default
      	{
  	};

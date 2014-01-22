@@ -254,7 +254,7 @@ class Params
 		default = 7;
 	};
 
-	class SniperTeamsPatrol
+class SniperTeamsPatrol
 	{
 		title = "Sniper Teams Patrolling AO";
 		values[] = {0,1,2,3};
@@ -276,7 +276,7 @@ class Params
 		values[] = {0,1,2,3,4};
 		texts[] = {1,2,3,4,5};
 		default = 3;
-	};
+	};	
 
 	class CarsPatrol
 	{
@@ -583,6 +583,19 @@ class RscTitles
 		titles[] = {};
 	};
 }; */
+
+class CfgSounds
+{
+	sounds[] = {};
+    class arrival
+    {
+        // how the sound is referred to in the editor (e.g. trigger effects)
+        name = "arrival";
+        // filename, volume, pitch
+        sound[] = {"sounds\arrival.ogg", 1, 1};
+        titles[] = {};
+    };
+};
 
 /* Adds screen when loading. */
 author = Rarek [AW];
