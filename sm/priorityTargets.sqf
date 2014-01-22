@@ -48,7 +48,7 @@ while {true} do
 	
 	//Define hint
 	_briefing = 
-	"<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#b60000'>Enemy Artillery</t><br/>____________________<br/>OPFOR forces are setting up an artillery battery to hit you guys damned hard! We've picked up their positions with thermal imaging scans and have marked it on your map.<br/><br/>This is a priority target, boys! They're just setting up now; they'll be firing in about five minutes!";
+	"<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#b60000'>Enemy Mortars</t><br/>____________________<br/>OPFOR forces are setting up a mortar team to hit you guys damned hard! We've picked up their positions with thermal imaging scans and have marked it on your map.<br/><br/>This is a priority target, boys! They're just setting up now; they'll be firing in about five minutes!";
 
 	/*
 		Find flat position that's not near spawn or within (PARAMS_AOSize + 200) of AO
@@ -136,51 +136,23 @@ while {true} do
 	//Spawn some enemies protecting the units
 	for "_c" from 0 to 2 do
 	{
-		_randomPos = [_flatPos, 100] call aw_fnc_randomPos;
+		_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _flatPos, 200] call aw_fnc_spawn2_perimeterPatrol;
+		[_spawnGroup, _flatPos, 50] call aw_fnc_spawn2_perimeterPatrol;
 		[(units _spawnGroup)] call aw_setGroupSkill;
 		
 		_unitsArray = _unitsArray + [_spawnGroup];
 	};
 	
-	for "_c" from 0 to 1 do
+	for "_c" from 0 to 3 do
 	{
-		_randomPos = [_flatPos, 100] call aw_fnc_randomPos;
-		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "UInfantry" >> "OIA_GuardSquad")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _flatPos, 100] call aw_fnc_spawn2_randomPatrol;
+		_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
+		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+		[_spawnGroup, _flatPos, 150] call aw_fnc_spawn2_randomPatrol;
 		[(units _spawnGroup)] call aw_setGroupSkill;
 		
 		_unitsArray = _unitsArray + [_spawnGroup];
 	};
-
-	for "_c" from 0 to 1 do
-	{
-		_randomPos = [_flatPos, 150] call aw_fnc_randomPos;
-		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OI_SniperTeam")] call BIS_fnc_spawnGroup;
-		[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_perimeterPatrol;
-		[(units _spawnGroup)] call aw_setGroupSkillSniper;
-				
-		_unitsArray = _unitsArray + [_spawnGroup];
-	};
-	
-	_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "O_MRAP_02_hmg_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
 
 	//Set marker up
 	_fuzzyPos = 
@@ -191,16 +163,16 @@ while {true} do
 	];
 
 	{ _x setMarkerPos _fuzzyPos; } forEach ["priorityMarker", "priorityCircle"];
-	"priorityMarker" setMarkerText "Priority Target: Artillery";
+	"priorityMarker" setMarkerText "Priority Target: Mortar Team";
 	publicVariable "priorityMarker";
 	priorityTargetUp = true;
-	priorityTargetText = "Artillery";
+	priorityTargetText = "Mortar Team";
 	publicVariable "priorityTargetUp";
 	publicVariable "priorityTargetText";
 
 	//Send Global Hint
 	GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText _briefing;
-	showNotification = ["NewPriorityTarget", "Destroy Enemy Artillery"]; publicVariable "showNotification";
+	showNotification = ["NewPriorityTarget", "Destroy Enemy Mortar Team"]; publicVariable "showNotification";
 
 	debugMessage = "Letting mortars 'set up'.";
 	publicVariable "debugMessage";
@@ -283,7 +255,7 @@ while {true} do
 
 	//Send completion hint
 	GlobalHint = _completeText; publicVariable "GlobalHint"; hint parseText _completeText;
-	showNotification = ["CompletedPriorityTarget", "Enemy Artillery Neutralised"]; publicVariable "showNotification";
+	showNotification = ["CompletedPriorityTarget", "Enemy Mortar Team Neutralised"]; publicVariable "showNotification";
 	
 	//Set global VAR saying mission is complete
 	priorityTargetUp = false;

@@ -30,7 +30,6 @@ _sideMissions =
 	"destroyExplosivesCoast",
 	"destroyWeaponsSupply",
 	"destroyResearchOutpost",
-	"destroyInsurgentHQ",
 	"destroyRogueHQ"
 ];
 

@@ -21,12 +21,12 @@ _pitchBank =
 
 _check = _vehicle getVariable "aw_sling_attached";
 if(isNil "_check") then {_vehicle setVariable ["aw_sling_attached",false,false]};
-if(isNil "aw_sling_cameraOn") then {aw_sling_cameraOn = false};
+if(isNil "aw_sling_cameraOn") then {aw_sling_cameraOn = true};
 
 
 _vehicle addAction ["<t color='#FF0000'>" + "Sling Rope Attach" + "</t>","scripts\aw_sling\aw_sling_attach.sqf",[],21,true,true,"","(_this == driver _target) AND (count ((getPos _target) nearEntities [['Car','Motorcycle','Tank','ship'],5]) > 0) AND !(_target getVariable 'aw_sling_attached')"];
 _vehicle addAction ["<t color='#FF0000'>" + "Sling Rope Detach" + "</t>","scripts\aw_sling\aw_sling_detach.sqf",[],21,true,true,"","(_this == driver _target) AND (_target getVariable 'aw_sling_attached')"];
-_vehicle addAction ["<t color='#FF0000'>" + "Toggle Sling Camera" + "</t>","scripts\aw_sling\aw_sling_toggleDisplay.sqf",[],-98,false,false,"","(_this == driver _target)"];
+_vehicle addAction ["<t color='#FF0000'>" + "Toggle Sling Camera" + "</t>","scripts\aw_sling\aw_sling_toggleDisplay.sqf",[],20,true,true,"","(_this == driver _target)"];
 //pilot eject
 _vehicle addAction ["Eject",{player action [ "eject", vehicle player]},[],1,false,true,"","_this in _target"];
 

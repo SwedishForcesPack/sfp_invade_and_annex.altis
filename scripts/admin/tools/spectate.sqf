@@ -1,1 +1,0 @@
-[player] execVM "spectator\specta.sqf";

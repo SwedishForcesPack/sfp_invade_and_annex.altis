@@ -4,7 +4,7 @@ version 0.95 Offical release
 Visit us at:
 http://www.blacktemplars.altervista.org/
 06/03/2012
-*/ 
+*/
 
 ////////////////// EDITABLE \\\\\\\\\\\\\\\\\\\\\\\\\\
 BTC_r_new_system    = 0; //WIP - set 1 to activate it
@@ -16,7 +16,7 @@ BTC_r_trans_ratio   = 100;
 BTC_revive_time_min = 1;
 BTC_revive_time_max = 600;
 BTC_who_can_revive  = ["B_medic_F"];
-BTC_loop_check      = 0;
+BTC_loop_check      = 1;
 BTC_disable_respawn = 0;
 BTC_respawn_gear    = 1;
 BTC_active_lifes    = 10;
@@ -27,7 +27,7 @@ BTC_s_mode_view     = ["First person","Behind the back","High","Free"];
 BTC_black_screen    = 0;//Black screen + button while unconscious or action wheel and clear view
 BTC_action_respawn  = 0;//if black screen is set to 0 you can choose if you want to use the action wheel or the button. Keep in mind that if you don't use the button, the injured player can use all the action, frag too....
 BTC_camera_unc      = 1;
-BTC_camera_unc_type = ["Behind the back","High"];
+BTC_camera_unc_type = ["Behind the back","High","Free"];
 BTC_respawn_time    = 0;
 BTC_active_mobile   = 1;//Active mobile respawn (You have to put in map the vehicle and give it a name. Then you have to add one object per side to move to the mobile (BTC_base_flag_west,BTC_base_flag_east) - (1 = yes, 0 = no))
 BTC_mobile_respawn  = 1;//Active the mobile respawn fnc (1 = yes, 0 = no)
@@ -72,7 +72,7 @@ if (isServer) then
 	BTC_marker_pveh = [];publicVariable "BTC_marker_pveh";
 	BTC_load_pveh = [];publicVariable "BTC_load_pveh";
 	BTC_pullout_pveh = [];publicVariable "BTC_pullout_pveh";
-	if (BTC_r_new_system == 1) then
+	if (BTC_r_new_system == 1) then 
 	{
 		BTC_anim_pveh = [];publicVariable "BTC_anim_pveh";
 		BTC_cpr_pveh = [];publicVariable "BTC_cpr_pveh";
@@ -106,11 +106,11 @@ BTC_respawn_cond = false;
 	if (BTC_respawn_marker == "respawn_guer") then {BTC_respawn_marker = "respawn_guerrila";};
 	if (BTC_respawn_marker == "respawn_civ") then {BTC_respawn_marker = "respawn_civilian";};
 	BTC_r_base_spawn = "Land_HelipadEmpty_F" createVehicleLocal getMarkerPos BTC_respawn_marker;
-	if (BTC_r_new_system == 0) then
+	if (BTC_r_new_system == 0) then 
 	{
 		player addEventHandler ["Killed", BTC_player_killed];if (BTC_respawn_gear == 1) then {player addEventHandler ["HandleDamage", BTC_fnc_handledamage_gear];};
-	}
-	else
+	} 
+	else 
 	{
 		"BTC_cpr_pveh" addPublicVariableEventHandler BTC_fnc_PVEH;
 		"BTC_ban_pveh" addPublicVariableEventHandler BTC_fnc_PVEH;
@@ -124,7 +124,7 @@ BTC_respawn_cond = false;
 		BTC_r_action_menu = true;
 		BTC_r_med_effect = false;
 		BTC_is_bleeding = false;
-		enableCamShake true;
+		enableCamShake true; 
 		BTC_r_unc = false;
 		BTC_r_unc_loop = false;
 		BTC_r_damage = 0;
@@ -141,7 +141,7 @@ BTC_respawn_cond = false;
 	player addAction [("<t color=""#ED2744"">") + ("Drag") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_drag], 8, true, true, "", "[] call BTC_check_action_drag"];
 	player addAction [("<t color=""#ED2744"">") + ("Carry") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_carry], 8, true, true, "", "[] call BTC_check_action_drag"];
 	player addAction [("<t color=""#ED2744"">") + ("Pull out injured") + "</t>","=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_pull_out], 8, true, true, "", "[] call BTC_pull_out_check"];
-	if (BTC_active_mobile == 1) then
+	if (BTC_active_mobile == 1) then 
 	{
 		switch (true) do
 		{

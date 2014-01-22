@@ -24,7 +24,7 @@ _veh = _this select 0;
 _vehType = getText(configFile>>"CfgVehicles">>typeOf _veh>>"DisplayName");
 
 if (_veh isKindOf "ParachuteBase" || !alive _veh) exitWith {};
-if !((_veh isKindOf "Helicopter" ) or (_veh isKindOf "plane")) exitWith { _veh vehicleChat "This pad is for aircraft service only, soldier!"; };
+if !((_veh isKindOf "Helicopter" ) or (_veh isKindOf "plane")) exitWith { _veh vehicleChat "This pad is for chopper repairs only, soldier!"; };
 
 _fuelLevel = fuel _veh;
 _damage = getDammage _veh;

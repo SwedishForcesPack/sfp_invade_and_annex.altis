@@ -4,7 +4,6 @@ aw_fnc_loiter =
 	_group = _this select 0;
 	_pos = _this select 1;
 	_wp = _group addWaypoint [_pos, 0];
-	_wp setWaypointType "LOITER";
 };
 
 aw_fnc_fuelMonitor =
@@ -68,7 +67,7 @@ aw_fnc_spawn2_waypointBehaviour =
 			{
 				if(waypointType _x == "SAD") then {_x setWaypointBehaviour "MOVE"};
 				_x setWaypointBehaviour "COMBAT";
-				_x setWaypointBehaviour "WEDGE";
+				_x setWaypointFormation "WEDGE";
 			}forEach (waypoints _this);
 		};
 	};
@@ -126,7 +125,7 @@ aw_fnc_spawn2_randomPatrol =
 		_wp setWaypointBehaviour "AWARE";
 		_wp setWaypointTimeOut [0,10,40];
 
-/*		if(DEBUG) then
+		/*if(DEBUG) then
 		{
 			_name = format ["%1",_wp];
 			createMarkerLocal [_name,waypointPosition _wp];
@@ -143,7 +142,7 @@ aw_fnc_spawn2_randomPatrol =
 	_wp setWaypointFormation "STAG COLUMN";
 	_wp setWaypointBehaviour "SAFE";
 
-/*	if(DEBUG) then
+	/*if(DEBUG) then
 	{
 		_name = format ["%1",_wp];
 		createMarkerLocal [_name,waypointPosition _wp];
@@ -177,7 +176,7 @@ aw_fnc_spawn2_perimeterPatrol =
 		_wp setWaypointBehaviour "AWARE";
 		_wp setWaypointTimeOut [0,10,40];
 
-/*		if(DEBUG) then
+		/*if(DEBUG) then
 		{
 			_name = format ["%1",_wp];
 			createMarkerLocal [_name,waypointPosition _wp];
@@ -202,7 +201,7 @@ aw_fnc_spawn2_perimeterPatrol =
 	_wp setWaypointSpeed "LIMITED";
 	_wp setWaypointFormation "WEDGE";
 
-/*	if(DEBUG) then
+	/*if(DEBUG) then
 	{
 		_name = format ["%1",_wp];
 		createMarkerLocal [_name,waypointPosition _wp];
@@ -285,56 +284,62 @@ aw_deleteUnits =
 	[] spawn aw_cleanGroups;
 };
 
-ISSE_Cfg_VehicleInfo = {
-    private["_cfg", "_name", "_DescShort", "_DescLong", "_Type", "_MaxSpeed", "_MaxFuel"];
-    _name = _this;
-    _cfg  = (configFile >>  "CfgVehicles" >>  _name);
+aw_serverRespawn =
+{
+	if(!serverCommandAvailable "#kick") exitWith{};
+	private ["_x","_y"];
+	{
+		_x setVelocity [0,0,0];
+		_x setPos [getPos _x select 0,getPos _x select 1,0];
 
-    _DescShort = if (isText(_cfg >> "displayName")) then {
-        getText(_cfg >> "displayName")
-    }
-    else {
-        "/"
-    };
+		hint format["Deleting %1",typeOf _x];
 
-    _DescLong = if (isText(_cfg >> "Library" >> "libTextDesc")) then {
-        getText(_cfg >> "Library" >> "libTextDesc")
-    }
-    else {
-        "/"
-    };
-
-    _Pic = if (isText(_cfg >> "picture")) then {
-        getText(_cfg >> "picture")
-    }
-    else {
-        "/"
-    };
-
-    _Type = if (isText(_cfg >> "type")) then {
-        parseNumber(getText(_cfg >> "type"))
-    }
-    else {
-        getNumber(_cfg >> "type")
-    };
-
-    _MaxSpeed = if (isText(_cfg >> "maxSpeed")) then {
-        parseNumber(getText(_cfg >> "maxSpeed"))
-    }
-    else {
-        getNumber(_cfg >> "maxSpeed")
-    };
-
-    _MaxFuel = if (isText(_cfg >>    "fuelCapacity")) then {
-        parseNumber(getText(_cfg >> "fuelCapacity"))
-    }
-    else {
-        getNumber(_cfg >>"fuelCapacity")
-    };
-
-    [_DescShort, _DescLong, _Type, _Pic, _MaxSpeed, _MaxFuel]
+		for[{_y=0},{_y<(count (crew _x))},{_y=_y+1}] do
+		{
+			moveOut ((crew _x) select _y);
+			((crew _x) select _y) setPos [getPos ((crew _x) select _y) select 0,(getPos ((crew _x) select _y) select 1) + 5,0];
+		};
+		_x setPos [0,0,0];
+		_x setDamage 1;
+	}forEach ((getPos trg_aw_admin) nearEntities [["Air","Car","Motorcycle","Tank"],5000]);
 };
 
-ISSE_Cfg_Vehicle_GetName  = {
-    (_this call ISSE_Cfg_VehicleInfo) select 0
+aw_serverSingleRespawn =
+{
+	private ["_x","_y","_pos","_units"];
+
+	if(!serverCommandAvailable "#kick") exitWith{};
+
+	_pos = screenToWorld [0.5,0.5];
+
+	_units = _pos nearEntities [["Car","Air","Tank","Ship","Motorcycle"],5];
+
+	if(count _units > 0) then
+	{
+		_x =_units select 0;
+		_x setVelocity [0,0,0];
+		_x setPos [getPos _x select 0,getPos _x select 1,0];
+
+		hint format["Deleting %1",typeOf _x];
+
+		for[{_y=0},{_y<(count (crew _x))},{_y=_y+1}] do
+		{
+			moveOut ((crew _x) select _y);
+			((crew _x) select _y) setPos [getPos ((crew _x) select _y) select 0,(getPos ((crew _x) select _y) select 1) + 5,0];
+		};
+		_x setPos [0,0,0];
+		_x setDamage 1;
+	};
+};
+
+aw_serverCursorTP =
+{
+	if(!serverCommandAvailable "#kick") exitWith{};
+	player setPos (screenToWorld [0.5,0.5]);
+};
+
+aw_serverMapTP =
+{
+	if(!serverCommandAvailable "#kick") exitWith{};
+	onMapSingleClick "player setPos _pos;onMapSingleClick '';true";
 };

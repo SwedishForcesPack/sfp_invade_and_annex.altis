@@ -7,7 +7,7 @@
  #+# #+#           #+#   #+#           #+#   #+#
 ### ###             ### ###             ### ###
 
-| AHOY WORLD | ARMA 3 ALPHA | ALTIS ANNEX 2.70c | LB EDIT
+| AHOY WORLD | ARMA 3 ALPHA | Altis |
 
 Creating working missions of this complexity from
 scratch is difficult and time consuming, please
@@ -16,22 +16,11 @@ distibuting this mission when hosting!
 
 This version of Domination was lovingly crafted by
 Jack Williams (Rarek) for Ahoy World!
-
 Maintained by [AW] Jester and Razgriz33
-
-LB has edited I&A with many hours of work.
-Contact LB Quiksilver or LB chucky for information.
 */
 
-// JIP Check (This code should be placed first line of init.sqf file)
-if (!isServer && isNull player) then {isJIP=true;} else {isJIP=false;};
-
 // Wait until player is initialized
-if (!isDedicated) then
-{
-	waitUntil {!isNull player && isPlayer player};
-	sidePlayer = side player;
-};
+if (!isDedicated) then {waitUntil {!isNull player && isPlayer player};};
 
 #define WELCOME_MESSAGE	"Welcome to Ahoy World's Invade & Annex ~ALTIS~\n" +\
 						"by Rarek (Ahoy World)\n\n" +\
@@ -60,112 +49,98 @@ if (!isDedicated) then
 
 private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
 
-execVM "scripts\jump.sqf";
-[] execVM "=BTC=_Logistic\=BTC=_Logistic_Init.sqf";
 _handle = execVM "aw_functions.sqf";
-waitUntil {time > 0};
+waitUntil{scriptDone _handle};
 execVM "changeLog.sqf";
-execVM "serverRules.sqf";
-execVM "teamSpeak.sqf";
-execVM "uavConnect.sqf";
 _initialTargets = [
-	"Sofia Radar Station",
-	"Research Facility",
-	"Feres Outpost",
-	"Pyrgos Military Base",
-	"Skopos Castle",
+	"Kalochori",
+	"Sofia",
+	"Dome",
+	"Feres",
+	"Pyrgos",
+	"Skopos",
 	"Neri",
 	"Factory",
 	"Syrta",
 	"Zaros",
 	"Chalkeia",
-	"Aristi Turbines",
+	"Aristi",
 	"Dump",
+	"Outpost",
 	"Frini",
-	"Limni",
+	"Athira",
+	"Swamp",
 	"Rodopoli",
 	"Charkia",
 	"Alikampos",
-	"Neochori",
-	"Eginio",
+	"Stavros",
+	"Kavala",
 	"Aggelochori",
 	"Agios Dionysios",
+	"Poliakko",
 	"Paros",
 	"Molos",
-	"Didymos Turbines",
-	"Delfinaki Outpost",
+	"Anthrakia",
+	"The wind turbines",
+	"The peninsula",
+	"Therisa",
+	"Delfinaki outpost",
 	"Panochori",
 	"The Stadium",
-	"Gori Refinery",
+	"The Xirolimni Dam",
+	"The small industrial complex",
+	"Lakka military outpost",
 	"Negades",
+	"Fotia",
 	"Abdera",
-	"Kore",
-	"Oreokastro",
-	"Dorida",
-	"Galati Outpost",
-	"Frini Woodlands",
-	"Nidasos Woodlands",
-	"Sofia Powerplant",
-	"Gatolia Solar Farm",
-	"Vikos Outpost",
-	"Sagonisi Outpost",
-	"Sfaka Safehouse",
-	"Panagia",
-	"Selakano Outpost",
-	"Faros Safehouse",
-	"Molos Airfield",
-	"Pyrgos",
-	"Fotia Turbines"
+	"Ioannina",
+	"Kore"
 ];
 
 _targets = [
-	"Sofia Radar Station",
-	"Research Facility",
-	"Feres Outpost",
-	"Pyrgos Military Base",
-	"Skopos Castle",
+	"Kalochori",
+	"Sofia",
+	"Dome",
+	"Feres",
+	"Pyrgos",
+	"Skopos",
 	"Neri",
 	"Factory",
 	"Syrta",
 	"Zaros",
 	"Chalkeia",
-	"Aristi Turbines",
+	"Aristi",
 	"Dump",
+	"Outpost",
 	"Frini",
-	"Limni",
+	"Athira",
+	"Swamp",
 	"Rodopoli",
 	"Charkia",
 	"Alikampos",
-	"Neochori",
-	"Eginio",
+	"Stavros",
+	"Kavala",
 	"Aggelochori",
 	"Agios Dionysios",
+	"Poliakko",
 	"Paros",
 	"Molos",
-	"Didymos Turbines",
-	"Delfinaki Outpost",
+	"Anthrakia",
+	"The wind turbines",
+	"The peninsula",
+	"Therisa",
+	"Delfinaki outpost",
 	"Panochori",
 	"The Stadium",
-	"Gori Refinery",
+	"The Xirolimni Dam",
+	"The small industrial complex",
+	"Lakka military outpost",
 	"Negades",
+	"Fotia",
 	"Abdera",
-	"Kore",
-	"Oreokastro",
-	"Dorida",
-	"Galati Outpost",
-	"Frini Woodlands",
-	"Nidasos Woodlands",
-	"Sofia Powerplant",
-	"Gatolia Solar Farm",
-	"Vikos Outpost",
-	"Sagonisi Outpost",
-	"Sfaka Safehouse",
-	"Panagia",
-	"Selakano Outpost",
-	"Faros Safehouse",
-	"Molos Airfield",
-	"Pyrgos",
-	"Fotia Turbines"
+	"Ioannina",
+	"Kore"
+
 ];
 
 //Grab parameters and put them into readable variables
@@ -187,7 +162,6 @@ if(isMultiplayer) then
 {
 	if(PARAMS_DebugMode2 == 1) then {DEBUG2 = true} else {DEBUG2 = false};
 } else {DEBUG2 = true};
-
 // Disable saving to save time
 enableSaving [false, false];
 
@@ -310,25 +284,12 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
 
-/* [] spawn {
-	scriptName "initMission.hpp: mission start";
-	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
-	waitUntil {sleep 0.5; !(isNil "BIS_fnc_titlecard_finished")};
-	[[14600.0,16801.0,100],"We've gotten a foot-hold on the island,|but we need to take the rest.||Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
-	titleText [WELCOME_MESSAGE, "PLAIN", 3];
-}; */
-
 // vehicle crew display
-[player] execVM "scripts\crew\crew.sqf";
-
-// group manager
-0 = [] execVM 'DOM_squad\group_manager.sqf';
-[] execVM "DOM_squad\init.sqf";
-
+//[player] execVM "scripts\crew\crew.sqf";
+0 = [] execVM 'group_manager.sqf';
 // restrictions
 _null = [] execVM "restrictions.sqf";
-//_null=[] execVM "admin_uid.sqf";
-
+_null=[] execVM "admin_uid.sqf";
 // other stuff
 [40,50,55,60] execVM "scripts\bodyRemoval.sqf";
 if (PARAMS_ViewDistance == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
@@ -340,10 +301,20 @@ if (PARAMS_ReviveEnabled == 1) then
 	//if (PARAMS_MedicMarkers == 1) then { _null = [] execVM "misc\medicMarkers.sqf"; };
 };
 if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
+/* 	Disabled while Alpha bug is present
+	_null = [] execVM "misc\radioChannels.sqf"; */
+
+/* [] spawn {
+	scriptName "initMission.hpp: mission start";
+	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
+	waitUntil {sleep 0.5; !(isNil "BIS_fnc_titlecard_finished")};
+	[[14600.0,16801.0,100],"We've gotten a foot-hold on the island,|but we need to take the rest.||Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
+	titleText [WELCOME_MESSAGE, "PLAIN", 3];
+}; */
 
 if (!isServer) then
 {
-	sleep 10;
+	sleep 20;
 
 	waitUntil {sleep 0.5; currentAO != "Nothing"};
 
@@ -407,7 +378,6 @@ if (!isServer) then
 		false,
 		true
 	];
-
 };
 
 if (!isServer) exitWith
@@ -416,7 +386,7 @@ if (!isServer) exitWith
 
 	{
 		_x allowDamage false;
-		//_x enableSimulation false;
+		_x enableSimulation false;
 	} forEach _spawnBuildings;
 
 	while {true} do
@@ -465,13 +435,10 @@ priorityTargets = ["None"];
 smRewards =
 [
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
-	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
-	["a PO-30 Orca", "O_Heli_Light_02_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
 	["a Strider HMG", "I_MRAP_03_hmg_F"],
 	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],
-	["an A-143 Buzzard (CAS)", "I_Plane_Fighter_03_CAS_F"],
 	["an M2A1 Slammer", "B_MBT_01_cannon_F"],
 	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
 	["an Offroad (Armed)", "B_G_Offroad_01_armed_F"]
@@ -482,22 +449,14 @@ smMarkerList =
 /*---------------------------------------------------------------------------
 Disabled while Alpha bug is present
 ---------------------------------------------------------------------------*/
+
 //Run a few miscellaneous server-side scripts
-//_null = [] execVM "misc\clearBodies.sqf";
+_null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
-// AI retake AO start
-[]execVM "eos\OpenMe.sqf";
 
-// Water Missions
-if (PARAMS_WaterMissions == 1) then { _null=[2700] execVM "sm\sideMission_Init.sqf"; };
-null=[] execVM "misc\brief.sqf";
 
 _isPerpetual = false;
-
-
-//Water missions explosives
-//player addAction["<t color='#ffff00'>Place C4 Charge</t>","sm\sabotage.sqf",[],21,true,true,"","count ((getPos _target) nearObjects [['Land_UWreck_MV22_F','another_object_here'],5]) > 0"];
 
 if (PARAMS_Perpetual == 1) then
 {
@@ -526,7 +485,7 @@ _targetsLeft = count _targets;
 AW_fnc_minefield = {
 	_centralPos = _this select 0;
 	_unitsArray = [];
-	for "_x" from 0 to 20 do
+	for "_x" from 0 to 29 do
 	{
 		_mine = createMine ["APERSMine", _centralPos, [], 50];
 		_unitsArray = _unitsArray + [_mine];
@@ -551,57 +510,12 @@ AW_fnc_minefield = {
 AW_fnc_deleteOldAOUnits =
 {
 	private ["_unitsArray", "_obj", "_isGroup"];
-	sleep 30;
+	sleep 300;
 	_unitsArray = _this select 0;
 	for "_c" from 0 to (count _unitsArray) do
 	{
 		_obj = _unitsArray select _c;
 		_isGroup = false; if (_obj in allGroups) then { _isGroup = true; };
-		if (_isGroup) then
-		{
-			{
-				if (!isNull _x) then { deleteVehicle _x; };
-			} forEach (units _obj);
-		} else {
-			if (!isNull _obj) then { deleteVehicle _obj; };
-		};
-	};
-};
-
-GC_fnc_deleteOldUnitsAndVehicles = {
-    {
-	sleep 60;
-        if (typeName _x == "GROUP") then {
-            {
-                if (vehicle _x != _x) then {
-                    deleteVehicle (vehicle _x);
-                };
-                deleteVehicle _x;
-            } forEach (units _x);
-        } else {
-            if (vehicle _x != _x) then {
-                deleteVehicle (vehicle _x);
-            };
-            if !(_x isKindOf "Man") then {
-                {
-                    deleteVehicle _x;
-                } forEach (crew _x)
-            };
-            deleteVehicle _x;
-        };
-    } forEach (_this select 0);
-};
-
-AW_fnc_deleteOldSMUnits =
-{
-	private ["_unitsArray", "_obj", "_isGroup"];
-	sleep 120;
-	_unitsArray = _this select 0;
-	for "_c" from 0 to (count _unitsArray) do
-	{
-		_obj = _unitsArray select _c;
-		_isGroup = false;
-		if (_obj in allGroups) then { _isGroup = true; };
 		if (_isGroup) then
 		{
 			{
@@ -647,28 +561,6 @@ _veh = smRewards call BIS_fnc_selectRandom;
 _unitSpawnPlus = PARAMS_AOSize;
 _unitSpawnMinus = _unitSpawnPlus - (_unitSpawnPlus * 2);
 
-AW_fnc_rewardPlusHintJet = {
-
-private ["_veh","_vehName","_vehVarname","_completeTextJet","_reward"];
-
-	_completeTextJet = format[
-	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Buzzard Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
-
-	GlobalHint = _completeTextJet; publicVariable "GlobalHint"; hint parseText _completeTextJet;
-	showNotification = ["EnemyJetDown", "Enemy Buzzard is down. Well Done!"]; publicVariable "showNotification";
-};
-
-AW_fnc_rewardPlusHintMI = {
-
-private ["_veh","_vehName","_vehVarname","_completeTextHelo","_reward"];
-
-	_completeTextHelo = format[
-	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Kajman Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
-
-	GlobalHint = _completeTextHelo; publicVariable "GlobalHint"; hint parseText _completeTextHelo;
-	showNotification = ["EnemyHeloDown", "Enemy Mi-48 Kajman is down. Well Done!"]; publicVariable "showNotification";
-};
-// Edited by Quiksilver
 AW_fnc_garrisonBuildings =
 {
 	_building = _this select 0;
@@ -697,15 +589,6 @@ AW_fnc_garrisonBuildings =
 			[216.049,-0.5,-1.0721207,-173.782],
 			[-216.049,-0.5,-1.0721207,-173.782]
 		],
-		"Land_Cargo_HQ_V1_F", [
-			[-89.3972,5.45408,-0.724457,-89.757],
-			[160.876,5.95225,-0.59613,-0.245575],
-			[30.379,5.37352,-3.03543,-32.9396],
-			[49.9438,7.04951,-3.03488,1.15405],
-			[109.73,7.20652,-3.12396,-273.082],
-			[190.289,6.1683,-3.12094,-181.174],
-			[212.535,6.83544,-3.1217,-154.507]
-		],
 		"Land_Cargo_HQ_V2_F", [
 			[-89.3972,5.45408,-0.724457,-89.757],
 			[160.876,5.95225,-0.59613,-0.245575],
@@ -724,12 +607,7 @@ AW_fnc_garrisonBuildings =
 			[190.289,6.1683,-3.12094,-181.174],
 			[212.535,6.83544,-3.1217,-154.507]
 		],
-		"Land_Cargo_Patrol_V1_F", [
-			[84.1156,2.21253,-4.1396,88.6112],
-			[316.962,3.81801,-4.14061,270.592],
-			[31.6563,3.91418,-4.13602,-0.194908]
 
-		],
 		"Land_Cargo_Patrol_V2_F", [
 			[84.1156,2.21253,-4.1396,88.6112],
 			[316.962,3.81801,-4.14061,270.592],
@@ -742,20 +620,7 @@ AW_fnc_garrisonBuildings =
 			[31.6563,3.91418,-4.13602,-0.194908]
 
 		],
-		"Land_Cargo_Tower_V1_F", [
-			[99.5325,3.79597,-4.62543,-271,3285],
-			[-65.1654,4.17803,-8.59327,2,79],
-			[-50.097,4.35226,-12.7691,2,703],
-			[115.749,5.55055,-12.7623,-270,6282],
-			[-143.89,7.92183,-12.9027,-180,867],
-			[67.2957,6.75608,-15.4993,-270,672],
-			[-68.9994,7.14031,-15.507,-88,597],
-			[195.095,7.46374,-17.792,-182,651],
-			[-144.962,8.67736,-17.7939,-178,337],
-			[111.831,6.52689,-17.7889,-271,5161],
-			[-48.2151,6.2476,-17.7976,-1,334],
-			[-24.622,4.62995,-17.796,1,79]
-		],
+
 		"Land_Cargo_Tower_V2_F", [
 			[99.5325,3.79597,-4.62543,-271,3285],
 			[-65.1654,4.17803,-8.59327,2,79],
@@ -783,25 +648,9 @@ AW_fnc_garrisonBuildings =
 			[111.831,6.52689,-17.7889,-271,5161],
 			[-48.2151,6.2476,-17.7976,-1,334],
 			[-24.622,4.62995,-17.796,1,79]
-		],
-		"Land_i_Barracks_V1_F", [
-			[66.6219,14.8599,-3.8678,94.6476],
-			[52.0705,10.0203,-3.86142,4.09206],
-			[11.4515,6.26249,-3.85385,1.42117],
-			[306.455,10.193,-3.84314,0.0715332],
-			[294.846,14.2778,-3.83774,-91.0892],
-			[7.04782,1.86908,-0.502411,-90.3917],
-			[86.3556,7.98911,-0.510651,129.846]
-		],
-		"Land_i_Barracks_V2_F", [
-			[66.6219,14.8599,-3.8678,94.6476],
-			[52.0705,10.0203,-3.86142,4.09206],
-			[11.4515,6.26249,-3.85385,1.42117],
-			[306.455,10.193,-3.84314,0.0715332],
-			[294.846,14.2778,-3.83774,-91.0892],
-			[7.04782,1.86908,-0.502411,-90.3917],
-			[86.3556,7.98911,-0.510651,129.846]
 		]
+
+
 	];
 
 	if (!(typeOf _building in _buildings)) exitWith {_newGrp = objNull; _newGrp};
@@ -904,6 +753,7 @@ _pos = getMarkerPos (_this select 0);
 	for "_x" from 1 to PARAMS_TeamsPatrol do {
 		_randomPos = [getMarkerPos currentAO, PARAMS_AOSize] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+
 		[_spawnGroup, getMarkerPos currentAO,(2.8 * (PARAMS_AOSize / 3))] call aw_fnc_spawn2_randomPatrol;
 		[(units _spawnGroup)] call aw_setGroupSkill;
 
@@ -933,10 +783,12 @@ _pos = getMarkerPos (_this select 0);
 	};
 
 	_x = 0;
+
 	for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 		_randomPos = [getMarkerPos currentAO, PARAMS_AOSize] call aw_fnc_randomPos;
 		_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OI_SniperTeam")] call BIS_fnc_spawnGroup;
 		[_spawnGroup, getMarkerPos currentAO,(3 * (PARAMS_AOSize / 3))] call aw_fnc_spawn2_perimeterPatrol;
+
 		[(units _spawnGroup)] call aw_setGroupSkillSniper;
 
 		if(DEBUG) then
@@ -1158,6 +1010,7 @@ _pos = getMarkerPos (_this select 0);
 			_name = format ["%1%2",name (leader _armourGroup),_x];
 			createMarker [_name,getPos (leader _armourGroup)];
 			_name setMarkerType "o_unknown";
+
 			_name setMarkerText format ["Armor %1",_x];;
 			_name setMarkerColor "ColorRed";
 			[_armourGroup,_name] spawn
@@ -1252,7 +1105,46 @@ _pos = getMarkerPos (_this select 0);
 };
 
 //Set time of day
-//skipTime PARAMS_TimeOfDay;
+skipTime PARAMS_TimeOfDay;
+
+//Set weather
+0 setWindForce random 1;
+0 setWindDir random 360;
+0 setGusts random 1;
+
+switch (PARAMS_Weather) do
+{
+	case 1: {
+		0 setOvercast 0;
+		0 setRain 0;
+		0 setFog 0;
+	};
+
+	case 2: {
+		0 setOvercast 1;
+		0 setRain 1;
+		0 setFog 0.2;
+		0 setGusts 1;
+		0 setLightnings 1;
+		0 setWaves 1;
+		0 setWindForce 0.5;
+	};
+
+	case 3: {
+		0 setOvercast 0.7;
+		0 setRain 0;
+		0 setFog 0;
+		0 setGusts 0.5;
+		0 setWaves 0.7;
+		0 setWindForce 0.3;
+	};
+
+	case 4: {
+		0 setOvercast 0.7;
+		0 setRain 1;
+		0 setFog 0.7;
+	};
+};
 
 //Spawn random wrecks
 if (PARAMS_PriorityTargets == 1) then
@@ -1278,6 +1170,9 @@ if (PARAMS_SideMissions == 1) then { _null = [] execVM "sm\sideMissions.sqf"; };
 
 //Begin generating priority targets
 if (PARAMS_PriorityTargets == 1) then { _null = [] execVM "sm\priorityTargets.sqf"; };
+
+//Begin creating random patrols
+// _null = [] execVM "randomPatrols.sqf";
 
 _firstTarget = true;
 _lastTarget = "Nothing";
@@ -1379,8 +1274,6 @@ while {count _targets > 0} do
 	showNotification = ["NewMain", currentAO]; publicVariable "showNotification";
 	showNotification = ["NewSub", "Destroy the enemy radio tower."]; publicVariable "showNotification";
 
-	if (PARAMS_AOReinforcementJet == 1) then { _null = [] execVM "sm\airDefense.sqf"; };
-	if (PARAMS_AOReinforcementHeavyHelo == 1) then { _null = [] execVM "sm\heloDefense.sqf"; };
 
 	/* =============================================== */
 	/* ========= WAIT FOR TARGET COMPLETION ========== */
@@ -1390,12 +1283,32 @@ while {count _targets > 0} do
 	publicVariable "radioTowerAlive";
 	"radioMarker" setMarkerPos [0,0,0];
 	_radioTowerDownText =
-		"<t align='center' size='2.2'>Radio Tower</t><br/><t size='1.5' color='#08b000' align='center'>DESTROYED</t><br/>____________________<br/>The enemy radio tower has been destroyed! Fantastic job, lads!<br/><br/><t size='1.2' color='#08b000' align='center'> The enemy cannot call in anymore air support now!</t><br/><br/> You're now all free to use your Personal UAVs!";
+		"<t align='center' size='2.2'>Radio Tower</t><br/><t size='1.5' color='#08b000' align='center'>DESTROYED</t><br/>____________________<br/>The enemy radio tower has been destroyed! Fantastic job, lads! You're now all free to use your Personal UAVs!<br/><br/>Keep up the good work, lads; we're countin' on you.";
 	GlobalHint = _radioTowerDownText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedSub", "Enemy radio tower destroyed."]; publicVariable "showNotification";
 	showNotification = ["Reward", "Personal UAVs now available."]; publicVariable "showNotification";
 
 	waitUntil {sleep 5; count list _dt < PARAMS_EnemyLeftThreshhold};
+
+	//Set enemy kill timer
+	//[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
+
+	//Delete markers and trigger
+	/* if (_isPerpetual) then
+	{
+		//_perimeterMarker = [currentAO] call AW_fnc_markerDeactivate;
+		if (count _targets == 1) then
+		{
+			_targets = _initialTargets;
+			_lastTarget = currentAO;
+			publicVariable "refreshMarkers";
+		} else {
+			_targets = _targets - [currentAO];
+		};
+	} else {
+		_targets = _targets - [currentAO];
+		//deleteMarker currentAO;
+	}; */
 
 	if (_isPerpetual) then
 	{
@@ -1434,45 +1347,6 @@ while {count _targets > 0} do
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMain", currentAO]; publicVariable "showNotification";
-
-	//Set enemy kill timer
-	[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
-
-	// AI Retaliation by Jester [AW]
-	if (PARAMS_DefendAO == 1) then
-	{
-	_aoUnderAttack = [] execVM "sm\aoRetake.sqf";
-	waitUntil {scriptDone _aoUnderAttack};
-	};
-	publicVariable "refreshMarkers";
-	currentAOUp = false;
-	publicVariable "currentAOUp";
-
-	//Delete detection trigger and markers
-	deleteVehicle _dt;
-
-	//Small sleep to let deletions process
-	sleep 1;
-
-	//Set target completion text
-	_targetCompleteText = format
-	[
-		"<t align='center' size='2.2'>Target Defended</t><br/><t size='1.5' align='center' color='#00FF80'>%1</t><br/>____________________<br/><t align='left'>Fantastic job defending %1, boys! Give us a moment here at HQ and we'll line up your next target for you.</t>",
-		currentAO
-	];
-
-	{_x setMarkerPos [-10000,-10000,-10000];} forEach ["aoCircle_2","aoCircle_3","aoMarker_2"];
-
-	/*[] spawn aw_cleanGroups;
-	//[] call AW_fnc_rewardPlusHintDefended;
-	[_enemiesArrayDefend] spawn AW_fnc_deleteOldAOUnits;
-	[_enemiesArrayDefend] spawn GC_fnc_deleteOldUnitsAndVehicles;*/
-
-
-	//Show global target completion hint
-	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
-	showNotification = ["CompletedMainDefended", currentAO]; publicVariable "showNotification";
-	sleep 5;
 	[] spawn aw_cleanGroups;
 };
 
