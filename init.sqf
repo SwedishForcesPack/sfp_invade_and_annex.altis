@@ -64,10 +64,6 @@ execVM "scripts\jump.sqf";
 [] execVM "=BTC=_Logistic\=BTC=_Logistic_Init.sqf";
 _handle = execVM "aw_functions.sqf";
 waitUntil {time > 0};
-execVM "scripts\EtV.sqf";
-waitUntil {!isNil "EtVInitialized"};
-[player] call EtV_Actions;
-waitUntil{scriptDone _handle};
 execVM "changeLog.sqf";
 execVM "serverRules.sqf";
 execVM "teamSpeak.sqf";
@@ -1256,7 +1252,7 @@ _pos = getMarkerPos (_this select 0);
 };
 
 //Set time of day
-skipTime PARAMS_TimeOfDay;
+//skipTime PARAMS_TimeOfDay;
 
 //Spawn random wrecks
 if (PARAMS_PriorityTargets == 1) then

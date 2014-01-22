@@ -1,4 +1,4 @@
-aw_fnc_loiter =
+wwaw_fnc_loiter =
 {
 	private["_group","_wp","_pos"];
 	_group = _this select 0;

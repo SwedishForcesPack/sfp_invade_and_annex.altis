@@ -1,4 +1,4 @@
-minLiftingHeight = 2.4;
+minLiftingHeight = 3;
 
 maxLiftingDistance = 10;
 maxLiftingHeight = 10;
@@ -30,7 +30,7 @@ fnWeightParameters =
 		upwardThrust = 15; // upward thrust when lifted unit is detached
 		downwardThrust = 0.6; // constant downward thrust when lifted unit is attached
 		draggingDampen = 0.85; // velocity dampening effect on lifting chopper because of dragging
-		liftingDampen = 0.95; // velocity dampening effect on chopper whilst lifting without obstruction			
+		liftingDampen = 0.95; // velocity dampening effect on chopper whilst lifting without obstruction
 	}
 	else {
 		if(({_unitType == _x} count heavy) > 0) then {
