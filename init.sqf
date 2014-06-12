@@ -343,15 +343,19 @@ smRewards =
 [
 	["a TO-199 Neophron", "O_Plane_CAS_02_F"],
 	["a A-164 Wipeout", "B_Plane_CAS_01_F"],
-	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
 	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
-	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
-	["a PO-30 Orca", "O_Heli_Light_02_F"],
-	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
 	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],
-	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
-	["an MQ4A Greyhawk", "B_UAV_02_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
+	["a PO-30 Orca", "O_Heli_Light_02_F"],
+	["an MQ4A Greyhawk", "B_UAV_02_F"],
+	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
+	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
+	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
+	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
+	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
+	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
+	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
+	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
 	["an M2A1 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"]
 ];
 
