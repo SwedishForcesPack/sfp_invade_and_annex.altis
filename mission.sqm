@@ -103,7 +103,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="co45 AW Invade & Annex -ALTIS- 2.67a";
+		briefingName="co45 AW Invade & Annex -ALTIS- 2.67b";
 		resistanceWest=0;
 		resistanceEast=1;
 		timeOfChanges=28800;
@@ -3589,7 +3589,7 @@ class Mission
 	};
 	class Sensors
 	{
-		items=15;
+		items=13;
 		class Item0
 		{
 			position[]={15972.207,3.5464966,16012.277};
@@ -3795,40 +3795,6 @@ class Mission
 			interruptable=1;
 			age="UNKNOWN";
 			expActiv="handle = [(thisList select 0)] execVM ""arrival.sqf"";";
-			class Effects
-			{
-			};
-		};
-		class Item13
-		{
-			position[]={14630.262,17.91,16793.955};
-			a=5;
-			b=5;
-			angle=-226.313;
-			rectangular=1;
-			activationBy="WEST";
-			repeating=1;
-			interruptable=1;
-			age="UNKNOWN";
-			expActiv="mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_7B_move"", 1]; mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_7A_move"", 1]";
-			expDesactiv="mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_7B_move"", 0]; mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_7A_move"", 0];";
-			class Effects
-			{
-			};
-		};
-		class Item14
-		{
-			position[]={14604.462,17.91,16816.045};
-			a=7;
-			b=5;
-			angle=-134.98599;
-			rectangular=1;
-			activationBy="WEST";
-			repeating=1;
-			interruptable=1;
-			age="UNKNOWN";
-			expActiv="mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_8B_move"", 1]; mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_8A_move"", 1]";
-			expDesactiv="mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_8B_move"", 0]; mydoor = position terminal1 nearestObject 492044; mydoor animate [""Door_8A_move"", 0];";
 			class Effects
 			{
 			};
