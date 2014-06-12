@@ -1,5 +1,3 @@
-_fastRopable = [];
-
 // ghosthawk
 _ghosthawk = ["B_Heli_Transport_01_camo_F","B_Heli_Transport_01_F"];
 
@@ -49,7 +47,7 @@ if(_type in _strider) then {
 	_unit setObjectTexture [1,'\A3\data_f\vehicles\turret_co.paa']; 
 };
 
-if(_type in _wasp) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\Skins\heli_light_01_ext_wasp_co.paa']};
+if(_type in _wasp) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\Skins\heli_light_01_ext_elliptical_co.paa']};
 
 if(_type in _VASable) then { _unit addAction["<t color='#ff1111'>Mobile Ammo Box</t>", "VAS\open.sqf"]; };
 

@@ -255,7 +255,6 @@ _null = [] execVM "scripts\pilotCheck.sqf"; 							// pilots only
 _null = [] execVM "scripts\grenadeStop.sqf"; 							// spawn protection
 _null = [] execVM "scripts\jump.sqf";									// jump action
 _null = [] execVM "misc\briefing.sqf";									// diary tabs
-_null = [] execVM "vehicle\fastrope\zlt_fastrope.sqf";					// heli rope	
 _null = [] execVM "misc\playerMarkers.sqf";								// blufor tracker
 call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf";		// revive
 tawvd_disablenone = true;												// no-grass disabled

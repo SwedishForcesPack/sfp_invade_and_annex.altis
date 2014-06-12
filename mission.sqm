@@ -73,7 +73,7 @@ class Mission
 		"A3_Modules_F",
 		"A3_Structures_F_EPB_Civ_Camping",
 		"A3_Structures_F_Civ_Garbage",
-		"A3_Structures_F_Ind_AirPort",
+		"A3_Structures_F_Ind_AirPort"
 	};
 	addOnsAuto[]=
 	{
@@ -134,7 +134,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-45 AW Invade & Annex 2.73C";
+		briefingName="Co-45 AW Invade & Annex 2.73D";
 		overviewText="Quiksilver, Razgriz33 and David Edit";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -3313,7 +3313,7 @@ class Mission
 			vehicle="B_Heli_Light_01_F";
 			skill=0.60000002;
 			text="LB_1";
-			init="_m = [this,60,300] execVM ""vehicle\monitor.sqf""; this setObjectTexture [0, 'A3\Air_F\Heli_Light_01\Data\Skins\heli_light_01_ext_wasp_co.paa'];";
+			init="_m = [this,60,300] execVM ""vehicle\monitor.sqf"";";
 		};
 		class Item124
 		{
