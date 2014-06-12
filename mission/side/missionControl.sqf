@@ -56,7 +56,6 @@ while { true } do {
 		sleep _delay;
 		
 		SM_SWITCH = true; publicVariable "SM_SWITCH";
-		hqSideChat = "Side objective available"; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 	};
 	_loopTimeout;
 };

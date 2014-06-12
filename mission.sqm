@@ -127,7 +127,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-45 AW Invade & Annex 2.76b";
+		briefingName="Co-45 AW Invade & Annex 2.76c";
 		overviewText="Version 2.76";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -996,7 +996,6 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="uavOperator";
-					init="(group this) setGroupId [""UAV - Deathstar""];";
 					description="UAV Operator - Deathstar";
 				};
 			};
