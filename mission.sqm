@@ -127,7 +127,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-45 AW Invade & Annex 2.75e";
+		briefingName="Co-45 AW Invade & Annex 2.75g";
 		overviewText="Version 2.75.28";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -2170,7 +2170,7 @@ class Mission
 		};
 		class Item18
 		{
-			position[]={14615.103,17.91,16774.197};
+			position[]={14630.271,17.91,16765.922};
 			azimut=315;
 			id=103;
 			side="EMPTY";
