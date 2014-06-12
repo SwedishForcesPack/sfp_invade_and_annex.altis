@@ -367,9 +367,6 @@ smMarkerList =
 _null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
-// AI retake AO start
-[]execVM "eos\OpenMe.sqf";
-
 // Urban Missions
 if (PARAMS_UrbanMissions == 1) then { _null = [2700] execVM "sm\sideMission_Init.sqf"; };
 
