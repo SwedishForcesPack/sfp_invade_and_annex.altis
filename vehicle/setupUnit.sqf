@@ -9,6 +9,9 @@ _strider = ["I_MRAP_03_F","I_MRAP_03_hmg_F","I_MRAP_03_gmg_F"];
 // black vehicles
 _blackVehicles = ["B_Heli_Light_01_F","B_Heli_Light_01_armed_F"];
 
+// The wasp
+_wasp = ["B_Heli_Light_01_F"];
+
 // all Helicopters are slingable with the following exceptions
 _slingable = [];
 _notSlingable = ["B_Heli_Light_01_armed_F", "B_Heli_Attack_01_F"];
@@ -45,11 +48,9 @@ if(_type in _strider) then {
 	_unit setObjectTexture [0,'\A3\soft_f_beta\mrap_03\data\mrap_03_ext_co.paa'];
 	_unit setObjectTexture [1,'\A3\data_f\vehicles\turret_co.paa']; 
 };
-	
-if(_type in _lightHeliTexturable) then {_unit setObjectTexture [0,_lightHeliTexture]};
+
+if(_type in _wasp) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\Skins\heli_light_01_ext_wasp_co.paa']};
 
 if(_type in _VASable) then { _unit addAction["<t color='#ff1111'>Mobile Ammo Box</t>", "VAS\open.sqf"]; };
 
 _unit addAction ["<t color='#3f3fff'>Clear Inventory</t>","vehicle\clear\clear.sqf",[],-97,false];
-
-[_unit] execVM "scripts\aw_markerFollow.sqf";
