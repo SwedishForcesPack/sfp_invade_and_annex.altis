@@ -7,7 +7,7 @@
  #+# #+#           #+#   #+#           #+#   #+#
 ### ###             ### ###             ### ###
 
-| AHOY WORLD | ARMA 3 ALPHA | STRATIS DOMI VER 2.7 | EDITED
+| AHOY WORLD | ARMA 3 | ALTIS 2.7 | EDITED
 
 Creating working missions of this complexity from
 scratch is difficult and time consuming, please
@@ -25,7 +25,6 @@ Contact Quiksilver or chucky for information. ts3.allfps.com.au:9992. www.allFPS
 
 
 #include "spectator\spectating.hpp"     	// Kegetys Spectator Script
-#include "DOM_squad\SquadManagement.hpp"  	// Xeno squad management
 #include "VAS\menu.hpp" 			// VAS
 #include "taw_vd\dialog.hpp" 			// TAW View Distance
 #include "misc\common.hpp"  			// vehicle crew hud

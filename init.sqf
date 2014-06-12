@@ -247,7 +247,7 @@ enableSentences false;
 /* =============================================== */
 
 [] execvm "scripts\crew.sqf"; 											// vehicle HUD
-_null = [] execVM "DOM_squad\init.sqf"; 								// group manager
+_null = [] execVM "scripts\group_manager.sqf"; 								// group manager
 _null = [] execVM "scripts\restrictions.sqf"; 							// gear restrictions
 _null = [] execVM "scripts\pilotCheck.sqf"; 							// pilots only
 _null = [] execVM "scripts\grenadeStop.sqf"; 							// spawn protection

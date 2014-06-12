@@ -127,7 +127,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-40 AW Invade & Annex 2.72d";
+		briefingName="Co-40 AW Invade & Annex 2.72e";
 		overviewText="Quiksilver + Razgriz33 Edit";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -1830,7 +1830,7 @@ class Mission
 		class Item55
 		{
 			position[]={14588.41,17.91,16776.012};
-			azimut=128.0972;
+			azimut=128.097;
 			id=122;
 			side="EMPTY";
 			vehicle="B_supplyCrate_F";
