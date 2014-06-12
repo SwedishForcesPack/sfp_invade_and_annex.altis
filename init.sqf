@@ -7,7 +7,7 @@
  #+# #+#           #+#   #+#           #+#   #+#
 ### ###             ### ###             ### ###
 
-| AHOY WORLD | ARMA 3 | ALTIS ANNEX 2.71 | QUIKSILVER EDITED |
+| AHOY WORLD | ARMA 3 | ALTIS ANNEX 2.72 | QUIKSILVER EDITED |
 
 Creating working missions of this complexity from
 scratch is difficult and time consuming, please
@@ -348,17 +348,10 @@ smRewards =
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["a PO-30 Orca", "O_Heli_Light_02_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
-	["a Strider HMG", "I_MRAP_03_hmg_F"],
-	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],
-	["an A-143 Buzzard (CAS)", "I_Plane_Fighter_03_CAS_F"],
-	["an M2A1 Slammer", "B_MBT_01_cannon_F"],
+	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],,
 	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
-	["an Offroad (Armed)", "B_G_Offroad_01_armed_F"],
 	["an MQ4A Greyhawk", "B_UAV_02_F"],
-	["an M2A1 Slammer", "B_MBT_01_cannon_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
-	["a WY-55 Hellcat", "I_Heli_light_03_F"],
-	["a T-100 Varsuk", "O_MBT_02_cannon_F"],
 	["an M2A1 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"]
 ];
 
@@ -928,6 +921,9 @@ _pos = getMarkerPos (_this select 0);
 
 	_enemiesArray
 };
+
+//Set time of day
+skipTime PARAMS_TimeOfDay;
 
 //Begin generating side missions
 if (PARAMS_SideMissions == 1) then { _null = [] execVM "sm\sideMissions.sqf"; };

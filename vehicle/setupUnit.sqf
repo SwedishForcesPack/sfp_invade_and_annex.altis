@@ -51,3 +51,5 @@ if(_type in _lightHeliTexturable) then {_unit setObjectTexture [0,_lightHeliText
 if(_type in _VASable) then { _unit addAction["<t color='#ff1111'>Mobile Ammo Box</t>", "VAS\open.sqf"]; };
 
 _unit addAction ["<t color='#3f3fff'>Clear Inventory</t>","vehicle\clear\clear.sqf",[],-97,false];
+
+[_unit] execVM "scripts\aw_markerFollow.sqf";
