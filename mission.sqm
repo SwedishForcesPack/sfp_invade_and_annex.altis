@@ -112,7 +112,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-40 AW Invade & Annex 2.71e";
+		briefingName="Co-40 AW Invade & Annex 2.71f";
 		overviewText="Quiksilver + Razgriz33 Edit";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -920,7 +920,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					init="(group this) setGroupId [""TV""]; this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Vortex Pilot (MUST BE ON TS TO FLY!)";
+					description="Vortex Pilot (Recommended join TS: ts.ahoyworld.co.uk)";
 				};
 				class Item1
 				{
@@ -934,7 +934,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Vortex Pilot (MUST BE ON TS TO FLY!)";
+					description="Vortex Pilot (Recommended join TS: ts.ahoyworld.co.uk)";
 				};
 				class Item2
 				{
@@ -948,7 +948,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Vortex Pilot (MUST BE ON TS TO FLY!)";
+					description="Vortex Pilot (Recommended join TS: ts.ahoyworld.co.uk)";
 				};
 				class Item3
 				{
@@ -962,7 +962,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					init="this addEventHandler [""respawn"", {_this execVM ""admin_uid.sqf""}];";
-					description="Vortex Pilot (MUST BE ON TS TO FLY!)";
+					description="Vortex Pilot (Recommended join TS: ts.ahoyworld.co.uk)";
 				};
 			};
 		};
@@ -4599,15 +4599,15 @@ class Mission
 		{
 			position[]={2478.2695,-0.06651964,27510.965};
 			name="ts";
-			text="Teamspeak: ts3.allfps.com.au:9992";
+			text="Teamspeak: ts.ahoyworld.co.uk";
 			type="mil_box";
 			colorName="ColorRed";
 		};
 		class Item94
 		{
 			position[]={2474.2029,-185.97,28509.059};
-			name="allfps2";
-			text="www.allFPS.com.au";
+			name="aw2";
+			text="www.AhoyWorld.co.uk";
 			type="mil_box";
 			colorName="ColorRed";
 		};
@@ -4791,7 +4791,7 @@ class Mission
 		class Item116
 		{
 			position[]={2481.0732,-0.086317524,29480.646};
-			name="allfps";
+			name="aw1";
 			text="Join us on our new website and TS!";
 			type="mil_box";
 			colorName="ColorRed";

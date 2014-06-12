@@ -500,7 +500,7 @@ class RscTitles
 onLoadName = "Invade & Annex 2.71";
 author = Rarek [AhoyWorld] - allFPS + Ahoy Edit;
 loadScreen = "signs\loading.jpg";
-OnLoadMission = "Welcome back to the home of Invade and Annex...Big thanks to www.allFPS.com.au for their help developing this further. join us on TeamSpeak at ts.ahoyworld.co.uk:9987 ";
+OnLoadMission = "Welcome back to the home of Invade and Annex ... Join us on TeamSpeak at ts.ahoyworld.co.uk:9987 ";
 
 disabledAI = 1;
 Respawn = 3;

@@ -42,16 +42,16 @@ player createDiaryRecord ["mods",
 <br />- CBA - Required to run the below mods.
 		http://www.armaholic.com/page.php?id=18768<br /><br />
 		
-<br />- JSRS 2.0 - Enhanced sounds and audio.
+<br />- JSRS (2.0 & 2.1) - Enhanced sounds and audio.
 		http://www.armaholic.com/page.php?id=22150<br /><br />
 		
-<br />- [currently disabled] Blastcore R3 - Enhanced visuals, including explosions.
+<br />- Blastcore R3 - Enhanced visuals, including explosions.
 		http://www.armaholic.com/page.php?id=23899<br /><br />
 		
 <br />- ShackTac Fireteam HUD - Situational awareness HUD
 		http://www.armaholic.com/page.php?id=9936<br /><br />
 
-<br />- VTS Weapon resting - Simulates 'bipod' and weapon resting.
+<br />- VTS Weapon resting (v04) - Simulates 'bipod' and weapon resting.
 		http://www.armaholic.com/page.php?id=20817
 "
 ]];
@@ -62,16 +62,15 @@ player createDiaryRecord ["mods",
 "
 <br /> Mods currently running on server (subject to change without notice):<br /><br />
 
-<br />- FFIS v1.25 - Fire-Fight Improvement System
-		http://www.armaholic.com/page.php?id=22096
+<br />- Coming soon!
 "
 ]];
 
 player createDiaryRecord ["teamspeak",
 [
-"All FPS",
+"Ahoy World",
 "
-<br /> Address: ts3.allfps.com.au:9992
+<br /> Address: ts3.ahoyworld.co.uk
 <br />
 <br /> Visitors and guests welcome!
 "
@@ -209,7 +208,6 @@ player createDiaryRecord ["changelog",
 "
 <br />- [UPDATED] EOS v1.97.2. (Defend sequence).
 <br />- [UPDATED] Vehicle hud (tweaked by QS).
-<br />- [ADDED] FOB Gori, FOB Kali, FOB Delfinaki. Currently unmarked and not operational.
 <br />- [ADDED] 
 <br />- [CHANGED] AO Defend sequence, slightly. Attempt at increasing enemy aggression.
 <br />- [REMOVED] Most easter eggs.
@@ -218,7 +216,6 @@ player createDiaryRecord ["changelog",
 <br />- [REMOVED] Personal UAV.
 <br />- [FIXED] All UI errors.
 <br />- [FIXED] 
-<br />- [Behind the scenes] Prepping for release of v2.80 build. 
 "
 ]];
 
@@ -236,7 +233,6 @@ player createDiaryRecord ["changelog",
 <br />- [FIXED] Some side mission errors.
 <br />- [FIXED] AO unit spawn problems.
 <br />- [FIXED] Enemy snipers smarter.
-<br />- [Behind the scenes] Prepare for Escalation!
 "
 ]];
 
@@ -252,7 +248,6 @@ player createDiaryRecord ["changelog",
 <br />- [REMOVED] More old code.
 <br />- [FIXED] Enemy CAS spawn limit.
 <br />- [FIXED]
-<br />- [Behind the scenes] Prepare for Escalation!
 "
 ]];
 
@@ -292,8 +287,6 @@ player createDiaryRecord ["credits",
 		Fast rope<br />
 		- Zealot<br /><br />
 		Map markers<br />
-		- aeroson<br /><br />
-		Weather<br />
-		- code34
+		- aeroson
 "
 ]];
