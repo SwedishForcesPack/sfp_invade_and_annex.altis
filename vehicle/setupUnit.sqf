@@ -7,7 +7,7 @@ _ghosthawk = ["B_Heli_Transport_01_camo_F","B_Heli_Transport_01_F"];
 _strider = ["I_MRAP_03_F","I_MRAP_03_hmg_F","I_MRAP_03_gmg_F"];
 
 // black vehicles
-_blackVehicles = ["B_Heli_Light_01_F","B_Heli_Light_01_armed_F"];
+_blackVehicles = ["B_Heli_Light_01_armed_F"];
 
 // The wasp
 _wasp = ["B_Heli_Light_01_F"];

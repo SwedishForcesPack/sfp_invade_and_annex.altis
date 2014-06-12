@@ -66,7 +66,9 @@ class Mission
 		"A3_Weapons_F_ItemHolders",
 		"a3_weapons_f",
 		"A3_Structures_F_EPA_Items_Medical",
-		"A3_Structures_F_EPA_Items_Tools"
+		"A3_Structures_F_EPA_Items_Tools",
+		"A3_Modules_F_Multiplayer",
+		"A3_Weapons_F_NATO"
 	};
 	addOnsAuto[]=
 	{
@@ -125,7 +127,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-40 AW Invade & Annex 2.72c";
+		briefingName="Co-40 AW Invade & Annex 2.72d";
 		overviewText="Quiksilver + Razgriz33 Edit";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -1218,7 +1220,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=261;
+		items=263;
 		class Item0
 		{
 			position[]={14566.157,17.91,16836.326};
@@ -4091,7 +4093,27 @@ class Mission
 			side="EMPTY";
 			vehicle="Land_Billboard_F";
 			skill=0.60000002;
-			init="this setObjectTexture [0, ""signs\MEDEVACSIGN.paa""]; ";
+			init="this setObjectTexture [0, ""signs\MEDEVACSIGN.paa""]; this allowDamage false;";
+		};
+		class Item261
+		{
+			position[]={14658.656,17.91,16795.766};
+			azimut=80.056396;
+			offsetY=-10;
+			id=328;
+			side="EMPTY";
+			vehicle="RoadCone_L_F";
+			skill=0.60000002;
+		};
+		class Item262
+		{
+			position[]={14664.925,17.91,16790.137};
+			azimut=80.056396;
+			offsetY=-10;
+			id=329;
+			side="EMPTY";
+			vehicle="RoadCone_L_F";
+			skill=0.60000002;
 		};
 	};
 	class Markers
