@@ -1,66 +1,67 @@
 //FreeLookMovementHandler = 
 //{
-	private ["_dX", "_dY"];
+	private ["_dX", "_dY", "_mouseScroll", "_zfactor"];
 
-	//if ( KEGsRunAbort ) then {
-	//	diag_log format ["freelook movement start: %1", KEGs_target];
-	//};
-
-	//_debugPlayer=objNull;
-	//if ( f_var_debugMode == 1 ) then {
-	//	_debugPlayer=player;
-	//};
-	
-	// ----------------------------------------------------------------------------------------------------------------------------------------------------
-	// Process mouse movement
 	mouseDeltaX = mouseLastX - (KEGsMouseCoord select 0);
 	mouseDeltaY = mouseLastY - (KEGsMouseCoord select 1);	
+			
+	_mouseScroll = 0;
+	_zfactor = 0.1;
 	
-	if(!(KEGsMouseButtons select 0) and (KEGsMouseButtons select 1)) then {
-		// Right mouse button - Adjust position
-		fangle = fangle - (mouseDeltaX*360);
-		fangleY=fangleY + (mouseDeltaY*180);
-		if(fangleY > 89) then {fangleY = 89};
-		if(fangleY < -89) then {fangleY = -89};
-//player sideChat format ["Angle: %1 - %2", round fangle, round fangleY];		
-	};
-	if((KEGsMouseButtons select 0) and !(KEGsMouseButtons select 1)) then {
-		// Left mouse button - Adjust distance
-		sdistance = sdistance - (mouseDeltaY*10);
-		if(sdistance > maxDistance) then {sdistance = maxDistance};
-		if(sdistance < -maxDistance) then {sdistance = -maxDistance};		
-	};	
-	if(KEGsMouseScroll != 0) then {
-		// Mouse scroll wheel - Adjust distance
-		sdistance = sdistance - (KEGsMouseScroll*0.11);		
-		KEGsMouseScroll = KEGsMouseScroll * 0.75;
-		if(sdistance > maxDistance) then {sdistance = maxDistance};
-		if(sdistance < -maxDistance) then {sdistance = -maxDistance};						
-	};
-	if((KEGsMouseButtons select 0) and (KEGsMouseButtons select 1)) then {
-		// Both mousebuttons - Adjust zoom
-		szoom = szoom - (mouseDeltaY*3);		
-		if(szoom > minZoom) then {szoom = minZoom};
-		if(szoom < maxZoom) then {szoom = maxZoom};
+	// ------------------------------------------------------------------------------------------------------
+	// Process mouse movement
+	
+	if !(KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
+	{
+		if ( count _this > 0 ) then { _mouseScroll = _this select 0; };
+	
+		if ( (KEGsMouseButtons select 1) && { !(KEGsMouseButtons select 0) } ) then 
+		{
+			// Right mouse button - Adjust position
+			fangle = fangle - (mouseDeltaX*360);
+			fangleY = (fangleY + (mouseDeltaY*180)) min 89 max -89;
+		};
 
-	};
+		// Mouse scroll wheel - Adjust distance Lock-on mode
+		if ( (_mouseScroll != 0) && { (KEGs_cameraNames select KEGs_cameraIdx == "Lock-on") } ) then 
+		{
+			// Maximum view distance = 100 m
+			sdistance = (sdistance - (_mouseScroll*sdistance/10)) max 0 min 75;
+		};
 		
-	// ----------------------------------------------------------------------------------------------------------------------------------------------------			
-	// Get target properties
-	if (KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
+		// Mouse scroll wheel - Adjust distance Chase mode
+		if ( (_mouseScroll != 0) && { (KEGs_cameraNames select KEGs_cameraIdx == "Chase") } ) then 
+		{
+			// Maximum view distance = -50 m / 50 m 
+			if ( abs(sdistance) > 3 ) then { _zfactor = abs(sdistance)/10 };
+			sdistance = (sdistance - (_mouseScroll*_zfactor)) max -50 min 50;
+		};
+		
+		// Both mousebuttons + ALT = Adjust zoom		
+		if( KEGs_ALT_PRESS && { (KEGsMouseButtons select 0) } && { (KEGsMouseButtons select 1) } ) then 
+		{
+			// Maximum zoom level = 0.05
+			// Minimum zoom level = 2;
+			szoom = (szoom - (mouseDeltaY*3)) min 2 max 0.05;
+		};
+		
+		// Both mousebuttons + ALT + CTRL = Reset zoom
+		if( KEGs_CTRL_PRESS && { KEGs_ALT_PRESS } && { (KEGsMouseButtons select 0) } && { (KEGsMouseButtons select 1) } ) then 
+		{
+			szoom = 1;
+		};
+	}
+	// ------------------------------------------------------------------------------------------------------
+	//	if (KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
+	else
 	{
 		if(!(KEGsMouseButtons select 0) and (KEGsMouseButtons select 1)) then 
 		{
 			_dX = 0;
 			_dY = 0;
 			
-			//player globalChat format ["[%1] - [%2]", mouseDeltaX,(KEGsMouseCoord select 0)];
-			
-			 if ( mouseDeltaX > 0 ) then {  _dX = mouseDeltaX * -100; };
-			 if ( mouseDeltaX < 0 ) then {  _dX = mouseDeltaX * -100; };
-			 
-			 if ( mouseDeltaY > 0 ) then {  _dY = mouseDeltaY * 50; };
-			 if ( mouseDeltaY < 0 ) then {  _dY = mouseDeltaY * 50; };
+			 if !( mouseDeltaX == 0 ) then {  _dX = mouseDeltaX * -100; };
+			 if !( mouseDeltaY == 0 ) then {  _dY = mouseDeltaY * 50; };
 	
 			_dX = _dX max -180 min +180;
 			
@@ -69,12 +70,10 @@
 			KEGscam_free setdir (direction KEGscam_free + _dX);
 			[KEGscam_free,KEGscam_free_pitch,0] call bis_fnc_setpitchbank;
 		};
-		
 	};
-				
-	//VM_CommitDelay;
+
 	mouseLastX = KEGsMouseCoord select 0;
-	mouseLastY = KEGsMouseCoord select 1;
+	mouseLastY = KEGsMouseCoord select 1;	
 //};
 
 

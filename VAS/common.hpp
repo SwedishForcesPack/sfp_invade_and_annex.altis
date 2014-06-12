@@ -296,25 +296,6 @@ class VAS_RscShortcutButton
 	};
 };
 
-class VAS_ScrollBar
-{
-	color[] = {1,1,1,0.6};
-	colorActive[] = {1,1,1,1};
-	colorDisabled[] = {1,1,1,0.3};
-	thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
-	arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
-	arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
-	border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
-	shadow = 0;
-	scrollSpeed = 0.06;
-	width = 0;
-	height = 0;
-	autoScrollEnabled = 0;
-	autoScrollSpeed = -1;
-	autoScrollDelay = 5;
-	autoScrollRewind = 0;
-};
-
 class VAS_RscButtonMenu : VAS_RscShortcutButton 
 {
 	idc = -1;
@@ -474,8 +455,7 @@ class VAS_RscProgress
 	colorBar[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])","(profilenamespace getvariable ['GUI_BCG_RGB_A',0.8])"};
 };
 
-class VAS_RscListBox 
-{
+class VAS_RscListBox {
 	style = 16;
 	idc = -1;
 	type = 5;
@@ -505,10 +485,14 @@ class VAS_RscListBox
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 	
-	class ListScrollBar: VAS_ScrollBar
-	{
-		color[] = {1,1,1,1};
-		autoScrollEnabled = 1;
+	class ListScrollBar {
+		color[] = {1, 1, 1, 0.6};
+		colorActive[] = {1, 1, 1, 1};
+		colorDisabled[] = {1, 1, 1, 0.3};
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 	};
 };
 

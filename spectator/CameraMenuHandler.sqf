@@ -1,4 +1,4 @@
-private ["_Source", "_debugPlayer", "_cName", "_cCamera"];
+private ["_Source", "_debugPlayer", "_cName", "_cCamera", "_KEGs_cs"];
 
 //diag_log format ["camera menu start: %1", KEGs_target];
 
@@ -19,46 +19,57 @@ _cCamera = 55002;
 	// Check for listbox selections
 	if(KEGs_camSelLast != lbCurSel KEGs_cLBCameras) then 
 	{
-		KEGs_cs = lbCurSel KEGs_cLBCameras;
-		if(KEGs_cs == KEGs_cLbSeparator) then {
-			KEGs_cs = KEGs_camSelLast;
+		_KEGs_cs = lbCurSel KEGs_cLBCameras;
+		if(_KEGs_cs == KEGs_cLbSeparator) then {
+			_KEGs_cs = KEGs_camSelLast;
 			//_debugPlayer globalchat "KEGs_cLbSeparator";
 		};
 		
 		// Special for toggling tags
-		if(KEGs_cs == KEGs_cLbToggleTags) then {
+		if(_KEGs_cs == KEGs_cLbToggleTags) then {
 			KEGsTags = !KEGsTags;
-			["ToggleTags", [KEGsTags]] call spectate_events;
-			KEGs_cs = KEGs_camSelLast;
+			//["ToggleTags", [KEGsTags]] call spectate_events;
+			if ( KEGsTags ) then { KEGSTagsScript = [] spawn KEGsShowUnitLocator; };
+			_KEGs_cs = KEGs_camSelLast;
 			//_debugPlayer globalchat "toggle tags";
 		};
 		
 		// Special for toggling awareness ststus tags
-		if(KEGs_cs == KEGs_cLbToggleTagsStat) then {
+		if(_KEGs_cs == KEGs_cLbToggleTagsStat) then {
 			KEGsTagsStat = !KEGsTagsStat;
-			["ToggleTagsStat", [KEGsTagsStat]] call spectate_events;
-			KEGs_cs = KEGs_camSelLast;
+			//["ToggleTagsStat", [KEGsTagsStat]] call spectate_events;
+			if ( KEGsTagsStat ) then { KEGSTagsStatScript = [] spawn KEGsShowCombatMode; };
+			_KEGs_cs = KEGs_camSelLast;
 			//_debugPlayer globalchat "toggle tags";
 		};						
 		
 		// Special for toggling AI filter
-		if(KEGs_cs == KEGs_cLbToggleAiFilter) then {
+		if(_KEGs_cs == KEGs_cLbToggleAiFilter) then {
 			KEGsAIfilter = !KEGsAIfilter;
-			KEGs_cs = KEGs_camSelLast;				
+			_KEGs_cs = KEGs_camSelLast;				
 			KEGsNeedUpdateLB = true; // Request listbox update
 			//_debugPlayer globalchat "toggle AI filter";
 		};
 		
 		// Special for toggling Unknown (Dead) Players
-		if(KEGs_cs == KEGs_cLbToggleDeadFilter) then 
+		if(_KEGs_cs == KEGs_cLbToggleDeadFilter) then 
 		{
 			KEGsDeadFilter = !KEGsDeadFilter;
-			KEGs_cs = KEGs_camSelLast;				
+			_KEGs_cs = KEGs_camSelLast;				
 			KEGsNeedUpdateLB = true; // Request listbox update
 //			_debugPlayer globalchat "toggle Unknown (Dead) filter";
 		};
 		
-		KEGs_cameraIdx = KEGs_cs;
+		// Special for toggling Unknown (Dead) Players
+		if(_KEGs_cs == KEGs_cLbToggleCombatActionFilter) then 
+		{
+			KEGsCombatActionFilter = !KEGsCombatActionFilter;
+			_KEGs_cs = KEGs_camSelLast;				
+			KEGsNeedUpdateLB = true; // Request listbox update
+//			_debugPlayer globalchat "toggle Unknown (Dead) filter";
+		};
+		
+		KEGs_cameraIdx = _KEGs_cs;
 		KEGs_camSelLast = lbCurSel KEGs_cLBCameras; //immediately capture the last selected camera index
 		//_debugPlayer globalchat "Reset KEGs_cameraIdx to the New or Current Mode";			
 	};
@@ -71,8 +82,10 @@ _cCamera = 55002;
 	
 	// If not in First Person mode rest camera
 	// If (!(KEGs_cameraIdx == 4) && !(VM_CurrentCameraView in ["INTERNAL","GUNNER"]) ) then { 
-		(KEGs_cameras select KEGs_cameraIdx) cameraEffect["internal", "BACK"];
-		//_debugplayer globalchat format ["Resetting Camera on to %1", KEGs_target];
+	
+		(KEGs_cameras select KEGs_cameraIdx) cameraEffect["internal", "BACK"]; // CHECK IF NEEDED !!!
+	
+	//_debugplayer globalchat format ["Resetting Camera on to %1", KEGs_target];
 	// };
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -89,7 +102,10 @@ _cCamera = 55002;
 
 	if(KEGsDeadFilter) then {lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleDeadFilter, [1, 0.5, 0, 1]]} 
 	else {lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleDeadFilter, [1,1,1,0.33]]};	
-
+	
+	if(KEGsCombatActionFilter) then {lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleCombatActionFilter, [1, 0.5, 0, 1]]} 
+	else {lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleCombatActionFilter, [1,1,1,0.33]]};
+	
 // ----------------------------------------------------------------------------------------------------------------------------------------------------
 /*		if((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) then {
 		// 1st person view

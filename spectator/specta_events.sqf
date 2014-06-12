@@ -5,11 +5,6 @@
 _type = _this select 0;
 _param = _this select 1;
 
-//if ( KEGsRunAbort ) then 
-//{
-//	diag_log format ["event start: %1 - %2 - %3", KEGs_target, _type, _param];
-//};
-
 _cCamera = 55002;
 _cTarget = 55003;
 _cName = 55004;
@@ -28,7 +23,34 @@ _cEventLog = 50016;
 _cDebug = 55100;
 _UI = [_cCamera, _cTarget, _cName, KEGs_cLBCameras, KEGs_cLBTargets, _cCamerasBG, _cTargetsBG, _cBG1, _cBG2, _cTitle, _cHelp];
 
-//player globalChat format ["event: %1", _this];
+KEGs_fnc_camMove2 = 
+{
+	private ["_coef","_zCoef","_dX","_dY","_dZ","_pos","_dir","_camPos"];
+
+	if (KEGs_cameraNames select KEGs_cameraIdx == "Free") then
+	{
+		_dX = _this select 0;
+		_dY = _this select 1;
+		_dZ = _this select 2;
+		
+		//--- Nelson's solution for key lag
+		_coef = 0.1;
+		_zCoef = 0.1;
+		if (KEGs_CTRL_PRESS && { (_dZ == 0) } ) then {_coef = 5; _zCoef = 3; }; //press left ctrl key for turbo speed
+		if (KEGs_ALT_PRESS) then {_coef = 1;  _zCoef = 0.5; }; //press left alt key to increase speed
+
+		_pos = getPosASL KEGscam_free;
+		_dir = (direction KEGscam_free) + _dX * 90;
+		_camPos = [
+			(_pos select 0) + ((sin _dir) * _coef * _dY),
+			(_pos select 1) + ((cos _dir) * _coef * _dY),
+			(_pos select 2) + _dZ * _zCoef * (abs(((getPosATL KEGscam_free) select 2) + 0.001379)/5)
+		];
+		
+		_camPos set [2,(_camPos select 2) max ((getTerrainHeightASL _camPos) + 1)];
+		KEGscam_free setPosASL _camPos;
+	};
+};
 
 switch (_type) do 
 {
@@ -74,7 +96,7 @@ switch (_type) do
 				KEGs_tgtIdx = deathCam find _newCamTarget;
 				
 				KEGs_target = _newCamTarget;
-								
+				
 				KEGs_cxpos = getPos KEGs_target select 0;
 				KEGs_cypos = getPos KEGs_target select 1;
 
@@ -85,7 +107,8 @@ switch (_type) do
 				
 				// adjust target name bottom left
 				[false] spawn PlayerMenuHandler;
-				
+
+				KEGs_autoTarget = KEGs_target;				
 				//player sideChat format ["new target '%1' - curr target '%2' - ('%3' - '%4')", _newCamTarget, KEGs_target, KEGs_tgtIdx, deathCam select KEGs_tgtIdx];			
 				
 				if(ctrlVisible _cMapFull) then 
@@ -107,32 +130,38 @@ switch (_type) do
 		// "WSAD keys: camera movement in dropped mode";
 		switch(_key) do 
 		{		
-			case 32: { 
-				// D
-				KEGsCamRight = true;
+			case 32: 
+			{ 
+				// D = right
+				[1,1,0] call KEGs_fnc_camMove2;
 			};	
-			case 30: { 
-				//A
-				KEGsCamLeft = true;
+			case 30: 
+			{ 
+				//A = left
+				[-1,1,0] call KEGs_fnc_camMove2;
 			};
-			case 17: { 
-				// W
-				KEGsCamForward = true;
+			case 17: 
+			{ 
+				// W = forward
+				[0,1,0] call KEGs_fnc_camMove2;
 			};	
-			case 31: { 
-				// S
-				KEGsCamBack = true;
+			case 31: 
+			{ 
+				// S = backward
+				[0,-1,0] call KEGs_fnc_camMove2;
 			};
-			case 16: { 
-				// Q
-				KEGsCamUp = true;
+			case 16: 
+			{ 
+				// Q = up
+				[0,0,1] call KEGs_fnc_camMove2;
 			};
-			case 44: { 
-				// Z
-				KEGsCamDown = true;
-			};
-			
-			case 35: { 
+			case 44: 
+			{ 
+				// Z = down
+				[0,0,-1] call KEGs_fnc_camMove2;
+			};			
+			case 35: 
+			{ 
 				// H
 				if (NORRN_noMarkersUpdates) then 
 				{
@@ -143,11 +172,13 @@ switch (_type) do
 					titleCut ["\n\n\n\n\n\n\n\n\nMap Marker Updates Disabled","PLAIN", 0.2];
 				};
 			};
-			case 56: { 
+			case 56: 
+			{ 
 				//ALT
 				KEGs_ALT_PRESS = true;
 			};
-			case 29: { 
+			case 29: 
+			{ 
 				// CRTL
 				KEGs_CTRL_PRESS = true;
 			};
@@ -165,59 +196,60 @@ switch (_type) do
 				if !(KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
 				{
 					//Next target
-					//KEGs_tgtIdx = (( KEGs_tgtIdx + 1 ) min ( (count deathCam) - 2 ));
 					KEGs_tgtIdx = ( KEGs_tgtIdx + 1 );
 					if ( KEGs_tgtIdx > ((count deathCam) - 2 ) ) then { KEGs_tgtIdx = 0 };
 				
 					KEGs_target = deathCam select KEGs_tgtIdx;
-
+					
+					// Skip dead AI/players if filter has been enabled
+					while { ( KEGsDeadFilter ) && !( alive KEGs_target) } do
+					{
+						KEGs_tgtIdx = ( KEGs_tgtIdx + 1 );
+						if ( KEGs_tgtIdx > ((count deathCam) - 2 ) ) then { KEGs_tgtIdx = 0 };
+						KEGs_target = deathCam select KEGs_tgtIdx;
+					};
+					
 					[false] spawn PlayerMenuHandler;
 					
-					KEGs_cxpos = getPos KEGs_target select 0;
-					KEGs_cypos = getPos KEGs_target select 1;
-					KEGscam_free setPos [KEGs_cxpos, KEGs_cypos, (getPosATL KEGscam_free) select 2];
+					KEGs_autoTarget = KEGs_target;					
+					
+					KEGs_cxpos = getPosATL KEGs_target select 0;
+					KEGs_cypos = getPosATL KEGs_target select 1;
+					KEGscam_free setPosATL [KEGs_cxpos, KEGs_cypos, (getPosATL KEGscam_free) select 2];
 				};
-				KEGsCamRight = false;				
 			};	
 			case 30: {
 				// A
 				if !(KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
 				{
 					 //Previous target
-					//KEGs_tgtIdx = (( KEGs_tgtIdx - 1 ) max 0 );
 					KEGs_tgtIdx = ( KEGs_tgtIdx - 1 );
 					if ( KEGs_tgtIdx < 0 ) then { KEGs_tgtIdx =  ((count deathCam) - 2 ) };
 					
-					KEGs_target = deathCam select KEGs_tgtIdx; 
+					KEGs_target = deathCam select KEGs_tgtIdx;
+					
+					// Skip dead AI/players if filter has been enabled
+					while { ( KEGsDeadFilter ) && !( alive KEGs_target) } do
+					{
+						KEGs_tgtIdx = ( KEGs_tgtIdx - 1 );
+						if ( KEGs_tgtIdx < 0 ) then { KEGs_tgtIdx =  ((count deathCam) - 2 ) };
+						KEGs_target = deathCam select KEGs_tgtIdx;
+					};					
+					
 					[false] spawn PlayerMenuHandler;
 					
-					KEGs_cxpos = getPos KEGs_target select 0;
-					KEGs_cypos = getPos KEGs_target select 1;
-					KEGscam_free setPos [KEGs_cxpos, KEGs_cypos, (getPosATL KEGscam_free) select 2];
+					KEGs_autoTarget = KEGs_target;
+					
+					KEGs_cxpos = getPosATL KEGs_target select 0;
+					KEGs_cypos = getPosATL KEGs_target select 1;
+					KEGscam_free setPosATL [KEGs_cxpos, KEGs_cypos, (getPosATL KEGscam_free) select 2];
 				};
-				KEGsCamLeft = false;
 			};
-			case 17: {
-				// W
-				KEGsCamForward = false;
-			};
-			case 31: { 
-				// S
-				KEGsCamBack = false;
-			};
-			case 16: { 
-				// Q
-				KEGsCamUp = false;
-			};
-			case 44: { 
-				// Z
-				KEGsCamDown = false;
-			};			
+		
 			case 46: {
 				// "C = Next camera";
-				//_debugPlayer sidechat format ["Old KEGs_cameraIdx %1, New KEGs_cameraIdx %2", KEGs_cameraIdx, (KEGs_cameraIdx + 1)];
+
 				KEGs_cameraIdx = KEGs_cameraIdx + 1;
-				//KEGs_cameraIdx = KEGs_cameraIdx % 3;
 				KEGs_cameraIdx = KEGs_cameraIdx % (count KEGs_cameras);
 				["Specta_Events"] call CameraMenuHandler;
 				KEGsCamBack = false;
@@ -231,12 +263,14 @@ switch (_type) do
 				{
 					KEGsTags = !KEGsTags;
 					if(!KEGsTags) then {
-						["ToggleTags", [false]] call spectate_events;
+						//["ToggleTags", [false]] call spectate_events;
+						//if !(scriptDone KEGSTagsScript) then { terminate KEGSTagsScript; };
 						lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTags, [1,1,1,0.33]];
 					}
 					else
 					{
-						["ToggleTags", [true]] call spectate_events;
+						//["ToggleTags", [true]] call spectate_events;
+						KEGSTagsScript = [] spawn KEGsShowUnitLocator;
 						lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTags, [1, 0.5, 0, 1]];
 					};
 				}
@@ -245,12 +279,14 @@ switch (_type) do
 					// Ctrl-T = Toggle Awareness Tags
 					KEGsTagsStat = !KEGsTagsStat;
 					if(!KEGsTagsStat) then {
-						["ToggleTagsStat", [false]] call spectate_events;
+						//["ToggleTagsStat", [false]] call spectate_events;
+						//if !(scriptDone KEGSTagsStatScript) then { terminate KEGSTagsStatScript; };
 						lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTagsStat, [1,1,1,0.33]];
 					}
 					else
 					{
-						["ToggleTagsStat", [true]] call spectate_events;
+						//["ToggleTagsStat", [true]] call spectate_events;
+						KEGSTagsStatScript = [] spawn KEGsShowCombatMode;
 						lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTagsStat, [1, 0.5, 0, 1]];
 					};
 				};
@@ -281,29 +317,35 @@ switch (_type) do
 				};
 			};
 			
-			/*
-			case 57: {
-				// "Space - drop camera or toggle 1stperson/gunner"; _debugPlayer groupchat "Processing SpaceBar Event";
-				if(KEGs_cameras select KEGs_cameraIdx == KEGscam_1stperson) then {
-					KEGs1stGunner = !KEGs1stGunner;
-				} else {
-					KEGsDroppedCamera = !KEGsDroppedCamera;
-					if(KEGsDroppedCamera) then {
-						KEGs_cameraIdx = 0;
-						_debugPlayer groupchat "DropCamera Activated";
-					};
-				};
-				["Specta_Events"] spawn CameraMenuHandler;
-			};
-			*/
-	
 			// "Direct camera change with number keys";
-			case 2: {KEGs_cameraIdx = 0; VM_CurrentCameraView = ""; _debugPlayer globalchat "key 1"; lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]]; _debugPlayer sidechat format ["KEGs_cameraNames %1", KEGs_cameraNames];	 ["Specta_Events"] spawn CameraMenuHandler;};				
-			case 3: {KEGs_cameraIdx = 1; VM_CurrentCameraView = ""; _debugPlayer globalchat "key 2"; lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	["Specta_Events"] spawn CameraMenuHandler;};				
-			case 4: {KEGs_cameraIdx = 2; VM_CurrentCameraView = ""; _debugPlayer globalchat "key 3"; lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	["Specta_Events"] spawn CameraMenuHandler;};				
-			//case 5: {KEGs_cameraIdx = 3; VM_CurrentCameraView = ""; _debugPlayer globalchat "key 4"; lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	["Specta_Events"] spawn CameraMenuHandler;};				
-			//case 6: {KEGs_cameraIdx = 4; VM_CurrentCameraView = ""; _debugPlayer globalchat "key 5";  lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx];  ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]]; ["Specta_Events"] spawn CameraMenuHandler;};
+			case 2: {
+						KEGs_cameraIdx = 0; 
+						VM_CurrentCameraView = ""; 
+						//_debugPlayer globalchat "key 1"; 
+						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
+						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]]; 
+						_debugPlayer sidechat format ["KEGs_cameraNames %1", KEGs_cameraNames];	 
+						["Specta_Events"] spawn CameraMenuHandler;
+					};				
 			
+			case 3: {
+						KEGs_cameraIdx = 1; 
+						VM_CurrentCameraView = ""; 
+						//_debugPlayer globalchat "key 2"; 
+						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
+						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	
+						["Specta_Events"] spawn CameraMenuHandler;
+					};				
+			
+			case 4: {
+						KEGs_cameraIdx = 2; 
+						VM_CurrentCameraView = ""; 
+						//_debugPlayer globalchat "key 3"; 
+						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
+						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	
+						["Specta_Events"] spawn CameraMenuHandler;
+					};				
+		
 			// "Toggle NVG or map text type";
 			case 49: {
 				if(ctrlVisible _cMapFull) then 
@@ -315,8 +357,6 @@ switch (_type) do
 				{
 					KEGs_camera_vision = KEGs_camera_vision + 1;
 					KEGs_camera_vision = KEGs_camera_vision % 4;
-					
-					//diag_log format ["SPECT set NV mode [%1]", KEGs_camera_vision]; 
 					
 					switch (KEGs_camera_vision) do 
 					{
@@ -395,14 +435,13 @@ switch (_type) do
 	};	
 	
 	case "MouseZChanged": 
-	{
-	
+	{	
 		//player globalChat format ["CAMERA: [%1] - [%2]", KEGs_cameraNames select KEGs_cameraIdx, KEGs_cameraIdx];
 	
 		if !(KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
 		{
-			KEGsMouseScroll = KEGsMouseScroll + (_param select 1);
-			[] spawn FreeLookMovementHandler; 
+			//KEGsMouseScroll = KEGsMouseScroll + (_param select 1);
+			[(_param select 1)] spawn FreeLookMovementHandler; 
 		}
 		else
 		{
@@ -511,50 +550,19 @@ switch (_type) do
 	// "Toggle particlesource tags";	
 	case "ToggleTags": 
 	{
-		//private ["_clearKEGsTagSources"];
-		
-		//_clearKEGsTagSources = [];
-		
+	/*
 		_lifeTime = 0.25;
 		_dropPeriod = 0.05;
-		//_size = 0.5;
 		
 		_part = "\a3\data_f\cl_water.p3d";
 		//_part = "\A3\data_f\ParticleEffects\Universal\smoke.p3d";
-		//if(KEGsClientAddonPresent) then {_part = "\KEGspect\tag.p3d"};
-			
-		//player globalChat format ["ToggleTags: [%1] - [%2]", _param, _this];
-		
-		// if current KEGsTarget is player and dies we need to get rid of the Tags, else the client will crash...
-/*
-		if ( KEGsRunAbort ) then 
-		{
-			//diag_log format ["Toggle: %1 - %2 - %3", diag_tickTime, (_param select 0), KEGsTags];
-			{
-				if !( alive (_x select 0)) then 
-				{
-					diag_log format ["Toggle: detach %1", _x select 1];
-					detach (_x select 0);
-					detach (_x select 1);
-					_clearKEGsTagSources set [(count _clearKEGsTagSources), _x];	
-					KEGsTagSources = KEGsTagSources - _clearKEGsTagSources;
-				};
-			} forEach KEGsTagSources;
-		};
-*/	
 		{
 			_u = _x select 0;
 			_s = _x select 1;
 			
 			if ( KEGsTags && { !(isNull _u) } && { (alive _u) } )  then 
 			{
-			
-				//if ( KEGsRunAbort ) then {
-				//	diag_log format ["Toggle: %1 - %2 - %3 - %4", KEGs_target, _u, !(isNull _u), ( !(isNull _u) && { (alive _u ) } )];
-				//};
-				
-				//_size = 1.5 min (1.5* (((vehicle _u) distance _cam)/100));
-				_size = 5 min (5* (getPosATL (KEGs_cameras select KEGs_cameraIdx) select 2)/300) max 0.2;
+				_size = 5 min (5* (getPosATL (KEGs_cameras select KEGs_cameraIdx) select 2)/400) max 0.2;
 				
 				_color = [1,1,1,1];
 				switch ( side _u ) do
@@ -567,7 +575,7 @@ switch (_type) do
 
 				_colorB = [_color select 0, _color select 1, _color select 2, 0];
 
-				_s setParticleParams[_part, "", "billboard", 1, _lifeTime, [0, 0, 2], [0,0,0], 1, 1, 0.784, 0.1, [_size, _size*0.66], [_color, _color, _color, _color, _colorB], [1], 10.0, 0.0, "", "", vehicle _u];
+				_s setParticleParams[_part, "", "billboard", 1, _lifeTime, [0, 0, 2], [0,0,0], 1, 1, 0.784, 0.1, [_size, _size*0.66], [_color, _color, _color, _color, _color], [1], 10.0, 0.0, "", "", vehicle _u];
 				_s setDropInterval _dropPeriod;
 			}		
 			else
@@ -575,66 +583,23 @@ switch (_type) do
 			{
 				if !( isNull _u) then 
 				{
-					//if ( KEGsRunAbort ) then {
-					//	diag_log format ["Toggle OFF: %1 - %2 - %3 - %3", KEGs_target, _u, !(isNull _u), !( (isNull _u) && { !(alive _u) } )];
-					//};
 					_s setDropInterval 0;
-				//}
-				//else
-				//{
-					//diag_log format ["Toggle OFF is Null - detaching: %1 - %2 - %3", KEGs_target, _u, count KEGsTagSources];
-					//deleteVehicle _s;
-					//detach _s;
-					//_clearKEGsTagSources set [(count _clearKEGsTagSources), _x];					
 				};
 			};
 		} foreach KEGsTagSources;
-
-		//KEGsTagSources = KEGsTagSources - _clearKEGsTagSources;
-		//if ( KEGsRunAbort ) then {
-		//	diag_log format ["Toggle OFF is Null after: %1 - %2 - $3", KEGs_target, count KEGsTagSources, _clearKEGsTagSources];
-		//};
-		
-		//if(KEGsTags) then {lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTags, [1, 0.5, 0, 1]]} 
-		//else {lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTags, [1,1,1,0.33]]};	
-		
-		//if ( KEGsRunAbort ) then {
-		//	diag_log format ["Toggle ready"];
-		//};
-				
+		*/
 	};
 	
 	// "Toggle particlesource tags";	
 	case "ToggleTagsStat": 
 	{
-	
-	//player globalChat format ["ToggleTagsStat: [%1] - [%2]", _param, _this];
-	
 		if(_param select 0) then 
 		{
 			// "turn on";
 			{
 				_u = _x select 0;
 				_s = _x select 1;
-				
-
 				[_u, _s] spawn KEGsShowCombatMode;
-			/*
-				_size = 1.5 min (1.5* (((vehicle _u) distance _cam)/100));
-				
-				_color = [1,1,1,1];
-				if(side _u == east) then {_color = [1,0,0,1]};
-				if(side _u == west) then {_color = [0,0,1,1]};
-				if(side _u == resistance) then {_color = [0,1,0,1]};
-				if(alive _u) then {
-					_colorB = [_color select 0, _color select 1, _color select 2, 0];
-	
-					_s setParticleParams[_part, "", "billboard", 1, _lifeTime, [0, 0, 2], [0,0,0], 1, 1, 0.784, 0.1, [_size, _size*0.66], [_color, _color, _color, _color, _colorB], [1], 10.0, 0.0, "", "", vehicle _u];
-					_s setDropInterval _dropPeriod;				
-				} else {
-					_s setDropInterval 0;				
-				};
-			*/
 			} foreach KEGsTagStatSources;
 		}
 		else 
@@ -654,30 +619,7 @@ switch (_type) do
 			} foreach KEGsTagStatSources;
 		};
 
-		//if ( KEGsRunAbort ) then {
-		//	diag_log format ["Toggle status ready"];
-		//};
-		
 	};	
-
-/*	
-	// "Add string to event log";
-	case "EventLogAdd": {
-		_txt = _param select 0;
-		_color = _param select 1;
-		_i = lbAdd[_cEventLog, _txt];
-		lbSetColor[_cEventLog, _i, _color];	
-		lbSetCurSel[_cEventLog, _i];
-	};
-	
-	// "Killed eventhandler, add to log";
-	case "UnitKilled": {		
-		_killed = _param select 0;
-		_killer = _param select 1;
-		_txt = format["%1 (%2) was killed by %3 (%4) (%5m)", _killed, side _killed, _killer, side _killer, _killed distance _killer];
-		["EventLogAdd",[_txt,[1,1,1,1]]] call spectate_events;
-	};
-*/
 
 /*	
 	// "Fired eventhandler, display as marker in map";

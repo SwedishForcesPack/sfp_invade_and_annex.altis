@@ -91,7 +91,7 @@ class KEGsRscListBox {
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 	
-	class ScrollBar {
+	class ListScrollBar {
 		color[] = {1, 1, 1, 0.6};
 		colorActive[] = {1, 1, 1, 1};
 		colorDisabled[] = {1, 1, 1, 0.3};
@@ -506,7 +506,7 @@ class KEGsRscSpectate {
 
 	class controls {
 		class mouseHandler: KEGsRscControlsGroup {
-			class ScrollBar
+			class ListScrollBar
 			{
 				color[] = {1,1,1,0.6};
 				colorActive[] = {1,1,1,1};
@@ -561,7 +561,7 @@ class KEGsRscSpectate {
 			colorBackground[] = {0, 0, 0, 0.7};
 		};
 		class menuCamerasLB : KEGsRscListBox {
-			class ScrollBar
+			class ListScrollBar
 			{
 				color[] = {1,1,1,0.6};
 				colorActive[] = {1,1,1,1};
@@ -597,7 +597,7 @@ class KEGsRscSpectate {
 			colorBackground[] = {0, 0, 0, 0.7};
 		};
 		class menuTargetsLB : KEGsRscListBox {
-			class ScrollBar
+			class ListScrollBar
 			{
 				color[] = {1,1,1,0.6};
 				colorActive[] = {1,1,1,1};
@@ -661,7 +661,7 @@ class KEGsRscSpectate {
 			type = 13;
 			idc = IDC_HELP;
 			x = SafeZoneX + BORDERXSIZE*3;y=SafeZoneY + BORDERSIZE*3; w = SafeZoneW-(2*BORDERXSIZE*3); h = SafeZoneH-(2*BORDERSIZE*2);
-			text = "Kegetys Spectating Script for ArmA 3<br/><br/>Click at the camera/target text at the top to open camera/target menus.<br/>Units on the map can be clicked to set the camera focus to them<br/><br/>Keyboard controls:<br/><br/>A/D - Previous/Next target<br/>1-3 - Direct camera change<br/>N - NV view: Toggle night vision on/off<br/>N - Full map: Toggle marker text off/names/types<br/>T - Toggle unit tags on/off<br/>Crtl-T - Toggle unit combat awareness tags on/off<br/>F - Toggle AI menu filter on/off<br/>H - Toggle Map Markers Updates on/off<br/>M - Toggle map on/full/off<br/>Numpad plus/minus - Increase/decrease full map marker size<br/>W,S,A,D,Q,Z keys - free camera movement<br/>Alt + W,S,A,D,Q,Z keys - increase speed free camera movement<br/>Ctrl + W,S,A,D keys - turbo speed free camera movement<br/>V - increase Viewdistance 4x<br/>Alt - V - increase Viewdistance up to 12km<br/>Tab - Toggle UI on/off<br/>Esc - Exit Spectator mode<br/><br/>Mouse controls:<br/><br/>Mousewheel - zoom in/out of units or map<br/>Alt + Mousewheel - increase speed free camera movement<br/>Ctrl + Mousewheel - turbo speed free camera movement<br/>Right button - Rotate camera (lock-on and free camera mode)<br/>Left button - Move camera<br/>Left and right button - change FOV<br/><br/>Improvement modifications by Dwarden, ViperMaul, ShayGman, and Ollem</br>";			
+			text = "Kegetys Spectating Script for ArmA 3<br/><br/>Click at the camera/target text at the top to open camera/target menus.<br/>Units on the map can be clicked to set the camera focus to them<br/><br/>Keyboard controls:<br/><br/>A/D - Previous/Next target<br/>1-3 - Direct camera change<br/>N - NV view: Toggle night vision/FLIR on/off<br/>N - Full map: Toggle marker text off/names/types<br/>T - Toggle unit tags on/off<br/>Crtl-T - Toggle unit combat awareness tags on/off<br/>F - Toggle AI menu filter on/off<br/>H - Toggle Map Markers Updates on/off<br/>M - Toggle map: minimap/full/off<br/>Numpad plus/minus - Increase/decrease full map marker size<br/>W,S,A,D,Q,Z keys - free camera movement<br/>Alt + W,S,A,D,Q,Z keys - increase speed free camera movement<br/>Ctrl + W,S,A,D keys - turbo speed free camera movement<br/>V - increase Viewdistance 4x<br/>Alt - V - increase Viewdistance up to 12km<br/>Tab - Toggle UI on/off<br/>Esc - Exit Spectator mode<br/><br/>Mouse controls:<br/><br/>Mousewheel - zoom in/out of units or map<br/>Alt + Mousewheel - increase speed free camera movement<br/>Ctrl + Mousewheel - turbo speed free camera movement<br/>Right button - Rotate camera (lock-on and free camera mode)<br/>Left button - Move camera<br/>Left and right button - change FOV<br/><br/>Improvement modifications by Dwarden, ViperMaul, ShayGman, and Ollem</br>";			
 			style = 2;
 			sizeEx = 0.025;
 			size = 0.025;
@@ -669,9 +669,9 @@ class KEGsRscSpectate {
 			color[] = {0.0, 0.0, 0.0, 1.0};
 			font = "LucidaConsoleB";
 			class Attributes{
-				color = "#ffffff";
+				color = "#99FF00";
 				align = "left";
-				shadow = true;
+				shadow = false;
 			};
 		};
 
@@ -762,7 +762,7 @@ class KEGsRscSpectate {
 
 		// Fullscreen event log
 		class mapFullEventLog : KEGsRscListBox {
-			class ScrollBar
+			class ListScrollBar
 			{
 				color[] = {1,1,1,0.6};
 				colorActive[] = {1,1,1,1};

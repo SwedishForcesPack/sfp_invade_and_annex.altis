@@ -1,17 +1,10 @@
-private ["_obj","_caller","_id","_params","_FerDelay","_OtherObj","_PubVar"];
+_actUsed = _this select 1;  // Unit that used the Action (also _this in the addAction command)
+_actID = _this select 2;  // ID of the Action
 
-_obj = _this select 0;               // E.g. ActionBarrel
-_caller = _this select 1;            // E.g. Player
-_id = _this select 2;                // ID of action
-_params = _this select 3;            // Params passed to this script.
+_object = _this select 0;
 
-_OtherObj = sideObj;        // Dummy object to replace this object (object)
-
-_OtherObj setPos (getPos _obj);                                    //Replace object with dummy (so if player JIPs, they don't get to fire the event again; also prevents action from being called mulitple times whilst the wait is running)
-sideObj setVectorUp [0,0,1];
-_obj setPos [-200,-200];                                           //Move object to nether regions
 sleep 1;
-_timeleft = 45;
+_timeleft = 15;
 
 [[hint "Charge placed on Objective. Standby..."],"BIS_fnc_spawn",nil,true] spawn BIS_fnc_MP;
 sleep 0.5;
@@ -21,6 +14,7 @@ if (_timeleft < 1) exitWith{};
   _timeleft = _timeleft -1;
 sleep 1;
 };
-"Bo_GBU12_LGB" createvehicle getpos _OtherObj;
-{_x setdamage 1} foreach crew _OtherObj + [_OtherObj];
+"Bo_Mk82" createvehicle getpos _object;
+{_x setdamage 0} foreach crew _object + [_object];
+SM_COMPLETE=true;publicvariable "SM_COMPLETE";
 

@@ -23,7 +23,7 @@ private ["_damage","_percentage","_veh","_vehType","_fuelLevel"];
 _veh = _this select 0;
 _vehType = getText(configFile>>"CfgVehicles">>typeOf _veh>>"DisplayName");
 
-//if (_veh isKindOf "LandVehicle") exitWith { _veh vehicleChat "This pad is for vehicle repairs only, soldier!"; };
+//if (_veh isKindOf "LandVehicle") exitWith { _veh vehicleChat "This pad is for vehicle service only, soldier!"; };
 
 _fuelLevel = fuel _veh;
 _damage = getDammage _veh;

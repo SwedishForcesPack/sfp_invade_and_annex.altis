@@ -208,6 +208,7 @@ class VAS_Diag {
 			text = "";
 			sizeEx = 0.032;
 			onLBDblClick = "_this spawn VAS_fnc_qRemoveItem;";
+			onLBDrop = "(_this + 1) call VAS_fnc_quickAddDrag";
 			//onLBSelChanged = "[2502] execVM 'gear\selection.sqf'";
 			
 			x = 0.60; y = 0.31;

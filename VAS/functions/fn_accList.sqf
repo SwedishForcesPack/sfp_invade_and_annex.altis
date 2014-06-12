@@ -26,9 +26,7 @@ if(count (_configInfo select 14) > 0) then {
 					_badItems set[count _badItems,(configName _entry)];
 				};
 			} else {
-				if(((configName _entry) in VAS_items) OR !((configName _entry) in VAS_r_items)) then {
-					_items set[count _items,(configName _entry)];
-				};
+				_items set[count _items,(configName _entry)];
 			};
 		};
 
@@ -38,29 +36,15 @@ if(count (_configInfo select 14) > 0) then {
 			{
 				_entry = _parent select _i;
 				if(!((configName _entry) in _badItems)) then {
-					if(((configName _entry) in VAS_items) OR !((configName _entry) in VAS_r_items)) then {
-						_items set[count _items,(configName _entry)];
-					};
+					_items set[count _items,(configName _entry)];
 				};
 			};
 		};
 	} foreach (_configInfo select 14);
 	
-	{
-		if((_x in VAS_items) OR !(_x in VAS_r_items)) then {
-			_items set[count _items,_x];
-		};
-	} foreach (_configInfo select 12);
-		
 	_items = _items + (_configInfo select 12);
 } else {
-	_items = [];
-	{
-		if((_x in VAS_items) OR !(_x in VAS_r_items)) then {
-			_items set[count _items,_x];
-		};
-	} foreach ((_configInfo select 10) + (_configInfo select 11) + (_configInfo select 12));
+	_items = ((_configInfo select 10) + (_configInfo select 11) + (_configInfo select 12));
 };
 
-//Remove attachments that are not suppose to be in it.
 _items;

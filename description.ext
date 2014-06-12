@@ -7,43 +7,29 @@
  #+# #+#           #+#   #+#           #+#   #+#
 ### ###             ### ###             ### ###
 
-| AHOY WORLD | ARMA 3 ALPHA | STRATIS DOMI VER 2.7 |
+| AHOY WORLD | ARMA 3 ALPHA | STRATIS DOMI VER 2.7 | EDITED
 
 Creating working missions of this complexity from
 scratch is difficult and time consuming, please
 credit http://www.ahoyworld.co.uk for creating and
 distibuting this mission when hosting!
 
-This version Invade and Annex was lovingly crafted by
-Jack Williams (Rarek) and altered by Jester for Ahoy World!
+This version of Domination was lovingly crafted by
+Jack Williams (Rarek) for Ahoy World!
+
+Maintained for AhoyWorld by Jester, Razgriz33 and Kamaradski. 
+
+Heavily edited version.
+Contact Quiksilver or chucky for information. ts3.allfps.com.au:9992. www.allFPS.com.au
 */
 
-/* Adds screen when loading. */
-author = Rarek [AW];
-onLoadName = "AW Invade & Annex";
-loadScreen = "awMissionLogo.jpg";
-OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. Maintained by Jester [AW] and Razgriz33 [AW]. To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk";
-Respawn = "BASE";
-RespawnDelay = 15;
-respawnTemplates[] = {"MenuPosition"};
-DisabledAI = true;
-joinUnassigned = false; // auto assign
 
-class Header
-{
-  gameType = COOP;
-  minPlayers = 1;
-  maxPlayers = 45;
-};
-#include "misc\common.hpp"
-// airdrop
-#include "scripts\ATM_airdrop\dialog.hpp"
-
-// Kegetys Spectator Script
-#include "spectator\spectating.hpp"
-
-/* VAS includes */
-#include "VAS\menu.hpp"
+#include "spectator\spectating.hpp"     	// Kegetys Spectator Script
+#include "DOM_squad\SquadManagement.hpp"  	// Xeno squad management
+#include "VAS\menu.hpp" 			// VAS
+#include "taw_vd\dialog.hpp" 			// TAW View Distance
+#include "misc\common.hpp"  			// vehicle crew hud
+#include "=BTC=_revive\=BTC=_respawn.h"		// BTC medic revive system 
 
 class CfgFunctions
 {
@@ -51,13 +37,15 @@ class CfgFunctions
 	#include "taw_vd\CfgFunctions.hpp"
 };
 
-/* View Distance includes */
-#include "taw_vd\dialog.hpp"
+class Header
+{
+  gameType = COOP;
+  minPlayers = 1;
+  maxPlayers = 40;
+};
 
-//group manger
-#include "joinerUI\defines.hpp"
-#include "joinerUI\dialog.hpp"
-
+enableSaving = [false, false];
+disableChannels[]={0};
 
 class Params
 {
@@ -69,84 +57,20 @@ class Params
 		default = 1;
 	};
 
-	class TimeOfDay
-	{
-		title = "Time of Day";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
-		texts[] = {"00:00","01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"};
-		default = 5;
-	};
-
-	class Weather
-	{
-		title = "Starting Weather";
-		values[] = {1,2,3,4};
-		texts[] = {"Clear","Stormy","Cloudy","Foggy"};
-		default = 3;
-	};
-
-		class PlayerMarkers
-	{
-		title = "Player markers on map";
-		values[] = {1,0};
-		texts[] = {"Enabled","Disabled"};
-		default = 1;
-	};
-
-	class Revive
-  {
-    title = "Number of Revives:";
-    values[] = {2000,1000,20,10,7,5};
-    texts[] = {"No Revive","Infinite - Cadet","20 - Easy ","10 - Normal","7  - Hard","5  - Extreme"};
-    default = 1000;
-  };
-
-  class ViewDistanceTaw
-	{
-		title = "Player View Distance Dialog";
-		values[] = {1,0};
-		texts[] = {"Enabled","Disabled"};
-		default = 1;
-	};
-
-	class VehicleRespawnDistance
-	{
-		title = "Distance from players that vehicles won't respawn";
-		values[] = {10,50,100,200,300,400,500,1000,2000,5000,10000};
-		texts[] = {"10m","50m","100m","200m","300m","400m","500m","1km","2km","5km","10km"};
-		default = 300;
-	};
-
-	class PilotsOnly
-	{
-		title = "Can only pilots fly?";
-		values[] = {1,0};
-		texts[] = {"Yes","No"};
-		default = 1;
-	};
-
-		class SpawnProtection
-	{
-		title = "Spawn Protection Zone";
-		values[] = {1,0};
-		texts[] = {"Enabled","Disabled"};
-		default = 1;
-	};
-
 	class EnemyLeftThreshhold
 	{
 		title = "Enemy Left Threshold";
 		values[] = {1,2,3,4,5,6,7,8,9,10};
 		texts[] = {"1","2","3","4","5","6","7","8","9","10"};
-		default = 5;
+		default = 7;
 	};
 
 	class RadioTowerMineFieldChance
 	{
 		title = "Chance for minefield to spawn around Radio Tower?";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10};
+		values[] = {0,1,2,3,4,5,6,7,8,9,11};
 		texts[] = {"0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"};
-		default = 4;
+		default = 5;
 	};
 
 	class SideMissions
@@ -157,12 +81,28 @@ class Params
 		default = 1;
 	};
 
+	class UrbanMissions
+	{
+		title = "Enable Urban Missions?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
 	class PriorityTargets
 	{
 		title = "Enable Priority Targets?";
 		values[] = {1,0};
 		texts[] = {"Enabled","Disabled"};
-		default = 0;
+		default = 1;
+	};
+
+	class AOReinforcementJet
+	{
+		title = "Enable AO Reinforcement Jet?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
 	};
 
 	class PriorityTargetTickTimeMin
@@ -178,7 +118,7 @@ class Params
 		title = "MAXIMUM Time between Priority Target actions";
 		values[] = {30,60,120,180,240,300,600,900};
 		texts[] = {"30 seconds","1 minute","2 minutes","3 minutes","4 minutes","5 minutes","10 minutes","15 minutes"};
-		default = 240;
+		default = 300;
 	};
 
 	class PriorityTargetTickWarning
@@ -194,7 +134,31 @@ class Params
 		title = "Main AO Diameter";
 		values[] = {200,300,400,500,600,700,800,900,1000};
 		texts[] = {"200m","300m","400m","500m","600m","700m","800m","900m","1,000m"};
-		default = 800;
+		default = 1000;
+	};
+
+	class DefendAO
+	{
+		title = "AI Retake AO?";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
+	class ViewDistance
+	{
+		title = "Player View Distance Dialog";
+		values[] = {1,0};
+		texts[] = {"Enabled","Disabled"};
+		default = 1;
+	};
+
+	class VehicleRespawnDistance
+	{
+		title = "Distance from players that vehicles won't respawn";
+		values[] = {10,50,100,200,300,400,500,1000,2000,5000,10000};
+		texts[] = {"10m","50m","100m","200m","300m","400m","500m","1km","2km","5km","10km"};
+		default = 300;
 	};
 
 	class SquadsPatrol
@@ -202,7 +166,7 @@ class Params
 		title = "Squads Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 4;
+		default = 6;
 	};
 
 	class SquadsDefend
@@ -218,9 +182,9 @@ class Params
 		title = "Teams Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 6;
+		default = 4;
 	};
-
+	
 	class SniperTeamsPatrol
 	{
 		title = "Sniper Teams Patrolling AO";
@@ -237,20 +201,36 @@ class Params
 		default = 2;
 	};
 
+	class AirDefenseTeams
+	{
+		title = "Air-Defense Teams Patrolling AO";
+		values[] = {0,1,2,3};
+		texts[] = {1,2,3,4};
+		default = 2;
+	};
+
 	class StaticMG
 	{
-		title = "Static MG in the AO";
-		values[] = {0,1,2,3,4};
-		texts[] = {1,2,3,4,5};
-		default = 4;
+		title = "Static Weapons in the AO";
+		values[] = {0,1,2,3};
+		texts[] = {1,2,3,4};
+		default = 2;
 	};
+
+	class Overwatch
+	{
+		title = "Overwatch squads in the AO";
+		values[] = {0,1,2,3,4,5,6};
+		texts[] = {1,2,3,4,5,6,7};
+		default = 6;
+	};		
 
 	class CarsPatrol
 	{
-		title = "Motorised Infantry Patrolling AO";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-		default = 1;
+		title = "MRAPs Patrolling AO";
+		values[] = {0,1,2,3};
+		texts[] = {1,2,3,4};
+		default = 2;
 	};
 
 	class APCPatrol
@@ -260,11 +240,20 @@ class Params
 		texts[] = {1,2,3,4};
 		default = 2;
 	};
+
 	class ArmourPatrol
 	{
-		title = "Armoured Vehicles Patrolling AO";
-		values[] = {0,1,2,3,4,5};
-		texts[] = {1,2,3,4,5,6};
+		title = "Main Battle Tanks Patrolling AO";
+		values[] = {0,1,2,3,4};
+		texts[] = {1,2,3,4,5};
+		default = 3;
+	};
+
+	class AAPatrol
+	{
+		title = "AA Vehicles Patrolling AO";
+		values[] = {0,1,2,3,4};
+		texts[] = {1,2,3,4,5};
 		default = 2;
 	};
 
@@ -273,29 +262,9 @@ class Params
 		title = "% Chance Of Air Vehicles Patrolling AO";
 		values[] = {0,1,2,3,4,5,6,7,8,9,10};
 		texts[] = {0,10,20,30,40,50,60,70,80,90,100};
-		default = 8;
+		default = 7;
 	};
 
-	class DebugMode
-	{
-		title = "Enable Debug Mode";
-		values[] = {1,0};
-		texts[] = {"Enable","Disable"};
-		default = 0;
-	};
-	class DebugMode2
-	{
-		title = "Enable Debug2 Mode";
-		values[] = {1,0};
-		texts[] = {"Enable","Disable"};
-		default = 0;
-	};
-
-};
-
-class RscTitles
-{
-	#include "misc\namesleft.hpp"
 };
 
 class CfgNotifications
@@ -347,6 +316,7 @@ class CfgNotifications
 		color[] = {1, 0.81, 0.06, 1};
 		priority = 9;
 	};
+
 	class NewSub
 	{
 		title = "NEW SUB-OBJECTIVE";
@@ -400,6 +370,7 @@ class CfgNotifications
 		color[] = {0, 0.7, 0.93, 1};
 		priority = 7;
 	};
+
 	class CompletedSideMission
 	{
 		title = "SIDE MISSION COMPLETE";
@@ -498,6 +469,7 @@ class CfgNotifications
 		color[] = {1, 0.81, 0.06, 1};
 		priority = 8;
 	};
+
 	class Reward
 	{
 		title = "TEAM REWARD";
@@ -518,17 +490,18 @@ class CfgNotifications
 	};
 };
 
-class CfgSounds
+class RscTitles
 {
-	sounds[] = {};
-    class arrival
-    {
-        // how the sound is referred to in the editor (e.g. trigger effects)
-        name = "arrival";
-        // filename, volume, pitch
-        sound[] = {"sounds\arrival.ogg", 1, 1};
-        titles[] = {};
-    };
+	#include "misc\namesleft.hpp"
 };
 
 
+/* Adds screen when loading. */
+onLoadName = "Invade & Annex 2.71";
+author = Rarek [AhoyWorld] - allFPS + Ahoy Edit;
+loadScreen = "signs\loading.jpg";
+OnLoadMission = "Welcome back to the home of Invade and Annex...Big thanks to www.allFPS.com.au for their help developing this further. join us on TeamSpeak at ts.ahoyworld.co.uk:9987 ";
+
+disabledAI = 1;
+Respawn = 3;
+RespawnDelay = 4;

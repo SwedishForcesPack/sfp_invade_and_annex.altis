@@ -20,7 +20,7 @@ disableSerialization;
         _vehname= getText (configFile >> "CfgVehicles" >> (typeOf vehicle player) >> "DisplayName");
         _weapname = getarray (configFile >> "CfgVehicles" >> typeOf (vehicle player) >> "Turrets" >> "MainTurret" >> "weapons"); 
         _weap = _weapname select 0;
-        _name = format ["<t size='1.25' color='#556b2f'>%1</t><br/>", _vehname];
+        /*_name = format ["<t size='1.25' color='#556b2f'>%1</t><br/>", _vehname];*/
 
 
 					
