@@ -42,7 +42,7 @@ while {true} do
 		if (!_skipTimer) then
 		{
 			//Wait between 15-25 minutes before assigning another mission
-			sleep (900 + (random 600));
+			sleep (420 + (random 900));
 
 			//Select random mission from the SM list
 			_mission = _sideMissions call BIS_fnc_selectRandom;

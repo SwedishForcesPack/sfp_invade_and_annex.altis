@@ -18,7 +18,7 @@ _pushable = ["Wheeled_APC_F"];
 _notPushable = [];
 
 // VAS-enabled vehicles
-_VASable = ["B_Truck_01_ammo_F"];
+_VASable = ["B_Truck_01_ammo_F", "O_Truck_03_covered_F"];
 
 // parameters and variables
 _unit = _this select 0;

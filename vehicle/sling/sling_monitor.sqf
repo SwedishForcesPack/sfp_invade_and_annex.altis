@@ -11,15 +11,6 @@ while{alive _helo} do
 		_minY = (((boundingBox _unit) select 0) select 2);
 		_height = (((getPos _unit select 2) + minLiftingHeight) + _minY);
 
-		//when lifted object is above ground without obstruction
-		if(_height > 1) then
-		{
-			_vel = velocity _helo;
-			_velPost = [(_vel select 0)*liftingDampen,(_vel select 1)*liftingDampen,(_vel select 2)-downwardThrust];			
-			_helo setVelocity (_velPost);
-			sleep 0.2;
-		};		
-		
 		//when lifted object is below ground
 		if(_height < 0) then {
 			_speedHelo = speed _helo;

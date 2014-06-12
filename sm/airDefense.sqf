@@ -1,5 +1,5 @@
-#define AIR_TYPE "I_Plane_Fighter_03_CAS_F"
-#define SPAWN_LIMIT 3
+#define AIR_TYPE "O_Plane_CAS_02_F"
+#define SPAWN_LIMIT 1
 #define EASY true
 #define FIXED_TIME 900
 #define RANDOM_TIME 900

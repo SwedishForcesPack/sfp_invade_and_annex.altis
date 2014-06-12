@@ -60,7 +60,8 @@ class Mission
 		"a3_air_f_epb_heli_light_03",
 		"A3_Armor_F_Slammer",
 		"A3_Armor_F_EPC_MBT_01",
-		"A3_Misc_F_Helpers"
+		"A3_Misc_F_Helpers",
+		"A3_Soft_F_EPC_Truck_03"
 	};
 	addOnsAuto[]=
 	{
@@ -88,6 +89,7 @@ class Mission
 		"A3_Soft_F_Car",
 		"A3_Structures_F_Civ_Lamps",
 		"a3_roads_f",
+		"A3_Soft_F_EPC_Truck_03",
 		"A3_Soft_F_MRAP_03",
 		"A3_Armor_F_EPC_MBT_01",
 		"A3_Structures_F_EPA_Mil_Scrapyard",
@@ -112,7 +114,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-40 AW Invade & Annex 2.71f";
+		briefingName="Co-40 AW Invade & Annex 2.72";
 		overviewText="Quiksilver + Razgriz33 Edit";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -1005,6 +1007,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="server";
+					init="null = [5,false,false] execFSM ""misc\core_time.fsm"";";
 				};
 			};
 		};
@@ -1722,14 +1725,14 @@ class Mission
 		};
 		class Item56
 		{
-			position[]={14559.838,17.746235,16880.279};
-			azimut=404.92401;
+			position[]={14597.862,17.91,16829.754};
+			azimut=402.44601;
 			id=118;
 			side="EMPTY";
-			vehicle="I_MRAP_03_F";
+			vehicle="O_Truck_03_covered_F";
 			lock="UNLOCKED";
 			skill=0.60000002;
-			text="strider2";
+			text="TTransport";
 			init="_m = [this,60,1200] execVM ""vehicle\monitor.sqf"";";
 		};
 		class Item57
@@ -3561,7 +3564,7 @@ class Mission
 		};
 		class Item224
 		{
-			position[]={14700.439,17.910877,16958.156};
+			position[]={14699.938,17.91,16957.488};
 			azimut=136.44099;
 			id=286;
 			side="EMPTY";

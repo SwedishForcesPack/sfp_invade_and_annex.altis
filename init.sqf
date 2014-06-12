@@ -341,6 +341,8 @@ sideObj = objNull;
 priorityTargets = ["None"];
 smRewards =
 [
+	["a TO-199 Neophron", "O_Plane_CAS_02_F"],
+	["a A-164 Wipeout", "B_Plane_CAS_01_F"],
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
 	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
@@ -530,7 +532,7 @@ AW_fnc_rewardPlusHintJet = {
 private ["_veh","_vehName","_vehVarname","_completeTextJet","_reward"];
 
 	_completeTextJet = format[
-	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Buzzard Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
+	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Jet Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
 
 	GlobalHint = _completeTextJet; publicVariable "GlobalHint"; hint parseText _completeTextJet;
 	showNotification = ["EnemyJetDown", "Enemy Buzzard is down. Well Done!"]; publicVariable "showNotification";

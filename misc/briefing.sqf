@@ -23,9 +23,9 @@ player createDiaryRecord ["rules",
 <br />3. Excessive, unintentional team-killing may result in a Kick/Temp ban.
 <br />4. Unnecessary destruction of BLUFOR vehicles will not be tolerated.
 <br />5. Verbal abuse and bullying will not be tolerated. 
-<br />6. You must be on Teamspeak to fly.
+<br />6. It is reccomended  you be on Teamspeak to fly.
 <br />7. Firing a weapon on base--unless at an enemy--may result in a Kick/Temp ban.
-<br />8. Griefing and obstructive play will not be tolerated.
+<br />8. Disruptive play will not be tolerated.
 <br />9. Excessive mic spamming, especially of Side and Global channels, will not be tolerated.
 <br />10. A server moderator or admin's word is final.
 <br />
@@ -42,7 +42,7 @@ player createDiaryRecord ["mods",
 <br />- CBA - Required to run the below mods.
 		http://www.armaholic.com/page.php?id=18768<br /><br />
 		
-<br />- JSRS (2.0 & 2.1) - Enhanced sounds and audio.
+<br />- JSRS (2.1) - Enhanced sounds and audio.
 		http://www.armaholic.com/page.php?id=22150<br /><br />
 		
 <br />- Blastcore R3 - Enhanced visuals, including explosions.

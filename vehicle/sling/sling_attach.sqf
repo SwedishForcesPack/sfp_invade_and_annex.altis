@@ -14,7 +14,7 @@ if((_heloType == "B_Heli_Light_01_F") OR (_heloType == "B_Heli_Light_02_armed_F"
 	_liftable = light;
 	_notLiftable = medium + heavy + superheavy;
 };
-if((_heloType == "B_Heli_Transport_01_camo_F") || (_heloType == "B_Heli_Transport_01_F")) then {
+if((_heloType == "B_Heli_Transport_01_camo_F") || (_heloType == "I_Heli_light_03_unarmed_F") || (_heloType == "B_Heli_Transport_01_F")) then {
 	_liftable = light + medium;
 	_notLiftable = heavy + superheavy;
 };
@@ -56,7 +56,6 @@ _midY = (((boundingBox _helo) select 1) select 1) / 3;
 _attachPoint = [0,_midY,_minZ];
 
 //Attach
-[_closestUnit] call fnWeightParameters ;
 _closestUnit attachTo [_helo,_attachPoint];
 _helo setVariable ["sling_attached",true,true];
 _helo setVariable ["sling_object",_closestUnit,true];
