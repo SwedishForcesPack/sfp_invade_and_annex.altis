@@ -48,7 +48,7 @@ if(({_closestUnitType == _x} count _notLiftable) > 0) exitWith{hint "Too heavy."
 
 if(({_closestUnitType == _x} count _liftable) < 1) exitWith{hint "No lift hooks.";};
 
-if(count (crew _closestUnit) > 0) exitWith{hint "Crew in vehicle.";};
+//if(count (crew _closestUnit) > 0) exitWith{hint "Crew in vehicle.";};
 
 //Find sling position
 _minZ = (((boundingBox _helo) select 0) select 2) - 1;

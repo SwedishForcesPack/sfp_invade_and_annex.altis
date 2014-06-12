@@ -19,7 +19,7 @@ enableSentences false;
 
 //------------------- client executions
 
-if (!isDedicated) then {
+if (isDedicated) then {
 	TCB_AIS_PATH = "ais_injury\";
 	{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});		// execute for every playable unit
 	

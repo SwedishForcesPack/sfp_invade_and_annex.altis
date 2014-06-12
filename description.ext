@@ -1,7 +1,7 @@
 //------------------------- On Load
 
 author = Rarek [AhoyWorld] - allFPS + Ahoy Edit;		// Visible when loading mission
-onLoadName = "Invade & Annex 2.75";						// Visible when loading mission
+onLoadName = "Invade & Annex 2.76";						// Visible when loading mission
 OnLoadMission = "Welcome back to the home of Invade and Annex ... Join us on TeamSpeak at ts.ahoyworld.co.uk:9987";
 loadScreen = "media\images\loading.jpg";				// Visible when loading mission
 overviewPicture = "media\images\loading.jpg";			// Visible when selecting mission	
@@ -52,19 +52,18 @@ corpseRemovalMaxTime = 120;								// Max time before removal
 #include "scripts\taw_vd\dialog.hpp" 					// TAW View Distance
 #include "scripts\vehicle\crew\common.hpp"  			// vehicle crew hud
 #include "scripts\spectator\spectating.hpp"     		// Kegetys Spectator Script
+#include "scripts\=BTC=_revive\=BTC=_respawn.h"			// BTC medic revive system 
 
 class CfgFunctions
 	{
 		#include "functions\cfgfunctions.hpp"			// Integrated I&A functions
 		#include "scripts\VAS\cfgfunctions.hpp"			// VAS
 		#include "scripts\taw_vd\CfgFunctions.hpp"		// View distance
-		#include "ais_injury\cfgFunctionsAIS.hpp"		// A3 Wounding system
 	};
 
 class RscTitles
 	{
 		#include "scripts\vehicle\crew\namesleft.hpp"	// Occupants HUD for vehicles
-		#include "ais_injury\dialogs\rscTitlesAIS.hpp"		// A3 Wounding System
 	};
 
 //------------------------- Parameters

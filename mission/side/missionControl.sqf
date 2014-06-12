@@ -23,7 +23,7 @@ _loopTimeout = 10 + (random 10);
 
 _missionList = [	
 	"destroyUrban",
-	"HQcoast",	
+	"HQcoast",
 	"HQfia",
 	"HQind",
 	"HQresearch",
@@ -35,7 +35,7 @@ _missionList = [
 	"secureRadar"
 ];
 
-SM_SWITCH = false; publicVariable "SM_SWITCH";
+SM_SWITCH = true; publicVariable "SM_SWITCH";
 	
 while { true } do {
 
@@ -55,7 +55,7 @@ while { true } do {
 	
 		sleep _delay;
 		
-		SM_SWITCH = false; publicVariable "SM_SWITCH";
+		SM_SWITCH = true; publicVariable "SM_SWITCH";
 		hqSideChat = "Side objective available"; publicVariable "hqSideChat"; [WEST,"HQ"] sideChat hqSideChat;
 	};
 	_loopTimeout;
