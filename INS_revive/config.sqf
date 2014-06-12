@@ -2,7 +2,7 @@
 
 // RESPAWN LOCATION list
 // You can define vehicle or object
-INS_REV_CFG_list_of_respawn_locations_blufor = ["base"];
+INS_REV_CFG_list_of_respawn_locations_blufor = ["base","Pilot_Respawn"];
 INS_REV_CFG_list_of_respawn_locations_opfor = [];
 INS_REV_CFG_list_of_respawn_locations_civ = [];
 INS_REV_CFG_list_of_respawn_locations_guer = [];

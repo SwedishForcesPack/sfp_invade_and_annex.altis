@@ -36,11 +36,6 @@ execVM "changeLog.sqf";
 _handle = execVM "aw_functions.sqf";
 waitUntil{scriptDone _handle};
 
-// INS_revive initialize
-[] execVM "INS_revive\revive_init.sqf";
-// Wait for INS_revive initialized
-waitUntil {!isNil "INS_REV_FNCT_init_completed"};
-
 /* =============================================== */
 /* =============== GLOBAL VARIABLES ============== */
 
@@ -301,6 +296,19 @@ enableSentences false;
 _null = [] execVM "restrictions.sqf";
 // other stuff
 [30,25,30,35] execVM "scripts\bodyRemoval.sqf";
+//damage modify
+_null = []ExecVM "damage.sqf";
+
+//group manager
+If (!IsDedicated) Then {
+
+ _Functions = []ExecVM "joinerUI\GroupMonitor.sqf";
+ waitUntil {!IsNull Player && ScriptDone _Functions};
+ Player AddEventHandler ["Respawn", {_menu = (_this select 0) addAction ["<t color=""#3399FF"">" +"Groups", "joinerUI\showJoiner.sqf"];}];
+ _menu = player addAction ["<t color=""#3399FF"">" +"Groups", "joinerUI\showJoiner.sqf"];
+ 
+};
+
 
 //if (PARAMS_ViewDistanceTaw == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
 if (PARAMS_PilotsOnly == 1) then { _null = [] execVM "pilotCheck.sqf"; };
@@ -417,7 +425,6 @@ if (!isServer) exitWith
 		];
 	};
 };
-
 
 /* =============================================== */
 /* ============ SERVER INITIALISATION ============ */

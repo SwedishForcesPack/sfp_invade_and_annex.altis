@@ -1,6 +1,13 @@
 player createDiarySubject ["changeLog","Change Log"];
 player createDiaryRecord ["changeLog",["I & A Mission Change Log", "V 2.66.0
 
+
+<br />2.77.0
+<br />- Removed Respawn
+<br />- Trialling new group manager script
+<br />- 
+<br />
+<br />
 <br />2.66.0
 <br />- Added Hellcats
 <br />- Updated VAS and View Distance.

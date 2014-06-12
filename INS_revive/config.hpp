@@ -96,7 +96,7 @@
 // - Friendly unit search distance
 // values[]={ 10,30,50,100,300,500 };
 // texts[]={ "10m","30m","50m","100m","300m","500m"};
-#define INS_REV_DEF_near_friendly_distance 300
+#define INS_REV_DEF_near_friendly_distance 100
 
 // Player cannot respawn, if exist enemy unit near player
 // values[]={ 1,0 };

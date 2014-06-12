@@ -23,8 +23,9 @@ author = Rarek [AW];
 onLoadName = "AW Invade & Annex";
 loadScreen = "awMissionLogo.jpg";
 OnLoadMission = "A custom-made domination-esque mission for ArmA 3, Ahoy World Invade &amp; Annex is lovingly crafted by Rarek. Maintained by Jester [AW] and Razgriz33 [AW]. To follow / aid in the development of this mission, please sign up to www.AhoyWorld.co.uk and join us on TeamSpeak at ts.ahoyworld.co.uk";
-Respawn = "INSTANT";
-RespawnDelay = 3;
+Respawn = "BASE";
+RespawnDelay = 15;
+respawnTemplates[] = {"MenuPosition"};
 DisabledAI = true;
 joinUnassigned = false; // auto assign
 
@@ -53,9 +54,10 @@ class CfgFunctions
 /* View Distance includes */
 #include "taw_vd\dialog.hpp"
 
-//// Respawn Script - Start ////
-#include "INS_revive\description.hpp"
-//// Respawn Script - End   ////
+//group manger
+#include "joinerUI\defines.hpp"
+#include "joinerUI\dialog.hpp"
+
 
 class Params
 {
@@ -289,18 +291,11 @@ class Params
 		default = 0;
 	};
 
-	//// Respawn Script - Start ////
-	#include "INS_revive\params.hpp"
-	//// Respawn Script - End   ////
-
 };
 
 class RscTitles
 {
 	#include "misc\namesleft.hpp"
-	//// Respawn Script - Start ////
-	#include "INS_revive\rsctitles.hpp"
-	//// Respawn Script - End   ////
 };
 
 class CfgNotifications

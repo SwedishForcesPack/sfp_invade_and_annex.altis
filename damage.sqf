@@ -15,7 +15,7 @@ _x addEventHandler
         };
         _i = _selections find _selection;
         _olddamage = _gethit select _i;
-        _damage = _olddamage + ((_this select 2) - _olddamage) * 0.01;
+        _damage = _olddamage + ((_this select 2) - _olddamage) * 0.33;
         _gethit set [_i, _damage];
         _damage;
     }
