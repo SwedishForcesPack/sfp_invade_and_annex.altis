@@ -1,9 +1,21 @@
+aw_fnc_MPaddAction = {
+private["_object","_screenMsg","_scriptToCall"];
+_object = _this select 0;
+_screenMsg = _this select 1;
+_scriptToCall = _this select 2;
+
+if(isNull _object) exitWith {};
+
+_object addaction [_screenMsg,_scriptToCall];
+};
+
 aw_fnc_loiter =
 {
 	private["_group","_wp","_pos"];
 	_group = _this select 0;
 	_pos = _this select 1;
 	_wp = _group addWaypoint [_pos, 0];
+	//_wp setWaypointType "LOITER";
 };
 
 aw_fnc_fuelMonitor =
@@ -67,7 +79,7 @@ aw_fnc_spawn2_waypointBehaviour =
 			{
 				if(waypointType _x == "SAD") then {_x setWaypointBehaviour "MOVE"};
 				_x setWaypointBehaviour "COMBAT";
-				_x setWaypointFormation "WEDGE";
+				_x setWaypointBehaviour "WEDGE";
 			}forEach (waypoints _this);
 		};
 	};
@@ -125,7 +137,7 @@ aw_fnc_spawn2_randomPatrol =
 		_wp setWaypointBehaviour "AWARE";
 		_wp setWaypointTimeOut [0,10,40];
 
-		/*if(DEBUG) then
+/*		if(DEBUG) then
 		{
 			_name = format ["%1",_wp];
 			createMarkerLocal [_name,waypointPosition _wp];
@@ -142,7 +154,7 @@ aw_fnc_spawn2_randomPatrol =
 	_wp setWaypointFormation "STAG COLUMN";
 	_wp setWaypointBehaviour "SAFE";
 
-	/*if(DEBUG) then
+/*	if(DEBUG) then
 	{
 		_name = format ["%1",_wp];
 		createMarkerLocal [_name,waypointPosition _wp];
@@ -176,7 +188,7 @@ aw_fnc_spawn2_perimeterPatrol =
 		_wp setWaypointBehaviour "AWARE";
 		_wp setWaypointTimeOut [0,10,40];
 
-		/*if(DEBUG) then
+/*		if(DEBUG) then
 		{
 			_name = format ["%1",_wp];
 			createMarkerLocal [_name,waypointPosition _wp];
@@ -201,7 +213,7 @@ aw_fnc_spawn2_perimeterPatrol =
 	_wp setWaypointSpeed "LIMITED";
 	_wp setWaypointFormation "WEDGE";
 
-	/*if(DEBUG) then
+/*	if(DEBUG) then
 	{
 		_name = format ["%1",_wp];
 		createMarkerLocal [_name,waypointPosition _wp];
@@ -284,62 +296,108 @@ aw_deleteUnits =
 	[] spawn aw_cleanGroups;
 };
 
-aw_serverRespawn =
-{
-	if(!serverCommandAvailable "#kick") exitWith{};
-	private ["_x","_y"];
-	{
-		_x setVelocity [0,0,0];
-		_x setPos [getPos _x select 0,getPos _x select 1,0];
+ISSE_Cfg_VehicleInfo = {
+    private["_cfg", "_name", "_DescShort", "_DescLong", "_Type", "_MaxSpeed", "_MaxFuel"];
+    _name = _this;
+    _cfg  = (configFile >>  "CfgVehicles" >>  _name);
 
-		hint format["Deleting %1",typeOf _x];
+    _DescShort = if (isText(_cfg >> "displayName")) then {
+        getText(_cfg >> "displayName")
+    }
+    else {
+        "/"
+    };
 
-		for[{_y=0},{_y<(count (crew _x))},{_y=_y+1}] do
-		{
-			moveOut ((crew _x) select _y);
-			((crew _x) select _y) setPos [getPos ((crew _x) select _y) select 0,(getPos ((crew _x) select _y) select 1) + 5,0];
-		};
-		_x setPos [0,0,0];
-		_x setDamage 1;
-	}forEach ((getPos trg_aw_admin) nearEntities [["Air","Car","Motorcycle","Tank"],5000]);
+    _DescLong = if (isText(_cfg >> "Library" >> "libTextDesc")) then {
+        getText(_cfg >> "Library" >> "libTextDesc")
+    }
+    else {
+        "/"
+    };
+
+    _Pic = if (isText(_cfg >> "picture")) then {
+        getText(_cfg >> "picture")
+    }
+    else {
+        "/"
+    };
+
+    _Type = if (isText(_cfg >> "type")) then {
+        parseNumber(getText(_cfg >> "type"))
+    }
+    else {
+        getNumber(_cfg >> "type")
+    };
+
+    _MaxSpeed = if (isText(_cfg >> "maxSpeed")) then {
+        parseNumber(getText(_cfg >> "maxSpeed"))
+    }
+    else {
+        getNumber(_cfg >> "maxSpeed")
+    };
+
+    _MaxFuel = if (isText(_cfg >>    "fuelCapacity")) then {
+        parseNumber(getText(_cfg >> "fuelCapacity"))
+    }
+    else {
+        getNumber(_cfg >>"fuelCapacity")
+    };
+
+    [_DescShort, _DescLong, _Type, _Pic, _MaxSpeed, _MaxFuel]
 };
 
-aw_serverSingleRespawn =
-{
-	private ["_x","_y","_pos","_units"];
+ISSE_Cfg_Vehicle_GetName  = {
+    (_this call ISSE_Cfg_VehicleInfo) select 0
+};
 
-	if(!serverCommandAvailable "#kick") exitWith{};
+INS_REV_FNCT_get_group_color_index = {
+	private ["_phoneticCode", "_found", "_index", "_result", "_i", "_j"];
 
-	_pos = screenToWorld [0.5,0.5];
+	// Set variable
+	_unit = _this select 0;
+	_phoneticCode = ["Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf"];
+	_found = false;
+	_index = 0;
 
-	_units = _pos nearEntities [["Car","Air","Tank","Ship","Motorcycle"],5];
-
-	if(count _units > 0) then
+	// Find group name
 	{
-		_x =_units select 0;
-		_x setVelocity [0,0,0];
-		_x setPos [getPos _x select 0,getPos _x select 1,0];
-
-		hint format["Deleting %1",typeOf _x];
-
-		for[{_y=0},{_y<(count (crew _x))},{_y=_y+1}] do
-		{
-			moveOut ((crew _x) select _y);
-			((crew _x) select _y) setPos [getPos ((crew _x) select _y) select 0,(getPos ((crew _x) select _y) select 1) + 5,0];
+		for "_i" from 1 to 4 do {
+		 	for "_j" from 1 to 3 do {
+		 		_groupName = format["%1 %2-%3", _x, _i, _j];
+		 		if (format["b %1",_groupName] == str(group _unit) || format["o %1",_groupName] == str(group _unit)) exitWith {
+		 			_found = true;
+		 		};
+		 		_index = _index + 1;
+			};
+			if (_found) exitWith {};
 		};
-		_x setPos [0,0,0];
-		_x setDamage 1;
+		if (_found) exitWith {};
+	} forEach _phoneticCode;
+
+	// If not found, return 0
+	if (!_found) then {
+		_result = 0;
+	} else {
+		_result = _index % 10;
 	};
+
+	_result
 };
 
-aw_serverCursorTP =
-{
-	if(!serverCommandAvailable "#kick") exitWith{};
-	player setPos (screenToWorld [0.5,0.5]);
-};
+// Get group color
+// Usage : '[unit] call FNC_GET_GROUP_COLOR;'
+// Return : string
+INS_REV_FNCT_get_group_color = {
+	private ["_unit", "_colors", "_colorIndex", "_result"];
 
-aw_serverMapTP =
-{
-	if(!serverCommandAvailable "#kick") exitWith{};
-	onMapSingleClick "player setPos _pos;onMapSingleClick '';true";
+	// Set varialble
+	_unit = _this select 0;
+	_colors = ["ColorGreen","ColorYellow","ColorOrange","ColorPink","ColorBrown","ColorKhaki","ColorBlue","ColorRed","ColorBlack","ColorWhite"];
+	_colorIndex = [_unit] call INS_REV_FNCT_get_group_color_index;
+
+	// Set color
+	_result = _colors select _colorIndex;
+
+	// Return value
+	_result
 };

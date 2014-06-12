@@ -14,7 +14,7 @@ You may alter, use or change this code as you wish as long as you keep the origi
 
 */
 
-kARRdisallowed = ["B_Heli_Transport_01_F","I_Heli_Transport_02_F","B_Heli_Transport_01_camo_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_F"];
+kARRdisallowed = ["B_Heli_Transport_01_F","I_Heli_Transport_02_F","B_Heli_Transport_01_camo_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_F","I_Plane_Fighter_03_CAS_F"];
 
 while {true} do {
 	waitUntil {sleep 0.5; alive player};									// wait till player is alive

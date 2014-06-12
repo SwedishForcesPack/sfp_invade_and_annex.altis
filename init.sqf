@@ -7,7 +7,7 @@
  #+# #+#           #+#   #+#           #+#   #+#
 ### ###             ### ###             ### ###
 
-| AHOY WORLD | ARMA 3 ALPHA | Altis |
+| AHOY WORLD | ARMA 3 ALPHA | STRATIS DOMI VER 2.82 |
 
 Creating working missions of this complexity from
 scratch is difficult and time consuming, please
@@ -18,9 +18,12 @@ This version of Domination was lovingly crafted by
 Jack Williams (Rarek) for Ahoy World!
 Maintained by [AW] Jester and Razgriz33
 */
+// JIP Check (This code should be placed first line of init.sqf file)
+if (!isServer && isNull player) then {isJIP=true;} else {isJIP=false;};
 
 // Wait until player is initialized
 if (!isDedicated) then {waitUntil {!isNull player && isPlayer player};};
+
 
 #define WELCOME_MESSAGE	"Welcome to Ahoy World's Invade & Annex ~ALTIS~\n" +\
 						"by Rarek (Ahoy World)\n\n" +\
@@ -29,6 +32,14 @@ if (!isDedicated) then {waitUntil {!isNull player && isPlayer player};};
 						"...and feel free to join us on TeamSpeak at\n" +\
 						"ts.ahoyworld.co.uk"
 
+execVM "changeLog.sqf";
+_handle = execVM "aw_functions.sqf";
+waitUntil{scriptDone _handle};
+
+// INS_revive initialize
+[] execVM "INS_revive\revive_init.sqf";
+// Wait for INS_revive initialized
+waitUntil {!isNil "INS_REV_FNCT_init_completed"};
 
 /* =============================================== */
 /* =============== GLOBAL VARIABLES ============== */
@@ -49,9 +60,6 @@ if (!isDedicated) then {waitUntil {!isNull player && isPlayer player};};
 
 private ["_pos","_uavAction","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
 
-_handle = execVM "aw_functions.sqf";
-waitUntil{scriptDone _handle};
-execVM "changeLog.sqf";
 _initialTargets = [
 	"Kalochori",
 	"Sofia",
@@ -140,7 +148,6 @@ _targets = [
 	"Abdera",
 	"Ioannina",
 	"Kore"
-
 ];
 
 //Grab parameters and put them into readable variables
@@ -160,16 +167,14 @@ if(isMultiplayer) then
 } else {DEBUG = true};
 if(isMultiplayer) then
 {
-	if(PARAMS_DebugMode2 == 1) then {DEBUG2 = true} else {DEBUG2 = false};
+	if(PARAMS_DebugMode2 == 1) then {_null = [] execVM "scripts\debug_a3.sqf";};
 } else {DEBUG2 = true};
+
 // Disable saving to save time
 enableSaving [false, false];
 
 // Disable automatic radio messages
 enableSentences false;
-
-
-if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, _name] execVM ""ac\init.sqf"";"; };
 
 "GlobalHint" addPublicVariableEventHandler
 {
@@ -239,6 +244,12 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 	"priorityMarker" setMarkerTextLocal format["Priority Target: %1",priorityTargetText];
 };
 
+"paraMarker" addPublicVariableEventHandler
+{
+	"paraMarker" setMarkerPosLocal (markerPos "paraMarker");
+	"paraMarker" setMarkerTextLocal format["Paradrop Available"];
+};
+
 "aw_addAction" addPublicVariableEventHandler
 {
 	_obj = (_this select 1) select 0;
@@ -268,7 +279,7 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 
 "debugMessage" addPublicVariableEventHandler
 {
-	private ["_isAdmin", "_message"];
+/*	private ["_isAdmin", "_message"];
 	_isAdmin = serverCommandAvailable "#kick";
 	if (_isAdmin) then
 	{
@@ -277,41 +288,26 @@ if (PARAMS_AhoyCoinIntegration == 1) then { OnPlayerConnected "_handle = [_uid, 
 			_message = _this select 1;
 			[_message] call bis_fnc_error;
 		};
-	};
+	};*/
 };
 
 
 /* =============================================== */
 /* ================ PLAYER SCRIPTS =============== */
-
-// vehicle crew display
-//[player] execVM "scripts\crew\crew.sqf";
-0 = [] execVM 'group_manager.sqf';
+/* =============================================== */
+// Vehicle HUD
+[] execvm "scripts\crew.sqf";
 // restrictions
 _null = [] execVM "restrictions.sqf";
-_null=[] execVM "admin_uid.sqf";
 // other stuff
-[40,50,55,60] execVM "scripts\bodyRemoval.sqf";
-if (PARAMS_ViewDistance == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
+[30,25,30,35] execVM "scripts\bodyRemoval.sqf";
+
+//if (PARAMS_ViewDistanceTaw == 1) then { _null = [] execVM "taw_vd\init.sqf"; };
 if (PARAMS_PilotsOnly == 1) then { _null = [] execVM "pilotCheck.sqf"; };
 if (PARAMS_SpawnProtection == 1) then { _null = [] execVM "grenadeStop.sqf"; };
-if (PARAMS_ReviveEnabled == 1) then
-{
-	call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf";
-	//if (PARAMS_MedicMarkers == 1) then { _null = [] execVM "misc\medicMarkers.sqf"; };
-};
-if (PARAMS_PlayerMarkers == 1) then { _null = [] execVM "misc\playerMarkers.sqf"; };
-/* 	Disabled while Alpha bug is present
-	_null = [] execVM "misc\radioChannels.sqf"; */
+if (PARAMS_PlayerMarkers == 1) then { 0 = [] execVM "misc\playerMarkers.sqf"; };
 
-/* [] spawn {
-	scriptName "initMission.hpp: mission start";
-	["rsc\FinalComp.ogv", false] spawn BIS_fnc_titlecard;
-	waitUntil {sleep 0.5; !(isNil "BIS_fnc_titlecard_finished")};
-	[[14600.0,16801.0,100],"We've gotten a foot-hold on the island,|but we need to take the rest.||Listen to HQ and neutralise all enemies designated."] spawn BIS_fnc_establishingShot;
-	titleText [WELCOME_MESSAGE, "PLAIN", 3];
-}; */
-
+//Let's roll!
 if (!isServer) then
 {
 	sleep 20;
@@ -323,9 +319,13 @@ if (!isServer) then
 		"radioMarker" setMarkerPosLocal (getPos radioTower);
 		"radioMineCircle" setMarkerPosLocal (getPos radioTower);
 		"radioMarker" setMarkerTextLocal (markerText "radioMarker");
+		"paraMarker" setMarkerPosLocal [0,0,0];
+
 	} else {
 		"radioMarker" setMarkerPosLocal [0,0,0];
 		"radioMineCircle" setMarkerPosLocal [0,0,0];
+		"paraMarker" setMarkerPosLocal (getPos "PD_Drop");
+		"paraMarker" setMarkerTextLocal (markerText "paraMarker");
 	};
 
 	if (sideMissionUp) then
@@ -391,7 +391,7 @@ if (!isServer) exitWith
 
 	while {true} do
 	{
-		_isAdmin = serverCommandAvailable "#kick";
+		/*_isAdmin = serverCommandAvailable "#kick";
 		if (_isAdmin) then
 		{
 			1 setRadioMsg "Toggle Debug Mode";
@@ -401,7 +401,7 @@ if (!isServer) exitWith
 			5 setRadioMsg "Skip Priority Target (N/A)";
 		} else {
 			{ _x setRadioMsg "NULL"; } forEach [1,2,3,4,5];
-		};
+		};*/
 		waitUntil {sleep 0.5; !alive player};
 		waitUntil {sleep 0.5; alive player};
 		_uavAction = player addAction
@@ -421,6 +421,7 @@ if (!isServer) exitWith
 
 /* =============================================== */
 /* ============ SERVER INITIALISATION ============ */
+/* =============================================== */
 
 //Set a few blank variables for event handlers and solid vars for SM
 debugMode = true; publicVariable "debugMode";
@@ -438,7 +439,6 @@ smRewards =
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
 	["a Strider HMG", "I_MRAP_03_hmg_F"],
-	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],
 	["an M2A1 Slammer", "B_MBT_01_cannon_F"],
 	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
 	["an Offroad (Armed)", "B_G_Offroad_01_armed_F"]
@@ -449,15 +449,12 @@ smMarkerList =
 /*---------------------------------------------------------------------------
 Disabled while Alpha bug is present
 ---------------------------------------------------------------------------*/
-
 //Run a few miscellaneous server-side scripts
-_null = [] execVM "misc\clearBodies.sqf";
+//_null = [] execVM "misc\clearBodies.sqf";
 _null = [] execVM "misc\clearItems.sqf";
 
 
-
 _isPerpetual = false;
-
 if (PARAMS_Perpetual == 1) then
 {
 	_isPerpetual = true;
@@ -510,7 +507,7 @@ AW_fnc_minefield = {
 AW_fnc_deleteOldAOUnits =
 {
 	private ["_unitsArray", "_obj", "_isGroup"];
-	sleep 300;
+	sleep 120;
 	_unitsArray = _this select 0;
 	for "_c" from 0 to (count _unitsArray) do
 	{
@@ -525,6 +522,30 @@ AW_fnc_deleteOldAOUnits =
 			if (!isNull _obj) then { deleteVehicle _obj; };
 		};
 	};
+};
+
+GC_fnc_deleteOldUnitsAndVehicles = {
+    {
+	sleep 0.5;
+        if (typeName _x == "GROUP") then {
+            {
+                if (vehicle _x != _x) then {
+                    deleteVehicle (vehicle _x);
+                };
+                deleteVehicle _x;
+            } forEach (units _x);
+        } else {
+            if (vehicle _x != _x) then {
+                deleteVehicle (vehicle _x);
+            };
+            if !(_x isKindOf "Man") then {
+                {
+                    deleteVehicle _x;
+                } forEach (crew _x)
+            };
+            deleteVehicle _x;
+        };
+    } forEach (_this select 0);
 };
 
 AW_fnc_deleteSingleUnit = {
@@ -561,6 +582,27 @@ _veh = smRewards call BIS_fnc_selectRandom;
 _unitSpawnPlus = PARAMS_AOSize;
 _unitSpawnMinus = _unitSpawnPlus - (_unitSpawnPlus * 2);
 
+AW_fnc_rewardPlusHintJet = {
+
+private ["_veh","_vehName","_vehVarname","_completeTextJet","_reward"];
+
+	_completeTextJet = format[
+	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Buzzard Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
+
+	GlobalHint = _completeTextJet; publicVariable "GlobalHint"; hint parseText _completeTextJet;
+	showNotification = ["EnemyJetDown", "Enemy Buzzard is down. Well Done!"]; publicVariable "showNotification";
+};
+
+AW_fnc_rewardPlusHintMI = {
+
+private ["_veh","_vehName","_vehVarname","_completeTextHelo","_reward"];
+
+	_completeTextHelo = format[
+	"<t align='center'><t size='2.2'>Priority AO Target</t><br/><t size='1.5' color='#00B2EE'>Enemy Kajman Neutralized</t><br/>____________________<br/>Fantastic job, lads! The OPFOR stationed on the island won't last long if you keep that up!<br/><br/>Focus on the main objective for now.</t>"];
+
+	GlobalHint = _completeTextHelo; publicVariable "GlobalHint"; hint parseText _completeTextHelo;
+	showNotification = ["EnemyHeloDown", "Enemy Mi-48 Kajman is down. Well Done!"]; publicVariable "showNotification";
+};
 AW_fnc_garrisonBuildings =
 {
 	_building = _this select 0;
@@ -649,8 +691,6 @@ AW_fnc_garrisonBuildings =
 			[-48.2151,6.2476,-17.7976,-1,334],
 			[-24.622,4.62995,-17.796,1,79]
 		]
-
-
 	];
 
 	if (!(typeOf _building in _buildings)) exitWith {_newGrp = objNull; _newGrp};
@@ -1108,9 +1148,9 @@ _pos = getMarkerPos (_this select 0);
 skipTime PARAMS_TimeOfDay;
 
 //Set weather
-0 setWindForce random 1;
+0 setWindForce random .5;
 0 setWindDir random 360;
-0 setGusts random 1;
+0 setGusts random .5;
 
 switch (PARAMS_Weather) do
 {
@@ -1146,33 +1186,12 @@ switch (PARAMS_Weather) do
 	};
 };
 
-//Spawn random wrecks
-if (PARAMS_PriorityTargets == 1) then
-{
-	{
-		_accepted = false;
-		_position = [0,0,0];
-		while {!_accepted} do
-		{
-			_position = [] call BIS_fnc_randomPos;
-			if (_position distance (getMarkerPos "respawn_west") > 800) then
-			{
-				_accepted = true;
-			};
-		};
-		_randomWreck = _x createVehicle _position;
-		_randomWreck setDir (random 360);
-	} forEach ["Land_Wreck_Commanche_F","Land_UWreck_Mv22_F","Land_UWreck_Mv22_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Offroad_F","Land_Wreck_Truck_dropside_F","Land_Wreck_Truck_F","Land_Wreck_Car_F","Land_Wreck_Car2_F","Land_Wreck_Car3_F"];
-};
-
 //Begin generating side missions
 if (PARAMS_SideMissions == 1) then { _null = [] execVM "sm\sideMissions.sqf"; };
 
 //Begin generating priority targets
 if (PARAMS_PriorityTargets == 1) then { _null = [] execVM "sm\priorityTargets.sqf"; };
 
-//Begin creating random patrols
-// _null = [] execVM "randomPatrols.sqf";
 
 _firstTarget = true;
 _lastTarget = "Nothing";
@@ -1231,12 +1250,19 @@ while {count _targets > 0} do
 		_flatPos = _position isFlatEmpty[3, 1, 0.7, 20, 0, false];
 	};
 
-	radioTower = "Land_TTowerBig_2_F" createVehicle _flatPos;
-	waitUntil {sleep 0.5; alive radioTower};
+	realTower setPos _flatpos;
+	realTower setVectorUp [0,0,1];
+	radioTower = "Land_dp_transformer_F" createVehicle (getMarkerPos "dummyRT");
+	radioTower allowdamage false;
 	radioTower setVectorUp [0,0,1];
+	radioTower2 = "Land_Communication_F" createVehicle _flatPos;
+	radioTower2 allowdamage false;
+	radioTower2 setVectorUp [0,0,1];
+	waitUntil {sleep 0.5; alive radioTower};
 	radioTowerAlive = true;
 	publicVariable "radioTowerAlive";
-	"radioMarker" setMarkerPos (getPos radioTower);
+	"radioMarker" setMarkerPos (getPos realTower);
+	"paraMarker" setMarkerPos [0,0,0];
 
 	//Spawn mines
 	_chance = random 10;
@@ -1244,7 +1270,7 @@ while {count _targets > 0} do
 	{
 		_mines = [_flatPos] call AW_fnc_minefield;
 		_enemiesArray = _enemiesArray + _mines;
-		"radioMineCircle" setMarkerPos (getPos radioTower);
+		"radioMineCircle" setMarkerPos _flatpos;
 		"radioMarker" setMarkerText "Radiotower (Minefield)";
 	} else {
 		"radioMarker" setMarkerText "Radiotower";
@@ -1273,7 +1299,7 @@ while {count _targets > 0} do
 	GlobalHint = _targetStartText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["NewMain", currentAO]; publicVariable "showNotification";
 	showNotification = ["NewSub", "Destroy the enemy radio tower."]; publicVariable "showNotification";
-
+	_null = [] execVM "scripts\AOdrop.sqf";
 
 	/* =============================================== */
 	/* ========= WAIT FOR TARGET COMPLETION ========== */
@@ -1281,34 +1307,25 @@ while {count _targets > 0} do
 	waitUntil {sleep 0.5; !alive radioTower};
 	radioTowerAlive = false;
 	publicVariable "radioTowerAlive";
+	radioTower2 setdamage 1;
 	"radioMarker" setMarkerPos [0,0,0];
+	"paraMarker" setMarkerPos getMarkerPos "PD_Drop";
+	AW_rtToggle = 0;
+	publicVariable "AW_rtToggle";
 	_radioTowerDownText =
-		"<t align='center' size='2.2'>Radio Tower</t><br/><t size='1.5' color='#08b000' align='center'>DESTROYED</t><br/>____________________<br/>The enemy radio tower has been destroyed! Fantastic job, lads! You're now all free to use your Personal UAVs!<br/><br/>Keep up the good work, lads; we're countin' on you.";
+		"<t align='center' size='2.2'>Radio Tower</t><br/><t size='1.5' color='#08b000' align='center'>DESTROYED</t><br/>____________________<br/>The enemy radio tower has been destroyed! Fantastic job, lads!<br/><br/><t size='1.2' color='#08b000' align='center'> The enemy cannot call in anymore air support now!</t><br/><br/> You're now all free to use your Personal UAVs!";
 	GlobalHint = _radioTowerDownText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedSub", "Enemy radio tower destroyed."]; publicVariable "showNotification";
 	showNotification = ["Reward", "Personal UAVs now available."]; publicVariable "showNotification";
-
+	sleep 5;
+			_paradropReadyText =
+			"<t align='center' size='2.2'>HALO Jump available</t><br/><t size='1.5' color='#b60000'>You can now paradrop from base</t><br/>____________________<br/>This will only be available for the duration of this AO<br/><br/>click the sign at the marker on the map in base.";
+			GlobalHint = _paradropReadyText; publicVariable "GlobalHint"; hint parseText _paradropReadyText;
+			showNotification = ["Paradrop", "Blufor paradrop is available."]; publicVariable "showNotification";
 	waitUntil {sleep 5; count list _dt < PARAMS_EnemyLeftThreshhold};
 
 	//Set enemy kill timer
-	//[_enemiesArray] spawn AW_fnc_deleteOldAOUnits;
-
-	//Delete markers and trigger
-	/* if (_isPerpetual) then
-	{
-		//_perimeterMarker = [currentAO] call AW_fnc_markerDeactivate;
-		if (count _targets == 1) then
-		{
-			_targets = _initialTargets;
-			_lastTarget = currentAO;
-			publicVariable "refreshMarkers";
-		} else {
-			_targets = _targets - [currentAO];
-		};
-	} else {
-		_targets = _targets - [currentAO];
-		//deleteMarker currentAO;
-	}; */
+	[_enemiesArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
 
 	if (_isPerpetual) then
 	{
@@ -1347,6 +1364,7 @@ while {count _targets > 0} do
 	//Show global target completion hint
 	GlobalHint = _targetCompleteText; publicVariable "GlobalHint"; hint parseText GlobalHint;
 	showNotification = ["CompletedMain", currentAO]; publicVariable "showNotification";
+
 	[] spawn aw_cleanGroups;
 };
 

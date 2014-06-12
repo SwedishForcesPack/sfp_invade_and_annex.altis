@@ -1,23 +1,32 @@
 /*
-	Insert public variable event handler into player init:
+      ::: ::: :::             ::: :::             :::
+     :+: :+:   :+:           :+:   :+:           :+:
+    +:+ +:+     +:+         +:+     +:+         +:+
+   +#+ +#+       +#+       +#+       +#+       +#+
+  +#+ +#+         +#+     +#+         +#+     +#+
+ #+# #+#           #+#   #+#           #+#   #+#
+### ###             ### ###             ### ###
 
-	"sideMarker" addPublicVariableEventHandler
-	{
-		"sideMarker" setMarkerPos (markerPos "sideMarker");
-	};
+| AHOY WORLD | ARMA 3 ALPHA | STRATIS DOMI VER 2.7 |
 
-	Also, we need an event handler for playing custom sounds via SAY.
-	Pass the EH a variable that it can use to play the correct sound.
+Creating working missions of this complexity from
+scratch is difficult and time consuming, please
+credit http://www.ahoyworld.co.uk for creating and
+distibuting this mission when hosting!
 
-	For the addAction issue, we need to run the addAction command LOCALLY. Using forEach allUnits won't work as the action is still being run on the server.
-	So, set up an EH that can add actions to units.
+This version Invade and Annex was lovingly crafted by
+Jack Williams (Rarek) and altered by Jester for Ahoy World!
 
-	For deletion of contact (and this applies to AO units, too!)...
-		Using []spawn { }; will run code that then ignores the rest of the script!
-		AWESOME!
+	Major edit by LB Quiksilver
 
-		Major edit by LB Quiksilver
+		RE-EDIT by Jester [AW] - to add function of using an
+				addaction to sideobj for completion instead of being
+				blown up by any type of explosion. This prevents SM
+				rapage by CAS. Also cleanup of deletion of old SM and
+				errors associated to it. You need the file "sabotage.sqf"
+				in the sm folder for this to work.
 */
+
 
 //Create base array of differing side missions
 
@@ -28,9 +37,11 @@ _sideMissions =
 	"destroyChopper",
 	"destroySmallRadar",
 	"destroyExplosivesCoast",
-	"destroyWeaponsSupply",
 	"destroyResearchOutpost",
+	"destroyWeaponsSupply",
+	"destroyInsurgentHQ",
 	"destroyRogueHQ"
+
 ];
 
 _mission = "";
@@ -41,9 +52,10 @@ _completeText =
 //Set up some vars
 _firstRun = true; //debug
 _skipTimer = false;
-_roadList = island nearRoads 2000; //change this to the BIS function that creates a trigger covering the map
+_roadList = island nearRoads 7000; //change this to the BIS function that creates a trigger covering the map
 _contactPos = [0,0,0];
 _unitsArray = [sideObj];
+sideMissionUp = false;
 
 while {true} do
 {
@@ -61,27 +73,7 @@ while {true} do
 			sleep (600 + (random 600));
 
 			//Delete old PT objects
-			for "_c" from 0 to (count _unitsArray) do
-			{
-				_obj = _unitsArray select _c;
-				_isGroup = false;
-				if (_obj in allGroups) then { _isGroup = true; } else { _isGroup = false; };
-				if (_isGroup) then
-				{
-					{
-						if (!isNull _x) then
-						{
-							deleteVehicle _x;
-						};
-					} forEach (units _obj);
-					deleteGroup _obj;
-				} else {
-					if (!isNull _obj) then
-					{
-						deleteVehicle _obj;
-					};
-				};
-			};
+			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
 
 			//Select random mission from the SM list
 			_mission = _sideMissions call BIS_fnc_selectRandom;
@@ -94,6 +86,11 @@ while {true} do
 	//Grab the code for the selected mission
 	switch (_mission) do
 	{
+
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 1---------------------------------*/
+	/* -----------------------------------------------------------*/
+
 		case "destroyChopper":
 		{
 			//Set up briefing message
@@ -129,23 +126,22 @@ while {true} do
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
 			//Spawn hangar and chopper
-			_randomDir = (random 360);
-			_hangar = "Land_TentHangar_V1_F" createVehicle _flatPos;
-			waitUntil {alive _hangar};
-			_hangar setPos [(getPos _hangar select 0), (getPos _hangar select 1), ((getPos _hangar select 2) - 1)];
-			sideObj = "O_Heli_Attack_02_black_F" createVehicle _flatPos;
+			realSMOne setPos _flatpos;
+			realSMOne setPos [(getPos realSMOne select 0), (getPos realSMOne select 1), ((getPos realSMOne select 2) - 0.2)];
+			realSMOne setVectorUp [0,0,1];
+			sideObj = "O_Heli_Attack_02_black_F" createVehicle (getMarkerPos "dummySM");
 			waitUntil {!isNull sideObj};
-
+			sideObj allowdamage false;
 			sideObj lock 3;
-			{_x setDir _randomDir} forEach [sideObj,_hangar];
 			sideObj setVehicleLock "LOCKED";
+
 			_fuzzyPos =
 			[
 				((_flatPos select 0) - 300) + (random 600),
@@ -161,7 +157,7 @@ while {true} do
 			//Spawn some enemies around the objective
 			_unitsArray = [sideObj];
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 4 do
 			{
 				_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
@@ -237,28 +233,29 @@ while {true} do
 				_unitsArray = _unitsArray + [_spawnGroup];
 			};
 
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "O_APC_Tracked_02_AA_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
+			if(DEBUG) then
+		{
+			_name = format ["%1%2",name (leader _spawnGroup),_x];
+			createMarker [_name,getPos (leader _spawnGroup)];
+			_name setMarkerType "o_unknown";
+			_name setMarkerText format ["Squad Patrol %1",_x];
+			_name setMarkerColor "ColorRed";
+			[_spawnGroup,_name] spawn
+			{
+				private["_group","_marker"];
+				_group = _this select 0;
+				_marker = _this select 1;
 
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
+				while{count (units _group) > 0} do
+				{
+					_marker setMarkerPos (getPos (leader _group));
+					sleep 0.1;
+				};
+				deleteMarker _marker;
+			};
+		};
 
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
+								_spawnGroup = createGroup east;
 			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
 			_armour = "O_APC_Tracked_02_cannon_F" createVehicle _randomPos;
 			waitUntil{!isNull _armour};
@@ -293,7 +290,8 @@ while {true} do
 			_unitsArray = _unitsArray + [_spawnGroup];
 			//[(units _spawnGroup)] call aw_setGroupSkill;
 			_armour lock true;
-					if(DEBUG) then
+
+		if(DEBUG) then
 		{
 			_name = format ["%1%2",name (leader _spawnGroup),_x];
 			createMarker [_name,getPos (leader _spawnGroup)];
@@ -315,6 +313,8 @@ while {true} do
 			};
 		};
 
+
+
 			//Send new side mission hint
 			GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText _briefing;
 			showNotification = ["NewSideMission", "Destroy Enemy Chopper"]; publicVariable "showNotification";
@@ -323,8 +323,6 @@ while {true} do
 			publicVariable "sideMissionUp";
 			sideMarkerText = "Destroy Chopper";
 			publicVariable "sideMarkerText";
-
-			//Wait until objective is destroyed
 			waitUntil {sleep 0.5; !alive sideObj};
 
 			sideMissionUp = false;
@@ -333,8 +331,6 @@ while {true} do
 			//Send completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 
 			//Hide SM marker
@@ -344,6 +340,10 @@ while {true} do
 
 			//PROCESS REWARD HERE
 		}; /* case "destroyChopper": */
+
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 2---------------------------------*/
+	/* -----------------------------------------------------------*/
 
 		case "destroySmallRadar":
 		{
@@ -381,17 +381,20 @@ while {true} do
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
 			//Spawn radar, set vector and add marker
-			sideObj = "Land_Radar_Small_F" createVehicle _flatPos;
-			waitUntil {alive sideObj};
-			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 2)];
-			sideObj setVectorUp [0,0,1];
+			realSMTwo setPos _flatpos;
+			realSMTwo setPos [(getPos realSMTwo select 0), (getPos realSMTwo select 1), ((getPos realSMTwo select 2) - 2)];
+			realSMTwo setVectorUp [0,0,1];
+			sideObj = "Land_Radar_Small_F" createVehicle (getMarkerPos "dummySM");
+			waitUntil {!isNull sideObj};
+			sideObj allowdamage false;
+
 			_fuzzyPos =
 			[
 				((_flatPos select 0) - 300) + (random 600),
@@ -407,7 +410,7 @@ while {true} do
 			//Spawn some enemies around the objective
 			_unitsArray = [sideObj];
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 4 do
 			{
 				_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
@@ -526,42 +529,6 @@ while {true} do
 			//[(units _spawnGroup)] call aw_setGroupSkill;
 			_armour lock true;
 
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "O_APC_Tracked_02_cannon_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_AR_F" createUnit [_randomPos,_spawnGroup];
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_medic_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 3) assignAsCargo _armour;
-			((units _spawnGroup) select 4) assignAsCargo _armour;
-			((units _spawnGroup) select 5) assignAsCargo _armour;
-			((units _spawnGroup) select 6) assignAsCargo _armour;
-			((units _spawnGroup) select 7) assignAsCargo _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			((units _spawnGroup) select 3) moveInCargo _armour;
-			((units _spawnGroup) select 4) moveInCargo _armour;
-			((units _spawnGroup) select 5) moveInCargo _armour;
-			((units _spawnGroup) select 6) moveInCargo _armour;
-			((units _spawnGroup) select 7) moveInCargo _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
 		if(DEBUG) then
 		{
 			_name = format ["%1%2",name (leader _spawnGroup),_x];
@@ -601,8 +568,6 @@ while {true} do
 			//Throw out objective completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
@@ -611,6 +576,11 @@ while {true} do
 
 			//provide players with reward. Place an MH-9 in the hangar, maybe?
 		}; /* case "destroySmallRadar": */
+
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 3---------------------------------*/
+	/* -----------------------------------------------------------*/
+
 
 		case "destroyExplosivesCoast":
 		{
@@ -623,7 +593,7 @@ while {true} do
 
 			while {!_accepted} do
 			{
-				_position = [[[getPos island,4000]],["water","out"]] call BIS_fnc_randomPos;
+				_position = [[[getPos island,10000]],["water","out"]] call BIS_fnc_randomPos;
 				_flatPos = _position isFlatEmpty
 				[
 					2,
@@ -636,7 +606,7 @@ while {true} do
 
 				while {(count _flatPos) < 1} do
 				{
-					_position = [[[getPos island,16000]],["water","out"]] call BIS_fnc_randomPos;
+					_position = [[[getPos island,10000]],["water","out"]] call BIS_fnc_randomPos;
 					_flatPos = _position isFlatEmpty
 					[
 						2,
@@ -648,24 +618,24 @@ while {true} do
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1700 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
 			//Spawn Mobile HQ
-			_randomDir = (random 360);
-			sideObj = "Land_research_hq_f" createVehicle _flatPos;
-			waitUntil {alive sideObj};
-			sideObj setDir _randomDir;
-			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 0.5)];
-			sideObj setVectorUp [0,0,1];
+			realSMThree setPos _flatpos;
+			realSMThree setPos [(getPos realSMThree select 0), (getPos realSMThree select 1), ((getPos realSMThree select 2) - 2)];
+			realSMThree setVectorUp [0,0,1];
+			sideObj = "Land_research_hq_f" createVehicle (getMarkerPos "dummySM");
+			waitUntil {!isNull sideObj};
+			sideObj allowdamage false;
 
 			//Spawn some enemies around the objective
 			_unitsArray = [sideObj];
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 4 do
 			{
 				_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
@@ -784,41 +754,6 @@ while {true} do
 			//[(units _spawnGroup)] call aw_setGroupSkill;
 			_armour lock true;
 
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "O_APC_Wheeled_02_rcws_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_AR_F" createUnit [_randomPos,_spawnGroup];
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_medic_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 3) assignAsCargo _armour;
-			((units _spawnGroup) select 4) assignAsCargo _armour;
-			((units _spawnGroup) select 5) assignAsCargo _armour;
-			((units _spawnGroup) select 6) assignAsCargo _armour;
-			((units _spawnGroup) select 7) assignAsCargo _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			((units _spawnGroup) select 3) moveInCargo _armour;
-			((units _spawnGroup) select 4) moveInCargo _armour;
-			((units _spawnGroup) select 5) moveInCargo _armour;
-			((units _spawnGroup) select 6) moveInCargo _armour;
-			((units _spawnGroup) select 7) moveInCargo _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
 
 		if(DEBUG) then
 		{
@@ -875,8 +810,6 @@ while {true} do
 			//Throw completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
@@ -886,6 +819,11 @@ while {true} do
 			[] spawn aw_cleanGroups;
 		}; /* case "destroyExplosivesCoast": */
 
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 4 ---------------------------------*/
+	/* -----------------------------------------------------------*/
+
+
 		case "destroyResearchOutpost":
 		{
 			//Set up briefing message
@@ -894,52 +832,52 @@ while {true} do
 
 			_flatPos = [0,0,0];
 			_accepted = false;
-
 			while {!_accepted} do
 			{
-				_position = [[[getPos island,16000]],["water","out"]] call BIS_fnc_randomPos;
+				//Get random safe position somewhere on the island
+				_position = [] call BIS_fnc_randomPos;
 				_flatPos = _position isFlatEmpty
 				[
-					2,
-					0,
-					0.3,
-					1,
-					0,
-					false
+					5, //minimal distance from another object
+					1, //try and find nearby positions if original is incorrect
+					0.5, //30% max gradient
+					sizeOf "Land_research_hq_f",
+					0, //no water
+					false //don't find positions near the shoreline
 				];
 
 				while {(count _flatPos) < 1} do
 				{
-					_position = [[[getPos island,16000]],["water","out"]] call BIS_fnc_randomPos;
+					_position = [] call BIS_fnc_randomPos;
 					_flatPos = _position isFlatEmpty
 					[
-						2,
-						0,
-						0.3,
-						1,
-						0,
-						false
+						10, //minimal distance from another object
+						1, //try and find nearby positions if original is incorrect
+						0.5, //30% max gradient
+						sizeOf "Land_research_hq_f",
+						0, //no water
+						false //don't find positions near the shoreline
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1700 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
-			//Spawn Research HQ
-			_randomDir = (random 360);
-			sideObj = "Land_Medevac_house_V1_F" createVehicle _flatPos;
-			waitUntil {alive sideObj};
-			sideObj setDir _randomDir;
-			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 0.5)];
-			sideObj setVectorUp [0,0,1];
+			//Spawn Weapons Supply House
+			realSMThree setPos _flatpos;
+			realSMThree setPos [(getPos realSMThree select 0), (getPos realSMThree select 1), ((getPos realSMThree select 2)-0.25)];
+			realSMThree setVectorUp [0,0,1];
+			sideObj = "Land_research_hq_f" createVehicle (getMarkerPos "dummySM");
+			waitUntil {!isNull sideObj};
+			sideObj allowdamage false;
 
 			//Spawn some enemies around the objective
 			_unitsArray = [sideObj];
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 4 do
 			{
 				_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
@@ -972,7 +910,7 @@ while {true} do
 			};
 
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 3 do
 			{
 				_randomPos = [_flatPos, 250] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OI_reconSentry")] call BIS_fnc_spawnGroup;
@@ -1005,7 +943,7 @@ while {true} do
 			};
 
 			_x = 0;
-			for "_x" from 0 to 1 do
+			for "_x" from 0 to 2 do
 			{
 				_randomPos = [_flatPos, 200] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OI_reconTeam")] call BIS_fnc_spawnGroup;
@@ -1030,65 +968,6 @@ while {true} do
 			((units _spawnGroup) select 0) moveInDriver _armour;
 			((units _spawnGroup) select 1) moveInGunner _armour;
 			((units _spawnGroup) select 2) moveInCommander _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "O_MRAP_02_hmg_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "O_MRAP_02_hmg_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 20,10] call aw_fnc_randomPos;
-			_armour = "C_SUV_01_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_officer_F" createUnit [_randomPos,_spawnGroup];
-			"O_soldierU_medic_F" createUnit [_randomPos,_spawnGroup];
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsCargo _armour;
-			((units _spawnGroup) select 1) assignAsCargo _armour;
-			((units _spawnGroup) select 2) assignAsCargo _armour;
-			((units _spawnGroup) select 0) moveInCargo _armour;
-			((units _spawnGroup) select 1) moveInCargo _armour;
-			((units _spawnGroup) select 2) moveInCargo _armour;
-
-			((units _spawnGroup) select 0) moveInDriver _armour;
 			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
 			_armour spawn aw_fnc_fuelMonitor;
 			_unitsArray = _unitsArray + [_spawnGroup];
@@ -1150,8 +1029,6 @@ while {true} do
 			//Throw completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
@@ -1160,6 +1037,11 @@ while {true} do
 			publicVariable "sideMarker";
 			[] spawn aw_cleanGroups;
 		}; /* case "destroyResearchOutpost": */
+
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 5---------------------------------*/
+	/* -----------------------------------------------------------*/
+
 
 		case "destroyWeaponsSupply":
 		{
@@ -1171,15 +1053,16 @@ while {true} do
 			_accepted = false;
 			while {!_accepted} do
 			{
+				//Get random safe position somewhere on the island
 				_position = [] call BIS_fnc_randomPos;
 				_flatPos = _position isFlatEmpty
 				[
-					5,
-					1,
-					0.5,
+					5, //minimal distance from another object
+					1, //try and find nearby positions if original is incorrect
+					0.5, //30% max gradient
 					sizeOf "Land_research_hq_f",
-					0,
-					false
+					0, //no water
+					false //don't find positions near the shoreline
 				];
 
 				while {(count _flatPos) < 1} do
@@ -1187,26 +1070,30 @@ while {true} do
 					_position = [] call BIS_fnc_randomPos;
 					_flatPos = _position isFlatEmpty
 					[
-						10,
-						1,
-						0.5,
+						10, //minimal distance from another object
+						1, //try and find nearby positions if original is incorrect
+						0.5, //30% max gradient
 						sizeOf "Land_research_hq_f",
-						0,
-						false
+						0, //no water
+						false //don't find positions near the shoreline
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1700 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
 			//Spawn Weapons Supply House
-			sideObj = "Land_research_hq_f" createVehicle _flatPos;
-			waitUntil {alive sideObj};
-			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2)-0.25)];
-			sideObj setVectorUp [0,0,1];
+			realSMThree setPos _flatpos;
+			realSMThree setPos [(getPos realSMThree select 0), (getPos realSMThree select 1), ((getPos realSMThree select 2)-0.25)];
+			realSMThree setVectorUp [0,0,1];
+			sideObj = "Land_research_hq_f" createVehicle (getMarkerPos "dummySM");
+			waitUntil {!isNull sideObj};
+			sideObj allowdamage false;
+
+
 			_fuzzyPos =
 			[
 				((_flatPos select 0) - 300) + (random 600),
@@ -1222,7 +1109,7 @@ while {true} do
 			//Spawn some enemies around the objective
 			_unitsArray = [sideObj];
 			_x = 0;
-			for "_x" from 0 to 1 do
+			for "_x" from 0 to 2 do
 			{
 				_randomPos = [_flatPos, 100] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "Indep" >> "IND_F" >> "Infantry" >> "HAF_InfTeam")] call BIS_fnc_spawnGroup;
@@ -1255,7 +1142,7 @@ while {true} do
 			};
 
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 4 do
 			{
 				_randomPos = [_flatPos, 100] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "Indep" >> "IND_F" >> "Infantry" >> "HAF_InfTeam_AA")] call BIS_fnc_spawnGroup;
@@ -1288,7 +1175,7 @@ while {true} do
 			};
 
 			_x = 0;
-			for "_x" from 0 to 1 do
+			for "_x" from 0 to 2 do
 			{
 				_randomPos = [_flatPos, 100] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "Indep" >> "IND_F" >> "Infantry" >> "HAF_InfSquad")] call BIS_fnc_spawnGroup;
@@ -1328,48 +1215,6 @@ while {true} do
 			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
 			"O_crew_F" createUnit [_randomPos,_spawnGroup];
 			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "I_MRAP_03_hmg_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"I_crew_F" createUnit [_randomPos,_spawnGroup];
-			"I_crew_F" createUnit [_randomPos,_spawnGroup];
-			"I_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,30] call aw_fnc_randomPos;
-			_armour = "I_APC_tracked_03_cannon_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"I_crew_F" createUnit [_randomPos,_spawnGroup];
-			"I_crew_F" createUnit [_randomPos,_spawnGroup];
 
 			((units _spawnGroup) select 0) assignAsDriver _armour;
 			((units _spawnGroup) select 1) assignAsGunner _armour;
@@ -1425,8 +1270,6 @@ while {true} do
 			//Throw completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
@@ -1435,6 +1278,11 @@ while {true} do
 			publicVariable "sideMarker";
 			[] spawn aw_cleanGroups;
 		}; /* case "destroyWeaponsSupply": */
+
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 6---------------------------------*/
+	/* -----------------------------------------------------------*/
+
 
 		case "destroyInsurgentHQ":
 		{
@@ -1472,17 +1320,20 @@ while {true} do
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
 			//Spawn HQ, set vector and add marker
-			sideObj = "Land_Cargo_HQ_V2_F" createVehicle _flatPos;
-			waitUntil {alive sideObj};
-			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 0.05)];
-			sideObj setVectorUp [0,0,1];
+			realSMFive setPos _flatpos;
+			realSMFive setPos [(getPos realSMFive select 0), (getPos realSMFive select 1), ((getPos realSMFive select 2) - 0.05)];
+			realSMFive setVectorUp [0,0,1];
+			sideObj = "Land_Cargo_HQ_V2_F" createVehicle (getMarkerPos "dummySM");
+			waitUntil {!isNull sideObj};
+			sideObj allowdamage false;
+
 			_fuzzyPos =
 			[
 				((_flatPos select 0) - 300) + (random 600),
@@ -1628,48 +1479,6 @@ while {true} do
 			//[(units _spawnGroup)] call aw_setGroupSkill;
 			_armour lock true;
 
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "B_G_Offroad_01_armed_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkillSpecial;
-			_armour lock true;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,10] call aw_fnc_randomPos;
-			_armour = "B_G_Offroad_01_armed_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkillSpecial;
-			_armour lock true;
-
 			//Throw out objective hint
 			GlobalHint = _briefing; publicVariable "GlobalHint"; hint parseText GlobalHint;
 			showNotification = ["NewSideMission", "Destroy Insurgency HQ"]; publicVariable "showNotification";
@@ -1687,8 +1496,6 @@ while {true} do
 			//Throw out objective completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];
@@ -1696,6 +1503,11 @@ while {true} do
 			publicVariable "sideMarker";
 
 		}; /* case "destroyInsurgentHQ": */
+
+	/* -----------------------------------------------------------*/
+	/* --------------- next side 7---------------------------------*/
+	/* -----------------------------------------------------------*/
+
 
 		case "destroyRogueHQ":
 		{
@@ -1707,42 +1519,46 @@ while {true} do
 			_accepted = false;
 			while {!_accepted} do
 			{
+				//Get random safe position somewhere on the island
 				_position = [] call BIS_fnc_randomPos;
 				_flatPos = _position isFlatEmpty
 				[
 					5, //minimal distance from another object
-					0, //try and find nearby positions if original is incorrect
+					1, //try and find nearby positions if original is incorrect
 					0.5, //30% max gradient
-					1,
+					sizeOf "Land_Cargo_HQ_V2_F",
 					0, //no water
 					false //don't find positions near the shoreline
 				];
 
 				while {(count _flatPos) < 1} do
 				{
-				_position = [] call BIS_fnc_randomPos;
-				_flatPos = _position isFlatEmpty
+					_position = [] call BIS_fnc_randomPos;
+					_flatPos = _position isFlatEmpty
 					[
 						10, //minimal distance from another object
-						0, //try and find nearby positions if original is incorrect
+						1, //try and find nearby positions if original is incorrect
 						0.5, //30% max gradient
-						1,
+						sizeOf "Land_Cargo_HQ_V2_F",
 						0, //no water
 						false //don't find positions near the shoreline
 					];
 				};
 
-				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1000 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
+				if ((_flatPos distance (getMarkerPos "respawn_west")) > 1800 && (_flatPos distance (getMarkerPos currentAO)) > 500) then //DEBUG - set >500 from AO to (PARAMS_AOSize * 2)
 				{
 					_accepted = true;
 				};
 			};
 
 			//Spawn HQ, set vector and add marker
-			sideObj = "Land_research_hq_f" createVehicle _flatPos;
-			waitUntil {alive sideObj};
-			sideObj setPos [(getPos sideObj select 0), (getPos sideObj select 1), ((getPos sideObj select 2) - 0.5)];
-			sideObj setVectorUp [0,0,1];
+			realSMFive setPos _flatpos;
+			realSMFive setPos [(getPos realSMFive select 0), (getPos realSMFive select 1), ((getPos realSMFive select 2) - 0.05)];
+			realSMFive setVectorUp [0,0,1];
+			sideObj = "Land_Cargo_HQ_V2_F" createVehicle (getMarkerPos "dummySM");
+			waitUntil {!isNull sideObj};
+			sideObj allowdamage false;
+
 			_fuzzyPos =
 			[
 				((_flatPos select 0) - 300) + (random 600),
@@ -1751,7 +1567,7 @@ while {true} do
 			];
 
 			{ _x setMarkerPos _fuzzyPos; } forEach ["sideMarker", "sideCircle"];
-			"sideMarker" setMarkerText "Side Mission: Eliminate Rogue HQ";
+			"sideMarker" setMarkerText "Side Mission: Destroy Insurgency HQ";
 			publicVariable "sideMarker";
 			publicVariable "sideObj";
 
@@ -1791,7 +1607,7 @@ while {true} do
 			};
 
 			_x = 0;
-			for "_x" from 0 to 2 do
+			for "_x" from 0 to 3 do
 			{
 				_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "West" >> "BLU_F" >> "Infantry" >> "BUS_InfTeam_AA")] call BIS_fnc_spawnGroup;
@@ -1857,7 +1673,7 @@ while {true} do
 			};
 
 			_x = 0;
-			for "_x" from 0 to 1 do
+			for "_x" from 0 to 2 do
 			{
 				_randomPos = [_flatPos, 50] call aw_fnc_randomPos;
 				_spawnGroup = [_randomPos, EAST, (configfile >> "CfgGroups" >> "East" >> "OPF_F" >> "Infantry" >> "OIA_InfSentry")] call BIS_fnc_spawnGroup;
@@ -1910,105 +1726,6 @@ while {true} do
 			//[(units _spawnGroup)] call aw_setGroupSkillSpecial;
 			_armour lock true;
 
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,50] call aw_fnc_randomPos;
-			_armour = "B_MRAP_01_hmg_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"B_G_engineer_F" createUnit [_randomPos,_spawnGroup];
-			"B_G_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"B_G_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"B_medic_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCargo _armour;
-			((units _spawnGroup) select 3) assignAsCargo _armour;
-
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCargo _armour;
-			((units _spawnGroup) select 2) moveInCargo _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,50] call aw_fnc_randomPos;
-			_armour = "B_MRAP_01_hmg_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"B_G_engineer_F" createUnit [_randomPos,_spawnGroup];
-			"B_G_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"B_G_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"B_medic_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCargo _armour;
-			((units _spawnGroup) select 3) assignAsCargo _armour;
-
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCargo _armour;
-			((units _spawnGroup) select 2) moveInCargo _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-
-			_spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 100,50] call aw_fnc_randomPos;
-			_armour = "B_APC_Tracked_01_rcws_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_crew_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_F" createUnit [_randomPos,_spawnGroup];
-			"O_Soldier_AR_F" createUnit [_randomPos,_spawnGroup];
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-			"O_medic_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsDriver _armour;
-			((units _spawnGroup) select 1) assignAsGunner _armour;
-			((units _spawnGroup) select 2) assignAsCommander _armour;
-			((units _spawnGroup) select 3) assignAsCargo _armour;
-			((units _spawnGroup) select 4) assignAsCargo _armour;
-			((units _spawnGroup) select 5) assignAsCargo _armour;
-			((units _spawnGroup) select 6) assignAsCargo _armour;
-			((units _spawnGroup) select 7) assignAsCargo _armour;
-			((units _spawnGroup) select 0) moveInDriver _armour;
-			((units _spawnGroup) select 1) moveInGunner _armour;
-			((units _spawnGroup) select 2) moveInCommander _armour;
-			((units _spawnGroup) select 3) moveInCargo _armour;
-			((units _spawnGroup) select 4) moveInCargo _armour;
-			((units _spawnGroup) select 5) moveInCargo _armour;
-			((units _spawnGroup) select 6) moveInCargo _armour;
-			((units _spawnGroup) select 7) moveInCargo _armour;
-			[_spawnGroup, _flatPos, 300] call aw_fnc_spawn2_randomPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-
-			spawnGroup = createGroup east;
-			_randomPos = [_flatPos, 30,30] call aw_fnc_randomPos;
-			_armour = "B_Truck_01_ammo_F" createVehicle _randomPos;
-			waitUntil{!isNull _armour};
-
-			"O_soldier_repair_F" createUnit [_randomPos,_spawnGroup];
-
-			((units _spawnGroup) select 0) assignAsCargo _armour;
-			((units _spawnGroup) select 0) moveInCargo _armour;
-
-			[_spawnGroup, _flatPos, 20] call aw_fnc_spawn2_perimeterPatrol;
-			_armour spawn aw_fnc_fuelMonitor;
-			_unitsArray = _unitsArray + [_spawnGroup];
-			//[(units _spawnGroup)] call aw_setGroupSkill;
-			_armour lock true;
-
 		if(DEBUG) then
 		{
 			_name = format ["%1%2",name (leader _spawnGroup),_x];
@@ -2048,8 +1765,6 @@ while {true} do
 			//Throw out objective completion hint
 			[] call AW_fnc_rewardPlusHint;
 
-			[_unitsArray] spawn GC_fnc_deleteOldUnitsAndVehicles;
-			[_unitsArray] spawn AW_fnc_deleteOldSMUnits;
 			deleteVehicle sideObj;
 			//Hide marker
 			"sideMarker" setMarkerPos [0,0,0];

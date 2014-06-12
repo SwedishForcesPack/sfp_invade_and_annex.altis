@@ -40,5 +40,8 @@ class VAS
 		class transferNetwork {};
 		class transferSaveMenu {};
 		class transferSaveGear {};
+		class VASP {};
+		class quickAttachment {};
+		class accList {};
 	};
 };

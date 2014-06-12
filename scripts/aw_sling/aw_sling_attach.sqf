@@ -7,12 +7,12 @@ if(count _nearUnits < 1) exitWith{hint "No Sling Targets";};
 
 //Add size checks here
 _heavyCant = ["O_MBT_02_arty_F","O_APC_Tracked_02_cannon_F","O_APC_Wheeled_02_rcws_F","O_MBT_02_cannon_F","O_APC_Tracked_02_AA_F"];
-_mediumCant = ["Tank","Wheeled_APC_F","Truck_F"];
-_lightCant = _mediumCant + ["MRAP_02_base_F","MRAP_01_base_F","MRAP_03_base_F","Offroad_01_base_F","Boat_Armed_01_base_F"];
+_mediumCant = _heavyCant + ["Tank","Wheeled_APC_F","Truck_F"];
+_lightCant = ["MRAP_02_base_F","MRAP_01_base_F","MRAP_03_base_F","Offroad_01_base_F","Boat_Armed_01_base_F"];
 
 _cantLift = [];
 if((_helo isKindOf "Heli_Light_01_base_F") OR (_helo isKindOf "Heli_Light_02_base_F")) then {_cantLift = _lightCant};
-if((_helo isKindOf "Heli_Transport_01_base_F")) then {_cantLift = _mediumCant};
+if((_helo isKindOf "I_Heli_light_03_unarmed_F") OR (_helo isKindOf "Heli_Transport_01_base_F")) then {_cantLift = _mediumCant};
 if((_helo isKindOf "Heli_Transport_02_base_F")) then {_cantLift = _heavyCant};
 
 //Check for vehicles not too heavy to lift
