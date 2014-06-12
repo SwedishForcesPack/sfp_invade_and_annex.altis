@@ -114,7 +114,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-40 AW Invade & Annex 2.72";
+		briefingName="Co-40 AW Invade & Annex 2.72a";
 		overviewText="Quiksilver + Razgriz33 Edit";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -1007,7 +1007,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="server";
-					init="null = [5,false,false] execFSM ""misc\core_time.fsm"";";
+					init="null = [5,false,false,5] execFSM ""misc\core_time.fsm"";";
 				};
 			};
 		};
