@@ -45,6 +45,8 @@ waitUntil{scriptDone _handle};
 private ["_pos","_isAdmin","_i","_isPerpetual","_accepted","_position","_randomWreck","_firstTarget","_validTarget","_targetsLeft","_flatPos","_targetStartText","_lastTarget","_targets","_dt","_enemiesArray","_radioTowerDownText","_targetCompleteText","_null","_unitSpawnPlus","_unitSpawnMinus","_missionCompleteText"];
 
 _initialTargets = [
+	"Ghost Hotel",
+	"North Field",
 	"Sofia Radar Station",
 	"Research Facility",
 	"Feres",
@@ -346,8 +348,8 @@ smRewards =
 	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
 	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
-	["a PO-30 Orca", "O_Heli_Light_02_F"],
-	["an MQ4A Greyhawk", "B_UAV_02_F"],
+	["a Hellcat", "I_Heli_light_03_F"],
+	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
