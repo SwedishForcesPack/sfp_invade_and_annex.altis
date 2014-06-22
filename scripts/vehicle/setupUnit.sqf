@@ -53,7 +53,7 @@ if (_type in _strider) then {
 };
 
 if (_type in _VASable) then { 
-	_unit addAction ["<t color='#ff1111'>Mobile VAS</t>","scripts\VAS\open.sqf",[],10,true,true,"","(cursorTarget distance player) < 10"];
+	_unit addAction ["<t color='#ff1111'>Mobile VAS</t>","scripts\VAS\open.sqf",[],10,true,true,'((vehicle player) == player) && ((player distance _target) < 5)'];
 };
 
 

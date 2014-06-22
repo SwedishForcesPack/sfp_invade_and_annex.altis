@@ -42,7 +42,7 @@ _c4Message = ["Chopper data secured. The charge has been set! 15 seconds until d
 
 	_randomDir = (random 360);
 	_hangar = "Land_TentHangar_V1_F" createVehicle _flatPos;
-	waitUntil {alive _hangar};
+	waitUntil {!isNull _hangar};
 	_hangar setPos [(getPos _hangar select 0), (getPos _hangar select 1), ((getPos _hangar select 2) - 1)];
 	sideObj = [CHOPPER_TYPE] call BIS_fnc_selectRandom createVehicle _flatPos;
 	waitUntil {!isNull sideObj};
