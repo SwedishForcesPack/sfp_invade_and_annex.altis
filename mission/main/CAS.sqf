@@ -24,8 +24,8 @@ __________________________________________________________*/
 
 #define AIR_TYPE "O_Plane_CAS_02_F"
 #define SPAWN_LIMIT 4
-#define FIXED_TIME 480 		// default 480
-#define RANDOM_TIME 300 	// default 300
+#define FIXED_TIME 10 		// default 480
+#define RANDOM_TIME 5 	// default 300
 
 waitUntil {sleep 0.5; !(isNil "currentAOUp")};
 private ["_priorityMessageJet"];
@@ -45,6 +45,14 @@ while {true} do {
 		
 		[(units _helo_Patrol)] call QS_fnc_setSkill4;
 		
+	_curators = allCurators;
+	{
+		_x addCuratorEditableObjects [[_helo_Patrol] + _helo_crew, false];
+	} foreach _curators;
+
+
+
+
 		showNotification = ["EnemyJet", "Enemy jet approaching the AO!"]; publicVariable "showNotification";
 		_priorityMessageJet =
 		"<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#b60000'>Enemy Jet Inbound</t><br/>____________________<br/>OPFOR are inbound with CAS to support their infantry forces!<br/><br/>This is a priority target!";

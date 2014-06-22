@@ -27,7 +27,7 @@ private ["_enemiesArray","_randomPos","_patrolGroup","_AOvehGroup","_AOveh","_AO
 _pos = getMarkerPos (_this select 0);
 _enemiesArray = [grpNull];
 _x = 0;
-	
+_curators = allCurators;	
 //---------- AA VEHICLE
 	
 for "_x" from 1 to PARAMS_AAPatrol do {
@@ -50,6 +50,12 @@ for "_x" from 1 to PARAMS_AAPatrol do {
 	_enemiesArray = _enemiesArray + [_aaGroup];
 	sleep 0.1;
 	_enemiesArray = _enemiesArray + [_aa];
+
+	{
+		_x addCuratorEditableObjects [[_aa], false];
+		_x addCuratorEditableObjects [units _aaGroup, false];
+	} foreach _curators;
+
 };
 	
 //---------- INFANTRY PATROLS RANDOM
@@ -61,6 +67,11 @@ for "_x" from 1 to PARAMS_GroupPatrol do {
 	[_patrolGroup, getMarkerPos currentAO, 400] call BIS_fnc_taskPatrol;
 
 	_enemiesArray = _enemiesArray + [_patrolGroup];
+
+	{
+		_x addCuratorEditableObjects [units _patrolGroup, false];
+	} foreach _curators;
+
 };
 	
 //---------- STATIC WEAPONS
@@ -81,6 +92,12 @@ for "_x" from 1 to PARAMS_StaticMG do {
 	_enemiesArray = _enemiesArray + [_staticGroup];
 	sleep 0.1;
 	_enemiesArray = _enemiesArray + [_static];
+
+	{
+		_x addCuratorEditableObjects [[_static], false];
+		_x addCuratorEditableObjects [units _staticGroup, false];
+	} foreach _curators;
+
 };
 	
 //---------- INFANTRY OVERWATCH
@@ -92,6 +109,11 @@ for "_x" from 1 to PARAMS_Overwatch do {
 	[_overwatchGroup, _randomPos, 100] call BIS_fnc_taskPatrol;
 
 	_enemiesArray = _enemiesArray + [_overwatchGroup];
+
+	{
+		_x addCuratorEditableObjects [units _overwatchGroup, false];
+	} foreach _curators;
+
 };
 
 //--------- MRAP
@@ -116,6 +138,13 @@ for "_x" from 0 to 1 do {
 	_enemiesArray = _enemiesArray + [_AOmrapGroup];
 	sleep 0.1;
 	_enemiesArray = _enemiesArray + [_AOmrap];
+
+	{
+		_x addCuratorEditableObjects [[_AOmrap], false];
+		_x addCuratorEditableObjects [units _AOmrapGroup, false];
+	} foreach _curators;
+
+
 };
 	
 //---------- GROUND VEHICLE RANDOM
@@ -140,6 +169,12 @@ for "_x" from 0 to (3 + (random 2)) do {
 	_enemiesArray = _enemiesArray + [_AOvehGroup,_AOveh];
 	sleep 0.1;
 	_enemiesArray = _enemiesArray + [_AOveh];
+
+	{
+		_x addCuratorEditableObjects [[_AOveh], false];
+		_x addCuratorEditableObjects [units _AOvehGroup, false];
+	} foreach _curators;
+
 };
 	
 //---------- HELICOPTER	
@@ -178,6 +213,12 @@ if((random 10 <= PARAMS_AirPatrol)) then {
 	_enemiesArray = _enemiesArray + [_airGroup];
 	sleep 0.1;
 	_enemiesArray = _enemiesArray + [_air];
+
+	{
+		_x addCuratorEditableObjects [[_air], false];
+		_x addCuratorEditableObjects [units _airGroup, false];
+	} foreach _curators;
+
 };
 
 //---------- SNIPERS
@@ -190,6 +231,11 @@ for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 	_sniperGroup setCombatMode "RED";
 		
 	_enemiesArray = _enemiesArray + [_sniperGroup];
+
+	{
+		_x addCuratorEditableObjects [units _sniperGroup, false];
+	} foreach _curators;
+
 };
 	
 //---------- COMMON
@@ -208,4 +254,4 @@ for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 		if (!isNull _newGrp) then { _enemiesArray = _enemiesArray + [_newGrp]; };
 	} forEach (getMarkerPos currentAO nearObjects ["House", 800]);
 	
-_enemiesArray
+_enemiesArray;
