@@ -1,3 +1,4 @@
+// http://forums.bistudio.com/showthread.php?176691-Making-placed-units-be-editable-for-every-Zeus
 _curator = _this select 0;
 _placed = _this select 1;
 
