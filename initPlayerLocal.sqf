@@ -20,8 +20,8 @@ enableSentences false;
 //------------------- client executions
 
 if (isDedicated) then {
-	TCB_AIS_PATH = "ais_injury\";
-	{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});		// execute for every playable unit
+	// TCB_AIS_PATH = "ais_injury\";
+	// {[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});		// execute for every playable unit
 	
 	//{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (units group player);													// only own group - you cant help strange group members
 	
@@ -29,6 +29,9 @@ if (isDedicated) then {
 };
 
 
+{
+	_x addCuratorEditableObjects [[_this select 0],true];
+} forEach allCurators;
 
 
 _null = [] execvm "scripts\vehicle\crew\crew.sqf"; 								// vehicle HUD

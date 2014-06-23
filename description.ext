@@ -59,6 +59,13 @@ class CfgFunctions
 		#include "functions\cfgfunctions.hpp"			// Integrated I&A functions
 		#include "scripts\VAS\cfgfunctions.hpp"			// VAS
 		#include "scripts\taw_vd\CfgFunctions.hpp"		// View distance
+	    class FETT {									// Curator synch
+	        class curator {
+	            class eventHandlers {postInit = 1;};
+	            class objPlaced {};
+	            class grpPlaced {};
+	        };
+	    };
 	};
 
 class RscTitles
