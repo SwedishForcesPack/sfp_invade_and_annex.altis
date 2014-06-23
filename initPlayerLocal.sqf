@@ -29,11 +29,6 @@ if (isDedicated) then {
 };
 
 
-{
-	_x addCuratorEditableObjects [[_this select 0],true];
-} forEach allCurators;
-
-
 _null = [] execvm "scripts\vehicle\crew\crew.sqf"; 								// vehicle HUD
 _null = [] execVM 'scripts\group_manager.sqf';									// group manager
 _null = [] execVM "scripts\restrictions.sqf"; 									// gear restrictions
