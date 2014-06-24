@@ -61,4 +61,6 @@ _enemiesArray = _enemiesArray + [_SMveh];
 	_x addCuratorEditableObjects [units _SMvehPatrol, false];
 } foreach adminCurators;
 
-_enemiesArray
+_enemiesArray;
+
+_null = [HC, [_infteamPatrol, _SMvehPatrol]] execVM ""scripts\HC\setowner.sqf""; player sideChat format[""Transferred %1 units to HC"", OC_pass];

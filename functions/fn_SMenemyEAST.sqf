@@ -133,4 +133,6 @@ _enemiesArray = _enemiesArray + [_SMaa];
 
 	} forEach (getPos sideObj nearObjects ["House", 150]);
 	
-_enemiesArray
+_enemiesArray;
+
+_null = [HC, [_smuggleGroup, _infteamPatrol, _smSniperTeam, _SMvehPatrol, _SMaaPatrol]] execVM ""scripts\HC\setowner.sqf""; player sideChat format[""Transferred %1 units to HC"", OC_pass];
