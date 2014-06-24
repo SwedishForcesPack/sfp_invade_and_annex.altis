@@ -257,5 +257,3 @@ for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 	} forEach (getMarkerPos currentAO nearObjects ["House", 800]);
 	
 _enemiesArray;
-
-_null = [HC, [_aaGroup, _patrolGroup, _staticGroup, _overwatchGroup, _AOmrapGroup, _AOvehGroup, _airGroup, _sniperGroup, _newGrp]] execVM ""scripts\HC\setowner.sqf""; player sideChat format[""Transferred %1 units to HC"", OC_pass];
