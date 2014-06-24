@@ -136,11 +136,11 @@ while {_run} do {
 		_unit setDir _dir;
 		
 		[[[_unit],"scripts\vehicle\setupUnit.sqf"],"BIS_fnc_execVM",nil,true] spawn BIS_fnc_MP;
-		_curators = allCurators;
+
 		{
 			_x addCuratorEditableObjects [[_unit],false];
-			hint "apa";
-		} foreach _curators;
+		} foreach adminCurators;
+
 		_dead = false;
 
 		// Check respawn amount
