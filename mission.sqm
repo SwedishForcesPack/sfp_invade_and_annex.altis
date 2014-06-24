@@ -127,7 +127,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-45 AW Invade & Annex 2.77";
+		briefingName="Co-45 AW Invade & Annex 2.77A";
 		overviewText="Version 2.77";
 		resistanceWest=0;
 		resistanceEast=1;
