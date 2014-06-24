@@ -28,7 +28,6 @@ if (isDedicated) then {
 	//{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach [p1,p2,p3,p4,p5];														// only some defined units
 };
 
-
 _null = [] execvm "scripts\vehicle\crew\crew.sqf"; 								// vehicle HUD
 _null = [] execVM 'scripts\group_manager.sqf';									// group manager
 _null = [] execVM "scripts\restrictions.sqf"; 									// gear restrictions
