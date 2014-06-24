@@ -27,7 +27,6 @@ private ["_enemiesArray","_randomPos","_patrolGroup","_AOvehGroup","_AOveh","_AO
 _pos = getMarkerPos (_this select 0);
 _enemiesArray = [grpNull];
 _x = 0;
-_curators = allCurators;	
 //---------- AA VEHICLE
 	
 for "_x" from 1 to PARAMS_AAPatrol do {
@@ -54,7 +53,7 @@ for "_x" from 1 to PARAMS_AAPatrol do {
 	{
 		_x addCuratorEditableObjects [[_aa], false];
 		_x addCuratorEditableObjects [units _aaGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 	
@@ -70,7 +69,7 @@ for "_x" from 1 to PARAMS_GroupPatrol do {
 
 	{
 		_x addCuratorEditableObjects [units _patrolGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 	
@@ -96,7 +95,7 @@ for "_x" from 1 to PARAMS_StaticMG do {
 	{
 		_x addCuratorEditableObjects [[_static], false];
 		_x addCuratorEditableObjects [units _staticGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 	
@@ -112,7 +111,7 @@ for "_x" from 1 to PARAMS_Overwatch do {
 
 	{
 		_x addCuratorEditableObjects [units _overwatchGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 
@@ -142,7 +141,7 @@ for "_x" from 0 to 1 do {
 	{
 		_x addCuratorEditableObjects [[_AOmrap], false];
 		_x addCuratorEditableObjects [units _AOmrapGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 
 };
@@ -173,7 +172,7 @@ for "_x" from 0 to (3 + (random 2)) do {
 	{
 		_x addCuratorEditableObjects [[_AOveh], false];
 		_x addCuratorEditableObjects [units _AOvehGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 	
@@ -217,7 +216,7 @@ if((random 10 <= PARAMS_AirPatrol)) then {
 	{
 		_x addCuratorEditableObjects [[_air], false];
 		_x addCuratorEditableObjects [units _airGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 
@@ -234,7 +233,7 @@ for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 
 	{
 		_x addCuratorEditableObjects [units _sniperGroup, false];
-	} foreach _curators;
+	} foreach adminCurators;
 
 };
 	
@@ -254,7 +253,7 @@ for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 		if (!isNull _newGrp) then { _enemiesArray = _enemiesArray + [_newGrp]; };
 		{
 			_x addCuratorEditableObjects [units _newGrp, false];
-		} foreach _curators;		
+		} foreach adminCurators;		
 	} forEach (getMarkerPos currentAO nearObjects ["House", 800]);
 	
 _enemiesArray;
