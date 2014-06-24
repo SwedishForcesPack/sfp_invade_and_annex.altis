@@ -26,8 +26,13 @@ Credit:
 ______________________________________________________*/
 
 
-enableSaving [false, false];	
+enableSaving [false, false];
 
+//------------------------------------------------ Set up curator classes
+
+curators = allCurators;
+guestCurators = [Guest1, Guest2];
+adminCurators = curators - guestCurators;
 
 //------------------------------------------------ Handle parameters
 

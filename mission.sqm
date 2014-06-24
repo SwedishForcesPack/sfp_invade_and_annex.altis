@@ -1983,7 +1983,7 @@ class Mission
 					skill=0.60000002;
 					text="curatorEditable";
 					syncId=16;
-					synchronizations[]={55,56,57,8,9,5,32,39,31,38,21,22,29,33,50,37,47,28,30,42,41,36,35,46,24,49,40,19,34,43,44,45,20,23,0,1,2,4,3,6,7,10,11,12,13,14,15,52,51,53,54,18,17,48,26,25,27};
+					synchronizations[]={53,54,55,8,9,5,30,37,29,36,19,20,27,31,48,35,45,26,28,40,39,34,33,44,22,47,38,17,32,41,42,43,18,21,0,1,2,4,3,6,7,10,11,12,13,14,15,50,49,51,52,46,24,23,25};
 				};
 			};
 		};
@@ -2031,8 +2031,6 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="Guest2";
-					syncId=17;
-					synchronizations[]={16};
 				};
 			};
 		};
@@ -2080,8 +2078,6 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="Guest1";
-					syncId=18;
-					synchronizations[]={16};
 				};
 			};
 		};
@@ -2111,7 +2107,7 @@ class Mission
 			skill=0.60000002;
 			text="HEMTT_4";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=19;
+			syncId=17;
 			synchronizations[]={16};
 		};
 		class Item2
@@ -2206,7 +2202,7 @@ class Mission
 			skill=0.60000002;
 			text="Quad_4";
 			init="_m = [this,60,30] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=20;
+			syncId=18;
 			synchronizations[]={16};
 		};
 		class Item11
@@ -2219,7 +2215,7 @@ class Mission
 			skill=0.60000002;
 			text="Quad_2";
 			init="_m = [this,60,30] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=21;
+			syncId=19;
 			synchronizations[]={16};
 		};
 		class Item12
@@ -2232,7 +2228,7 @@ class Mission
 			skill=0.60000002;
 			text="Quad_8";
 			init="_m = [this,60,30] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=22;
+			syncId=20;
 			synchronizations[]={16};
 		};
 		class Item13
@@ -2245,7 +2241,7 @@ class Mission
 			skill=0.60000002;
 			text="Quad_6";
 			init="_m = [this,60,30] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=23;
+			syncId=21;
 			synchronizations[]={16};
 		};
 		class Item14
@@ -2260,7 +2256,7 @@ class Mission
 			skill=0.60000002;
 			text="H_3";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=24;
+			syncId=22;
 			synchronizations[]={16};
 		};
 		class Item15
@@ -2274,7 +2270,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			init="_m = [this,60,300,0,FALSE] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=25;
+			syncId=23;
 			synchronizations[]={16};
 		};
 		class Item16
@@ -2287,7 +2283,7 @@ class Mission
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
-			syncId=26;
+			syncId=24;
 			synchronizations[]={16};
 		};
 		class Item17
@@ -2301,7 +2297,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			init="_m = [this,60,300,0,FALSE] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=27;
+			syncId=25;
 			synchronizations[]={16};
 		};
 		class Item18
@@ -2393,7 +2389,7 @@ class Mission
 			skill=0.60000002;
 			text="Marshall_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=28;
+			syncId=26;
 			synchronizations[]={16};
 		};
 		class Item26
@@ -2407,7 +2403,7 @@ class Mission
 			skill=0.60000002;
 			text="HEMTT_REPAIR";
 			init="_m = [this,60,30] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=29;
+			syncId=27;
 			synchronizations[]={16};
 		};
 		class Item27
@@ -2421,7 +2417,7 @@ class Mission
 			skill=0.60000002;
 			text="Bobcat_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=30;
+			syncId=28;
 			synchronizations[]={16};
 		};
 		class Item28
@@ -2437,7 +2433,7 @@ class Mission
 			ammo=0.66858453;
 			text="OB_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=31;
+			syncId=29;
 			synchronizations[]={16};
 		};
 		class Item29
@@ -2452,7 +2448,7 @@ class Mission
 			skill=0.60000002;
 			text="GH_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=32;
+			syncId=30;
 			synchronizations[]={16};
 		};
 		class Item30
@@ -2466,7 +2462,7 @@ class Mission
 			skill=0.60000002;
 			text="HEMTT_FUEL";
 			init="_m = [this,60,30] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=33;
+			syncId=31;
 			synchronizations[]={16};
 		};
 		class Item31
@@ -2481,7 +2477,7 @@ class Mission
 			skill=0.60000002;
 			text="HEMTT_3";
 			init="_m = [this,1200,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=34;
+			syncId=32;
 			synchronizations[]={16};
 		};
 		class Item32
@@ -2640,7 +2636,7 @@ class Mission
 			skill=0.60000002;
 			text="strider2";
 			init="_m = [this,60,1200] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=35;
+			syncId=33;
 			synchronizations[]={16};
 		};
 		class Item47
@@ -2653,7 +2649,7 @@ class Mission
 			skill=0.60000002;
 			text="strider1";
 			init="_m = [this,60,1200] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=36;
+			syncId=34;
 			synchronizations[]={16};
 		};
 		class Item48
@@ -2667,7 +2663,7 @@ class Mission
 			skill=0.60000002;
 			text="Slammer_2";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=37;
+			syncId=35;
 			synchronizations[]={16};
 		};
 		class Item49
@@ -3105,7 +3101,7 @@ class Mission
 			skill=0.60000002;
 			text="MH_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=38;
+			syncId=36;
 			synchronizations[]={16};
 		};
 		class Item91
@@ -3118,7 +3114,7 @@ class Mission
 			skill=0.60000002;
 			text="LB_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=39;
+			syncId=37;
 			synchronizations[]={16};
 		};
 		class Item92
@@ -3485,7 +3481,7 @@ class Mission
 			vehicle="B_Truck_01_transport_F";
 			skill=0.60000002;
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=40;
+			syncId=38;
 			synchronizations[]={16};
 		};
 		class Item126
@@ -3773,7 +3769,7 @@ class Mission
 			skill=0.60000002;
 			text="offroad1";
 			init="_m = [this,60,1200] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=41;
+			syncId=39;
 			synchronizations[]={16};
 		};
 		class Item152
@@ -3800,7 +3796,7 @@ class Mission
 			skill=0.60000002;
 			text="offroad2";
 			init="_m = [this,60,1200] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=42;
+			syncId=40;
 			synchronizations[]={16};
 		};
 		class Item154
@@ -3858,7 +3854,7 @@ class Mission
 			skill=0.60000002;
 			text="H_4";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=43;
+			syncId=41;
 			synchronizations[]={16};
 		};
 		class Item159
@@ -3872,7 +3868,7 @@ class Mission
 			skill=0.60000002;
 			text="H_5";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=44;
+			syncId=42;
 			synchronizations[]={16};
 		};
 		class Item160
@@ -3886,7 +3882,7 @@ class Mission
 			skill=0.60000002;
 			text="H_6";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=45;
+			syncId=43;
 			synchronizations[]={16};
 		};
 		class Item161
@@ -3901,7 +3897,7 @@ class Mission
 			skill=0.60000002;
 			text="H_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=46;
+			syncId=44;
 			synchronizations[]={16};
 		};
 		class Item162
@@ -4011,7 +4007,7 @@ class Mission
 			skill=0.60000002;
 			text="Panther_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=47;
+			syncId=45;
 			synchronizations[]={16};
 		};
 		class Item171
@@ -4022,7 +4018,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Boat_Civil_01_rescue_F";
 			skill=0.60000002;
-			syncId=48;
+			syncId=46;
 			synchronizations[]={16};
 		};
 		class Item172
@@ -4327,7 +4323,7 @@ class Mission
 			skill=0.60000002;
 			text="H_7";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=49;
+			syncId=47;
 			synchronizations[]={16};
 		};
 		class Item200
@@ -4340,7 +4336,7 @@ class Mission
 			skill=0.60000002;
 			text="Mora_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
-			syncId=50;
+			syncId=48;
 			synchronizations[]={16};
 		};
 		class Item201
@@ -4543,7 +4539,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Kart_01_Blu_F";
 			skill=0.60000002;
-			syncId=51;
+			syncId=49;
 			synchronizations[]={16};
 		};
 		class Item217
@@ -4554,7 +4550,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Kart_01_Fuel_F";
 			skill=0.60000002;
-			syncId=52;
+			syncId=50;
 			synchronizations[]={16};
 		};
 		class Item218
@@ -4565,7 +4561,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Kart_01_F";
 			skill=0.60000002;
-			syncId=53;
+			syncId=51;
 			synchronizations[]={16};
 		};
 		class Item219
@@ -4576,7 +4572,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Kart_01_Vrana_F";
 			skill=0.60000002;
-			syncId=54;
+			syncId=52;
 			synchronizations[]={16};
 		};
 		class Item220
@@ -8203,7 +8199,7 @@ class Mission
 			skill=1;
 			fuel=0;
 			init="this allowdamage false; this enablesimulation false;";
-			syncId=55;
+			syncId=53;
 			synchronizations[]={16};
 		};
 		class Item620
@@ -8217,7 +8213,7 @@ class Mission
 			skill=1;
 			fuel=0;
 			init="this allowdamage false; this enablesimulation false;";
-			syncId=56;
+			syncId=54;
 			synchronizations[]={16};
 		};
 		class Item621
@@ -8231,7 +8227,7 @@ class Mission
 			skill=1;
 			fuel=0;
 			init="this allowdamage false; this enablesimulation false;";
-			syncId=57;
+			syncId=55;
 			synchronizations[]={16};
 		};
 		class Item622
