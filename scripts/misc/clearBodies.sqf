@@ -6,6 +6,12 @@ while { true } do {
 		deleteVehicle _x;
 	} forEach allDead;
 	
+	sleep 1;
+	{deleteVehicle _x;} count (allMissionObjects "Ruins");
+	sleep 1;
+	{deleteVehicle _x;} count (allMissionObjects "CraterLong");
+	sleep 1;
+
 	_groups = allGroups;
 
 	for "_c" from 0 to ((count _groups) - 1) do {
