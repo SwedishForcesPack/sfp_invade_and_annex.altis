@@ -23,4 +23,4 @@ VictoryColor="colorGreen";	// Colour of marker after completion
 hostileColor="colorRed";	// Default colour when enemies active
 bastionColor="colorOrange";	// Colour for bastion marker
 EOS_DAMAGE_MULTIPLIER=1;	// 1 is default
-EOS_KILLCOUNTER=true;		// Counts killed units
+EOS_KILLCOUNTER=false;		// Counts killed units
