@@ -97,6 +97,11 @@ private ["_dir","_PTdir","_pos","_barrier","_unitsArray","_flatPos","_accepted",
 		((units _priorityGroup) select 3) moveInGunner priorityObj2;
 	
 	_unitsArray = _unitsArray + [_priorityGroup];
+
+	{
+		_x addCuratorEditableObjects [[priorityObj1, priorityObj2, ammoTruck] + (units _priorityGroup), false];
+	} foreach adminCurators;
+
 	
 	//---------- Engines on baby
 	

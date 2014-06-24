@@ -99,6 +99,10 @@ private ["_flatPos","_accepted","_position","_flatPos1","_flatPos2","_flatPos3",
 	_priorityGroup allowFleeing 0;
 	
 	_unitsArray = _unitsArray + [_priorityGroup];
+
+	{
+		_x addCuratorEditableObjects [[priorityObj1, priorityObj2, ammoTruck] + (units _priorityGroup), false];
+	} foreach adminCurators;
 	
 //-------------------- 4. SPAWN H-BARRIER RING
 	
