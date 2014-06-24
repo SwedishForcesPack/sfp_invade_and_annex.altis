@@ -45,6 +45,15 @@ while {true} do {
 		
 		[(units _helo_Patrol)] call QS_fnc_setSkill4;
 		
+
+		{
+			_x addCuratorEditableObjects [[_air], false]
+			_x addCuratorEditableObjects [units _airGroup, false];
+		} foreach _curators;
+
+
+
+		
 		showNotification = ["EnemyJet", "Enemy jet approaching the AO!"]; publicVariable "showNotification";
 		_priorityMessageJet =
 		"<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#b60000'>Enemy Jet Inbound</t><br/>____________________<br/>OPFOR are inbound with CAS to support their infantry forces!<br/><br/>This is a priority target!";

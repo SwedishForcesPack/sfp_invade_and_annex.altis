@@ -65,6 +65,11 @@ private ["_flatPos","_accepted","_position","_randomDir","_x","_briefing","_enem
 	[(units _smuggleGroup)] call QS_fnc_setSkill2;
 	
 	_unitsArray = [_smuggleGroup];
+
+	{
+		_x addCuratorEditableObjects [[boat], false];
+		_x addCuratorEditableObjects [units _smuggleGroup, false];
+	} foreach adminCurators;
 	
 	//---------- SHIPPING TRAWLER AND INFLATABLE BOAT FOR AMBIENCE
 	

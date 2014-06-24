@@ -97,6 +97,10 @@ while { count _targetArray > 0 } do {
 	};
 	publicVariable "radioTower";
 
+	{
+		_x addCuratorEditableObjects [[radioTower], false];
+	} foreach allCurators;
+
 	//------------------------------------------- Set target start text
 	
 	_targetStartText = format

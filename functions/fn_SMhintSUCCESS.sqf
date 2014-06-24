@@ -37,6 +37,10 @@ waitUntil {!isNull _reward};
 
 _reward setDir 284;
 
+{
+	_x addCuratorEditableObjects [[_reward], false];
+} foreach adminCurators;
+
 GlobalHint = _completeText; publicVariable "GlobalHint"; hint parseText _completeText;
 showNotification = ["CompletedSideMission", sideMarkerText]; publicVariable "showNotification";
 showNotification = ["Reward", format["Your team received %1!", _vehName]]; publicVariable "showNotification";
