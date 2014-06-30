@@ -1,24 +1,24 @@
 /*
 Author:
- 
+
 	Jester [AW]
 	Quiksilver
-	
-Last modified: 
+
+Last modified:
 
 	27/04/2014
-	
-Description: 
+
+Description:
 
 	Spawns enemy CAS while radio tower is alive.
 
-To do: 	
+To do:
 
 	WIP
-	
-	Fuck. WIP version doesn't work for whatever reason, so this is a revert script from 2.74. 
+
+	Fuck. WIP version doesn't work for whatever reason, so this is a revert script from 2.74.
 	At least it sort of works. Don't have time to fix at the moment. while loop not working on new one.
-	
+
 	Basically, this code will be changing dramatically over coming weeks.
 __________________________________________________________*/
 
@@ -42,23 +42,23 @@ while {true} do {
 		_helo_Patrol = _helo_Array select 0;
 		_helo_crew = _helo_Array select 1;
 		[_helo_Array select 2, _patrolPos] call BIS_fnc_taskAttack;
-		
+
 		[(units _helo_Patrol)] call QS_fnc_setSkill4;
-		
+
 
 		{
-			_x addCuratorEditableObjects [[_air], false]
+			_x addCuratorEditableObjects [[_air], false];
 			_x addCuratorEditableObjects [units _airGroup, false];
 		} foreach _curators;
 
 
 
-		
+
 		showNotification = ["EnemyJet", "Enemy jet approaching the AO!"]; publicVariable "showNotification";
 		_priorityMessageJet =
 		"<t align='center' size='2.2'>Priority Target</t><br/><t size='1.5' color='#b60000'>Enemy Jet Inbound</t><br/>____________________<br/>OPFOR are inbound with CAS to support their infantry forces!<br/><br/>This is a priority target!";
 		GlobalHint = _priorityMessageJet; publicVariable "GlobalHint"; hint parseText _priorityMessageJet;
-		
+
 		waitUntil {
 			sleep 5;
 			_helo_Patrol setVehicleAmmo 1;
