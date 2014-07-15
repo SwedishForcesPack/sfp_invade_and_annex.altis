@@ -3,7 +3,7 @@ private ["_veh","_vehName","_vehVarname","_completeText","_reward"];
 smRewards =
 [
 	["a To-199 Neophron (CAS)", "O_Plane_CAS_02_F"],
-	["an A-164 Wipeout (CAS)", "B_Plane_CAS_01_F"],
+	["an A-164 Wipeout (CAS)", "B_Plane_CAS_01_F"]
 	["an Mi-48 Kajman", "O_Heli_Attack_02_black_F"],
 	["an AH-99 Blackfoot", "B_Heli_Attack_01_F"],
 	["a PO-30 Orca", "O_Heli_Light_02_F"],
@@ -19,6 +19,7 @@ smRewards =
 	["a T-100 Varsuk", "O_MBT_02_cannon_F"],
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
 	["an M2A4 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"],
+	["an M2A1 Slammer", "B_MBT_01_cannon_F"],
 ];
 smMarkerList =
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
