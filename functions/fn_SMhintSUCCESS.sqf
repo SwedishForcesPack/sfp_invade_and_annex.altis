@@ -18,7 +18,7 @@ smRewards =
 	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
 	["a T-100 Varsuk", "O_MBT_02_cannon_F"],
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
-	["an M2A4 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"],
+	["an M2A4 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"]
 ];
 smMarkerList =
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];
