@@ -130,7 +130,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-45 AW Invade & Annex 2.77I";
+		briefingName="Co-45 AW Invade & Annex 2.77J";
 		overviewText="Version 2.77";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -9622,7 +9622,7 @@ class Mission
 			interruptable=1;
 			age="UNKNOWN";
 			expCond="this and ((getPos (thisList select 0)) select 2 < 1)";
-			expActiv="_handle = [(thisList select 0)] execVM ""misc\rearmChopper.sqf"";";
+			expActiv="_handle = [(thisList select 0)] execVM ""scripts\misc\rearmChopper.sqf"";";
 			class Effects
 			{
 			};
