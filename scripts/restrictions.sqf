@@ -40,7 +40,7 @@ _________________________________________________*/
 
 		//------------------------------------- Sniper Rifles
 
-		if ((player hasWeapon "srifle_GM6_F") || (player hasWeapon "srifle_GM6_LRPS_F") || (player hasWeapon "srifle_LRR_F") || (player hasWeapon "srifle_GM6_SOS_F") || (player hasWeapon "srifle_LRR_LRPS_F") || (player hasWeapon "srifle_LRR_SOS_F")) then
+		if ((player hasWeapon "srifle_GM6_F") || (player hasWeapon "srifle_GM6_LRPS_F") || (player hasWeapon "srifle_LRR_F") || (player hasWeapon "srifle_GM6_SOS_F") || (player hasWeapon "srifle_GM6_camo_F") || (player hasWeapon "srifle_GM6_camo_SOS_F") || (player hasWeapon "srifle_GM6_camo_LRPS_F") || (player hasWeapon "srifle_LRR_camo_F") || (player hasWeapon "srifle_LRR_camo_LRPS_F") || (player hasWeapon "srifle_LRR_camo_SOS_F") || (player hasWeapon "srifle_LRR_LRPS_F") || (player hasWeapon "srifle_LRR_SOS_F")) then
 		{
 			if ((playerSide == west && typeOf player != "B_sniper_F") || (playerside == east && typeOf player != "O_sniper_F")) then
 			{
@@ -50,6 +50,12 @@ _________________________________________________*/
 				player removeWeapon "srifle_LRR_F";
 				player removeWeapon "srifle_LRR_LRPS_F";
 				player removeWeapon "srifle_LRR_SOS_F";
+				player removeWeapon "srifle_GM6_camo_F";
+				player removeWeapon "srifle_GM6_camo_LRPS_F";
+				player removeWeapon "srifle_GM6_camo_SOS_F";
+				player removeWeapon "srifle_LRR_camo_F";
+				player removeWeapon "srifle_LRR_camo_LRPS_F";
+				player removeWeapon "srifle_LRR_camo_SOS_F";
 				titleText [SNIPER_MSG, "PLAIN", 3];
 			};
 		};
