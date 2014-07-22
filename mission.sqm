@@ -130,7 +130,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-45 AW Invade & Annex 2.77L";
+		briefingName="Co-45 AW Invade & Annex 2.77M";
 		overviewText="Version 2.77";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -9616,13 +9616,13 @@ class Mission
 			position[]={23642.178,5.23,16372.913};
 			a=8;
 			b=8;
-			angle=90.471367;
+			angle=90.471397;
 			activationBy="WEST";
 			repeating=1;
 			interruptable=1;
 			age="UNKNOWN";
 			expCond="this and ((getPos (thisList select 0)) select 2 < 1)";
-			expActiv="_handle = [(thisList select 0)] execVM ""scripts\misc\rearmChopper.sqf"";";
+			expActiv="_handle = [(thisList select 0)] execVM ""scripts\misc\rearmHelicopter.sqf"";";
 			class Effects
 			{
 			};

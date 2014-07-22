@@ -22,7 +22,7 @@ private ["_heli", "_reloadtime"];
     _crateType =  "B_supplyCrate_F";			//ammocrate class for blufor, feel free to change to whichever box you desire
     _smokeType =  "SmokeShellPurple";  			//smoke shell color you want to use
     _lightType =  "Chemlight_blue";  			//chemlightcolor you want used
-    _reloadtime = 30;  							// time before next ammo drop is available to use, default 600 or 480
+    _reloadtime = 600;  							// time before next ammo drop is available to use, default 600 or 480
     _minheight = 50;  							// the height you have to be before you can actually drop the crate
 	// display this when too low to drop
     _tooLow = format ["<t align='center'><t size='2.2' color='#ed3b00'>TOO LOW</t><br/><t size='1.2' color='#9ef680'>You need to be above</t><br/><t size='1.5' color='#ed3b00'>%1 meters</t><br/><t size='1.2' color='#9ef680'>in order to drop an ammo crate.</t></t>",_minheight];
