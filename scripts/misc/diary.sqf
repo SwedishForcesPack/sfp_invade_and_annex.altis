@@ -37,7 +37,7 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
-player createDiarySubject ["rules", "Rules"];
+player createDiarySubject ["rules", "allFPS I&A Rules"];
 player createDiarySubject ["mods", "Mods"];
 player createDiarySubject ["teamspeak", "Teamspeak"];
 player createDiarySubject ["faq", "FAQ"];
@@ -48,19 +48,50 @@ player createDiarySubject ["credits", "Credits"];
 
 player createDiaryRecord ["rules",
 [
+"Enforcement",
+"
+<br />The purpose of the above rules are to ensure a fun and relaxing environment for public players.
+<br />
+<br />Server rules are in place merely as a means to that end.
+<br />
+<br />Guideline for enforcement:
+<br />
+<br />-	Innocent rule violation and disruptive behavior: 
+<br />
+<br />		= Verbal / Written request to cease, or warning.
+<br /> 
+<br />-	Minor or first-time rule violation:
+<br />
+<br />		= Kick, or 0 - 3 day ban.
+<br />
+<br />-	Serious or repetitive rule violation: 
+<br />
+<br />		= 3 - 7 day ban.
+<br />
+<br />-	Administrative ban (hack/exploit/verbal abuse/serious offense):
+<br />
+<br />		= permanent or 30 day.
+<br />
+<br />
+<br />The above is subject to discretion.
+"
+]];
+
+player createDiaryRecord ["rules",
+[
 "General",
 "
 <br />1. Hacking and mission exploitation will not be tolerated.
 <br />2. Intentional team-killing will not be tolerated.
-<br />3. Excessive, unintentional team-killing may result in a Kick/Ban.
+<br />3. Excessive, unintentional team-killing may result in a Kick/Temp ban.
 <br />4. Unnecessary destruction of BLUFOR vehicles will not be tolerated.
 <br />5. Verbal abuse and bullying will not be tolerated. 
-<br />6. Firing a weapon on base--unless at an enemy--may result in a Kick/Ban.
+<br />6. Firing a weapon on base--unless at an enemy--may result in a Kick/Temp ban.
 <br />7. Griefing and obstructive play will not be tolerated.
 <br />8. Excessive mic spamming, especially of Side and Global channels, will not be tolerated.
-<br />9. A server admin's word are final.
+<br />9. A server moderator or admin's word is final.
 <br />
-<br />If you see a player in violation of the above, contact an admin (teamspeak).
+<br />If you see a player in violation of the above, contact a moderator or admin (teamspeak).
 "
 ]];
 
@@ -112,7 +143,7 @@ player createDiaryRecord ["teamspeak",
 
 player createDiaryRecord ["teamspeak",
 [
-"Ahoy World",
+"All FPS",
 "
 <br /> Address: ts.ahoyworld.co.uk
 <br />
@@ -126,7 +157,28 @@ player createDiaryRecord ["faq",
 [
 "UAVs",
 "
-<br /> Visit "http://www.ahoyworld.co.uk/topic/3140-how-to-use-the-uavs-basic-and-in-depth-guide/"
+<br /> In the Control Tower at base, a UAV Operator can now recycle the UAV crew on one of the computer terminals.
+<br /><br />
+<br /><font size='16'>Q:</font> Can I use the UAVs?<br />
+<br /><font size='16'>A:</font> Yes, however you must be in the UAV Operator role and you must have a UAV Terminal.
+<br />
+<br />
+<br /><font size='16'>Q:</font> Why do the UAVs keep exploding?<br />
+<br /><font size='16'>A:</font> When the bomb-equipped UAVs are first connected to, the Gunner AI fires its weapons. Until it's fixed, here is a guide for you.<br />
+<br /> To safely connect to the MQ4A Greyhawk UAV:<br />
+<br />	1. Enter action menu (mouse scroll), click 'Open UAV Terminal'.
+<br />	2. Right-click on the UAV you wish to control, on the terminal map.
+<br />	3. Click 'Connect Terminal to UAV'.
+<br /><br /> [IMPORTANT] Do NOT click 'Take Control' button in UAV Terminal.<br />
+<br />	4. Esc out of the UAV terminal.
+<br />	5. Enter action menu (mouse scroll) again.
+<br />	6. [IMPORTANT] Select 'Take UAV TURRET controls'.<br />
+<br />
+<br />	It is now safe to 'Take Control' of the UAV.
+<br />
+<br />
+<br /><font size='16'>Q:</font> Why can't I connect to the UAV?<br />
+<br /><font size='16'>A:</font> Sometimes the UAVs are still connected to the prior Operators Terminal. If he disconnects or dies, sometimes the Terminal does not delete properly. The only solution at this time is to destroy the UAV, and you yourself must respawn.
 "
 ]];
 
@@ -411,26 +463,6 @@ player createDiaryRecord ["changelog",
 "
 ]];
 
-
-player createDiaryRecord ["changelog",
-[
-"2.77 All edits",
-"
-<br />- [UPDATED] Changelog.
-<br />- [UPDATED] Some ADMIN stuff.
-<br />- [UPDATED] Some of the diary entries.
-<br />- [ADDED] Arsenal.
-<br />- [CHANGED] Arsenal restrictions
-<br />- [CHANGED] Lots of Arsenal stuff.
-<br />- [CHANGED] Changed UAV FAQ help.
-<br />- [REMOVED] VAS.
-<br />- [FIXED] Side mission rewards.
-<br />- [FIXED] Aircraft repair pad at FOB Monoball should now work.
-<br />- [FIXED] Ammo Drop from Ghosthawk should now work.
-"
-]];
-
-
 //-------------------------------------------------- Credits
 
 player createDiaryRecord ["credits",
@@ -446,9 +478,6 @@ player createDiaryRecord ["credits",
 		- Jester - Ahoy World (ahoyworld.co.uk)<br />
 		- Razgriz33 - Ahoy World (ahoyworld.co.uk)<br />
 		- Kamaradski - Ahoy World (ahoyworld.co.uk)<br />
-		- Josh - Ahoy World (ahoyworld.co.uk)<br />
-		- danne - Ahoy World (ahoyworld.co.uk)<br />
-		- BACONMOP - Ahoy World (ahoyworld.co.uk)<br />
 		- chucky - All FPS (allfps.com.au)<br /><br />
 		
 <br />Other:<br /><br />
