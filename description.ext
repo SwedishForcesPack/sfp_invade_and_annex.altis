@@ -1,7 +1,7 @@
 //------------------------- On Load
 
 author = Rarek, AhoyWorld, Quiksilver;					// Visible when loading mission
-onLoadName = "Invade & Annex 2.78";						// Visible when loading mission
+onLoadName = "Invade & Annex 2.79";						// Visible when loading mission
 OnLoadMission = "Welcome back to the home of Invade and Annex ... Join us on TeamSpeak at ts.ahoyworld.co.uk:9987";
 loadScreen = "media\images\loading.jpg";				// Visible when loading mission
 overviewPicture = "media\images\loading.jpg";			// Visible when selecting mission	
