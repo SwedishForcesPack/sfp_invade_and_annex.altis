@@ -124,5 +124,4 @@ _________________________________________________*/
 		};
 
 		sleep 5;
-	} forEach playableUnits;	// original: foreach allUnits;
-};
+	};
