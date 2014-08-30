@@ -21,7 +21,7 @@ eastSide = createCenter east;
 
 //---------------------------------------------- AO location marker array
 
-_targets = ["Frini","Rodopoli","Alikampos","Neochori","Agios Dionysios","Frini Woodlands","Athira","Lakka"];
+_targets = ["Frini","Rodopoli","Alikampos","Neochori","Agios Dionysios","Frini Woodlands","Athira","Lakka","Poliakko","Xirolimni Dam","Agia Stemma","Agios Dionysios Factory","Hill 224","Orino","Koroni","Ifestiona"];
 
 //----------------------------------------------- SELECT A FEW RANDOM AOs
 
