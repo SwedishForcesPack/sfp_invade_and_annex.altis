@@ -74,6 +74,6 @@ private ["_object","_briefing","_smPos","_c4Message"];
 	
 //--------------------- DELETE, DESPAWN, HIDE and RESET
 	
-	SM_SUCCESS = false; publicVariable "SM_SUCCESS"				// reset var for next cycle
+	SM_SUCCESS = false; publicVariable "SM_SUCCESS";				// reset var for next cycle
 	sleep 120;													// sleep to hide despawns from players. default 120, 1 for testing	
 	[[currentSM]] call EOS_deactivate;							// despawn enemies and civs
