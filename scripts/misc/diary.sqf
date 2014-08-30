@@ -137,13 +137,13 @@ player createDiaryRecord ["teamspeak",
 "TS3",
 "
 <br /> Teamspeak:<br /><br />
-<br /> http://www.teamspeak.com/?page=downloads
+<br /> http://www.teamspeak.com/?page=downloads <br /><br />
 "
 ]];
 
 player createDiaryRecord ["teamspeak",
 [
-"All FPS",
+"Ahoy World",
 "
 <br /> Address: ts.ahoyworld.co.uk
 <br />
@@ -462,6 +462,23 @@ player createDiaryRecord ["changelog",
 <br />- [Behind the scenes]
 "
 ]];
+
+
+player createDiaryRecord ["changelog",
+[
+"2.78",
+"
+<br />- [CHANGED] Spawn Loaction.
+<br />- [CHANGED] Changed UAV FAQ help.
+<br />- [CHANGED] Planes and UAVs now have their own repair pads.
+<br />- [TWEAKED] Spawn rates for side mission rewards.
+<br />- [ADDED] VAS and Arsenel.
+<br />- [ADDED] Vehicle Service points around the map.
+<br />- [REMOVED] Bobcat and HEMTT Ammo.
+"
+]];
+
+
 
 //-------------------------------------------------- Credits
 
