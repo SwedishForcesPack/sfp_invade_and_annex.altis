@@ -37,7 +37,7 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
-player createDiarySubject ["rules", "allFPS I&A Rules"];
+player createDiarySubject ["rules", "Rules"];
 player createDiarySubject ["mods", "Mods"];
 player createDiarySubject ["teamspeak", "Teamspeak"];
 player createDiarySubject ["faq", "FAQ"];
@@ -64,13 +64,9 @@ player createDiaryRecord ["rules",
 <br />
 <br />		= Kick, or 0 - 3 day ban.
 <br />
-<br />-	Serious or repetitive rule violation: 
-<br />
-<br />		= 3 - 7 day ban.
-<br />
 <br />-	Administrative ban (hack/exploit/verbal abuse/serious offense):
 <br />
-<br />		= permanent or 30 day.
+<br />		= permanent.
 <br />
 <br />
 <br />The above is subject to discretion.
@@ -468,16 +464,29 @@ player createDiaryRecord ["changelog",
 [
 "2.78",
 "
-<br />- [CHANGED] Spawn Loaction.
+<br />- [CHANGED] Spawn Location.
 <br />- [CHANGED] Changed UAV FAQ help.
 <br />- [CHANGED] Planes and UAVs now have their own repair pads.
 <br />- [TWEAKED] Spawn rates for side mission rewards.
-<br />- [ADDED] VAS and Arsenel.
+<br />- [ADDED] VAS and Arsenal.
 <br />- [ADDED] Vehicle Service points around the map.
 <br />- [REMOVED] Bobcat and HEMTT Ammo.
 "
 ]];
 
+
+player createDiaryRecord ["changelog",
+[
+"2.79",
+"
+<br />- [CHANGED] Minor tweaks to spawn.
+<br />- [ADDED] AI playing ambient animations.
+<br />- [ADDED] Shooting range.
+<br />- [ADDED] Lots of new AO's.
+<br />- [FIXED] Sling script should now work.
+<br />- [REMOVED] Arsenal.
+"
+]];
 
 
 //-------------------------------------------------- Credits
@@ -495,6 +504,7 @@ player createDiaryRecord ["credits",
 		- Jester - Ahoy World (ahoyworld.co.uk)<br />
 		- Razgriz33 - Ahoy World (ahoyworld.co.uk)<br />
 		- Kamaradski - Ahoy World (ahoyworld.co.uk)<br />
+		- BACONMOP - Ahoy World (ahoyworld.co.uk)<br />
 		- chucky - All FPS (allfps.com.au)<br /><br />
 		
 <br />Other:<br /><br />

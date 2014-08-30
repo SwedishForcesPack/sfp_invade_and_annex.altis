@@ -13,7 +13,7 @@ Description:
 	
 Notes:
 	
-	_targets = ["Sofia Radar Station","Research Facility","Limni","Paros","Molos","Delfinaki Outpost","Nidasos Woodlands","Sofia Powerplant","Gatolia Solar Farm"];
+	_targets = ["Sofia Radar Station","Research Facility","Limni","Paros","Molos","Delfinaki Outpost","Nidasos Woodlands","Sofia Powerplant","Gatolia Solar Farm","Molos Airfield","Agios Anreas","Ghost Hotel","Paros","Kalithea"];
 
 ______________________________________________*/
 
@@ -22,7 +22,7 @@ eastSide = createCenter east;
 
 //---------------------------------------------- AO location marker array
 
-_targets = ["Sofia Radar Station","Research Facility","Limni","Paros","Molos","Delfinaki Outpost","Nidasos Woodlands","Sofia Powerplant","Gatolia Solar Farm"];
+_targets = ["Sofia Radar Station","Research Facility","Limni","Paros","Molos","Delfinaki Outpost","Nidasos Woodlands","Sofia Powerplant","Gatolia Solar Farm","Molos Airfield","Agios Anreas","Ghost Hotel","Paros","Kalithea"];
 
 //----------------------------------------------- SELECT A FEW RANDOM AOs
 
