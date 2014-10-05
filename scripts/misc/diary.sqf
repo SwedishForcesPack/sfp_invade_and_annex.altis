@@ -37,7 +37,7 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
-player createDiarySubject ["rules", "Rules"];
+player createDiarySubject ["rules", "allFPS I&A Rules"];
 player createDiarySubject ["mods", "Mods"];
 player createDiarySubject ["teamspeak", "Teamspeak"];
 player createDiarySubject ["faq", "FAQ"];
@@ -62,12 +62,11 @@ player createDiaryRecord ["rules",
 <br /> 
 <br />-	Minor or first-time rule violation:
 <br />
-<br />		= Kick, or 0 - 3 day ban.
+<br />		= Kick.
 <br />
-<br />-	Administrative ban (hack/exploit/verbal abuse/serious offense):
+<br />-	Serious or repetitive rule violation: 
 <br />
-<br />		= permanent.
-<br />
+<br />		= Ban.
 <br />
 <br />The above is subject to discretion.
 "
@@ -86,6 +85,7 @@ player createDiaryRecord ["rules",
 <br />7. Griefing and obstructive play will not be tolerated.
 <br />8. Excessive mic spamming, especially of Side and Global channels, will not be tolerated.
 <br />9. A server moderator or admin's word is final.
+<br />10. Landing a helicopter in the spawn may result in a kick.
 <br />
 <br />If you see a player in violation of the above, contact a moderator or admin (teamspeak).
 "
@@ -112,17 +112,30 @@ player createDiaryRecord ["mods",
 <br />- CBA - 1.00 beta5 - Required to run the below mods.
 		http://www.armaholic.com/page.php?id=18768<br /><br />
 		
-<br />- JSRS - 2.0 and 2.1 - Enhanced sounds and audio.
+<br />- JSRS - 2.0, 2.1, and 2.2 - Enhanced sounds and audio.
 		http://www.armaholic.com/page.php?id=22150<br /><br />
 		
 <br />- Blastcore - R3 - Enhanced visual effects.
 		http://www.armaholic.com/page.php?id=23899<br /><br />
 		
-<br />- ShackTac Fireteam HUD - v140302 - Situational awareness HUD
-		http://www.armaholic.com/page.php?id=9936<br /><br />
+<br />- ShackTac Complete UI - v140302 - Situational awareness HUD
+		http://dslyecxi.com/shacktac_wp/shacktac-mods/<br /><br />
 
 <br />- VTS Weapon resting - v05 - Simulates 'bipod' and weapon resting.
-		http://www.armaholic.com/page.php?id=20817
+		http://www.armaholic.com/page.php?id=20817<br /><br />
+
+<br />- Speed Of Sound - RC1 - Enhanced sounds and audio.
+		http://www.armaholic.com/page.php?id=23078<br /><br />
+		
+<br />- Tao Folding Map - 2.6.1 - Tao Folding Map will allow you to toggle a large map anytime in game by pressing Shift-M.		
+		http://www.armaholic.com/page.php?id=18963<br /><br />
+		
+<br />- Helmet Mounted Displays Mod  - 1.3 - Enhanced HMD for helicopters.		
+		http://www.armaholic.com/page.php?id=26351<br /><br />
+		
+<br />- Midrange Terrain Texture  - 27_08_13 - Better Textures.		
+		http://www.armaholic.com/page.php?id=19524<br /><br />
+		
 "
 ]];
 
@@ -189,14 +202,6 @@ player createDiaryRecord ["faq",
 <br /> 3. You can interact with the person you are looking at, or those within a 5m radius.
 <br />
 <br /> * Xeno's Squad Management tool had to be removed at request of the script author.
-"
-]];
-
-player createDiaryRecord ["faq",
-[
-"FOBs",
-"
-<br />Coming soon ...
 "
 ]];
 
@@ -464,29 +469,41 @@ player createDiaryRecord ["changelog",
 [
 "2.78",
 "
-<br />- [CHANGED] Spawn Location.
+<br />- [CHANGED] Spawn Loaction.
 <br />- [CHANGED] Changed UAV FAQ help.
 <br />- [CHANGED] Planes and UAVs now have their own repair pads.
 <br />- [TWEAKED] Spawn rates for side mission rewards.
-<br />- [ADDED] VAS and Arsenal.
+<br />- [ADDED] VAS and Arsenel.
 <br />- [ADDED] Vehicle Service points around the map.
 <br />- [REMOVED] Bobcat and HEMTT Ammo.
 "
 ]];
 
-
 player createDiaryRecord ["changelog",
 [
 "2.79",
 "
-<br />- [CHANGED] Minor tweaks to spawn.
-<br />- [ADDED] AI playing ambient animations.
-<br />- [ADDED] Shooting range.
-<br />- [ADDED] Lots of new AO's.
-<br />- [FIXED] Sling script should now work.
-<br />- [REMOVED] Arsenal.
+<br />- [CHANGED] Hummingbird texture.
+<br />- [CHANGED] 1 Ghosthawk changed to a helcat.
+<br />- [CHANGED] Pawnee should now have a different texture.
+<br />- [CHANGED] Changelog.
+<br />- [TWEAKED] Pawnee side mission spawn rate increased.
+<br />- [TWEAKED] Wipeout and Neophron now have 60 flares.
+<br />- [TWEAKED] Some minor things added at spawn.
+<br />- [ADDED] Minigun Dispersion.
+<br />- [ADDED] Mortar to side mission reward.
+<br />- [ADDED] LaForte to Zeus.
+<br />- [ADDED] Spartan program.
+<br />- [ADDED] New AO's.
+<br />- [ADDED] Speed of sound to accepted mods.
+<br />- [ADDED] Tao Folding Map to accepted mods.
+<br />- [ADDED] Helmet Mounted Displays Mod to accepted mods.
+<br />- [ADDED] Midrange Terrain Texture to accepted mods.
+<br />- [ADDED] Rule against landing helicopters in the main spawn.
+<br />- [FIXED] Exploit where jet could bypass 5 minutes repair timer.
 "
 ]];
+
 
 
 //-------------------------------------------------- Credits
@@ -504,8 +521,8 @@ player createDiaryRecord ["credits",
 		- Jester - Ahoy World (ahoyworld.co.uk)<br />
 		- Razgriz33 - Ahoy World (ahoyworld.co.uk)<br />
 		- Kamaradski - Ahoy World (ahoyworld.co.uk)<br />
-		- BACONMOP - Ahoy World (ahoyworld.co.uk)<br />
 		- chucky - All FPS (allfps.com.au)<br /><br />
+		- BACONMOP - Ahoy World (ahoyworld.co.uk)<br />
 		
 <br />Other:<br /><br />
 		VAS<br />
@@ -530,11 +547,11 @@ player createDiaryRecord ["credits",
 		- Zealot<br /><br />
 		Map markers<br />
 		- aeroson<br /><br />
-		Jump<br />
-		- ProGamer<br /><br />
 		Gear restrictions<br />
 		- wildw1ng<br /><br />
 		Safe zone<br />
 		- Bake<br />
+		Minigun dispersion<br />
+		- pfc.Christiansen<br />
 "
 ]];

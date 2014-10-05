@@ -1,4 +1,4 @@
-private ["_veh","_vehName","_vehVarname","_completeText","_reward"];
+	private ["_veh","_vehName","_vehVarname","_completeText","_reward"];
 
 smRewards =
 [
@@ -9,6 +9,7 @@ smRewards =
 	["a PO-30 Orca", "O_Heli_Light_02_F"],
 	["a WY-55 Hellcat", "I_Heli_light_03_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
+	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
@@ -18,6 +19,7 @@ smRewards =
 	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
 	["a T-100 Varsuk", "O_MBT_02_cannon_F"],
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
+	["a Mortar", "B_Mortar_01_F"],
 	["an M2A4 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"]
 ];
 smMarkerList =
@@ -35,6 +37,20 @@ _reward = createVehicle [_vehVarname, getMarkerPos "smReward1",smMarkerList,0,"N
 waitUntil {!isNull _reward};
 
 _reward setDir 284;
+_reward addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadFix.sqf"}];  
+_reward addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadTurret.sqf"}];  
+
+if (_reward isKindOf "O_Plane_CAS_02_F") exitWith { 
+	_reward removeMagazine "120Rnd_CMFlare_Chaff_Magazine";
+	_reward addMagazine "60Rnd_CMFlare_Chaff_Magazine";
+};
+if (_reward isKindOf "B_Plane_CAS_01_F") exitWith { 
+	_reward removeMagazine "120Rnd_CMFlare_Chaff_Magazine";
+	_reward addMagazine "60Rnd_CMFlare_Chaff_Magazine";
+};
+if (_reward isKindOf "B_Heli_Light_01_armed_F") exitWith { 
+	_reward setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\skins\heli_light_01_ext_digital_co.paa']
+};
 
 {
 	_x addCuratorEditableObjects [[_reward], false];

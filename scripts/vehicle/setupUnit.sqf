@@ -16,7 +16,7 @@ _strider = ["I_MRAP_03_F","I_MRAP_03_hmg_F","I_MRAP_03_gmg_F"];
 _blackVehicles = ["B_Heli_Light_01_armed_F"];
 
 // The hummingbird
-_wasp = ["B_Heli_Light_01_F"];
+_wasp = ["B_Heli_Light_01_F","B_Heli_Light_01_armed_F"];
 
 // The orca
 _orca = ["O_Heli_Light_02_unarmed_F"];
@@ -57,7 +57,8 @@ if (_type in _VASable) then {
 };
 
 
-if(_type in _wasp) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\heli_light_01_ext_indp_co.paa']};
+if(_type in _wasp) then {
+	_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\skins\heli_light_01_ext_digital_co.paa']};
 
 if(_type in _orca) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_02\Data\heli_light_02_ext_indp_co.paa']};
 
