@@ -158,7 +158,7 @@ class Params
 				title = "Groups Patrolling AO";
 				values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 				texts[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-				default = 11; // default 11... remember, more AI = less FPS
+				default = 8; // default 11... remember, more AI = less FPS
 			};
 	
 		class SniperTeamsPatrol {
@@ -179,14 +179,14 @@ class Params
 				title = "Overwatch teams in the AO";
 				values[] = {0,1,2,3,4,5,6,7};
 				texts[] = {1,2,3,4,5,6,7,8};
-				default = 6; // default 6
+				default = 4; // default 6
 			};	
 
 		class VEHPatrol {
 				title = "Vehicles Patrolling AO";
 				values[] = {0,1,2,3,4,5,6};
 				texts[] = {1,2,3,4,5,6,7};
-				default = 6; // default 2
+				default = 4; // default 2
 			};
 
 		class AAPatrol {

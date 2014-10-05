@@ -14,7 +14,7 @@ Description:
 	
 __________________________________________________________________________*/
 
-private ["_flatPos","_accepted","_position","_flatPos1","_flatPos2","_flatPos3","_PTdir","_unitsArray","_priorityGroup","_distance","_dir","_c","_pos","_barrier","_enemiesArray","_radius","_unit","_targetPos","_firingMessages","_fuzzyPos","_briefing","_completeText","_priorityMan1","_priorityMan2"];
+private ["_flatPos","_accepted","_position","_flatPos1","_flatPos2","_flatPos3","_PTdir","_unitsArray","_priorityGroup","_distance","_dir","_c","_pos","_barrier","_enemiesArray","_radius","_target","_targetPos","_firingMessages","_fuzzyPos","_briefing","_completeText","_priorityMan1","_priorityMan2"];
 
 //-------------------- 1. FIND POSITION
 
@@ -156,15 +156,15 @@ _radius = 80;
 while { canMove priorityObj1 || canMove priorityObj2 } do {
 
 		_accepted = false;
-		_unit = objNull;
+		_target = objNull;
 		_targetPos = [0,0,0];
 		
 		while {!_accepted} do {
 			
-			_unit = (playableUnits select (floor (random (count playableUnits))));
-			_targetPos = getPos _unit;
+			_target = (playableUnits select (floor (random (count playableUnits))));
+			_targetPos = getPos _target;
 			
-			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _unit == _unit && side _unit == WEST) then { 
+			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _target == _target && side _target == WEST) then { 
 				_accepted = true; 
 			} else {
 				sleep 10;																// default 10

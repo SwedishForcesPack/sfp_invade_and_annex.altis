@@ -13,7 +13,7 @@ Description:
 	
 Notes:
 	
-	_targets = ["Pyrsos","Factory","Syrta","Aristi Turbines","Dump","Negades","Abdera","Kore","Oreokastro","Galati Outpost","Topolia","Fotia Turbines","North West Airstrip","Kira","Bomos","Synneforos"];
+	_targets = ["Pyrsos","Factory","Syrta","Aristi Turbines","Dump","Negades","Abdera","Kore","Oreokastro","Galati Outpost","Fotia Turbines","Agios Konstantinos","Faros","Krya Nera Airfield","Krya Nera Turbines"];
 	while {(_x > 0) count _targetsLeft} do {
 	
 ______________________________________________*/
@@ -23,7 +23,7 @@ eastSide = createCenter east;
 
 //---------------------------------------------- AO location marker array
 
-_targets = ["Pyrsos","Factory","Syrta","Aristi Turbines","Dump","Negades","Abdera","Kore","Oreokastro","Galati Outpost","Topolia","Fotia Turbines","North West Airstrip","Kira","Bomos","Synneforos"];
+_targets = ["Pyrsos","Factory","Syrta","Aristi Turbines","Dump","Negades","Abdera","Kore","Oreokastro","Galati Outpost","Fotia Turbines","Agios Konstantinos","Faros","Krya Nera Airfield","Krya Nera Turbines"];
 
 //----------------------------------------------- SELECT A FEW RANDOM AOs
 
