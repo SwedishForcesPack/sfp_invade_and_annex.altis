@@ -41,6 +41,7 @@ if (((_unit isKindOf "Helicopter") OR (_type in _slingable)) AND !(_type in _not
 if (_type in _ghosthawk) then {
 	[_unit] execVM "scripts\vehicle\animate\ghosthawk.sqf";
 	_unit addAction ["<t color='#0000f6'>Ammo Drop</t>", "scripts\vehicle\drop\drop.sqf",[1],0,false,true,"","driver _target == _this"];
+	_unit addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadTurret.sqf"}];  
 };
 
 if (_type in _blackVehicles) then {

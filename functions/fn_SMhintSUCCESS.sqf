@@ -1,4 +1,4 @@
-	private ["_veh","_vehName","_vehVarname","_completeText","_reward"];
+	private ["_veh","_vehName","_vehVarname","_completeText","_reward","_GAU","_rabbit"];
 
 smRewards =
 [
@@ -9,7 +9,7 @@ smRewards =
 	["a PO-30 Orca", "O_Heli_Light_02_F"],
 	["a WY-55 Hellcat", "I_Heli_light_03_F"],
 	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
-	["an AH-9 Pawnee", "B_Heli_Light_01_armed_F"],
+	["an AH-9 Pawnee GAU - 19", "Rabbit_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
@@ -37,8 +37,10 @@ _reward = createVehicle [_vehVarname, getMarkerPos "smReward1",smMarkerList,0,"N
 waitUntil {!isNull _reward};
 
 _reward setDir 284;
-_reward addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadFix.sqf"}];  
-_reward addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadTurret.sqf"}];  
+
+GlobalHint = _completeText; publicVariable "GlobalHint"; hint parseText _completeText;
+showNotification = ["CompletedSideMission", sideMarkerText]; publicVariable "showNotification";
+showNotification = ["Reward", format["Your team received %1!", _vehName]]; publicVariable "showNotification";
 
 if (_reward isKindOf "O_Plane_CAS_02_F") exitWith { 
 	_reward removeMagazine "120Rnd_CMFlare_Chaff_Magazine";
@@ -49,13 +51,21 @@ if (_reward isKindOf "B_Plane_CAS_01_F") exitWith {
 	_reward addMagazine "60Rnd_CMFlare_Chaff_Magazine";
 };
 if (_reward isKindOf "B_Heli_Light_01_armed_F") exitWith { 
-	_reward setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\skins\heli_light_01_ext_digital_co.paa']
+	_reward setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\skins\heli_light_01_ext_digital_co.paa'];
+	_reward addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadFix.sqf"}];
+};
+if (_reward isKindOf "Rabbit_F") exitWith {
+	_GAU = createVehicle ["B_Heli_Light_01_armed_F", getMarkerPos "smReward1",smMarkerList,0,"NONE"];
+	_GAU setDir 284;
+	_reward setDamage 1;
+	_GAU removeMagazine ("5000Rnd_762x51_Belt");
+	_GAU removeWeapon ("M134_minigun");
+	_GAU addWeapon ("HMG_127_APC");
+	_GAU addMagazine ("500Rnd_127x99_mag_Tracer_Red");
+	_GAU addEventHandler ["Fired", { _this execVM "scripts\vehicle\spreadFix.sqf"}];
+	{_x addCuratorEditableObjects [[_GAU], false];} foreach adminCurators;
 };
 
 {
 	_x addCuratorEditableObjects [[_reward], false];
 } foreach adminCurators;
-
-GlobalHint = _completeText; publicVariable "GlobalHint"; hint parseText _completeText;
-showNotification = ["CompletedSideMission", sideMarkerText]; publicVariable "showNotification";
-showNotification = ["Reward", format["Your team received %1!", _vehName]]; publicVariable "showNotification";

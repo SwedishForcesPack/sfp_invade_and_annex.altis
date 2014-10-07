@@ -37,7 +37,7 @@ if (!hasInterface) exitWith {};
 
 waitUntil {!isNull player};
 
-player createDiarySubject ["rules", "allFPS I&A Rules"];
+player createDiarySubject ["rules", "Rules"];
 player createDiarySubject ["mods", "Mods"];
 player createDiarySubject ["teamspeak", "Teamspeak"];
 player createDiarySubject ["faq", "FAQ"];
@@ -504,6 +504,17 @@ player createDiaryRecord ["changelog",
 "
 ]];
 
+player createDiaryRecord ["changelog",
+[
+"2.79A",
+"
+<br />- [ADDED] AH-9 Pawnee GAU - 19 variant to side missions rewards.
+<br />- [ADDED] Rabbit to side missions rewards (used to spawn GAU-19).
+<br />- [FIXED] Mortar side mission reward should no longer be restricted.
+<br />- [FIXED] Secure Chopper side missions should now work.
+<br />- [FIXED] Minigun dispersion to Ghosthawk turrets.
+"
+]];
 
 
 //-------------------------------------------------- Credits
@@ -521,8 +532,9 @@ player createDiaryRecord ["credits",
 		- Jester - Ahoy World (ahoyworld.co.uk)<br />
 		- Razgriz33 - Ahoy World (ahoyworld.co.uk)<br />
 		- Kamaradski - Ahoy World (ahoyworld.co.uk)<br />
-		- chucky - All FPS (allfps.com.au)<br /><br />
 		- BACONMOP - Ahoy World (ahoyworld.co.uk)<br />
+		- chucky - All FPS (allfps.com.au)<br /><br />
+
 		
 <br />Other:<br /><br />
 		VAS<br />
@@ -550,8 +562,8 @@ player createDiaryRecord ["credits",
 		Gear restrictions<br />
 		- wildw1ng<br /><br />
 		Safe zone<br />
-		- Bake<br />
+		- Bake<br /><br />
 		Minigun dispersion<br />
-		- pfc.Christiansen<br />
+		- pfc.Christiansen<br /><br />
 "
 ]];
