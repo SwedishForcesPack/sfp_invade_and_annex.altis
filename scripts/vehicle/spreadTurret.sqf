@@ -23,3 +23,14 @@ if(_ammoType == "1000Rnd_20mm_shells") then {
 	
 	};
 	
+if(_ammoType == "2000Rnd_65x39_Belt_Tracer_Red") then {
+	
+	//_newPos = _unit modelToWorld [0,0,0]; //Where to spawn the new projectile,this is to prevent spawning inside vic model
+	_newPos = getPos _bullet;
+    _veh = createVehicle ["B_65x39_Minigun_Caseless",_newPos,[],1,"CAN_COLLIDE"]; //Creates new bullet,see cfgMagazine for diffrent ammo types.
+    _veh setDir getDir _bullet; //Sets dir of new bullet in the same direction of the bullet-
+    _veh setVelocity velocity _bullet; //Sets velocity of new projectile to match the old bullet.
+    deleteVehicle _bullet;//Deletes original bullet
+	
+	};
+	

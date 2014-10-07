@@ -54,7 +54,7 @@ _c4Message = ["Chopper data secured. The charge has been set! 15 seconds until d
 	house allowDamage false;
 	
 	_object = [research1,research2] call BIS_fnc_selectRandom;
-	sleep =0.3;
+	sleep 0.3;
 	_dummy = [explosivesDummy1,explosivesDummy2] call BIS_fnc_selectRandom;
 	sleep 0.3;
 	{ _x enableSimulation true } forEach [researchTable,_object];

@@ -146,7 +146,7 @@ class Mission
 	class Intel
 	{
 		briefingName="Co-60 AW Invade & Annex 2.79";
-		overviewText="Version 2.78";
+		overviewText="Version 2.79";
 		resistanceWest=0;
 		resistanceEast=1;
 		timeOfChanges=28800;
@@ -7112,7 +7112,7 @@ class Mission
 		};
 		class Item477
 		{
-			position[]={14450.595,18.642765,16271.285};
+			position[]={15398.545,4.2756519,15879.381};
 			azimut=212.79724;
 			id=572;
 			side="EMPTY";
@@ -7123,7 +7123,7 @@ class Mission
 		};
 		class Item478
 		{
-			position[]={14447.188,18.664473,16273.306};
+			position[]={15395.829,4.2795095,15882.094};
 			azimut=-144.97018;
 			id=573;
 			side="EMPTY";
@@ -7134,7 +7134,7 @@ class Mission
 		};
 		class Item479
 		{
-			position[]={14454.521,18.658028,16277.516};
+			position[]={15401.497,4.3421288,15884.313};
 			azimut=211.41351;
 			id=574;
 			side="EMPTY";
@@ -7145,7 +7145,7 @@ class Mission
 		};
 		class Item480
 		{
-			position[]={14450.721,18.680952,16279.469};
+			position[]={15398.022,4.2911086,15886.022};
 			azimut=213.45441;
 			id=575;
 			side="EMPTY";
