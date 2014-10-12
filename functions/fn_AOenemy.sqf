@@ -45,6 +45,9 @@ for "_x" from 1 to PARAMS_AAPatrol do {
 		((units _aaGroup) select 2) moveInCommander _aa;
 	[_aaGroup, getMarkerPos currentAO, 500] call BIS_fnc_taskPatrol;
 	_aa lock 3;
+	if (random 1 >= 0.3) then {
+		_aa allowCrewInImmobile true;
+	};
 		
 	_enemiesArray = _enemiesArray + [_aaGroup];
 	sleep 0.1;
@@ -133,6 +136,9 @@ for "_x" from 0 to 1 do {
 		((units _AOmrapGroup) select 2) moveInCargo _AOmrap;
 	[_AOmrapGroup, getMarkerPos currentAO, 600] call BIS_fnc_taskPatrol;
 	_AOmrap lock 3;
+	if (random 1 >= 0.5) then {
+		_AOmrap allowCrewInImmobile true;
+	};
 	
 	_enemiesArray = _enemiesArray + [_AOmrapGroup];
 	sleep 0.1;
@@ -164,6 +170,9 @@ for "_x" from 0 to (3 + (random 2)) do {
 		((units _AOvehGroup) select 2) moveInCommander _AOveh;
 	[_AOvehGroup, getMarkerPos currentAO, 400] call BIS_fnc_taskPatrol;
 	_AOveh lock 3;
+	if (random 1 >= 0.4) then {
+		_AOveh allowCrewInImmobile true;
+	};
 	
 	_enemiesArray = _enemiesArray + [_AOvehGroup,_AOveh];
 	sleep 0.1;
@@ -242,7 +251,7 @@ for "_x" from 1 to PARAMS_SniperTeamsPatrol do {
 [(units _patrolGroup)] call QS_fnc_setSkill1;
 [(units _overwatchGroup)] call QS_fnc_setSkill2;
 [(units _AOvehGroup)] call QS_fnc_setSkill2;
-[(units _sniperGroup)] call QS_fnc_setSkill3;
+[(units _sniperGroup)] call QS_fnc_setSkill4;
 [(units _staticGroup)] call QS_fnc_setSkill3;
 [(units _aaGroup)] call QS_fnc_setSkill4;
 	

@@ -28,7 +28,7 @@ _null = [] execVM "scripts\safezone.sqf"; 										// spawn protection
 _null = [] execVM "scripts\jump.sqf";											// jump action
 _null = [] execVM "scripts\misc\diary.sqf";										// diary tabs
 _null = [] execVM "scripts\vehicle\fastrope\zlt_fastrope.sqf";					// heli rope	
-_null = [] execVM "scripts\playerMarkers.sqf";									// blufor map tracker
+_null = [] execVM "scripts\icons.sqf";											// blufor map tracker
 _null = [] execVM "scripts\VA.sqf";												// Virtual Arsenal
 
 

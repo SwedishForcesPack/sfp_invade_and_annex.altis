@@ -74,7 +74,7 @@ private ["_dir","_PTdir","_pos","_barrier","_unitsArray","_flatPos","_accepted",
 		waitUntil {!isNull ammoTruck};
 		ammoTruck setDir random 360;
 	
-	{ _x lock 3 } forEach [priorityObj1,priorityObj2,ammoTruck];
+	{ _x lock 3; _x allowCrewInImmobile true; } forEach [priorityObj1,priorityObj2,ammoTruck];
 	
 //-------------------- 3. SPAWN CREW
 	
