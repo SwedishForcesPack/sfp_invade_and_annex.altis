@@ -40,7 +40,7 @@ while{alive _helo} do {
 				// medium speed collision - bumpy drag
 				if(_speedHelo > lowSpeedThreshold) then {
 					_wasCollide = _wasCollide + 1;
-					if(_wasCollide > _collisionCounter) then {
+					if(_wasCollide > collisionCounter) then {
 						_vel = velocity _helo;
 						_velPost = [(_vel select 0)*collisionDampen,(_vel select 1)*collisionDampen,(_vel select 2)+upwardThrust]; //sling breaks causes upward thrust			
 					

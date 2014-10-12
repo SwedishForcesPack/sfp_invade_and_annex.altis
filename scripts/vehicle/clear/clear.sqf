@@ -1,3 +1,3 @@
 _unit = _this select 0;
-clearItemCargo _unit;
-clearMagazineCargo _unit;
+clearItemCargoGlobal _unit;
+clearMagazineCargoGlobal _unit;

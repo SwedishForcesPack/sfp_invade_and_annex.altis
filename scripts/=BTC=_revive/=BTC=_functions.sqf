@@ -15,6 +15,9 @@ BTC_assign_actions =
 	if ([player] call BTC_is_class_can_revive) then {
 		player addAction [("<t color=""#ED2744"">") + ("First aid") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_first_aid], 8, true, true, "", "[] call BTC_check_action_first_aid"];
 	};
+	if (!([player] call BTC_is_class_can_revive)) then {
+        player addAction [("<t color=""#ED2744"">") + ("First Aid (Medical HEMTT)") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_first_aid], 8, true, true, "", "[] call BTC_check_action_HEMTT"];
+    };
 	player addAction [("<t color=""#ED2744"">") + ("Drag") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_drag], 8, true, true, "", "[] call BTC_check_action_drag"];
 	player addAction [("<t color=""#ED2744"">") + ("Pull out injured") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_pull_out], 8, true, true, "", "[] call BTC_pull_out_check"];
 	player addAction [("<t color=""#ED2744"">") + ("Carry") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_carry], 8, true, true, "", "[] call BTC_check_action_drag"];
@@ -980,7 +983,7 @@ BTC_fnc_PVEH =
 
 BTC_first_aid =
 {
-	private ["_injured","_array_item_injured","_array_item","_cond"];
+	private ["_injured","_array_item_injured","_array_item","_cond","_fak"];
 	_men = nearestObjects [player, ["Man"], 2];
 	if (count _men > 1) then {_injured = _men select 1;};
 	if (format ["%1",_injured getVariable "BTC_need_revive"] != "1") exitWith {};
@@ -991,8 +994,14 @@ BTC_first_aid =
 	if ((_array_item_injured find "FirstAidKit" == -1) && (BTC_need_first_aid == 1)) then {_cond = false;} else {_cond = true;};
 	if (!_cond && BTC_need_first_aid == 1) then {if ((_array_item find "FirstAidKit" == -1)) then {_cond = false;} else {_cond = true;};};
 	if (!_cond) exitWith {hint "Can't revive him";};
-	if (BTC_need_first_aid == 1) then {if (_array_item_injured find "FirstAidKit" == -1) then {player removeItem "FirstAidKit";};};
+	_fak = ["FirstAidKit"];
+	if (({(_x in _array_item)} count _fak) > 0) then {
+		player removeItem "FirstAidKit";
+	} else {
+		_injured removeItem "FirstAidKit";
+	};
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
+	player setFatigue 0;
 	sleep 5;
 	waitUntil {!Alive player || (animationState player != "AinvPknlMstpSlayWrflDnon_medic" && animationState player != "amovpercmstpsraswrfldnon_amovpknlmstpsraswrfldnon" && animationState player != "amovpknlmstpsraswrfldnon_ainvpknlmstpslaywrfldnon" && animationState player != "ainvpknlmstpslaywrfldnon_amovpknlmstpsraswrfldnon")};
 	if (Alive player && Alive _injured && format ["%1",player getVariable "BTC_need_revive"] == "0") then
@@ -1008,6 +1017,7 @@ BTC_first_aid =
 		};
 		_injured playMoveNow "AinjPpneMstpSnonWrflDnon_rolltoback";
 	};
+	
 };
 
 BTC_drag =
@@ -1020,6 +1030,7 @@ BTC_drag =
 	_injured setVariable ["BTC_dragged",1,true];
 	_injured attachTo [player, [0, 1.1, 0.092]];
 	player playMoveNow "AcinPknlMstpSrasWrflDnon";
+	hintSilent "Can't move? Press 'C'";
 	_id = player addAction [("<t color=""#ED2744"">") + ("Drop") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_release], 9, true, true, "", "true"];
 	BTC_drag_pveh = [1,_injured];publicVariable "BTC_drag_pveh";
 	WaitUntil {!Alive player || ((animationstate player == "acinpknlmstpsraswrfldnon") || (animationstate player == "acinpknlmwlksraswrfldb"))};
@@ -1153,10 +1164,14 @@ BTC_player_killed =
 			player setVariable ["BTC_need_revive",1,true];
 			player switchMove "AinjPpneMstpSnonWrflDnon";
 			_actions = [] spawn BTC_assign_actions;
-			if (BTC_respawn_gear == 1) then
-			{
-				_gear = [player,BTC_gear] spawn BTC_set_gear;
+
+			[player,[player,"KilledInventory"]] call BIS_fnc_loadInventory;
+			
+			if (!isNil killed_PrimaryWeapon) then {
+				player addWeapon killed_PrimaryWeapon;
+				{player addPrimaryWeaponItem _x;} count killed_PrimaryWeaponItems;
 			};
+			
 			WaitUntil {animationstate player == "ainjppnemstpsnonwrfldnon"};
 			sleep 2;
 			player setDir _dir;
@@ -1331,6 +1346,11 @@ BTC_player_respawn =
 			player enableSimulation true;
 			player switchMove "amovpercmstpsraswrfldnon";
 			player switchMove "";//amovpercmstpsraswrfldnon
+			
+			if (respawnInventory_Saved) then {
+				[player,[player,"ClassGear"]] call BIS_fnc_loadInventory;
+			};
+			
 			if (BTC_black_screen == 1 && BTC_respawn_time == 0) then {titleText ["", "BLACK IN"];sleep 2;titleText ["", "PLAIN"]; titleFadeOut 1;};
 			if (BTC_black_screen == 0 || BTC_respawn_time > 0) then
 			{
@@ -1365,6 +1385,27 @@ BTC_check_action_first_aid =
 		if (!_cond && _array_item_injured find "FirstAidKit" != -1) then {_cond = true;};
 	};
 	_cond
+};
+
+BTC_check_action_HEMTT = {
+    private ["_injured","_hemtt","_itemsP","_itemsI","_fak"];
+    _cond = false;
+    _men = nearestObjects [vehicle player, ["Man"], 2];
+    if (count _men > 1 && format ["%1", player getVariable "BTC_need_revive"] == "0") then {
+        if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] != "1") then {
+			_hemtt = [];
+			_hemtt = (position player) nearEntities [["B_Truck_01_medical_F"],5];
+			if ((count _hemtt) > 0) then {
+				_itemsP = items player;
+				_itemsI = items (_men select 1);
+				_fak = ["FirstAidKit"];
+				if (({(_x in _itemsP) || (_x in _itemsI)} count _fak) > 0) then {
+					_cond = true;
+				};
+			};
+        };    
+    };
+    _cond;
 };
 
 BTC_check_action_drag =

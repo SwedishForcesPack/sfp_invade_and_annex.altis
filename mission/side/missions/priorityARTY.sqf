@@ -66,7 +66,8 @@ private ["_flatPos","_accepted","_position","_flatPos1","_flatPos2","_flatPos3",
 	waitUntil {!isNull ammoTruck};
 	ammoTruck setDir random 360;
 		
-	{ _x lock 3 } forEach [priorityObj1,priorityObj2,ammoTruck];
+	{ _x lock 3; _x allowCrewInImmobile true; } forEach [priorityObj1,priorityObj2,ammoTruck];
+	
 		
 //-------------------- 3. SPAWN CREW
 
@@ -160,15 +161,18 @@ while { canMove priorityObj1 || canMove priorityObj2 } do {
 		_targetPos = [0,0,0];
 		
 		while {!_accepted} do {
+			_target = objNull;
+			_target = playableUnits select (floor (random (count playableUnits)));
+			if (!isNull _target) then {
+				_targetPos = getPos _target;
 			
-			_target = (playableUnits select (floor (random (count playableUnits))));
-			_targetPos = getPos _target;
-			
-			if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _target == _target && side _target == WEST) then { 
-				_accepted = true; 
-			} else {
-				sleep 10;																// default 10
+				if ((_targetPos distance (getMarkerPos "respawn_west")) > 1000 && vehicle _target == _target && side _target == WEST) then { 
+					_accepted = true; 
+				} else {
+					sleep 7;																// default 10
+				};
 			};
+			sleep 3;
 		};
 		
 		if (PARAMS_ArtilleryTargetTickWarning == 1) then {

@@ -30,6 +30,10 @@ _notSlingable = ["B_Heli_Light_01_armed_F", "B_Heli_Attack_01_F"];
 
 _VASable = ["B_Truck_01_ammo_F"];
 
+//---------- BOBCAT
+
+_noAmmoCargo = ["B_APC_Tracked_01_CRV_F","B_Truck_01_ammo_F"];
+
 //------------------------------ INITIALIZE VEHICLES
 
 if (isNull _unit) exitWith {};
@@ -62,5 +66,7 @@ if(_type in _wasp) then {
 	_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\skins\heli_light_01_ext_digital_co.paa']};
 
 if(_type in _orca) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_02\Data\heli_light_02_ext_indp_co.paa']};
+
+if (_type in _noAmmoCargo) then {_unit setAmmoCargo 0;};
 
 _unit addAction ["<t color='#3f3fff'>Clear Inventory</t>","scripts\vehicle\clear\clear.sqf",[],-97,false];

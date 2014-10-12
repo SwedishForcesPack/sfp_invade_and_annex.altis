@@ -128,3 +128,17 @@ if (_count > 0) then {
 _veh setVehicleAmmo 1;	// Reload turrets / drivers magazine
 
 _veh vehicleChat format ["%1 successfully repaired and refuelled.", _vehType];
+
+_fuelVeh = ["B_APC_Tracked_01_CRV_F","B_Truck_01_fuel_F"];
+_repairVeh = ["B_APC_Tracked_01_CRV_F","B_Truck_01_Repair_F","C_Offroad_01_repair_F"];
+_ammoVeh = ["B_APC_Tracked_01_CRV_F","B_Truck_01_ammo_F"];
+if (({_veh isKindOf _x} count _repairVeh) > 0) then {
+    _veh setRepairCargo 1;
+};
+if (({_veh isKindOf _x} count _ammoVeh) > 0) then {
+    // to prevent unauthorized re-arm
+	//_veh setAmmoCargo 1;
+};
+if (({_veh isKindOf _x} count _fuelVeh) > 0) then {
+    _veh setFuelCargo 1;
+};

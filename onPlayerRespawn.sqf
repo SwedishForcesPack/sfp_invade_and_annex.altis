@@ -12,6 +12,4 @@ Description:
 
 	Client scripts that should execute after respawn.
 	
-______________________________________________________
-
-_null = [] execVM "scripts\admin_uid.sqf";					// Admin spectate */
+______________________________________________________*/

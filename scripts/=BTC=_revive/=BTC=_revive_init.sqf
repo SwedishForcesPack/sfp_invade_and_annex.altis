@@ -37,7 +37,7 @@ BTC_mobile_respawn  = 0;											//Active the mobile respawn fnc (1 = yes, 0 =
 BTC_mobile_respawn_time = 30;										//Secs delay for mobile vehicle to respawn
 BTC_need_first_aid = 1;												//You need a first aid kit to revive (1 = yes, 0 = no)
 BTC_pvp = 0; 														//(disable the revive option for the enemy)
-BTC_injured_marker = 1;
+BTC_injured_marker = 0;
 BTC_3d_can_see     = ["B_medic_F","B_recon_medic_F"];
 BTC_3d_distance    = 300;
 BTC_3d_icon_size   = 0.5;
@@ -47,6 +47,9 @@ BTC_objects_actions_west = [];
 BTC_objects_actions_east = [];
 BTC_objects_actions_guer = [];
 BTC_objects_actions_civ  = [];
+saving_inventory = false;
+loading_inventory = false;
+respawnInventory_Saved = false;
 
 if (isServer) then {
 	BTC_vehs_mobile_west = [];//Editable - define mobile west
@@ -115,7 +118,7 @@ BTC_respawn_cond = false;
 	BTC_r_base_spawn = "Land_HelipadEmpty_F" createVehicleLocal getMarkerPos BTC_respawn_marker;
 	if (BTC_r_new_system == 0) then {
 	
-		player addEventHandler ["Killed", BTC_player_killed];if (BTC_respawn_gear == 1) then {player addEventHandler ["HandleDamage", BTC_fnc_handledamage_gear];};
+		player addEventHandler ["Killed", BTC_player_killed];
 	
 	} else {
 	
@@ -149,6 +152,9 @@ BTC_respawn_cond = false;
 	if ([player] call BTC_is_class_can_revive) then {
 		player addAction [("<t color=""#ED2744"">") + ("First aid") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_first_aid], 8, true, true, "", "[] call BTC_check_action_first_aid"];
 	};	
+	if (!([player] call BTC_is_class_can_revive)) then {
+        player addAction [("<t color=""#ED2744"">") + ("First Aid (Medical HEMTT)") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_first_aid], 8, true, true, "", "[] call BTC_check_action_HEMTT"];
+    };
 	player addAction [("<t color=""#ED2744"">") + ("Drag") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_drag], 8, true, true, "", "[] call BTC_check_action_drag"];
 	player addAction [("<t color=""#ED2744"">") + ("Carry") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_carry], 8, true, true, "", "[] call BTC_check_action_drag"];
 	player addAction [("<t color=""#ED2744"">") + ("Pull out injured") + "</t>","scripts\=BTC=_revive\=BTC=_addAction.sqf",[[],BTC_pull_out], 8, true, true, "", "[] call BTC_pull_out_check"];
@@ -167,8 +173,7 @@ BTC_respawn_cond = false;
 		BTC_vehs_mobile_west_str = [];BTC_vehs_mobile_east_str = [];BTC_vehs_mobile_guer_str = [];BTC_vehs_mobile_civ_str = [];
 	};
 	
-	BTC_gear = [player] call BTC_get_gear;
-	if (BTC_loop_check == 1) then {[] spawn BTC_revive_loop;};
+
 	if (({player isKindOf _x} count BTC_3d_can_see) > 0) then {if (BTC_pvp == 1) then {_3d = [] spawn BTC_3d_markers_pvp;} else {_3d = [] spawn BTC_3d_markers;};};
 	
 	BTC_revive_started = true;

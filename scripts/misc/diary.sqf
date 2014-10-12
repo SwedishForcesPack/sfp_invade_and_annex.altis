@@ -7,7 +7,7 @@
 | Description: 
 |	
 |	Created: 26/11/2013.
-|	Last modified: 9/04/2014.
+|	Last modified: 13/10/2014.
 |	Coded for I&A and hosted on allfps.com.au servers.
 |	You may use and edit the code.
 |	You may not remove any entries from Credits without first removing the relevant author's contributions, 
@@ -516,6 +516,34 @@ player createDiaryRecord ["changelog",
 "
 ]];
 
+player createDiaryRecord ["changelog",
+[
+"2.79B",
+"
+<br />- [CHANGED] Now Use Quiksilver's player markers.
+<br />- [CHANGED] Rifleman (AT) is now a Missile Spec. (AT).
+<br />- [ADDED] All players may now revive when within 5 meters of a Medical HEMTT.
+<br />- [ADDED] New Medivac LZ.
+<br />- [ADDED] Combat Life Saviour Team.
+<br />- [ADDED] Arsenal is back on the VASman.
+"
+]];
+
+player createDiaryRecord ["changelog",
+[
+"2.79D",
+"
+<br />- [FIXED] Rifleman(AT) should now be fixed again.
+<br />- [FIXED] Artillery should now fire.
+<br />- [TWEAKED] Player Icons should now display further away.
+<br />- [TWEAKED] Players now need a FAK to revive at a Medical HEMTT.
+<br />- [TWEAKED] Tweaked some aspects of BTC to improve performance.
+<br />- [CHANGED] All playable units should now be attached to Zues.
+<br />- [ADDED] 5th pilot slot and helicopter.
+<br />- [ADDED] Bobcat is now at spawn.
+<br />- [ADDED] Quick save option for gear.
+"
+]];
 
 //-------------------------------------------------- Credits
 
@@ -542,7 +570,8 @@ player createDiaryRecord ["credits",
 		- Sa-Matra<br />
 		- Dslyecxi<br /><br />
 		=BTC= Revive<br />
-		- Giallustio<br /><br />
+		- Giallustio<br />
+		- Edited by Quiksilver<br /><br />
 		EOS<br />
 		- BangaBob<br /><br />
 		Squad Manager<br />
@@ -557,8 +586,8 @@ player createDiaryRecord ["credits",
 		- Shuko<br /><br />
 		Fast rope<br />
 		- Zealot<br /><br />
-		Map markers<br />
-		- aeroson<br /><br />
+		Map and GPS Icons (Soldier Tracker)<br />
+		- Quiksilver<br /><br />
 		Gear restrictions<br />
 		- wildw1ng<br /><br />
 		Safe zone<br />
