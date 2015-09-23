@@ -12695,7 +12695,7 @@ class Mission
 			special="NONE";
 			id=1074;
 			side="EMPTY";
-			vehicle="Flag_US_F";
+			vehicle="sfp_flagcarrier_sweden";
 			leader=1;
 			skill=0.60000002;
 			init="this allowDamage false;";
@@ -12707,7 +12707,7 @@ class Mission
 			special="NONE";
 			id=1075;
 			side="EMPTY";
-			vehicle="Flag_UK_F";
+			vehicle="sfp_flagcarrier_sweden";
 			leader=1;
 			skill=0.60000002;
 			init="this allowDamage false;";
@@ -12719,7 +12719,7 @@ class Mission
 			special="NONE";
 			id=1076;
 			side="EMPTY";
-			vehicle="Flag_Redburger_F";
+			vehicle="sfp_flagcarrier_sweden";
 			leader=1;
 			skill=0.60000002;
 			init="this allowDamage false;";
@@ -12731,7 +12731,7 @@ class Mission
 			special="NONE";
 			id=1077;
 			side="EMPTY";
-			vehicle="Flag_Blueking_F";
+			vehicle="sfp_flagcarrier_sweden";
 			leader=1;
 			skill=0.60000002;
 			init="this allowDamage false;";
