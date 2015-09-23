@@ -2641,7 +2641,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=1000;
+		items=1002;
 		class Item0
 		{
 			position[]={11584.9,23.361359,11913.601};
@@ -12971,6 +12971,26 @@ class Mission
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
 			syncId=128;
 			synchronizations[]={70};
+		};
+		class Item1000
+		{
+			position[]={15089.681,17.91,16951.248};
+			azimut=65;
+			id=1100;
+			side="EMPTY";
+			vehicle="sfp_tp84_2015";
+			skill=0.60000002;
+			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
+		};
+		class Item1001
+		{
+			position[]={15060.313,17.91,17156.205};
+			azimut=115;
+			id=1101;
+			side="EMPTY";
+			vehicle="sfp_jas39_cap";
+			skill=0.60000002;
+			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
 		};
 	};
 	class Markers
