@@ -19,14 +19,14 @@ _tempArray=[];
 };
 // WEST NATO FACTION	
 	if (_faction==1) then {
-	_InfPool=	["B_sniper_F","B_Soldier_A_F","B_Soldier_AA_F","B_Soldier_AAA_F","B_Soldier_AAR_F","B_Soldier_AAT_F","B_Soldier_AR_F","B_Soldier_AT_F","B_soldier_exp_F","B_Soldier_F","B_engineer_F","B_medic_F","B_recon_exp_F","B_recon_F","B_recon_JTAC_F","B_recon_LAT_F","B_recon_M_F","B_recon_medic_F","B_recon_TL_F"];	
-	_ArmPool=	["B_MBT_01_arty_F","B_MBT_01_cannon_F","B_MBT_01_mlrs_F","B_APC_Tracked_01_AA_F","B_APC_Tracked_01_CRV_F","B_APC_Tracked_01_rcws_F","B_APC_Wheeled_01_cannon_F","B_MBT_02_cannon_F"];
-	_MotPool=	["B_Truck_01_covered_F","B_Truck_01_transport_F","B_MRAP_01_F","B_MRAP_01_gmg_F","B_MRAP_01_hmg_F","B_Truck_01_medical_F"];
+	_InfPool=	["sfp_m90w_sog_sniper_ag90","B_Soldier_A_F","B_Soldier_AA_F","B_Soldier_AAA_F","B_Soldier_AAR_F","B_Soldier_AAT_F","B_Soldier_AR_F","B_Soldier_AT_F","sfp_m90w_explosive_specialist","sfp_m90w_rifleman_ak5","sfp_m90w_engineer","sfp_m90w_medic","sfp_m90w_sog_explosive_specialist","B_recon_F","sfp_m90w_sog_uav_op","sfp_m90w_sog_at_specialist_rb57","sfp_m90w_rifleman_ag90","sfp_m90w_sog_spotter","sfp_m90w_sog_teamleader"];	
+	_ArmPool=	["B_MBT_01_arty_F","B_MBT_01_cannon_F","B_MBT_01_mlrs_F","sfp_lvkv90c","sfp_strf90c","sfp_strf90c","sfp_patgb203","B_MBT_02_cannon_F"];
+	_MotPool=	["sfp_tgb20","sfp_tgb20","sfp_tgb16","B_MRAP_01_gmg_F","sfp_tgb16_rws","sfp_patgb203_ambulance"];
 	_ACHPool=	["B_Heli_Attack_01_F","B_Heli_Light_01_armed_F"];
-	_CHPool=	["B_Heli_Light_01_F","B_Heli_Transport_01_camo_F","B_Heli_Transport_01_F"];
+	_CHPool=	["sfp_hkp9_sog","sfp_hkp16","sfp_hkp16"];
 	_uavPool=	["B_UAV_01_F","B_UAV_01_CAS_F","B_UGV_01_rcws_F"];
-	_stPool=	["B_Mortar_01_F","B_static_AT_F","B_static_AA_F"];
-	_shipPool=	["B_Boat_Armed_01_minigun_F","B_Boat_Transport_01_F"];
+	_stPool=	["sfp_fh77","sfp_rbs56","sfp_rbs97"];
+	_shipPool=	["B_Boat_Armed_01_minigun_F","sfp_gruppbat"];
 	_diverPool=	["B_diver_exp_F","B_diver_F","B_diver_TL_F"];
 	_crewPool=	["B_crew_F"];
 	_heliCrew=	["B_helicrew_F","B_helipilot_F"];

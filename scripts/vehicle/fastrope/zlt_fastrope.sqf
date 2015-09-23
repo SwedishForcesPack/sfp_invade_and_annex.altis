@@ -21,7 +21,7 @@ waituntil {player == player};
 zlt_rope_ropes = [];
 zlt_mutexAction = false;
 
-zlt_rope_helis = ["O_Heli_Light_02_unarmed_F","O_Heli_Light_02_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","I_Heli_Transport_02_F","B_Heli_Light_01_F"];
+zlt_rope_helis = ["O_Heli_Light_02_unarmed_F","O_Heli_Light_02_F","sfp_hkp16","sfp_hkp16","O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","I_Heli_Transport_02_F","sfp_hkp9_sog"];
 zlt_rope_helidata = 
 [
 	[
@@ -30,7 +30,7 @@ zlt_rope_helidata =
 		[-1.45,1.35,-24.95]
 	],
 	[
-		["B_Heli_Transport_01_F", "B_Heli_Transport_01_camo_F"],
+		["sfp_hkp16", "sfp_hkp16"],
 		[-1.11,2.5,-24.7],
 		[1.11,2.5,-24.7]
 	],
@@ -45,7 +45,7 @@ zlt_rope_helidata =
 		[]
 	],	
 	[
-		["B_Heli_Light_01_F"],
+		["sfp_hkp9_sog"],
 		[0.6,0.5,-25.9],
 		[-0.8,0.5,-25.9]
 	]

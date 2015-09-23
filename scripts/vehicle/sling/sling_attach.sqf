@@ -10,11 +10,11 @@ if(count _nearUnits < 1) exitWith{hint "No Sling Targets";};
 
 _liftable = [];
 _notLiftable =[];
-if((_heloType == "B_Heli_Light_01_F") OR (_heloType == "B_Heli_Light_02_armed_F")) then {
+if((_heloType == "sfp_hkp9_sog") OR (_heloType == "B_Heli_Light_02_armed_F")) then {
 	_liftable = light;
 	_notLiftable = medium + heavy + superheavy;
 };
-if((_heloType == "B_Heli_Transport_01_camo_F") || (_heloType == "B_Heli_Transport_01_F")) then {
+if((_heloType == "sfp_hkp16") || (_heloType == "sfp_hkp16")) then {
 	_liftable = light + medium;
 	_notLiftable = heavy + superheavy;
 };

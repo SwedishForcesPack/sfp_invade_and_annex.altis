@@ -23,7 +23,7 @@ while { true } do {
 
 	if ((player hasWeapon "launch_NLAW_F") || (player hasWeapon "launch_B_Titan_F") || (player hasWeapon "launch_O_Titan_F") || (player hasWeapon "launch_I_Titan_F") || (player hasWeapon "launch_B_Titan_short_F") || (player hasWeapon "launch_O_Titan_short_F") || (player hasWeapon "launch_I_Titan_short_F")) then
 	{
-		if ((playerSide == west && typeOf player != "B_soldier_LAT_F" && typeOf player != "B_recon_LAT_F" && typeOf player != "B_soldier_AT_F") || (playerside == east && typeOf player != "O_soldier_LAT_F") || (playerside == resistance && typeOf player != "I_soldier_LAT_F")) then
+		if ((playerSide == west && typeOf player != "B_soldier_LAT_F" && typeOf player != "sfp_m90w_sog_at_specialist_rb57" && typeOf player != "sfp_m90w_at_specialist_grg86") || (playerside == east && typeOf player != "O_soldier_LAT_F") || (playerside == resistance && typeOf player != "I_soldier_LAT_F")) then
 		{
 			player removeWeapon (secondaryWeapon player);
 			titleText [AT_MSG, "PLAIN", 3];
@@ -34,7 +34,7 @@ while { true } do {
 
 	if ((player hasWeapon "srifle_GM6_F") || (player hasWeapon "srifle_GM6_LRPS_F") || (player hasWeapon "srifle_LRR_F") || (player hasWeapon "srifle_GM6_SOS_F") || (player hasWeapon "srifle_GM6_camo_F") || (player hasWeapon "srifle_GM6_camo_SOS_F") || (player hasWeapon "srifle_GM6_camo_LRPS_F") || (player hasWeapon "srifle_LRR_camo_F") || (player hasWeapon "srifle_LRR_camo_LRPS_F") || (player hasWeapon "srifle_LRR_camo_SOS_F") || (player hasWeapon "srifle_LRR_LRPS_F") || (player hasWeapon "srifle_LRR_SOS_F")) then
 	{
-		if ((playerSide == west && typeOf player != "B_sniper_F") || (playerside == east && typeOf player != "O_sniper_F")) then
+		if ((playerSide == west && typeOf player != "sfp_m90w_sog_sniper_ag90") || (playerside == east && typeOf player != "O_sniper_F")) then
 		{
 			player removeWeapon (primaryWeapon player);
 			titleText [SNIPER_MSG, "PLAIN", 3];
@@ -43,7 +43,7 @@ while { true } do {
 
 	//------------------------------------- UAV
 
-	_uavOperator = ["B_soldier_UAV_F","B_officer_F"];
+	_uavOperator = ["sfp_m90w_rifleman_uav_op","sfp_m90w_officer"];
    	_uavRestricted = ["B_UavTerminal","O_UavTerminal","I_UavTerminal"];
     _assignedItems = assignedItems player;
 

@@ -5,7 +5,7 @@ _type = typeOf _unit;
 
 //---------- UH-80 Ghosthawk
 
-_ghosthawk = ["B_Heli_Transport_01_camo_F","B_Heli_Transport_01_F"];
+_ghosthawk = ["sfp_hkp16","sfp_hkp16"];
 
 //---------- Strider
 
@@ -16,14 +16,14 @@ _strider = ["I_MRAP_03_F","I_MRAP_03_hmg_F","I_MRAP_03_gmg_F"];
 _blackVehicles = ["B_Heli_Light_01_armed_F"];
 
 // The hummingbird
-_wasp = ["B_Heli_Light_01_F","B_Heli_Light_01_armed_F"];
+_wasp = ["sfp_hkp9_sog","B_Heli_Light_01_armed_F"];
 
 // The orca
 _orca = ["O_Heli_Light_02_unarmed_F"];
 
 //---------- Sling
 
-_slingable = ["B_Heli_Light_01_F"];
+_slingable = ["sfp_hkp9_sog"];
 _notSlingable = ["B_Heli_Light_01_armed_F", "B_Heli_Attack_01_F"];
 
 //---------- VAS-enabled
@@ -32,7 +32,7 @@ _VASable = ["B_Truck_01_ammo_F"];
 
 //---------- BOBCAT
 
-_noAmmoCargo = ["B_APC_Tracked_01_CRV_F","B_Truck_01_ammo_F"];
+_noAmmoCargo = ["sfp_strf90c","B_Truck_01_ammo_F"];
 
 //------------------------------ INITIALIZE VEHICLES
 
@@ -61,11 +61,13 @@ if (_type in _VASable) then {
 	_unit addAction ["<t color='#ff1111'>Mobile VAS</t>","scripts\VAS\open.sqf",[],10,true,true,'((vehicle player) == player) && ((player distance _target) < 5)'];
 };
 
-
+/*
 if(_type in _wasp) then {
 	_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_01\Data\skins\heli_light_01_ext_digital_co.paa']};
+ 
 
 if(_type in _orca) then {_unit setObjectTexture[0, 'A3\Air_F\Heli_Light_02\Data\heli_light_02_ext_indp_co.paa']};
+*/
 
 if (_type in _noAmmoCargo) then {_unit setAmmoCargo 0;};
 

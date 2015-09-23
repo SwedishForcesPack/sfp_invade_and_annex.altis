@@ -1394,7 +1394,7 @@ BTC_check_action_HEMTT = {
     if (count _men > 1 && format ["%1", player getVariable "BTC_need_revive"] == "0") then {
         if (format ["%1", (_men select 1) getVariable "BTC_need_revive"] == "1" && !BTC_dragging && format ["%1", (_men select 1) getVariable "BTC_dragged"] != "1") then {
 			_hemtt = [];
-			_hemtt = (position player) nearEntities [["B_Truck_01_medical_F"],5];
+			_hemtt = (position player) nearEntities [["sfp_patgb203_ambulance"],5];
 			if ((count _hemtt) > 0) then {
 				_itemsP = items player;
 				_itemsI = items (_men select 1);

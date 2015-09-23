@@ -143,7 +143,7 @@ class Mission
 	randomSeed=12935265;
 	class Intel
 	{
-		briefingName="Co-60 AW Invade & Annex 2.79D";
+		briefingName="SFP Co-60 AW Invade & Annex 2.79D";
 		overviewText="Version 2.79";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -183,7 +183,7 @@ class Mission
 					special="NONE";
 					id=0;
 					side="WEST";
-					vehicle="B_Soldier_SL_F";
+					vehicle="sfp_m90w_squadleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -200,7 +200,7 @@ class Mission
 					special="NONE";
 					id=1;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Medic";
@@ -214,7 +214,7 @@ class Mission
 					special="NONE";
 					id=2;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="sfp_m90w_engineer";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Repair Specialist";
@@ -228,7 +228,7 @@ class Mission
 					special="NONE";
 					id=3;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Autorifleman";
@@ -242,7 +242,7 @@ class Mission
 					special="NONE";
 					id=4;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Autorifleman";
@@ -256,7 +256,7 @@ class Mission
 					special="NONE";
 					id=5;
 					side="WEST";
-					vehicle="B_Soldier_GL_F";
+					vehicle="sfp_m90w_gr";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Grenadier";
@@ -270,7 +270,7 @@ class Mission
 					special="NONE";
 					id=6;
 					side="WEST";
-					vehicle="B_soldier_M_F";
+					vehicle="sfp_m90w_sniper";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Marksman";
@@ -284,7 +284,7 @@ class Mission
 					special="NONE";
 					id=7;
 					side="WEST";
-					vehicle="B_soldier_AT_F";
+					vehicle="sfp_m90w_at_specialist_grg86";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Alpha Rifleman (AT)";
@@ -306,7 +306,7 @@ class Mission
 					special="NONE";
 					id=8;
 					side="WEST";
-					vehicle="B_Soldier_SL_F";
+					vehicle="sfp_m90w_squadleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -323,7 +323,7 @@ class Mission
 					special="NONE";
 					id=9;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Medic";
@@ -337,7 +337,7 @@ class Mission
 					special="NONE";
 					id=10;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="sfp_m90w_engineer";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Repair Specialist";
@@ -351,7 +351,7 @@ class Mission
 					special="NONE";
 					id=11;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Autorifleman";
@@ -365,7 +365,7 @@ class Mission
 					special="NONE";
 					id=12;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Autorifleman";
@@ -379,7 +379,7 @@ class Mission
 					special="NONE";
 					id=13;
 					side="WEST";
-					vehicle="B_Soldier_GL_F";
+					vehicle="sfp_m90w_gr";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Grenadier";
@@ -393,7 +393,7 @@ class Mission
 					special="NONE";
 					id=14;
 					side="WEST";
-					vehicle="B_soldier_M_F";
+					vehicle="sfp_m90w_sniper";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Marksman";
@@ -407,7 +407,7 @@ class Mission
 					special="NONE";
 					id=15;
 					side="WEST";
-					vehicle="B_soldier_AT_F";
+					vehicle="sfp_m90w_at_specialist_grg86";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Bravo Rifleman (AT)";
@@ -429,7 +429,7 @@ class Mission
 					special="NONE";
 					id=16;
 					side="WEST";
-					vehicle="B_Soldier_SL_F";
+					vehicle="sfp_m90w_squadleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -446,7 +446,7 @@ class Mission
 					special="NONE";
 					id=17;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Medic";
@@ -460,7 +460,7 @@ class Mission
 					special="NONE";
 					id=18;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="sfp_m90w_engineer";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Repair Specialist";
@@ -474,7 +474,7 @@ class Mission
 					special="NONE";
 					id=19;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Autorifleman";
@@ -488,7 +488,7 @@ class Mission
 					special="NONE";
 					id=20;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Autorifleman";
@@ -502,7 +502,7 @@ class Mission
 					special="NONE";
 					id=21;
 					side="WEST";
-					vehicle="B_Soldier_GL_F";
+					vehicle="sfp_m90w_gr";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Grenadier";
@@ -516,7 +516,7 @@ class Mission
 					special="NONE";
 					id=22;
 					side="WEST";
-					vehicle="B_soldier_M_F";
+					vehicle="sfp_m90w_sniper";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Marksman";
@@ -530,7 +530,7 @@ class Mission
 					special="NONE";
 					id=23;
 					side="WEST";
-					vehicle="B_soldier_AT_F";
+					vehicle="sfp_m90w_at_specialist_grg86";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Charlie Rifleman (AT)";
@@ -552,7 +552,7 @@ class Mission
 					special="NONE";
 					id=24;
 					side="WEST";
-					vehicle="B_Soldier_SL_F";
+					vehicle="sfp_m90w_squadleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -569,7 +569,7 @@ class Mission
 					special="NONE";
 					id=25;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Medic";
@@ -583,7 +583,7 @@ class Mission
 					special="NONE";
 					id=26;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="sfp_m90w_engineer";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Repair Specialist";
@@ -597,7 +597,7 @@ class Mission
 					special="NONE";
 					id=27;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Autorifleman";
@@ -611,7 +611,7 @@ class Mission
 					special="NONE";
 					id=28;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Autorifleman";
@@ -623,7 +623,7 @@ class Mission
 					special="NONE";
 					id=29;
 					side="WEST";
-					vehicle="B_Soldier_GL_F";
+					vehicle="sfp_m90w_gr";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Grenadier";
@@ -636,7 +636,7 @@ class Mission
 					azimut=-322.332;
 					id=30;
 					side="WEST";
-					vehicle="B_soldier_M_F";
+					vehicle="sfp_m90w_sniper";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Marksman";
@@ -650,7 +650,7 @@ class Mission
 					special="NONE";
 					id=31;
 					side="WEST";
-					vehicle="B_soldier_AT_F";
+					vehicle="sfp_m90w_at_specialist_grg86";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Delta Rifleman (AT)";
@@ -672,7 +672,7 @@ class Mission
 					special="NONE";
 					id=32;
 					side="WEST";
-					vehicle="B_Soldier_SL_F";
+					vehicle="sfp_m90w_squadleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -689,7 +689,7 @@ class Mission
 					special="NONE";
 					id=33;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Medic";
@@ -703,7 +703,7 @@ class Mission
 					special="NONE";
 					id=34;
 					side="WEST";
-					vehicle="B_soldier_repair_F";
+					vehicle="sfp_m90w_engineer";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Repair Specialist";
@@ -717,7 +717,7 @@ class Mission
 					special="NONE";
 					id=35;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Autorifleman";
@@ -731,7 +731,7 @@ class Mission
 					special="NONE";
 					id=36;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Autorifleman";
@@ -745,7 +745,7 @@ class Mission
 					special="NONE";
 					id=37;
 					side="WEST";
-					vehicle="B_Soldier_GL_F";
+					vehicle="sfp_m90w_gr";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Grenadier";
@@ -759,7 +759,7 @@ class Mission
 					special="NONE";
 					id=38;
 					side="WEST";
-					vehicle="B_soldier_M_F";
+					vehicle="sfp_m90w_sniper";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Marksman";
@@ -773,7 +773,7 @@ class Mission
 					special="NONE";
 					id=39;
 					side="WEST";
-					vehicle="B_soldier_AT_F";
+					vehicle="sfp_m90w_at_specialist_grg86";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Echo Rifleman (AT)";
@@ -794,7 +794,7 @@ class Mission
 					special="NONE";
 					id=40;
 					side="WEST";
-					vehicle="B_Soldier_TL_F";
+					vehicle="sfp_m90w_teamleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="SERGEANT";
@@ -810,7 +810,7 @@ class Mission
 					special="NONE";
 					id=41;
 					side="WEST";
-					vehicle="B_engineer_F";
+					vehicle="sfp_m90w_engineer";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.44999999;
@@ -824,7 +824,7 @@ class Mission
 					special="NONE";
 					id=42;
 					side="WEST";
-					vehicle="B_soldier_exp_F";
+					vehicle="sfp_m90w_explosive_specialist";
 					player="PLAY CDG";
 					skill=0.40000001;
 					description="EOD Explosive Specialist";
@@ -837,7 +837,7 @@ class Mission
 					special="NONE";
 					id=43;
 					side="WEST";
-					vehicle="B_soldier_exp_F";
+					vehicle="sfp_m90w_explosive_specialist";
 					player="PLAY CDG";
 					skill=0.40000001;
 					description="EOD Explosive Specialist";
@@ -858,7 +858,7 @@ class Mission
 					special="NONE";
 					id=44;
 					side="WEST";
-					vehicle="B_recon_TL_F";
+					vehicle="sfp_m90w_sog_teamleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -874,7 +874,7 @@ class Mission
 					special="NONE";
 					id=45;
 					side="WEST";
-					vehicle="B_recon_medic_F";
+					vehicle="sfp_m90w_sog_spotter";
 					player="PLAY CDG";
 					skill=0.2;
 					description="Recon Paramedic";
@@ -887,7 +887,7 @@ class Mission
 					special="NONE";
 					id=46;
 					side="WEST";
-					vehicle="B_recon_JTAC_F";
+					vehicle="sfp_m90w_sog_uav_op";
 					player="PLAY CDG";
 					skill=0.2;
 					description="Recon JTAC";
@@ -901,7 +901,7 @@ class Mission
 					special="NONE";
 					id=47;
 					side="WEST";
-					vehicle="B_recon_M_F";
+					vehicle="sfp_m90w_rifleman_ag90";
 					player="PLAY CDG";
 					skill=0.2;
 					description="Recon Marksman";
@@ -915,7 +915,7 @@ class Mission
 					special="NONE";
 					id=48;
 					side="WEST";
-					vehicle="B_recon_LAT_F";
+					vehicle="sfp_m90w_sog_at_specialist_rb57";
 					player="PLAY CDG";
 					rank="SERGEANT";
 					skill=0.60000002;
@@ -930,7 +930,7 @@ class Mission
 					special="NONE";
 					id=49;
 					side="WEST";
-					vehicle="B_recon_LAT_F";
+					vehicle="sfp_m90w_sog_at_specialist_rb57";
 					player="PLAY CDG";
 					rank="SERGEANT";
 					skill=0.60000002;
@@ -945,7 +945,7 @@ class Mission
 					special="NONE";
 					id=50;
 					side="WEST";
-					vehicle="B_recon_M_F";
+					vehicle="sfp_m90w_rifleman_ag90";
 					player="PLAY CDG";
 					rank="SERGEANT";
 					skill=0.60000002;
@@ -960,7 +960,7 @@ class Mission
 					special="NONE";
 					id=51;
 					side="WEST";
-					vehicle="B_recon_exp_F";
+					vehicle="sfp_m90w_sog_explosive_specialist";
 					player="PLAY CDG";
 					rank="SERGEANT";
 					skill=0.60000002;
@@ -983,7 +983,7 @@ class Mission
 					special="NONE";
 					id=52;
 					side="WEST";
-					vehicle="B_spotter_F";
+					vehicle="sfp_m90w_sog_spotter";
 					player="PLAY CDG";
 					leader=1;
 					rank="LIEUTENANT";
@@ -1000,7 +1000,7 @@ class Mission
 					special="NONE";
 					id=53;
 					side="WEST";
-					vehicle="B_sniper_F";
+					vehicle="sfp_m90w_sog_sniper_ag90";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
@@ -1023,7 +1023,7 @@ class Mission
 					special="NONE";
 					id=54;
 					side="WEST";
-					vehicle="B_spotter_F";
+					vehicle="sfp_m90w_sog_spotter";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
@@ -1038,7 +1038,7 @@ class Mission
 					special="NONE";
 					id=55;
 					side="WEST";
-					vehicle="B_sniper_F";
+					vehicle="sfp_m90w_sog_sniper_ag90";
 					player="PLAY CDG";
 					leader=1;
 					rank="SERGEANT";
@@ -2113,7 +2113,7 @@ class Mission
 					special="NONE";
 					id=78;
 					side="WEST";
-					vehicle="B_UAV_02_CAS_F";
+					vehicle="sfp_ucav23";
 					isUAV=1;
 					leader=1;
 					skill=0.60000002;
@@ -2159,7 +2159,7 @@ class Mission
 					offsetY=0.5;
 					id=80;
 					side="WEST";
-					vehicle="B_UAV_02_CAS_F";
+					vehicle="sfp_ucav23";
 					isUAV=1;
 					leader=1;
 					skill=0.60000002;
@@ -2181,7 +2181,7 @@ class Mission
 					special="NONE";
 					id=81;
 					side="WEST";
-					vehicle="B_officer_F";
+					vehicle="sfp_m90w_officer";
 					leader=1;
 					rank="MAJOR";
 					skill=0.60000002;
@@ -2202,7 +2202,7 @@ class Mission
 					azimut=487.13974;
 					id=82;
 					side="WEST";
-					vehicle="B_Soldier_F";
+					vehicle="sfp_m90w_rifleman_ak5";
 					leader=1;
 					skill=0.60000002;
 					text="injured";
@@ -2222,7 +2222,7 @@ class Mission
 					offsetY=-5;
 					id=83;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					leader=1;
 					lock="LOCKED";
 					skill=0.60000002;
@@ -2243,7 +2243,7 @@ class Mission
 					special="NONE";
 					id=84;
 					side="WEST";
-					vehicle="B_officer_F";
+					vehicle="sfp_m90w_officer";
 					leader=1;
 					rank="MAJOR";
 					skill=0.60000002;
@@ -2465,7 +2465,7 @@ class Mission
 					special="NONE";
 					id=89;
 					side="WEST";
-					vehicle="B_Soldier_TL_F";
+					vehicle="sfp_m90w_teamleader";
 					player="PLAY CDG";
 					leader=1;
 					rank="SERGEANT";
@@ -2482,7 +2482,7 @@ class Mission
 					special="NONE";
 					id=90;
 					side="WEST";
-					vehicle="B_soldier_AR_F";
+					vehicle="sfp_m90w_automaticrifleman_ksp90";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.44999999;
@@ -2497,7 +2497,7 @@ class Mission
 					special="NONE";
 					id=91;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.40000001;
 					description="CLS Medic";
@@ -2511,7 +2511,7 @@ class Mission
 					special="NONE";
 					id=92;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					player="PLAY CDG";
 					skill=0.40000001;
 					description="CLS Medic";
@@ -2533,7 +2533,7 @@ class Mission
 					offsetY=-5;
 					id=93;
 					side="WEST";
-					vehicle="B_medic_F";
+					vehicle="sfp_m90w_medic";
 					leader=1;
 					lock="LOCKED";
 					skill=0.60000002;
@@ -2554,7 +2554,7 @@ class Mission
 					special="NONE";
 					id=94;
 					side="WEST";
-					vehicle="B_soldier_UAV_F";
+					vehicle="sfp_m90w_rifleman_uav_op";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
@@ -2570,7 +2570,7 @@ class Mission
 					special="NONE";
 					id=95;
 					side="WEST";
-					vehicle="B_Helipilot_F";
+					vehicle="sfp_m90w_helipilot";
 					player="PLAYER COMMANDER";
 					leader=1;
 					rank="LIEUTENANT";
@@ -2587,7 +2587,7 @@ class Mission
 					special="NONE";
 					id=96;
 					side="WEST";
-					vehicle="B_Helipilot_F";
+					vehicle="sfp_m90w_helipilot";
 					player="PLAY CDG";
 					rank="SERGEANT";
 					skill=0.60000002;
@@ -2602,7 +2602,7 @@ class Mission
 					special="NONE";
 					id=97;
 					side="WEST";
-					vehicle="B_Helipilot_F";
+					vehicle="sfp_m90w_helipilot";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk)";
@@ -2616,7 +2616,7 @@ class Mission
 					special="NONE";
 					id=98;
 					side="WEST";
-					vehicle="B_Helipilot_F";
+					vehicle="sfp_m90w_helipilot";
 					player="PLAY CDG";
 					rank="CORPORAL";
 					skill=0.60000002;
@@ -2629,7 +2629,7 @@ class Mission
 					position[]={15119.922,17.976023,17246.24};
 					id=99;
 					side="WEST";
-					vehicle="B_Helipilot_F";
+					vehicle="sfp_m90w_helipilot";
 					player="PLAY CDG";
 					skill=0.60000002;
 					description="Vortex Pilot (TS3: ts.ahoyworld.co.uk)";
@@ -6243,7 +6243,7 @@ class Mission
 			azimut=-23.844601;
 			id=492;
 			side="EMPTY";
-			vehicle="B_Truck_01_medical_F";
+			vehicle="sfp_patgb203_ambulance";
 			lock="LOCKED";
 			skill=1;
 			fuel=0;
@@ -6257,7 +6257,7 @@ class Mission
 			azimut=-90.627777;
 			id=493;
 			side="EMPTY";
-			vehicle="B_Truck_01_fuel_F";
+			vehicle="sfp_tgb40_fuel";
 			lock="LOCKED";
 			skill=1;
 			fuel=0;
@@ -6271,7 +6271,7 @@ class Mission
 			azimut=-271.20313;
 			id=494;
 			side="EMPTY";
-			vehicle="B_Truck_01_Repair_F";
+			vehicle="sfp_tgb30_repair";
 			lock="LOCKED";
 			skill=1;
 			fuel=0;
@@ -6285,7 +6285,7 @@ class Mission
 			azimut=135.51492;
 			id=495;
 			side="EMPTY";
-			vehicle="B_Truck_01_medical_F";
+			vehicle="sfp_patgb203_ambulance";
 			leader=1;
 			skill=0.60000002;
 			text="HEMTT_4";
@@ -6348,7 +6348,7 @@ class Mission
 			azimut=132.09348;
 			id=500;
 			side="EMPTY";
-			vehicle="B_MRAP_01_F";
+			vehicle="sfp_tgb16";
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
@@ -6416,7 +6416,7 @@ class Mission
 			offsetY=0.5;
 			id=505;
 			side="EMPTY";
-			vehicle="B_APC_Wheeled_01_cannon_F";
+			vehicle="sfp_patgb203";
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="Marshall_1";
@@ -6430,7 +6430,7 @@ class Mission
 			azimut=180;
 			id=506;
 			side="EMPTY";
-			vehicle="I_Heli_light_03_unarmed_F";
+			vehicle="sfp_hkp9_sog";
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
@@ -6446,7 +6446,7 @@ class Mission
 			azimut=130.70499;
 			id=507;
 			side="EMPTY";
-			vehicle="B_Heli_Transport_01_F";
+			vehicle="sfp_hkp16";
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
@@ -6462,7 +6462,7 @@ class Mission
 			special="NONE";
 			id=508;
 			side="EMPTY";
-			vehicle="B_Truck_01_fuel_F";
+			vehicle="sfp_tgb40_fuel";
 			leader=1;
 			skill=0.60000002;
 			text="HEMTT_5";
@@ -6552,7 +6552,7 @@ class Mission
 			offsetY=0.5;
 			id=516;
 			side="EMPTY";
-			vehicle="B_MBT_01_TUSK_F";
+			vehicle="sfp_strv122";
 			skill=0.60000002;
 			text="Slammer_2";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
@@ -6595,7 +6595,7 @@ class Mission
 			azimut=132.81277;
 			id=520;
 			side="EMPTY";
-			vehicle="I_Heli_Transport_02_F";
+			vehicle="sfp_hkp4";
 			leader=1;
 			skill=0.60000002;
 			text="MH_1";
@@ -6609,7 +6609,7 @@ class Mission
 			azimut=260.31097;
 			id=521;
 			side="EMPTY";
-			vehicle="B_Heli_Light_01_F";
+			vehicle="sfp_hkp9_sog";
 			skill=0.60000002;
 			text="LB_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
@@ -6633,7 +6633,7 @@ class Mission
 			azimut=135.5047;
 			id=523;
 			side="EMPTY";
-			vehicle="B_Truck_01_transport_F";
+			vehicle="sfp_tgb20";
 			skill=0.60000002;
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
 			syncId=108;
@@ -6853,7 +6853,7 @@ class Mission
 			azimut=132.41383;
 			id=543;
 			side="EMPTY";
-			vehicle="B_MRAP_01_F";
+			vehicle="sfp_tgb16";
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
@@ -6868,7 +6868,7 @@ class Mission
 			azimut=134;
 			id=544;
 			side="EMPTY";
-			vehicle="B_MRAP_01_hmg_F";
+			vehicle="sfp_tgb16_rws";
 			leader=1;
 			skill=0.60000002;
 			text="H_5";
@@ -6882,7 +6882,7 @@ class Mission
 			azimut=134;
 			id=545;
 			side="EMPTY";
-			vehicle="B_MRAP_01_hmg_F";
+			vehicle="sfp_tgb16_rws";
 			leader=1;
 			skill=0.60000002;
 			text="H_6";
@@ -6896,7 +6896,7 @@ class Mission
 			azimut=134.87749;
 			id=546;
 			side="EMPTY";
-			vehicle="B_MRAP_01_F";
+			vehicle="sfp_tgb16";
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
@@ -7008,7 +7008,7 @@ class Mission
 			offsetY=0.5;
 			id=555;
 			side="EMPTY";
-			vehicle="B_APC_Tracked_01_rcws_F";
+			vehicle="sfp_strf90c";
 			skill=0.60000002;
 			text="Panther_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
@@ -7058,7 +7058,7 @@ class Mission
 			vehicle="Land_Laptop_unfolded_F";
 			skill=0.60000002;
 			text="maintenanceTerminal";
-			init="this allowDamage false; this enableSimulation false; this addAction [""<t color='#3f3fff'>Cycle airbase cleanup</t>"",""scripts\misc\actions\clearItemsBASE_switch.sqf"",[],21,true,true,"""",'((vehicle player) == player) && ((player distance _target) < 5)']; this addAction [   ""<t color='#3f3fff'>Recycle UAV crew</t>"",   ""scripts\misc\actions\uavFix_switch.sqf"",   [],   21,   true,   true,   """",   '((vehicle player) == player) && ((player distance _target) < 5) && (player isKindOf ""B_soldier_UAV_F"")'];";
+			init="this allowDamage false; this enableSimulation false; this addAction [""<t color='#3f3fff'>Cycle airbase cleanup</t>"",""scripts\misc\actions\clearItemsBASE_switch.sqf"",[],21,true,true,"""",'((vehicle player) == player) && ((player distance _target) < 5)']; this addAction [   ""<t color='#3f3fff'>Recycle UAV crew</t>"",   ""scripts\misc\actions\uavFix_switch.sqf"",   [],   21,   true,   true,   """",   '((vehicle player) == player) && ((player distance _target) < 5) && (player isKindOf ""sfp_m90w_rifleman_uav_op"")'];";
 		};
 		class Item460
 		{
@@ -7066,7 +7066,7 @@ class Mission
 			azimut=-226.54343;
 			id=560;
 			side="EMPTY";
-			vehicle="B_MRAP_01_hmg_F";
+			vehicle="sfp_tgb16_rws";
 			leader=1;
 			skill=0.60000002;
 			text="H_7";
@@ -7080,7 +7080,7 @@ class Mission
 			azimut=-269.24872;
 			id=561;
 			side="EMPTY";
-			vehicle="I_APC_tracked_03_cannon_F";
+			vehicle="sfp_strf90c";
 			skill=0.60000002;
 			text="Mora_1";
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
@@ -7355,7 +7355,7 @@ class Mission
 			offsetY=-5;
 			id=583;
 			side="EMPTY";
-			vehicle="B_Truck_01_medical_F";
+			vehicle="sfp_patgb203_ambulance";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
@@ -9469,7 +9469,7 @@ class Mission
 			azimut=163.52359;
 			id=791;
 			side="EMPTY";
-			vehicle="B_Truck_01_Repair_F";
+			vehicle="sfp_tgb30_repair";
 			leader=1;
 			lock="LOCKED";
 			skill=0.215813;
@@ -9481,7 +9481,7 @@ class Mission
 			azimut=-398.93619;
 			id=792;
 			side="EMPTY";
-			vehicle="B_Truck_01_fuel_F";
+			vehicle="sfp_tgb40_fuel";
 			leader=1;
 			lock="LOCKED";
 			skill=0.215813;
@@ -10317,7 +10317,7 @@ class Mission
 			age="ACTUAL";
 			id=865;
 			side="EMPTY";
-			vehicle="B_Heli_Transport_01_F";
+			vehicle="sfp_hkp16";
 			lock="LOCKEDPLAYER";
 			skill=0.60000002;
 			health=0;
@@ -10782,7 +10782,7 @@ class Mission
 			azimut=514.54321;
 			id=905;
 			side="EMPTY";
-			vehicle="B_Truck_01_Repair_F";
+			vehicle="sfp_tgb30_repair";
 			leader=1;
 			lock="LOCKED";
 			skill=0.215813;
@@ -10794,7 +10794,7 @@ class Mission
 			azimut=-47.916859;
 			id=906;
 			side="EMPTY";
-			vehicle="B_Truck_01_fuel_F";
+			vehicle="sfp_tgb40_fuel";
 			leader=1;
 			lock="LOCKED";
 			skill=0.215813;
@@ -11035,7 +11035,7 @@ class Mission
 			azimut=517.68201;
 			id=928;
 			side="EMPTY";
-			vehicle="B_Truck_01_Repair_F";
+			vehicle="sfp_tgb30_repair";
 			leader=1;
 			lock="LOCKED";
 			skill=0.215813;
@@ -11047,7 +11047,7 @@ class Mission
 			azimut=-44.778099;
 			id=929;
 			side="EMPTY";
-			vehicle="B_Truck_01_fuel_F";
+			vehicle="sfp_tgb40_fuel";
 			leader=1;
 			lock="LOCKED";
 			skill=0.215813;
@@ -12137,7 +12137,7 @@ class Mission
 			special="NONE";
 			id=1024;
 			side="EMPTY";
-			vehicle="B_Truck_01_Repair_F";
+			vehicle="sfp_tgb30_repair";
 			leader=1;
 			skill=0.60000002;
 			text="HEMTT_5_1";
@@ -12151,7 +12151,7 @@ class Mission
 			azimut=135.505;
 			id=1025;
 			side="EMPTY";
-			vehicle="B_Truck_01_covered_F";
+			vehicle="sfp_tgb20";
 			skill=0.60000002;
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
 			syncId=124;
@@ -12846,7 +12846,7 @@ class Mission
 			offsetY=-5;
 			id=1087;
 			side="EMPTY";
-			vehicle="B_Truck_01_medical_F";
+			vehicle="sfp_patgb203_ambulance";
 			leader=1;
 			lock="LOCKED";
 			skill=0.60000002;
@@ -12942,7 +12942,7 @@ class Mission
 			azimut=-49.620392;
 			id=1097;
 			side="EMPTY";
-			vehicle="B_Heli_Transport_01_F";
+			vehicle="sfp_hkp16";
 			leader=1;
 			lock="UNLOCKED";
 			skill=0.60000002;
@@ -12966,7 +12966,7 @@ class Mission
 			azimut=227.03345;
 			id=1099;
 			side="EMPTY";
-			vehicle="B_APC_Tracked_01_CRV_F";
+			vehicle="sfp_strf90c";
 			skill=0.60000002;
 			init="_m = [this,60,300] execVM ""scripts\vehicle\monitor.sqf"";";
 			syncId=128;

@@ -8,8 +8,8 @@ http://forums.bistudio.com/showthread.php?157481-crewmen
 
 true spawn {
 
-    _pilots = ["B_Helipilot_F"];
-    _aircraft_nocopilot = ["B_Heli_Transport_01_camo_F", "B_Heli_Transport_01_F", "I_Heli_Transport_02_F", "O_Heli_Light_02_F", "O_Heli_Light_02_unarmed_F", "B_Heli_Light_01_armed_F"];
+    _pilots = ["sfp_m90w_helipilot"];
+    _aircraft_nocopilot = ["sfp_hkp16", "sfp_hkp16", "I_Heli_Transport_02_F", "O_Heli_Light_02_F", "O_Heli_Light_02_unarmed_F", "B_Heli_Light_01_armed_F"];
 
     waitUntil {player == player};
 

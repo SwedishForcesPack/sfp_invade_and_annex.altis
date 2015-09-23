@@ -129,9 +129,9 @@ _veh setVehicleAmmo 1;	// Reload turrets / drivers magazine
 
 _veh vehicleChat format ["%1 successfully repaired and refuelled.", _vehType];
 
-_fuelVeh = ["B_APC_Tracked_01_CRV_F","B_Truck_01_fuel_F"];
-_repairVeh = ["B_APC_Tracked_01_CRV_F","B_Truck_01_Repair_F","C_Offroad_01_repair_F"];
-_ammoVeh = ["B_APC_Tracked_01_CRV_F","B_Truck_01_ammo_F"];
+_fuelVeh = ["sfp_strf90c","sfp_tgb40_fuel"];
+_repairVeh = ["sfp_strf90c","sfp_tgb30_repair","C_Offroad_01_repair_F"];
+_ammoVeh = ["sfp_strf90c","B_Truck_01_ammo_F"];
 if (({_veh isKindOf _x} count _repairVeh) > 0) then {
     _veh setRepairCargo 1;
 };

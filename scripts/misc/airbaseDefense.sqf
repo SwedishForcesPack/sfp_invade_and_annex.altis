@@ -39,7 +39,7 @@ while { true } do {
 
 		//---------- Spawn vehicle
 		
-		defender = createVehicle ["B_APC_Tracked_01_AA_F",_defensePos,[],0,"NONE"];
+		defender = createVehicle ["sfp_lvkv90c",_defensePos,[],0,"NONE"];
 		waitUntil {!isNull defender};
 		defender allowDamage false;
 		defender setDir 135; 

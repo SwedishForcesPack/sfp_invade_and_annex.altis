@@ -3,7 +3,7 @@ _veh = _this select 0;
 
 if (_veh isKindOf "ParachuteBase" || !alive _veh) exitWith {};
 
-if (!(_veh isKindOf "B_UAV_02_CAS_F")) exitWith { 
+if (!(_veh isKindOf "sfp_ucav23")) exitWith { 
 	_veh vehicleChat "This pad is for UAV service only, soldier!"; 
 };
 

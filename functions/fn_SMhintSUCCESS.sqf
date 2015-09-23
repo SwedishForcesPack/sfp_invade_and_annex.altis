@@ -1,5 +1,6 @@
 	private ["_veh","_vehName","_vehVarname","_completeText","_reward","_GAU","_rabbit"];
 
+/*
 smRewards =
 [
 	["a To-199 Neophron (CAS)", "O_Plane_CAS_02_F"],
@@ -14,13 +15,23 @@ smRewards =
 	["an FV-720 Mora", "I_APC_tracked_03_cannon_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
 	["an AFV-4 Gorgon", "I_APC_Wheeled_03_cannon_F"],
-	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
-	["an IFV-6a Cheetah", "B_APC_Tracked_01_AA_F"],
-	["an AMV-7 Marshall", "B_APC_Wheeled_01_cannon_F"],
+	["an IFV-6a Cheetah", "sfp_lvkv90c"],
+	["an IFV-6a Cheetah", "sfp_lvkv90c"],
+	["an AMV-7 Marshall", "sfp_patgb203"],
 	["a T-100 Varsuk", "O_MBT_02_cannon_F"],
 	["an MBT-52 Kuma", "I_MBT_03_cannon_F"],
-	["a Mortar", "B_Mortar_01_F"],
-	["an M2A4 Slammer (Urban Purpose)", "B_MBT_01_TUSK_F"]
+	["a Mortar", "sfp_fh77"],
+	["an M2A4 Slammer (Urban Purpose)", "sfp_strv122"]
+];
+*/
+smRewards = 
+[
+	["a Hkp 9 with Rb55", "sfp_hkp9_rb55"],
+	["a Tgb 1111 with Rbs56", "sfp_tgb1111_sog_rbs56"],
+	["a Tgb 16 with RWS", "sfp_tgb16_rws"],
+	["a Strv 122", "sfp_strv122"],
+	["a Strf 90 Ceasar", "sfp_strf90c"],
+	["a Hkp 16", "sfp_hkp16"]
 ];
 smMarkerList =
 ["smReward1","smReward2","smReward3","smReward4","smReward5","smReward6","smReward7","smReward8","smReward9","smReward10","smReward11","smReward12","smReward13","smReward14","smReward15","smReward16","smReward17","smReward18","smReward19","smReward20","smReward21","smReward22","smReward23","smReward24","smReward25","smReward26","smReward27"];

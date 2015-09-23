@@ -16,7 +16,7 @@ _obj = getMarkerPos "UAVspawn"; 								// uav spawn
 _rad = 300;  													// radius outwards from center point to search for Autonomous
 _delay = 300;  													// default 600
 _loopTimeout = 20 + (random 20);
-_uavArray = ["B_UAV_02_CAS_F","B_UAV_02_F","B_UGV_01_F","B_UGV_01_rcws_F"];
+_uavArray = ["sfp_ucav23","sfp_uav01","B_UGV_01_F","B_UGV_01_rcws_F"];
 
 UAVFIX_SWITCH = false; publicVariable "UAVFIX_SWITCH";
  
